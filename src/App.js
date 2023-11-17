@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-  import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { accountout, registerout, signout } from "./actions/userAction";
 // import { adminout } from "./actions/userAction";
 import PrivateRoute from "./components/PrivateRoute";
@@ -133,6 +133,7 @@ import TaxesMasterScreen from "./screens/TaxesMasterScreen";
 import TestingScreen from "./screens/TestingScreen";
 import WishListScreen from "./screens/WishListScreen";
 import ZoneScreen from "./screens/ZoneScreen";
+import Stockmaintance from "./screens/Stockmaintance";
 // Search bar section End*************************************
 
 // eslint-disable-next-line no-unused-vars
@@ -532,7 +533,7 @@ function App() {
               <Toolbar />
               {/* <Typography> */}
               <Routes>
-{/* ********************************************************************************* */}
+                {/* ********************************************************************************* */}
                 <Route path='/categorychildtwo/:id' element={<CategoryChildTwoScreen />}></Route>
                 <Route path='/categorychildthree/:id' element={<CategoryChildThreeScreen />}></Route>
                 <Route path='/categorychildfour/:id' element={<CategoryChildFourScreen />}></Route>
@@ -554,6 +555,10 @@ function App() {
                 <Route
                   path='/orderstatuslist'
                   element={<OrderStatusState />}
+                ></Route>
+                <Route
+                  path="/Stockmaintance"
+                  element={<Stockmaintance />}
                 ></Route>
                 {/*******************************Payment Gateway************************/}
                 <Route path='/gateway' element={<Gatewaygrid />}></Route>

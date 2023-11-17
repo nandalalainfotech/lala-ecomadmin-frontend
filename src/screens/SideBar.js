@@ -39,6 +39,7 @@ import Typography from "@mui/material/Typography";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ChildFriendlyIcon from "@mui/icons-material/ChildFriendly";
 import PaymentIcon from "@mui/icons-material/Payment";
+import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -128,6 +129,12 @@ export default function SideBar() {
   };
 
   const [sidopen, setSidopen] = useState();
+  const [stockopen, setstockopen] = useState();
+
+  const handlestock = () => {
+    setstockopen(!stockopen);
+  };
+
 
   const handleClick = () => {
     setSidopen(!sidopen);
@@ -195,10 +202,10 @@ export default function SideBar() {
                 <>
                   <ListItemButton
                     onClick={handleClick}
-                    // sx={{
-                    //   "&:hover": { backgroundColor: "red" },
-                    //   "&:active": { backgroundColor: "green" },
-                    // }}
+                  // sx={{
+                  //   "&:hover": { backgroundColor: "red" },
+                  //   "&:active": { backgroundColor: "green" },
+                  // }}
                   >
                     <ListItemIcon>
                       <LocationCityIcon sx={{ color: "#fff", mt: -1 }} />
@@ -582,6 +589,60 @@ export default function SideBar() {
               </ListItem>
             </List>
             <Divider sx={{ mt: -1, mb: -1 }} />
+            <List>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <>
+                  <ListItemButton onClick={handlestock}>
+                    <ListItemIcon>
+                      <ManageHistoryIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{ color: "#fff" }}
+                      primary={
+                        <Typography
+                          style={{
+                            color: "#FFFFFF",
+                            fontSize: 15,
+                          }}
+                        >
+                          General Setting
+                        </Typography>
+                      }
+                    />
+                    {stockopen ? (
+                      <ExpandLess sx={{ color: "#fff" }} />
+                    ) : (
+                      <ExpandMore sx={{ color: "#fff" }} />
+                    )}
+                  </ListItemButton>
+                  <Collapse in={stockopen} timeout="auto" unmountOnExit>
+                    <List>
+                      <ListItemButton sx={{ pl: 4 }}>
+                        <Link
+                          // reloadDocument
+                          to="/Stockmaintance"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <ListItemText
+                            sx={{ color: "#fff" }}
+                            primary={
+                              <Typography
+                                style={{
+                                  color: "#FFFFFF",
+                                  fontSize: 14,
+                                }}
+                              >
+                                Stock
+                              </Typography>
+                            }
+                          />
+                        </Link>
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </>
+              </ListItem>
+            </List>
             <List>
               <ListItem disablePadding sx={{ display: "block" }}>
                 <>
