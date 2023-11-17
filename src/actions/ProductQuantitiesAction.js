@@ -1,6 +1,9 @@
 import Axios from 'axios';
 import {
   PRODUCT_QUANTITIES_FAIL,
+  PRODUCT_QUANTITIES_LAST_LIST_FAIL,
+  PRODUCT_QUANTITIES_LAST_LIST_REQUEST,
+  PRODUCT_QUANTITIES_LAST_LIST_SUCCESS,
   PRODUCT_QUANTITIES_LIST_FAIL,
   PRODUCT_QUANTITIES_LIST_REQUEST,
   PRODUCT_QUANTITIES_LIST_SUCCESS,
@@ -71,5 +74,17 @@ export const QuantityListDetails = () => async (dispatch) => {
     dispatch({ type: PRODUCT_QUANTITIES_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_QUANTITIES_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const QuantityLastdataDetails = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_QUANTITIES_LAST_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get("/api/catProductDetails/lastquantitylist");
+    dispatch({ type: PRODUCT_QUANTITIES_LAST_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_QUANTITIES_LAST_LIST_FAIL, payload: error.message });
   }
 };

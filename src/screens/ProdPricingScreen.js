@@ -81,6 +81,11 @@ function ProdPricingScreen(PropTypes) {
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
 
+  const prodObj = catProducts?.find((item) => item?._id === EditId);
+  // eslint-disable-next-line no-unused-vars
+  const [productId, setproductId] = useState([prodObj?._id]);
+
+
   let productdata;
   {
     catProducts?.map((state) => {
@@ -185,6 +190,7 @@ function ProdPricingScreen(PropTypes) {
         RetailIncl: EditRetailincl,
         RetailCost: EditRetailcost,
         priceGroup: EditTaxprice,
+        productId: productId,
       })
     );
 

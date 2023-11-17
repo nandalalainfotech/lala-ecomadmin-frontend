@@ -42,12 +42,16 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
 
   const QuantityList = useSelector((state) => state.QuantityList);
   const { quantity } = QuantityList;
-  console.log('quantity', quantity);
 
   const quantityObj = quantity?.find((item) => item?.mprodId === EditId);
 
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
+
+  const prodObj = catProducts?.find((item) => item?._id === EditId);
+  // eslint-disable-next-line no-unused-vars
+  const [productId, setproductId] = useState([prodObj?._id]);
+
 
   let productdata;
   {
@@ -96,7 +100,8 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
         _id: quantityObj._id,
         Qty: EditQuantiry,
         minQty: EditMinQuantiry,
-        prodId: EditId
+        prodId: EditId,
+        productId: productId,
       })
     );
     window.confirm("Quantity Details Update Successfully!!");
