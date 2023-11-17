@@ -245,7 +245,7 @@ import {
   PaymultipleDeleteReducer,
   PayUpdateReducer,
 } from "./reducers/PayReducer";
-import { productEnquiryListReducer } from "./reducers/prodEnquiryReducer";
+import { enquiryDeleteReducer, notificationClearallReducer, notificationDeleteReducer, productEnquiryListReducer, productNotificationListReducer } from "./reducers/prodEnquiryReducer";
 import {
   PriceLastListReducer,
   PriceListReducer,
@@ -420,6 +420,10 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userAccount: userAccountReducer,
   productEnquiryList: productEnquiryListReducer,
+  productEnquirydel: enquiryDeleteReducer,
+  notificationall: productNotificationListReducer,
+  notificationdel: notificationDeleteReducer,
+  notificationclearall: notificationClearallReducer,
   customer: customerAddressReducer,
   customAddressList: customAddListReducer,
   customAddressUpdate: customAddressUpdateReducer,

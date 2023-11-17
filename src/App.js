@@ -16,7 +16,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
-
+import Badge from "@mui/material/Badge";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -81,7 +81,7 @@ import ProductViewScreen from "./screens/ProductViewScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import SideBar from "./screens/SideBar";
 import TextEditScreen from "./screens/TextEditScreen";
-
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddreeCustamerScreen from "./screens/AddreeCustamerScreen";
 import AttributeFormScreen from "./screens/AttributeFormScreen";
 import AttributeValueScreen from "./screens/AttributeValueScreen";
@@ -134,6 +134,7 @@ import TestingScreen from "./screens/TestingScreen";
 import WishListScreen from "./screens/WishListScreen";
 import ZoneScreen from "./screens/ZoneScreen";
 import Stockmaintance from "./screens/Stockmaintance";
+import NotificationSidebar from "./screens/NotificationSidebar";
 // Search bar section End*************************************
 
 // eslint-disable-next-line no-unused-vars
@@ -230,6 +231,14 @@ function App() {
     setAnchorEl(null);
   };
 
+
+  const notificationall = useSelector((state) => state.notificationall);
+  const { notificationlist } = notificationall;
+  const [open, setOpen] = useState(false);
+  const handleToggleSidebar = () => {
+    setOpen(!open);
+  };
+
   const classes = useStyles();
   const content = {
     brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
@@ -257,7 +266,7 @@ function App() {
       <div className='grid-container'>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
-            position='fixed'
+            position="fixed"
             style={{
               zIndex: 999,
               background: "#006997",
@@ -266,12 +275,12 @@ function App() {
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>
-                  <div className='grid-elements' style={{ display: "flex" }}>
+                  <div className="grid-elements" style={{ display: "flex" }}>
                     <Link
                       style={{ color: "inherit", textDecoration: "none" }}
-                      to='/'
+                      to="/"
                     >
-                      <Stack direction='row'>
+                      <Stack direction="row">
                         <Avatar
                           sx={{
                             animation: "spin 5s linear infinite",
@@ -284,27 +293,27 @@ function App() {
                               },
                             },
                           }}
-                          alt='NitLogo'
-                          src='/image/Fav.jpg'
+                          alt="NitLogo"
+                          src="/image/Fav.jpg"
                         />
                         <Typography
                           className={classes.sideBarButtons}
-                          variant='h4'
+                          variant="h4"
                           noWrap
-                          component='span'
+                          component="span"
                           sx={{
                             display: { xs: "block", sm: "block", md: "block" },
                             "&:hover": { color: "#ff7519" },
                           }}
                         >
-                          <div className='firstchild'> Lala</div>
+                          <div className="firstchild"> Lala</div>
                         </Typography>
                       </Stack>
                     </Link>
                   </div>
                 </Grid>
                 <Grid item xs={8}>
-                  <div className='grid-elements'>
+                  <div className="grid-elements">
                     {" "}
                     <Box
                       style={{ justifyContent: "center" }}
@@ -323,10 +332,10 @@ function App() {
                   </div>
                 </Grid>
                 <Grid item xs={2}>
-                  <div className='grid-elements'>
+                  <div className="grid-elements">
                     <Box sx={{ flexGrow: 0, display: "flex-end" }}>
                       <Stack
-                        direction='row'
+                        direction="row"
                         spacing={{ xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5 }}
                         sx={{ justifyContent: "flex-end" }}
                       >
@@ -345,23 +354,24 @@ function App() {
                                 <Tooltip
                                   title={userInfo?.name}
                                   arrow
-                                  placement='top'
+                                  placement="top"
                                 >
                                   <IconButton
                                     sx={{
                                       p: 0,
                                       "&:hover": { color: "#ff7519" },
+                                      mt: 1,
                                     }}
-                                    aria-controls='simple-menu'
-                                    aria-haspopup='true'
-                                    color='black'
+                                    aria-controls="simple-menu"
+                                    aria-haspopup="true"
+                                    color="black"
                                   >
                                     <Link
                                       style={{
                                         color: "black",
                                         textDecoration: "none",
                                       }}
-                                      to='#'
+                                      to="#"
                                     >
                                       <Avatar
                                         onClick={(e) =>
@@ -380,7 +390,7 @@ function App() {
                                   </IconButton>
                                 </Tooltip>
                                 <Menu
-                                  id='simple-menu'
+                                  id="simple-menu"
                                   anchorEl={anchorEl}
                                   keepMounted
                                   open={Boolean(anchorEl)}
@@ -388,14 +398,14 @@ function App() {
                                   MenuListProps={{ onMouseLeave: handleClose }}
                                   style={{ marginTop: "13px" }}
                                 >
-                                  <MenuItem onClick={handleClose} data-id='1'>
+                                  <MenuItem onClick={handleClose} data-id="1">
                                     <Link
                                       style={{
                                         fontSize: "16px",
                                         color: "#263238",
                                         textDecoration: "none",
                                       }}
-                                      to='/profile'
+                                      to="/profile"
                                     >
                                       User Profile
                                     </Link>
@@ -408,7 +418,7 @@ function App() {
                                         color: "#263238",
                                         textDecoration: "none",
                                       }}
-                                      to='/orderhistory'
+                                      to="/orderhistory"
                                     >
                                       OrderHistory
                                     </Link>
@@ -417,12 +427,12 @@ function App() {
                               </Box>
                             </div>
                           ) : (
-                            <Tooltip title='signIn' arrow>
+                            <Tooltip title="signIn" arrow>
                               <IconButton
                                 sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                                color='inherit'
+                                color="inherit"
                               >
-                                <Link style={{ color: "inherit" }} to='/signin'>
+                                <Link style={{ color: "inherit" }} to="/signin">
                                   <Avatar
                                     sx={{
                                       border: "2px solid #fff",
@@ -437,17 +447,47 @@ function App() {
                             </Tooltip>
                           )}
                         </Box>
+
+                        <Box sx={{ display: { xs: "flex" } }}>
+                          <IconButton
+                            x={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                            aria-label="show 4 new mails"
+                            color="inherit"
+                            onClick={handleToggleSidebar}
+                          >
+                            <Badge
+                              badgeContent={notificationlist?.length}
+                              color="warning"
+                            >
+                              <Avatar
+                                sx={{
+                                  border: "2px solid #fff",
+                                  bgcolor: "inherit",
+                                  "&:hover": { color: "#ff7519" },
+                                }}
+                              >
+                                <Tooltip title="Notification" arrow>
+                                  <NotificationsIcon />
+                                </Tooltip>
+                              </Avatar>
+                              <NotificationSidebar
+                                open={open}
+                                onClose={handleToggleSidebar}
+                              />
+                            </Badge>
+                          </IconButton>
+                        </Box>
                         <Box sx={{ display: { xs: "flex" } }}>
                           {userInfo && (
-                            <Tooltip title='Log Out' arrow>
+                            <Tooltip title="Log Out" arrow>
                               <IconButton
                                 sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                                aria-label='show 4 new mails'
-                                color='inherit'
+                                aria-label="show 4 new mails"
+                                color="inherit"
                               >
                                 <Link
                                   style={{ color: "inherit" }}
-                                  to='#signout'
+                                  to="#signout"
                                 >
                                   <Avatar
                                     sx={{
@@ -463,59 +503,6 @@ function App() {
                             </Tooltip>
                           )}
                         </Box>
-                        {/* <Box>
-                          <Tooltip title="Cart" arrow placement="top">
-                            <IconButton
-                              sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                              color="inherit"
-                            >
-                              <Link
-                                style={{
-                                  color: "inherit",
-                                  textDecoration: "none",
-                                }}
-                                to="/cart"
-                              >
-                                {userInfo ? (
-                                  <Avatar
-                                    sx={{
-                                      justifyContent: "center",
-                                      bgcolor: "inherit",
-                                      "&:hover": { color: "#ff7519" },
-                                      display: {},
-                                    }}
-                                  >
-                                    {" "}
-                                    {cartItems.length > 0 && (
-                                      <span className="badge">
-                                        {cartItems.length}
-                                      </span>
-                                    )}
-                                    <ShoppingCartCheckoutIcon />
-                                  </Avatar>
-                                ) : (
-                                  <Box>
-                                    <Avatar
-                                      sx={{
-                                        bgcolor: "inherit",
-                                        "&:hover": { color: "#ff7519" },
-                                        display: "flex",
-                                      }}
-                                    >
-                                      {" "}
-                                      {cartItems.length > 0 && (
-                                        <span className="badge">
-                                          {cartItems.length}
-                                        </span>
-                                      )}
-                                      <ShoppingCartCheckoutIcon />
-                                    </Avatar>
-                                  </Box>
-                                )}
-                              </Link>
-                            </IconButton>
-                          </Tooltip>
-                        </Box> */}
                       </Stack>
                     </Box>
                   </div>
