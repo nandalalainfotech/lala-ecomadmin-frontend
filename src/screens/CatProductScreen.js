@@ -24,6 +24,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import InputLabel from '@mui/material/InputLabel';
 import { DataGrid } from "@mui/x-data-grid";
 import Axios from "axios";
 import { useEffect, useState } from "react";
@@ -73,7 +74,7 @@ import {
   CategoryMasterallLists,
   grandChildCategoryLists,
 } from "../actions/categoryMasterAction";
-import { COMBINATION_SAVE_RESET } from "../constants/catBrandConstant";
+import { CAT_PRODUCT_UPDATE_RESET, COMBINATION_SAVE_RESET } from "../constants/catBrandConstant";
 
 import ProductQuantitiesSreen from "./ProductQuantitiesSreen";
 import ProductShippingScreen from "./ProductShippingScreen";
@@ -88,6 +89,10 @@ import { Autocomplete } from "../../node_modules/@mui/material/index";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 // import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Stack from "@mui/material/Stack";
+import { TaxesList } from "../actions/TaxesAction";
+import { ShipListDetails } from "../actions/ProductShippingAction";
+import { PricingLastListDetails, PricingListDetails } from "../actions/prodAction";
+import { QuantityLastdataDetails, QuantityListDetails } from "../actions/ProductQuantitiesAction";
 
 function CatProductScreen() {
   const {
@@ -128,6 +133,7 @@ function CatProductScreen() {
 
   const FeaturesValueList = useSelector((state) => state.FeaturesValueList);
   const { Featuresvaluedetails } = FeaturesValueList;
+
   const brandReduce = useSelector((state) => state.brandReduce);
   const { brandLists } = brandReduce;
 
@@ -154,6 +160,9 @@ function CatProductScreen() {
   const ComboUpdate = useSelector((state) => state.ComboUpdate);
   const { success: deleteCombo } = ComboUpdate;
 
+  const catalogProdUpdate = useSelector((state) => state.catalogProdUpdate);
+  const { success: updateprod } = catalogProdUpdate;
+
   // const allatt = useSelector((state) => state.allatt);
   // const { attributeValuedetailsall } = allatt;
   // console.log("attributeValuedetailsall", attributeValuedetailsall)
@@ -165,10 +174,52 @@ function CatProductScreen() {
 
   const prodctObj = catProducts?.find((item) => item?._id === ProdId);
 
+  console.log('prodctObj------->>>>', prodctObj);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "test",
   });
+
+
+
+  /************* */
+
+  const QuantityLastList = useSelector((state) => state.QuantityLastList);
+  const { quantitylist } = QuantityLastList;
+
+  let qtydata = []
+  {
+    quantitylist?.map((value) => (
+      qtydata.push(value._id)
+    ))
+  }
+
+  const PriceLastList = useSelector((state) => state.PriceLastList);
+  const { pricinglist } = PriceLastList;
+
+  let pricedata = []
+  {
+    pricinglist?.map((item) => (
+      pricedata.push(item._id)
+    ))
+  }
+
+  const taxesList = useSelector((state) => state.taxesList);
+  const { taxes } = taxesList;
+
+  const QuantityList = useSelector((state) => state.QuantityList);
+  const { quantity } = QuantityList;
+
+  const qunObj = quantity?.find((item) => item?.mprodId === ProdId);
+  const [quantityId, setquantityId] = useState([qunObj?._id])
+
+  const PriceList = useSelector((state) => state.PriceList);
+  const { pricingdetail } = PriceList;
+
+  const pricingObj = pricingdetail?.find((item) => item?.mprodId === ProdId);
+
+  const [priceId, setpriceId] = useState([pricingObj?._id])
 
   // **********************Edit Section********************************
 
@@ -221,16 +272,16 @@ function CatProductScreen() {
 
   const [newtaxincluded, setNewtaxincluded] = useState(prodctObj?.taxincluded);
 
-  // eslint-disable-next-line no-unused-vars
   const [newParentCategory, setNewParentCategory] = useState(prodctObj?.catId);
-  // eslint-disable-next-line no-unused-vars
+
   const [newchildCategory, setNewChildCategory] = useState(
     prodctObj?.catChildId
   );
-  // eslint-disable-next-line no-unused-vars
+
   const [grandchildCategory, setNewgrandchildCategory] = useState(
     prodctObj?.grandchildId
   );
+
   // ************************Edit Form array section*********************************
 
   const [field, setField] = useState(
@@ -266,6 +317,76 @@ function CatProductScreen() {
 
   const addFieldvalue = () => {
     setFieldvalue([...fieldvalue, { ingredients: "" }]);
+  };
+
+  /*********Tax save method ********* */
+
+  const [Prodexclusive, setProdexclusive] = useState();
+  const [Prodinclusive, setProdinclusive] = useState();
+  const [Taxprice, setTaxprice] = useState();
+
+  const taxesrule = (e) => {
+    setTaxprice(e.target.value);
+  };
+
+  const setpercentage = (e) => {
+    const taxper = taxes?.find((x) => x._id === e);
+    let test = (Prodexclusive * (taxper ? taxper.Rate : 0)) / 100;
+    let amt = test + parseInt(Prodexclusive);
+    setProdinclusive(amt);
+  };
+
+  const handleProdexclusive = (e) => {
+    setProdexclusive(e.target.value);
+    const taxper = taxes?.find((x) => x._id === Taxprice);
+
+    let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
+    let amt = test + parseInt(e.target.value);
+    setProdinclusive(amt);
+  }
+
+  /************Tax update method */
+  const [EditProdexclusive, setEditProdexclusive] = useState(prodctObj?.taxexcluded);
+
+  const [EditProdinclusive, setEditProdinclusive] = useState(prodctObj?.taxincluded);
+  const [EditTaxprice, setEditTaxprice] = useState(prodctObj?.taxrule);
+
+  const Edittaxesrule = (e) => {
+    setEditTaxprice(e.target.value);
+  };
+
+  const setEditpercentage = (e) => {
+    const taxper = taxes?.find((x) => x._id === e);
+
+    let test = (EditProdexclusive * (taxper ? taxper.Rate : 0)) / 100;
+    let amt = test + parseInt(EditProdexclusive);
+    setEditProdinclusive(amt);
+  };
+
+  const handleEditProdexclusive = (e) => {
+    setEditProdexclusive(e.target.value);
+    const taxper = taxes?.find((x) => x._id === EditTaxprice);
+
+    let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
+    let amt = test + parseInt(e.target.value);
+    setEditProdinclusive(amt);
+  }
+
+  /****************Category*********** */
+
+  const handleSelectedItemsupdate = (event, nodeId) => {
+
+    const items = nodeId.split("-");
+    let parent = items[0];
+    let child = items[1];
+    let grantChild = items[2];
+
+    if (grantChild) {
+      setCheckedtree(true);
+    }
+    settreeId(parent);
+    setchildId(child);
+    setGrandchildId(grantChild);
   };
 
   // ************************combination*********************************
@@ -536,6 +657,9 @@ function CatProductScreen() {
     if (deleteCombo) {
       dispatch({ type: COMBO_DELETE_RESET });
     }
+    if (updateprod) {
+      dispatch({ type: CAT_PRODUCT_UPDATE_RESET })
+    }
 
     dispatch(catProductList());
     dispatch(FeaturesMasterListDetails());
@@ -550,34 +674,36 @@ function CatProductScreen() {
     dispatch(AttributeValueListDetails());
     dispatch(CombinationListValue());
     dispatch(CombinationChildList());
+    dispatch(TaxesList());
+    dispatch(PricingListDetails());
+    dispatch(QuantityListDetails());
+    dispatch(QuantityLastdataDetails());
+    dispatch(PricingLastListDetails());
     // dispatch(AttributeValueallListDetails())
-    // if (prodctObj) {
-    const fetchBusinesses = async () => {
-      const img = await Axios.get(
-        `/api/uploads/productshow/${prodctObj?._id}`,
-        {
-          // responseType: "blob",
-        }
-      );
-      console.log("img------>>>", img);
+    if (prodctObj) {
+      const fetchBusinesses = async () => {
+        const img = await Axios.get(
+          `/api/uploads/productshow/${prodctObj?._id}`,
+          {
+            // responseType: "blob",
+          }
+        );
 
-      setImage(img.data);
-    };
+        setImage(img.data);
+      };
 
-    const fetchBusines = async () => {
-      const subimg = await Axios.get(
-        `/api/uploads/proshowsub/${prodctObj?._id}`,
-        {}
-      );
-      console.log("subimg--------->>", subimg);
-      setSubImage(subimg.data);
-    };
-    fetchBusines();
-    fetchBusinesses();
-    // }
+      const fetchBusines = async () => {
+        const subimg = await Axios.get(
+          `/api/uploads/proshowsub/${prodctObj?._id}`,
+          {}
+        );
+        setSubImage(subimg.data);
+      };
+      fetchBusines();
+      fetchBusinesses();
+    }
   }, [successcom, deleteCombo]);
   var file = new File([subimg], "name");
-  console.log("file---------->>", file);
 
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
@@ -592,9 +718,9 @@ function CatProductScreen() {
   Your reference code for this product. Allowed special characters: .-_#.
 `;
 
-  const quantity = `
-  How many products should be available for sale?
-`;
+  //   const quantity = `
+  //   How many products should be available for sale?
+  // `;
 
   const price = `
   This is the net sales price for your customers. 
@@ -653,7 +779,6 @@ Not all shops sell new products.
   const [SelectImage, setSelectImage] = useState("");
   const [testImage, settestImage] = useState(null);
   const [testImages, settestImages] = useState(null);
-  console.log("testImage-------->>", testImage);
   const handleCheckedit = (event) => {
     setCheckededit(event.target.checked);
   };
@@ -712,7 +837,47 @@ Not all shops sell new products.
 
   const dispatch = useDispatch();
 
+
+  useEffect(() => {
+    setNewProdname(prodctObj?.prodname),
+      setNewreference(prodctObj?.reference),
+      setNewQuantity(prodctObj?.quantity),
+      setNewtaxexcluded(prodctObj?.taxexcluded),
+      setNewtaxincluded(prodctObj?.taxincluded),
+      // setNewParentCategory(prodctObj?.catId),
+      settreeId(prodctObj?.catId),
+      // setNewChildCategory(prodctObj?.catChildId),
+      setchildId(prodctObj?.catChildId),
+      setGrandchildId(prodctObj?.grandchildId)
+    // setNewgrandchildCategory(prodctObj?.grandchildId)
+    if (prodctObj) {
+      const fetchBusinesses = async () => {
+        const img = await Axios.get(
+          `/api/uploads/productshow/${prodctObj?._id}`,
+          {
+            // responseType: "blob",
+          }
+        );
+
+        setImage(img.data);
+      };
+
+      const fetchBusines = async () => {
+        const subimg = await Axios.get(
+          `/api/uploads/proshowsub/${prodctObj?._id}`,
+          {}
+        );
+        setSubImage(subimg.data);
+      };
+      fetchBusines();
+      fetchBusinesses();
+    }
+  },
+    [prodctObj?.prodname], [prodctObj?.imageId], [prodctObj?.combination]
+  )
+
   const submitHandler = async (e) => {
+
     const formData = new FormData();
     formData.append("image", dropImage);
     formData.append("coverstatus", CoverStatus);
@@ -746,8 +911,9 @@ Not all shops sell new products.
           reference: e.reference,
           combination: combination,
           quantity: e.quantity,
-          taxexcluded: e.taxexcluded,
-          taxincluded: e.taxincluded,
+          taxexcluded: Prodexclusive,
+          taxincluded: Prodinclusive,
+          taxrule: Taxprice,
           catId: parentId,
           catChildId: childId,
           grandchildId: grandchildId,
@@ -765,6 +931,8 @@ Not all shops sell new products.
           width: e.width,
           depth: e.depth,
           weight: e.weight,
+          qtyId: qtydata,
+          priceId: pricedata,
         })
       );
       window.confirm("Product Details Saved SuccessFully!!");
@@ -823,11 +991,17 @@ Not all shops sell new products.
           combination: newcombination,
           reference: newreference,
           quantity: newQuantity,
-          taxexcluded: newtaxexcluded,
-          taxincluded: newtaxincluded,
-          parentId: newParentCategory,
-          childId: newchildCategory,
-          grandchildId: grandchildCategory,
+          taxexcluded: EditProdexclusive,
+          taxincluded: EditProdinclusive,
+          taxrule: EditTaxprice,
+          // parentId: newParentCategory,
+          // childId: newchildCategory,
+          // grandchildId: grandchildCategory,
+          catId: parentId,
+          catChildId: childId,
+          grandchildId: grandchildId,
+          quanId: quantityId,
+          priceId: priceId,
         })
       );
       window.confirm("Brand Details Updated SuccessFully!!");
@@ -842,7 +1016,7 @@ Not all shops sell new products.
     // const formData = new FormData();
     // formData.append("image", item);
     try {
-      const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, {data:item},
+      const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, { data: item },
       );
       console.log("data-------->>", data);
     } catch (err) {
@@ -906,7 +1080,7 @@ Not all shops sell new products.
 
   const [grandchildId, setGrandchildId] = useState("");
 
-  const [checkedtree, setCheckedtree] = useState(false);
+  const [checkedtree, setCheckedtree] = useState();
 
   const handleSelectedItems = (event, nodeId) => {
     const items = nodeId.split("-");
@@ -948,12 +1122,11 @@ Not all shops sell new products.
   // **********************COMINATION SCREEN**************************************
 
   function getnumId(comproducts) {
-    return `${
-      comproducts.row.CombinationId
-        ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
-            ?.prodname
-        : ""
-    }`;
+    return `${comproducts.row.CombinationId
+      ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
+        ?.prodname
+      : ""
+      }`;
   }
   const navigate = useNavigate();
   const editCombination = (obj) => {
@@ -1773,6 +1946,56 @@ Not all shops sell new products.
                             </Typography>
 
                             <>
+                              {prodctObj?.brand ? (
+                                <>
+                                  <Box sx={{ p: 1, m: 1 }}>
+                                    <Box
+                                      sx={{
+                                        display: "flex",
+                                        mt: "10px",
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "700",
+                                        }}
+                                      >
+                                        Brand
+                                      </Typography>
+                                    </Box>
+                                    <Box
+                                      sx={{
+                                        display: "flex",
+                                        mt: "20px",
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <FormControl sx={{ width: "40%" }}>
+                                        <Select
+                                          size="small"
+                                          value={newbrandId}
+                                          onChange={(e) =>
+                                            setNewbrandId(e.target.value)
+                                          }
+                                        >
+                                          {brandLists?.map((item, index) => (
+                                            <MenuItem
+                                              key={index}
+                                              value={item._id}
+                                            >
+                                              {item.name}
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </Box>
+                                  </Box>
+                                </>
+                              ) : (
+                                <></>
+                              )}
                               {brand === 1 ? (
                                 <>
                                   <Box sx={{ p: 1, m: 1 }}>
@@ -1971,7 +2194,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip title={quantity}>
+                              <Tooltip >
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -2043,7 +2266,6 @@ Not all shops sell new products.
                               sx={{
                                 display: "flex",
                                 mt: "10px",
-
                                 ml: -15,
                               }}
                             >
@@ -2051,10 +2273,8 @@ Not all shops sell new products.
                                 size="small"
                                 label="Tax excluded"
                                 id="outlined-start-adornment"
-                                value={newtaxexcluded}
-                                onChange={(e) =>
-                                  setNewtaxexcluded(e.target.value)
-                                }
+                                value={EditProdexclusive}
+                                onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
                                 InputProps={{
                                   style: { fontSize: 13 },
@@ -2067,12 +2287,32 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
+                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
+                                <InputLabel id="demo-simple-select-label">Tax Rule</InputLabel>
+                                <Select
+                                  labelId="demo-simple-select-label"
+                                  size='small'
+                                  label="Tax Rule"
+                                  value={EditTaxprice}
+                                  onChange={Edittaxesrule}
+                                >
+                                  {taxes?.map((item, index) => (
+                                    <MenuItem
+                                      key={index}
+                                      value={item._id}
+                                      onClick={() => setEditpercentage(item._id)}
+                                    >
+                                      {item.Name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
                               <TextField
                                 size="small"
                                 label="Tax included"
-                                value={newtaxincluded}
+                                value={EditProdinclusive}
                                 onChange={(e) =>
-                                  setNewtaxincluded(e.target.value)
+                                  setEditProdinclusive(e.target.value)
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
@@ -2088,23 +2328,7 @@ Not all shops sell new products.
                                   fontSize: 12,
                                 }}
                               />
-                              <TextField
-                                size="small"
-                                // select
-                                label={
-                                  <Typography sx={{ fontSize: 12 }}>
-                                    Tax Rule
-                                  </Typography>
-                                }
-                                sx={{ m: 1, width: "100%" }}
-                                id="margin-normal"
-                                margin="normal"
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              >
-                                <MenuItem>FR Taux standard (20%)</MenuItem>
-                              </TextField>{" "}
+                              {" "}
                             </Box>
                           </Grid>
                           <Grid item xs={8}>
@@ -2127,8 +2351,7 @@ Not all shops sell new products.
                               defaultCollapseIcon={<ExpandMoreIcon />}
                               defaultExpanded={["root"]}
                               defaultExpandIcon={<ChevronRightIcon />}
-                              // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItemss}
+                              onNodeSelect={handleSelectedItemsupdate}
                               sx={{
                                 border: "1px solid black",
                                 p: 1,
@@ -2141,9 +2364,182 @@ Not all shops sell new products.
                                 },
                               }}
                             >
-                              {categorymasterallList?.map((item) =>
-                                renderTree(item)
-                              )}
+                              {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                              {/* Update Method */}
+                              {categorymasterallList?.map((item) => (
+                                <>
+                                  <TreeItem
+                                    key={item._id}
+                                    nodeId={item._id}
+                                    label={
+                                      newParentCategory === item._id ? (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              sx={{ mt: -1 }}
+                                              name='file'
+                                              defaultChecked={true}
+                                            // checked={checkedtreeupdate}
+                                            // checked={true}
+                                            // onChange={handleChangecheckbox}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      ) : (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              sx={{ mt: -1 }}
+                                              size='small'
+                                              name='file'
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      )
+                                    }
+                                  >
+                                    {item.children
+                                      ?.filter((childItem) => {
+                                        return childItem.parent === item._id;
+                                      })
+                                      ?.map((childItem) => (
+                                        <>
+                                          <TreeItem
+                                            key={item._id}
+                                            nodeId={
+                                              `${item._id}` +
+                                              "-" +
+                                              `${childItem._id}`
+                                            }
+                                            label={
+                                              newchildCategory ===
+                                                childItem._id ? (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      name='file'
+                                                      defaultChecked={true}
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              ) : (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      size='small'
+                                                      sx={{ mt: -1 }}
+                                                      name='file'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              )
+                                            }
+                                          >
+                                            {childItem.children
+                                              ?.filter((grandItem) => {
+                                                return (
+                                                  grandItem.parent ===
+                                                  childItem._id
+                                                );
+                                              })
+                                              ?.map((grandItem) => (
+                                                <>
+                                                  <TreeItem
+                                                    key={item._id}
+                                                    nodeId={
+                                                      `${item._id}` +
+                                                      "-" +
+                                                      `${childItem._id}` +
+                                                      "-" +
+                                                      `${grandItem._id}`
+                                                    }
+                                                    label={
+                                                      grandchildCategory ===
+                                                        grandItem._id ? (
+                                                        <FormControlLabel
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              name='file'
+                                                              size='small'
+                                                              defaultChecked={true}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      ) : (
+                                                        <FormControlLabel
+                                                          control={
+                                                            <Checkbox
+                                                              size='small '
+                                                              sx={{ mt: -1 }}
+                                                              name='file'
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      )
+                                                    }
+                                                  ></TreeItem>
+                                                </>
+                                              ))}
+                                          </TreeItem>
+                                        </>
+                                      ))}
+                                  </TreeItem>
+                                </>
+                              ))}
                             </TreeView>
                           </Grid>
                           <Typography sx={{ mt: 2 }}>
@@ -2343,7 +2739,7 @@ Not all shops sell new products.
                             rowHeight={64}
                             pageSize={10}
                             rowsPerPageOptions={[10]}
-                            // checkboxSelection
+                          // checkboxSelection
                           />
 
                           <Button
@@ -3118,8 +3514,8 @@ Not all shops sell new products.
                                                   newfeaturestypevalue[index]
                                                     ?.id
                                                     ? newfeaturestypevalue[
-                                                        index
-                                                      ]?.id
+                                                      index
+                                                    ]?.id
                                                     : id
                                                 }
                                                 // ref={register()}
@@ -3187,14 +3583,14 @@ Not all shops sell new products.
                                 }}
                                 variant="outlined"
                                 startIcon={<AddCircleIcon />}
-                                onClick={() => addFieldvalue(1)}
+                                // onClick={() => addFieldvalue(1)}
+                                onClick={() => setBrand(1)}
                               >
                                 Add a brand
                               </Button>
                             </Typography>
-
                             <>
-                              {brand === 1 ? (
+                              {prodctObj?.brand ? (
                                 <>
                                   <Box sx={{ p: 1, m: 1 }}>
                                     <Box
@@ -3244,6 +3640,51 @@ Not all shops sell new products.
                               ) : (
                                 <></>
                               )}
+                              {brand === 1 ? (<>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        size="small"
+                                        value={newbrandId}
+                                        onChange={(e) =>
+                                          setNewbrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box></>) : (<></>)}
                             </>
 
                             <Typography
@@ -3392,7 +3833,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip title={quantity}>
+                              <Tooltip >
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -3464,7 +3905,6 @@ Not all shops sell new products.
                               sx={{
                                 display: "flex",
                                 mt: "10px",
-
                                 ml: -15,
                               }}
                             >
@@ -3472,10 +3912,8 @@ Not all shops sell new products.
                                 size="small"
                                 label="Tax excluded"
                                 id="outlined-start-adornment"
-                                value={newtaxexcluded}
-                                onChange={(e) =>
-                                  setNewtaxexcluded(e.target.value)
-                                }
+                                value={EditProdexclusive}
+                                onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
                                 InputProps={{
                                   style: { fontSize: 13 },
@@ -3488,12 +3926,32 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
+                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
+                                <InputLabel id="demo-simple-select-label">Tax Rule</InputLabel>
+                                <Select
+                                  labelId="demo-simple-select-label"
+                                  size='small'
+                                  label="Tax Rule"
+                                  value={EditTaxprice}
+                                  onChange={Edittaxesrule}
+                                >
+                                  {taxes?.map((item, index) => (
+                                    <MenuItem
+                                      key={index}
+                                      value={item._id}
+                                      onClick={() => setEditpercentage(item._id)}
+                                    >
+                                      {item.Name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
                               <TextField
                                 size="small"
                                 label="Tax included"
-                                value={newtaxincluded}
+                                value={EditProdinclusive}
                                 onChange={(e) =>
-                                  setNewtaxincluded(e.target.value)
+                                  setEditProdinclusive(e.target.value)
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
@@ -3509,23 +3967,7 @@ Not all shops sell new products.
                                   fontSize: 12,
                                 }}
                               />
-                              <TextField
-                                size="small"
-                                // select
-                                label={
-                                  <Typography sx={{ fontSize: 12 }}>
-                                    Tax Rule
-                                  </Typography>
-                                }
-                                sx={{ m: 1, width: "100%" }}
-                                id="margin-normal"
-                                margin="normal"
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              >
-                                <MenuItem>FR Taux standard (20%)</MenuItem>
-                              </TextField>{" "}
+                              {" "}
                             </Box>
                           </Grid>
                           <Grid item xs={8}>
@@ -3548,8 +3990,7 @@ Not all shops sell new products.
                               defaultCollapseIcon={<ExpandMoreIcon />}
                               defaultExpanded={["root"]}
                               defaultExpandIcon={<ChevronRightIcon />}
-                              // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItemss}
+                              onNodeSelect={handleSelectedItemsupdate}
                               sx={{
                                 border: "1px solid black",
                                 p: 1,
@@ -3562,9 +4003,182 @@ Not all shops sell new products.
                                 },
                               }}
                             >
-                              {categorymasterallList?.map((item) =>
-                                renderTree(item)
-                              )}
+                              {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                              {/* Update Method */}
+                              {categorymasterallList?.map((item) => (
+                                <>
+                                  <TreeItem
+                                    key={item._id}
+                                    nodeId={item._id}
+                                    label={
+                                      newParentCategory === item._id ? (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              sx={{ mt: -1 }}
+                                              name='file'
+                                              defaultChecked={true}
+                                            // checked={checkedtreeupdate}
+                                            // checked={true}
+                                            // onChange={handleChangecheckbox}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      ) : (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              sx={{ mt: -1 }}
+                                              size='small'
+                                              name='file'
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      )
+                                    }
+                                  >
+                                    {item.children
+                                      ?.filter((childItem) => {
+                                        return childItem.parent === item._id;
+                                      })
+                                      ?.map((childItem) => (
+                                        <>
+                                          <TreeItem
+                                            key={item._id}
+                                            nodeId={
+                                              `${item._id}` +
+                                              "-" +
+                                              `${childItem._id}`
+                                            }
+                                            label={
+                                              newchildCategory ===
+                                                childItem._id ? (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      name='file'
+                                                      defaultChecked={true}
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              ) : (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      size='small'
+                                                      sx={{ mt: -1 }}
+                                                      name='file'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              )
+                                            }
+                                          >
+                                            {childItem.children
+                                              ?.filter((grandItem) => {
+                                                return (
+                                                  grandItem.parent ===
+                                                  childItem._id
+                                                );
+                                              })
+                                              ?.map((grandItem) => (
+                                                <>
+                                                  <TreeItem
+                                                    key={item._id}
+                                                    nodeId={
+                                                      `${item._id}` +
+                                                      "-" +
+                                                      `${childItem._id}` +
+                                                      "-" +
+                                                      `${grandItem._id}`
+                                                    }
+                                                    label={
+                                                      grandchildCategory ===
+                                                        grandItem._id ? (
+                                                        <FormControlLabel
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              name='file'
+                                                              size='small'
+                                                              defaultChecked={true}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      ) : (
+                                                        <FormControlLabel
+                                                          control={
+                                                            <Checkbox
+                                                              size='small '
+                                                              sx={{ mt: -1 }}
+                                                              name='file'
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      )
+                                                    }
+                                                  ></TreeItem>
+                                                </>
+                                              ))}
+                                          </TreeItem>
+                                        </>
+                                      ))}
+                                  </TreeItem>
+                                </>
+                              ))}
                             </TreeView>
                           </Grid>
                           <Typography sx={{ mt: 2 }}>
@@ -3691,242 +4305,6 @@ Not all shops sell new products.
                   )}
                   {tabIndex === 4 && <SeoScreen />}
                   {tabIndex === 5 && <OptionsScreen />}
-                  {/* {tabIndex === 5 && (
-                    <Box>
-                      <Grid container>
-                        <Grid item xs={12}>
-                          <Typography
-                            sx={{ fontSize: "20px", fontWeight: "bold" }}
-                          >
-                            Visibility222222222222222222222
-                          </Typography>
-
-                          <Typography sx={{ mt: "20px" }}>
-                            Where do you want your product to appear?
-                          </Typography>
-
-                          <Typography sx={{ width: "40%", mt: "20px" }}>
-                            <TextField
-                              size='small'
-                              // select
-                              fullWidth
-                              id='margin-normal'
-                              margin='normal'
-                            >
-                              <MenuItem>Everywhere</MenuItem>
-                            </TextField>
-                          </Typography>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "100%",
-                            }}
-                          >
-                            <Typography sx={{ mt: "20px", width: "100%" }}>
-                              <Checkbox
-                                value='newcheck'
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Available for order
-                            </Typography>
-
-                            <Typography
-                              sx={{
-                                mt: "20px",
-                                wordWrap: "break-word",
-                                width: "100%",
-                                fontSize: "15px",
-                              }}
-                            >
-                              <Checkbox
-                                value='newcheck'
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Web only (not sold in your retail store)
-                            </Typography>
-                          </Box>
-
-                          <Typography sx={{ mt: "30px" }}>
-                            <Typography>Tags</Typography>
-                            <TextField
-                              size='small'
-                              sx={{ width: "70%" }}
-                              // select
-                              fullWidth
-                              id='margin-normal'
-                              margin='normal'
-                              InputProps={{
-                                style: { fontSize: 13 },
-                              }}
-                            ></TextField>
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: "20px",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Condition & References
-                          </Typography>
-
-                          <Typography sx={{ mt: "10px" }}>
-                            Condition
-                            <Tooltip title={condition}>
-                              <InfoIcon />
-                            </Tooltip>
-                          </Typography>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "100%",
-                            }}
-                          >
-                            <Typography sx={{ mt: "10px", width: "100%" }}>
-                              <TextField
-                                size='small'
-                                fullWidth
-                                id='margin-normal'
-                                margin='normal'
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              ></TextField>
-                            </Typography>
-
-                            <Typography
-                              sx={{
-                                mt: "20px",
-                                wordWrap: "break-word",
-                                width: "100%",
-                                fontSize: "15px",
-                              }}
-                            >
-                              <Checkbox
-                                value='newcheck'
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Display condition on product page
-                            </Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                              mt: "30px",
-                            }}
-                          >
-                            <Typography>ISBN</Typography>
-
-                            <Typography>EAN-13 or JAN barcode</Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                            }}
-                          >
-                            <Typography>
-                              <TextField
-                                size='small'
-                                fullWidth
-                                id='margin-normal'
-                                margin='normal'
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              ></TextField>
-                            </Typography>
-
-                            <Typography>
-                              <TextField
-                                size='small'
-                                fullWidth
-                                id='margin-normal'
-                                margin='normal'
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              ></TextField>
-                            </Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                              mt: "30px",
-                            }}
-                          >
-                            <Typography>UPC barcode</Typography>
-
-                            <Typography>MPN</Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                            }}
-                          >
-                            <Typography>
-                              <TextField
-                                size='small'
-                                fullWidth
-                                id='margin-normal'
-                                margin='normal'
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              ></TextField>
-                            </Typography>
-
-                            <Typography>
-                              <TextField
-                                size='small'
-                                fullWidth
-                                id='margin-normal'
-                                margin='normal'
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              ></TextField>
-                            </Typography>
-                          </Box>
-
-                          <Typography>
-                            <Button
-                              type='submit'
-                              sx={{ mt: "20px" }}
-                              variant='contained'
-                            >
-                              Save
-                            </Button>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )} */}
                 </Box>
               )}
             </Box>
@@ -4323,18 +4701,16 @@ Not all shops sell new products.
                                               size="small"
                                               // Featuresvaluedetails
                                               name={index}
-                                              // id={index}
+                                              id={index}
                                               // defaultValue={featurestype}
-                                              // defaultValue={featurestype}
-                                              // name={index}
-                                              // ref={register()}
+                                              ref={register()}
                                               onChange={(e) =>
                                                 HandleChange(e, index)
                                               }
                                             >
-                                              {/* <option>
-
-                                              </option> */}
+                                              <option value="">
+                                                Select your Future
+                                              </option>
                                               {Featuresdetails?.map(
                                                 (Feature) => (
                                                   <option
@@ -4347,24 +4723,25 @@ Not all shops sell new products.
                                               )}
                                             </Select>
                                           </FormControl>
-
                                           <FormControl sx={{ width: "30%" }}>
                                             <Select
                                               size="small"
                                               native
                                               // defaultValue={featurestypevalue}
                                               name={index}
-                                              // id={index}
+                                              id={index}
                                               ref={register()}
-                                              onChange={handleFeatureValue}
-                                              // onClick={() => removeName(index)}
+                                              onChange={(e) =>
+                                                handleFeatureValue(e, index)
+                                              }
+                                            // onClick={() => removeName(index)}
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
                                                   return (
                                                     // Feature.featuretype=== featurestype[newadd]?.id && index===featurestype[newadd]?.index
                                                     Feature.featuretype ===
-                                                    featurestype[index]
+                                                    featurestype[index]?.id
                                                   );
                                                 }
                                               )?.map((Feature) => (
@@ -4383,9 +4760,6 @@ Not all shops sell new products.
                                             ref={register()}
                                             id="outlined-size-small"
                                             size="small"
-                                            InputProps={{
-                                              style: { fontSize: 13 },
-                                            }}
                                           />
                                           <IconButton
                                             type="button"
@@ -4619,7 +4993,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip title={quantity}>
+                              <Tooltip >
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -4690,7 +5064,6 @@ Not all shops sell new products.
                               sx={{
                                 display: "flex",
                                 mt: "10px",
-
                                 ml: -15,
                               }}
                             >
@@ -4698,7 +5071,9 @@ Not all shops sell new products.
                                 size="small"
                                 label="Tax excluded"
                                 id="outlined-start-adornment"
-                                {...register("taxexcluded", { required: true })}
+                                value={Prodexclusive}
+                                onChange={handleProdexclusive}
+                                // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
                                 InputProps={{
                                   style: { fontSize: 13 },
@@ -4711,11 +5086,32 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-
+                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
+                                <InputLabel id="demo-select-small-label">Tax Rule</InputLabel>
+                                <Select
+                                  labelId="demo-select-small-label"
+                                  size='small'
+                                  label="Tax Rule"
+                                  value={Taxprice}
+                                  onChange={taxesrule}
+                                >
+                                  {taxes?.map((item, index) => (
+                                    <MenuItem
+                                      key={index}
+                                      value={item._id}
+                                      onClick={() => setpercentage(item._id)}
+                                    >
+                                      {item.Name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
                               <TextField
                                 size="small"
                                 label="Tax included"
-                                {...register("taxincluded", { required: true })}
+                                // {...register("taxincluded", { required: true })}
+                                value={Prodinclusive}
+                                onChange={(e) => setProdinclusive(e.target.value)}
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
                                 InputProps={{
@@ -4729,23 +5125,7 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <TextField
-                                size="small"
-                                // select
-                                label={
-                                  <Typography sx={{ fontSize: 12 }}>
-                                    Tax Rule
-                                  </Typography>
-                                }
-                                id="margin-normal"
-                                margin="normal"
-                                sx={{ m: 1, width: "100%" }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              >
-                                <MenuItem>FR Taux standard (20%)</MenuItem>
-                              </TextField>
+
                             </Box>
                           </Grid>
 
@@ -4770,7 +5150,7 @@ Not all shops sell new products.
                               defaultExpanded={["root"]}
                               defaultExpandIcon={<ChevronRightIcon />}
                               // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItemss}
+                              onNodeSelect={handleSelectedItems}
                               sx={{
                                 border: "1px solid black",
                                 p: 1,
@@ -4783,9 +5163,187 @@ Not all shops sell new products.
                                 },
                               }}
                             >
-                              {categorymasterallList?.map((item) =>
-                                renderTree(item)
-                              )}
+                              {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                              {categorymasterallList?.map((item) => (
+                                <>
+                                  <TreeItem
+                                    key={item._id}
+                                    nodeId={item._id}
+                                    label={
+                                      parentId === item._id ? (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              sx={{ mt: -1 }}
+                                              name='file'
+                                              checked={checkedtree}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      ) : (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              name='file'
+                                              sx={{ mt: -1 }}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      )
+                                    }
+                                  >
+                                    {item.children
+                                      ?.filter((childItem) => {
+                                        return childItem.parent === item._id;
+                                      })
+                                      ?.map((childItem) => (
+                                        <>
+                                          <TreeItem
+                                            key={item._id}
+                                            nodeId={
+                                              `${item._id}` +
+                                              "-" +
+                                              `${childItem._id}`
+                                            }
+                                            label={
+                                              childId === childItem._id ? (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                      name='file'
+                                                      checked={checkedtree}
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              ) : (
+                                                <FormControlLabel
+                                                  sx={{ fontSize: "12px" }}
+                                                  control={
+                                                    <Checkbox
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                      name='file'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              )
+                                            }
+                                          >
+                                            {childItem.children
+                                              ?.filter((grandItem) => {
+                                                return (
+                                                  grandItem.parent ===
+                                                  childItem._id
+                                                );
+                                              })
+                                              ?.map((grandItem) => (
+                                                <>
+                                                  <TreeItem
+                                                    key={item._id}
+                                                    nodeId={
+                                                      `${item._id}` +
+                                                      "-" +
+                                                      `${childItem._id}` +
+                                                      "-" +
+                                                      `${grandItem._id}`
+                                                    }
+                                                    label={
+                                                      grandchildId ===
+                                                        grandItem._id ? (
+                                                        <FormControlLabel
+                                                          sx={{
+                                                            fontSize: "12px",
+                                                          }}
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              size='small'
+                                                              name='file'
+                                                              checked={
+                                                                checkedtree
+                                                              }
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      ) : (
+                                                        <FormControlLabel
+                                                          sx={{
+                                                            fontSize: "12px",
+                                                          }}
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              size='small'
+                                                              name='file'
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      )
+                                                    }
+                                                  ></TreeItem>
+                                                </>
+                                              ))}
+                                          </TreeItem>
+                                        </>
+                                      ))}
+                                  </TreeItem>
+                                </>
+                              ))}
                             </TreeView>
                           </Grid>
                           <Typography
@@ -4906,7 +5464,7 @@ Not all shops sell new products.
                               rowHeight={64}
                               pageSize={10}
                               rowsPerPageOptions={[10]}
-                              // checkboxSelection
+                            // checkboxSelection
                             />
                             <Box>
                               <Dialog
@@ -4928,8 +5486,8 @@ Not all shops sell new products.
                                     component="img"
                                     // height="200"
                                     image={ComnewImg}
-                                    // alt={"subimgnew.filename"}
-                                    // onMouseOver={handleChangeimage}
+                                  // alt={"subimgnew.filename"}
+                                  // onMouseOver={handleChangeimage}
                                   />
                                 </Box>
                               </Dialog>
@@ -5441,7 +5999,7 @@ Not all shops sell new products.
                                               onChange={(e) =>
                                                 handleFeatureValue(e, index)
                                               }
-                                              // onClick={() => removeName(index)}
+                                            // onClick={() => removeName(index)}
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
@@ -5700,7 +6258,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip title={quantity}>
+                              <Tooltip >
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -5771,7 +6329,6 @@ Not all shops sell new products.
                               sx={{
                                 display: "flex",
                                 mt: "10px",
-
                                 ml: -15,
                               }}
                             >
@@ -5779,7 +6336,9 @@ Not all shops sell new products.
                                 size="small"
                                 label="Tax excluded"
                                 id="outlined-start-adornment"
-                                {...register("taxexcluded", { required: true })}
+                                value={Prodexclusive}
+                                onChange={handleProdexclusive}
+                                // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
                                 InputProps={{
                                   style: { fontSize: 13 },
@@ -5792,11 +6351,32 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-
+                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
+                                <InputLabel id="demo-select-small-label">Tax Rule</InputLabel>
+                                <Select
+                                  labelId="demo-select-small-label"
+                                  size='small'
+                                  label="Tax Rule"
+                                  value={Taxprice}
+                                  onChange={taxesrule}
+                                >
+                                  {taxes?.map((item, index) => (
+                                    <MenuItem
+                                      key={index}
+                                      value={item._id}
+                                      onClick={() => setpercentage(item._id)}
+                                    >
+                                      {item.Name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
                               <TextField
                                 size="small"
                                 label="Tax included"
-                                {...register("taxincluded", { required: true })}
+                                // {...register("taxincluded", { required: true })}
+                                value={Prodinclusive}
+                                onChange={(e) => setProdinclusive(e.target.value)}
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
                                 InputProps={{
@@ -5810,23 +6390,7 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                // select
-                                label={
-                                  <Typography sx={{ fontSize: 12 }}>
-                                    Tax Rule
-                                  </Typography>
-                                }
-                                id="margin-normal"
-                                margin="normal"
-                                sx={{ m: 1, width: "100%" }}
-                              >
-                                <MenuItem>FR Taux standard (20%)</MenuItem>
-                              </TextField>
+
                             </Box>
                           </Grid>
 
@@ -5851,7 +6415,7 @@ Not all shops sell new products.
                               defaultExpanded={["root"]}
                               defaultExpandIcon={<ChevronRightIcon />}
                               // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItemss}
+                              onNodeSelect={handleSelectedItems}
                               sx={{
                                 border: "1px solid black",
                                 p: 1,
@@ -5864,9 +6428,187 @@ Not all shops sell new products.
                                 },
                               }}
                             >
-                              {categorymasterallList?.map((item) =>
-                                renderTree(item)
-                              )}
+                              {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                              {categorymasterallList?.map((item) => (
+                                <>
+                                  <TreeItem
+                                    key={item._id}
+                                    nodeId={item._id}
+                                    label={
+                                      parentId === item._id ? (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              sx={{ mt: -1 }}
+                                              name='file'
+                                              checked={checkedtree}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      ) : (
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox
+                                              size='small'
+                                              name='file'
+                                              sx={{ mt: -1 }}
+                                            />
+                                          }
+                                          label={
+                                            <Typography sx={{ fontSize: 12 }}>
+                                              {item.name}
+                                            </Typography>
+                                          }
+                                          key={item._id}
+                                        />
+                                      )
+                                    }
+                                  >
+                                    {item.children
+                                      ?.filter((childItem) => {
+                                        return childItem.parent === item._id;
+                                      })
+                                      ?.map((childItem) => (
+                                        <>
+                                          <TreeItem
+                                            key={item._id}
+                                            nodeId={
+                                              `${item._id}` +
+                                              "-" +
+                                              `${childItem._id}`
+                                            }
+                                            label={
+                                              childId === childItem._id ? (
+                                                <FormControlLabel
+                                                  control={
+                                                    <Checkbox
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                      name='file'
+                                                      checked={checkedtree}
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              ) : (
+                                                <FormControlLabel
+                                                  sx={{ fontSize: "12px" }}
+                                                  control={
+                                                    <Checkbox
+                                                      sx={{ mt: -1 }}
+                                                      size='small'
+                                                      name='file'
+                                                    />
+                                                  }
+                                                  label={
+                                                    <Typography
+                                                      sx={{ fontSize: 12 }}
+                                                    >
+                                                      {childItem.name}
+                                                    </Typography>
+                                                  }
+                                                  key={childItem._id}
+                                                />
+                                              )
+                                            }
+                                          >
+                                            {childItem.children
+                                              ?.filter((grandItem) => {
+                                                return (
+                                                  grandItem.parent ===
+                                                  childItem._id
+                                                );
+                                              })
+                                              ?.map((grandItem) => (
+                                                <>
+                                                  <TreeItem
+                                                    key={item._id}
+                                                    nodeId={
+                                                      `${item._id}` +
+                                                      "-" +
+                                                      `${childItem._id}` +
+                                                      "-" +
+                                                      `${grandItem._id}`
+                                                    }
+                                                    label={
+                                                      grandchildId ===
+                                                        grandItem._id ? (
+                                                        <FormControlLabel
+                                                          sx={{
+                                                            fontSize: "12px",
+                                                          }}
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              size='small'
+                                                              name='file'
+                                                              checked={
+                                                                checkedtree
+                                                              }
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      ) : (
+                                                        <FormControlLabel
+                                                          sx={{
+                                                            fontSize: "12px",
+                                                          }}
+                                                          control={
+                                                            <Checkbox
+                                                              sx={{ mt: -1 }}
+                                                              size='small'
+                                                              name='file'
+                                                            // onChange={handleChange}
+                                                            />
+                                                          }
+                                                          label={
+                                                            <Typography
+                                                              sx={{
+                                                                fontSize: 12,
+                                                              }}
+                                                            >
+                                                              {grandItem.name}
+                                                            </Typography>
+                                                          }
+                                                          key={grandItem._id}
+                                                        />
+                                                      )
+                                                    }
+                                                  ></TreeItem>
+                                                </>
+                                              ))}
+                                          </TreeItem>
+                                        </>
+                                      ))}
+                                  </TreeItem>
+                                </>
+                              ))}
                             </TreeView>
                           </Grid>
                           <Typography

@@ -247,12 +247,14 @@ import {
 } from "./reducers/PayReducer";
 import { productEnquiryListReducer } from "./reducers/prodEnquiryReducer";
 import {
+  PriceLastListReducer,
   PriceListReducer,
   PricingDetailsReducer,
   PricingUpdateReducer,
 } from "./reducers/prodReducer";
 import {
   QuantitiesSaveReducer,
+  QuantityLastListReducer,
   QuantityListReducer,
   QuantityUpdateReducer,
 } from "./reducers/ProductQtyReducer";
@@ -621,6 +623,8 @@ const reducer = combineReducers({
   allatt: AttributeValueallListReducer,
   updatedatagrid: UpdatedatagridReducer,
   statusDlete: StatusDeleteReducer,
+  QuantityLastList: QuantityLastListReducer,
+  PriceLastList: PriceLastListReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

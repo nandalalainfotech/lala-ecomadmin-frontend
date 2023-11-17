@@ -1,5 +1,8 @@
 import {
   PRODUCT_QUANTITIES_FAIL,
+  PRODUCT_QUANTITIES_LAST_LIST_FAIL,
+  PRODUCT_QUANTITIES_LAST_LIST_REQUEST,
+  PRODUCT_QUANTITIES_LAST_LIST_SUCCESS,
   PRODUCT_QUANTITIES_LIST_FAIL,
   PRODUCT_QUANTITIES_LIST_REQUEST,
   PRODUCT_QUANTITIES_LIST_SUCCESS,
@@ -55,6 +58,25 @@ export const QuantityListReducer = (
         quantity: action.payload,
       };
     case PRODUCT_QUANTITIES_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const QuantityLastListReducer = (
+  state = { loading: true, quantitylist: [] },
+  action,
+) => {
+  switch (action.type) {
+    case PRODUCT_QUANTITIES_LAST_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_QUANTITIES_LAST_LIST_SUCCESS:
+      return {
+        loading: false,
+        quantitylist: action.payload,
+      };
+    case PRODUCT_QUANTITIES_LAST_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
