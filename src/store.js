@@ -144,6 +144,7 @@ import {
   subCategoryListReducer,
 } from "./reducers/categoryReducers";
 import {
+  cataloglastProdReducer,
   catalogProdReducer,
   catalogProdUpdateReducer,
   catalogProdViewReducer,
@@ -247,6 +248,7 @@ import {
 } from "./reducers/PayReducer";
 import { enquiryDeleteReducer, notificationClearallReducer, notificationDeleteReducer, productEnquiryListReducer, productNotificationListReducer } from "./reducers/prodEnquiryReducer";
 import {
+  PriceFindOneListReducer,
   PriceLastListReducer,
   PriceListReducer,
   PricingDetailsReducer,
@@ -254,6 +256,7 @@ import {
 } from "./reducers/prodReducer";
 import {
   QuantitiesSaveReducer,
+  QuantityFindOneReducer,
   QuantityLastListReducer,
   QuantityListReducer,
   QuantityUpdateReducer,
@@ -629,6 +632,9 @@ const reducer = combineReducers({
   statusDlete: StatusDeleteReducer,
   QuantityLastList: QuantityLastListReducer,
   PriceLastList: PriceLastListReducer,
+  QuantityFindOne: QuantityFindOneReducer,
+  PriceFindOneList: PriceFindOneListReducer,
+  cataloglastProd: cataloglastProdReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

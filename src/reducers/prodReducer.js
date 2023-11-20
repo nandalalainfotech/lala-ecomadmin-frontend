@@ -1,5 +1,8 @@
 import {
   PRICING_DETAILS_FAIL,
+  PRICING_DETAILS_FINDONE_FAIL,
+  PRICING_DETAILS_FINDONE_REQUEST,
+  PRICING_DETAILS_FINDONE_SUCCESS,
   PRICING_DETAILS_LAST_LIST_FAIL,
   PRICING_DETAILS_LAST_LIST_REQUEST,
   PRICING_DETAILS_LAST_LIST_SUCCESS,
@@ -78,6 +81,25 @@ export const PriceLastListReducer = (
         pricinglist: action.payload,
       };
     case PRICING_DETAILS_LAST_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const PriceFindOneListReducer = (
+  state = { loading: true, pricingOnelist: [] },
+  action,
+) => {
+  switch (action.type) {
+    case PRICING_DETAILS_FINDONE_REQUEST:
+      return { loading: true };
+    case PRICING_DETAILS_FINDONE_SUCCESS:
+      return {
+        loading: false,
+        pricingOnelist: action.payload,
+      };
+    case PRICING_DETAILS_FINDONE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
