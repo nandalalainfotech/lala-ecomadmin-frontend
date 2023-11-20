@@ -19,12 +19,12 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 // import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from '@mui/material/InputLabel';
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import InputLabel from '@mui/material/InputLabel';
 import { DataGrid } from "@mui/x-data-grid";
 import Axios from "axios";
 import { useEffect, useState } from "react";
@@ -39,13 +39,13 @@ import {
 } from "../actions/AttributeActions";
 import { brandList } from "../actions/brandAction";
 import {
-  catProductList,
   CombinationChildList,
   CombinationListValue,
+  catProductList,
   saveCatologProduct,
   saveCombination,
   updateCatProduct,
-  updateCatStock,
+  updateCatStock
 } from "../actions/catProductAction";
 DataGrid;
 
@@ -68,31 +68,29 @@ import { Link, useParams } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import { makeStyles } from "../../node_modules/@material-ui/styles/index";
 import {
-  CategoryChildallLists,
   CategoryChildNewLists,
-  CategorygrandChildNewLists,
+  CategoryChildallLists,
   CategoryMasterallLists,
+  CategorygrandChildNewLists,
   grandChildCategoryLists,
 } from "../actions/categoryMasterAction";
 import { CAT_PRODUCT_UPDATE_RESET, COMBINATION_SAVE_RESET } from "../constants/catBrandConstant";
 
-import ProductQuantitiesSreen from "./ProductQuantitiesSreen";
-import ProductShippingScreen from "./ProductShippingScreen";
-import SeoScreen from "./SeoScreen";
-import ProdPricingScreen from "./ProdPricingScreen";
 import { useNavigate } from "react-router-dom";
+import { Autocomplete } from "../../node_modules/@mui/material/index";
 import { CombotaxDetails, deleteCombolist } from "../actions/ComboAction";
 import { COMBO_DELETE_RESET } from "../constants/ComboConstants";
 import OptionsScreen from "./OptionsScreen";
-import { Autocomplete } from "../../node_modules/@mui/material/index";
+import ProdPricingScreen from "./ProdPricingScreen";
+import ProductQuantitiesSreen from "./ProductQuantitiesSreen";
+import ProductShippingScreen from "./ProductShippingScreen";
+import SeoScreen from "./SeoScreen";
 // import ListItemText from "@mui/material/ListItemText";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 // import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import Stack from "@mui/material/Stack";
+import { QuantityLastdataDetails, QuantityListDetails, QuantityfindOneaDetails } from "../actions/ProductQuantitiesAction";
 import { TaxesList } from "../actions/TaxesAction";
-import { ShipListDetails } from "../actions/ProductShippingAction";
-import { PricingLastListDetails, PricingListDetails } from "../actions/prodAction";
-import { QuantityLastdataDetails, QuantityListDetails } from "../actions/ProductQuantitiesAction";
+import { PricingFindOneDetails, PricingLastListDetails, PricingListDetails } from "../actions/prodAction";
 
 function CatProductScreen() {
   const {
@@ -183,10 +181,16 @@ function CatProductScreen() {
 
 
 
-  /************* */
+  /************* Product Quantity and Pricing details Updated*/
 
   const QuantityLastList = useSelector((state) => state.QuantityLastList);
   const { quantitylist } = QuantityLastList;
+
+  const QuantityFindOne = useSelector((state) => state.QuantityFindOne);
+  const { quantityOnelist } = QuantityFindOne;
+
+  const PriceFindOneList = useSelector((state) => state.PriceFindOneList);
+  const { pricingOnelist } = PriceFindOneList;
 
   let qtydata = []
   {
@@ -234,6 +238,8 @@ function CatProductScreen() {
 
   const [tabIndex, setTabIndex] = useState(0);
 
+  console.log('tabIndex-------11111111111---->>>', tabIndex);
+
   // const [catId, setCatId] = useState();
   // const [catChildId, setCatChildId] = useState();
   // const [grandchildId, setGrandchildId] = useState();
@@ -266,7 +272,7 @@ function CatProductScreen() {
   const [editproId, seteditproId] = useState(prodctObj?._id);
 
   const [newreference, setNewreference] = useState(prodctObj?.reference);
-  const [newQuantity, setNewQuantity] = useState(prodctObj?.quantity);
+  const [newQuantity, setNewQuantity] = useState();
 
   const [newtaxexcluded, setNewtaxexcluded] = useState(prodctObj?.taxexcluded);
 
@@ -346,9 +352,9 @@ function CatProductScreen() {
   }
 
   /************Tax update method */
-  const [EditProdexclusive, setEditProdexclusive] = useState(prodctObj?.taxexcluded);
+  const [EditProdexclusive, setEditProdexclusive] = useState();
 
-  const [EditProdinclusive, setEditProdinclusive] = useState(prodctObj?.taxincluded);
+  const [EditProdinclusive, setEditProdinclusive] = useState();
   const [EditTaxprice, setEditTaxprice] = useState(prodctObj?.taxrule);
 
   const Edittaxesrule = (e) => {
@@ -679,6 +685,8 @@ function CatProductScreen() {
     dispatch(QuantityListDetails());
     dispatch(QuantityLastdataDetails());
     dispatch(PricingLastListDetails());
+    dispatch(QuantityfindOneaDetails(ProdId));
+    dispatch(PricingFindOneDetails(ProdId));
     // dispatch(AttributeValueallListDetails())
     if (prodctObj) {
       const fetchBusinesses = async () => {
@@ -774,6 +782,15 @@ Not all shops sell new products.
     setDropZoneImage(dropimg[index]);
   };
 
+  useEffect(() => {
+    setNewQuantity(quantityOnelist?.Qty)
+  }, [quantityOnelist])
+
+  useEffect(() => {
+    setEditProdexclusive(pricingOnelist?.RetailExcl);
+    setEditProdinclusive(pricingOnelist?.RetailIncl);
+  }, [pricingOnelist])
+
   // *****************************************************edit cover Images**************************
   const [Checkededit, setCheckededit] = useState("");
   const [SelectImage, setSelectImage] = useState("");
@@ -844,12 +861,9 @@ Not all shops sell new products.
       setNewQuantity(prodctObj?.quantity),
       setNewtaxexcluded(prodctObj?.taxexcluded),
       setNewtaxincluded(prodctObj?.taxincluded),
-      // setNewParentCategory(prodctObj?.catId),
       settreeId(prodctObj?.catId),
-      // setNewChildCategory(prodctObj?.catChildId),
       setchildId(prodctObj?.catChildId),
       setGrandchildId(prodctObj?.grandchildId)
-    // setNewgrandchildCategory(prodctObj?.grandchildId)
     if (prodctObj) {
       const fetchBusinesses = async () => {
         const img = await Axios.get(
@@ -936,6 +950,7 @@ Not all shops sell new products.
         })
       );
       window.confirm("Product Details Saved SuccessFully!!");
+      event.target.reset();
     } catch (error) {
       setErrorUpload(error.message);
     }
@@ -1005,6 +1020,7 @@ Not all shops sell new products.
         })
       );
       window.confirm("Brand Details Updated SuccessFully!!");
+      event.target.reset();
     } catch (error) {
       setErrorUpload(error.message);
     }
@@ -1805,16 +1821,17 @@ Not all shops sell new products.
                                   }}
                                   variant="contained"
                                   startIcon={<AddCircleIcon />}
-                                  onClick={handleappendupdate}
+                                  onClick={addField}
                                 >
                                   Add a feature
                                 </Button>
                               </Typography>
-
+                              {/* *********************UPDATE SCREEN****************** */}
                               <>
-                                {fields ? (
+                                {field ? (
                                   <>
-                                    {fields?.map(({ id }, index) => {
+                                    {field?.map(({ id }, index) => {
+                                      // { console.log("field======>", field) }
                                       return (
                                         <Box key={id} sx={{ p: 2, m: 2 }}>
                                           <Box
@@ -1851,22 +1868,27 @@ Not all shops sell new products.
                                               <Select
                                                 native
                                                 size="small"
-                                                // Featuresvaluedetails
                                                 name={index}
-                                                // id={index}
-                                                // defaultValue={featurestype}
-                                                // defaultValue={featurestype}
-                                                // name={index}
-                                                ref={register()}
-                                                onChange={HandleChange}
+                                                key={id}
+                                                // value={id}
+                                                value={
+                                                  newfeature[index]?.id
+                                                    ? newfeature[index]?.id
+                                                    : id
+                                                }
+                                                // ref={register()}
+                                                onChange={(e) =>
+                                                  HandleChangeedit(e, index)
+                                                }
                                               >
                                                 {Featuresdetails?.map(
-                                                  (Feature) => (
+                                                  (item) => (
+                                                    // console.log("item,", item)
                                                     <option
-                                                      key={Feature._id}
-                                                      value={Feature._id}
+                                                      key={item._id}
+                                                      value={item._id}
                                                     >
-                                                      {Feature.featurename}
+                                                      {item?.featurename}
                                                     </option>
                                                   )
                                                 )}
@@ -1877,16 +1899,30 @@ Not all shops sell new products.
                                               <Select
                                                 size="small"
                                                 native
-                                                // defaultValue={featurestypevalue}
                                                 name={index}
-                                                ref={register()}
-                                                onChange={handleFeatureValue}
+                                                key={id}
+                                                // value={id}
+                                                value={
+                                                  newfeaturestypevalue[index]
+                                                    ?.id
+                                                    ? newfeaturestypevalue[
+                                                      index
+                                                    ]?.id
+                                                    : id
+                                                }
+                                                // ref={register()}
+                                                onChange={(e) =>
+                                                  handleFeatureValueedit(
+                                                    e,
+                                                    index
+                                                  )
+                                                }
                                               >
                                                 {Featuresvaluedetails?.filter(
                                                   (Feature) => {
                                                     return (
                                                       Feature.featuretype ===
-                                                      featurestype[index]
+                                                      newfeature[index]?.id
                                                     );
                                                   }
                                                 )?.map((Feature) => (
@@ -1910,7 +1946,7 @@ Not all shops sell new products.
                                             />
                                             <IconButton
                                               type="button"
-                                              onClick={() => remove(index)}
+                                              onClick={() => removeField(index)}
                                             >
                                               <ClearIcon
                                                 sx={{ color: "red" }}
@@ -2231,7 +2267,6 @@ Not all shops sell new products.
                                 <Typography>
                                   <TextField
                                     size="small"
-                                    label="0"
                                     width="50%"
                                     id="margin-normal"
                                     margin="normal"
@@ -3870,7 +3905,6 @@ Not all shops sell new products.
                                 <Typography>
                                   <TextField
                                     size="small"
-                                    label="0"
                                     width="50%"
                                     id="margin-normal"
                                     margin="normal"
@@ -5031,11 +5065,11 @@ Not all shops sell new products.
                                     sx={{ m: 1 }}
                                     size="small"
                                     width="50%"
-                                    label="0"
+                                    // label="0"
                                     id="margin-normal"
                                     margin="normal"
                                     {...register("quantity", {
-                                      required: true,
+                                      // required: true,
                                     })}
                                     InputProps={{
                                       style: { fontSize: 13 },
@@ -6296,11 +6330,11 @@ Not all shops sell new products.
                                     sx={{ m: 1 }}
                                     size="small"
                                     width="50%"
-                                    label="0"
+                                    // label="0"
                                     id="margin-normal"
                                     margin="normal"
                                     {...register("quantity", {
-                                      required: true,
+                                      // required: true,
                                     })}
                                     InputProps={{
                                       style: { fontSize: 13 },
@@ -6341,7 +6375,7 @@ Not all shops sell new products.
                                 // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
                                 InputProps={{
-                                  style: { fontSize: 13 },
+                                  style: { fontSize: 13, },
                                   startAdornment: (
                                     <InputAdornment position="start">
                                       <CurrencyRupeeIcon

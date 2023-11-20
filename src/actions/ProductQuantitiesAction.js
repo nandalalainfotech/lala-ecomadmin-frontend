@@ -1,6 +1,9 @@
 import Axios from 'axios';
 import {
   PRODUCT_QUANTITIES_FAIL,
+  PRODUCT_QUANTITIES_FINDONE_FAIL,
+  PRODUCT_QUANTITIES_FINDONE_REQUEST,
+  PRODUCT_QUANTITIES_FINDONE_SUCCESS,
   PRODUCT_QUANTITIES_LAST_LIST_FAIL,
   PRODUCT_QUANTITIES_LAST_LIST_REQUEST,
   PRODUCT_QUANTITIES_LAST_LIST_SUCCESS,
@@ -16,7 +19,7 @@ import {
 
 export const quantityDetail =
   (QuantityDetail) => async (dispatch, getState) => {
-    //console.log('QuantityDetail', QuantityDetail);
+    console.log('QuantityDetail===========', QuantityDetail);
     dispatch({ type: PRODUCT_QUANTITIES_REQUEST });
     const {
       userSignin: { userInfo },
@@ -86,5 +89,22 @@ export const QuantityLastdataDetails = () => async (dispatch) => {
     dispatch({ type: PRODUCT_QUANTITIES_LAST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_QUANTITIES_LAST_LIST_FAIL, payload: error.message });
+  }
+};
+
+
+export const QuantityfindOneaDetails = (qtyid) => async (dispatch) => {
+  dispatch({ type: PRODUCT_QUANTITIES_FINDONE_REQUEST, payload: qtyid });
+  try {
+    const { data } = await Axios.get(`/api/catProductDetails/findOnequantitylist/${qtyid}`);
+    dispatch({ type: PRODUCT_QUANTITIES_FINDONE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_QUANTITIES_FINDONE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

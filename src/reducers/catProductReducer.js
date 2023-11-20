@@ -1,4 +1,7 @@
 import {
+  CAT_LAST_PRODUCT_FAIL,
+  CAT_LAST_PRODUCT_REQUEST,
+  CAT_LAST_PRODUCT_SUCCESS,
   CAT_PRODUCT_ACTIVE_UPDATE_FAIL, CAT_PRODUCT_ACTIVE_UPDATE_REQUEST, CAT_PRODUCT_ACTIVE_UPDATE_RESET, CAT_PRODUCT_ACTIVE_UPDATE_SUCCESS, CAT_PRODUCT_DELETE_FAIL,
   CAT_PRODUCT_DELETE_REQUEST,
   CAT_PRODUCT_DELETE_RESET,
@@ -43,6 +46,25 @@ export const catalogProdReducer = (
         catProducts: action.payload,
       };
     case CAT_PRODUCT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const cataloglastProdReducer = (
+  state = { loading: true, lastcatProducts: [] },
+  action
+) => {
+  switch (action.type) {
+    case CAT_LAST_PRODUCT_REQUEST:
+      return { loading: true };
+    case CAT_LAST_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        lastcatProducts: action.payload,
+      };
+    case CAT_LAST_PRODUCT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

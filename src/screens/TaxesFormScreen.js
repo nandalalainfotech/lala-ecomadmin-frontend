@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Switch } from "@material-ui/core";
+import { Switch, makeStyles } from "@material-ui/core";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Divider from "@mui/material/Divider";
@@ -22,9 +22,22 @@ import { taxesDetails, TaxesList, updateTaxes } from "../actions/TaxesAction";
 
 import { useParams } from "react-router-dom";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
+
+const useStyles = makeStyles({
+  switch: {
+    "& .Mui-checked": {
+      color: "#00CC00",
+    },
+    "& .MuiSwitch-track": {
+      backgroundColor: "#00CC00 !important",
+    },
+  },
+});
 export default function TaxesFormScreen() {
   const taxesCreate = useSelector((state) => state.taxesCreate);
   const { success: taxSave } = taxesCreate;
+
+  const classes = useStyles();
 
   const updatetax = useSelector((state) => state.updatetax);
   const { success: taxUpdate } = updatetax;
@@ -187,8 +200,9 @@ export default function TaxesFormScreen() {
                       autoComplete="off"
                     />
 
-                    <InputLabel> Status</InputLabel>
+                    <InputLabel sx={{ fontSize: 13 }}> Status</InputLabel>
                     <Switch
+                      className={classes.switch}
                       onChange={(e) => setEditstatus(e.target.checked)}
                       checked={Editstatus}
                     />
@@ -271,6 +285,7 @@ export default function TaxesFormScreen() {
                     )}
                     <InputLabel sx={{ fontSize: 13 }}> Status</InputLabel>
                     <Switch
+                      className={classes.switch}
                       onChange={switchHandler}
                       {...register("checked")}
                       size="small"

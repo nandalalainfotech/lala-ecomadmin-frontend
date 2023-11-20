@@ -3,7 +3,6 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import InfoIcon from "@mui/icons-material/Info";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
@@ -15,20 +14,18 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  FormControlLabel,
-  FormGroup,
-  Grid,
+  Grid
 } from "../../node_modules/@material-ui/core/index";
-import { PricingListDetails, priceDetails, updatePricingdetail } from "../actions/prodAction";
 import { TaxesList } from "../actions/TaxesAction";
+import { PricingFindOneDetails, PricingLastListDetails, PricingListDetails, priceDetails, updatePricingdetail } from "../actions/prodAction";
 import { PRICING_DETAILS_RESET, PRICING_DETAILS_UPDATE_RESET } from "../constants/prodConstants";
 import SpecificPriceGridScreen from "./SpecificPriceGridScreen";
 // import { useParams } from "react-router-dom";
 
 // import { SPECIFIC_PRICE_CONDITION_RESET } from "../constants/specificPriceConstants";
 
-import SpecificScreen from "./SpecificScreen";
 import { useParams } from "../../node_modules/react-router-dom/dist/index";
+import SpecificScreen from "./SpecificScreen";
 
 // import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 
@@ -39,7 +36,7 @@ function ProdPricingScreen(PropTypes) {
   const { product } = PropTypes;
   console.log("props", product);
   const [specific, setSpecific] = useState(0);
-  console.log("specific", specific);
+  // console.log("specific", specific);
   const handlechange = () => {
     if (specific === 1) {
       setSpecific(0);
@@ -62,13 +59,9 @@ function ProdPricingScreen(PropTypes) {
   // const specificPrice = useSelector((state) => state.specificPrice);
   // const { success: specificprice } = specificPrice;
   const [Taxprice, setTaxprice] = useState(pricingSave?.Taxprice);
-  const [Retailexclusive, setRetailexclusive] = useState(
-    pricingSave?.Retailexclusive
-  );
-  const [Retailinclusive, setRetailinclusive] = useState(
-    pricingSave?.Retailinclusive
-  );
-  const [Retailcost, setRetailcost] = useState(pricingSave?.Retailcost);
+  const [Retailexclusive, setRetailexclusive] = useState();
+  const [Retailinclusive, setRetailinclusive] = useState();
+  // const [Retailcost, setRetailcost] = useState(pricingSave?.Retailcost);
 
   const PriceList = useSelector((state) => state.PriceList);
   const { pricingdetail } = PriceList;
@@ -78,12 +71,19 @@ function ProdPricingScreen(PropTypes) {
   const PricingUpdate = useSelector((state) => state.PricingUpdate);
   const { success: updateprice } = PricingUpdate;
 
+  const PriceFindOneList = useSelector((state) => state.PriceFindOneList);
+  const { pricingOnelist } = PriceFindOneList;
+
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
+
+  const PriceLastList = useSelector((state) => state.PriceLastList);
+  const { pricinglist } = PriceLastList;
 
   const prodObj = catProducts?.find((item) => item?._id === EditId);
   // eslint-disable-next-line no-unused-vars
   const [productId, setproductId] = useState([prodObj?._id]);
+
 
 
   let productdata;
@@ -94,9 +94,9 @@ function ProdPricingScreen(PropTypes) {
   }
 
 
-  const [EditRetailexcl, setEditRetailexcl] = useState(pricingObj?.RetailExcl);
-  const [EditRetailincl, setEditRetailincl] = useState(pricingObj?.RetailIncl);
-  const [EditRetailcost, setEditRetailcost] = useState(pricingObj?.RetailCost);
+  const [EditRetailexcl, setEditRetailexcl] = useState();
+  const [EditRetailincl, setEditRetailincl] = useState();
+  // const [EditRetailcost, setEditRetailcost] = useState(pricingObj?.RetailCost);
   const [EditTaxprice, setEditTaxprice] = useState(pricingObj?.priceGroup);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -108,7 +108,22 @@ function ProdPricingScreen(PropTypes) {
     }
     dispatch(TaxesList());
     dispatch(PricingListDetails());
+    dispatch(PricingFindOneDetails(EditId));
+    dispatch(PricingLastListDetails());
   }, [dispatch, pricingSave, updateprice]);
+
+  useEffect(() => {
+    setEditRetailexcl(pricingOnelist?.RetailExcl);
+    setEditRetailincl(pricingOnelist?.RetailIncl);
+  }, [pricingOnelist])
+
+  useEffect(() => {
+    if (pricinglist?.length > 0) {
+      setRetailexclusive(pricinglist[0]?.RetailExcl);
+      setRetailinclusive(pricinglist[0]?.RetailIncl);
+    }
+  }, [pricinglist])
+
   const {
     //register,
     formState: { errors },
@@ -116,7 +131,6 @@ function ProdPricingScreen(PropTypes) {
   } = useForm();
 
   const setpercentage = (e) => {
-    console.log("e", e);
     const taxper = taxes?.find((x) => x._id === e);
 
     let test = (Retailexclusive * (taxper ? taxper.Rate : 0)) / 100;
@@ -131,7 +145,6 @@ function ProdPricingScreen(PropTypes) {
   const handleRetailexclusive = (e) => {
     setRetailexclusive(e.target.value);
     const taxper = taxes?.find((x) => x._id === Taxprice);
-    console.log("");
 
     let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
     let amt = test + parseInt(e.target.value);
@@ -154,7 +167,6 @@ function ProdPricingScreen(PropTypes) {
   const handleEditRetailexclusive = (e) => {
     setEditRetailexcl(e.target.value);
     const taxper = taxes?.find((x) => x._id === EditTaxprice);
-    console.log("");
 
     let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
     let amt = test + parseInt(e.target.value);
@@ -167,18 +179,17 @@ function ProdPricingScreen(PropTypes) {
         mprodId: productdata,
         RetailExcl: Retailexclusive,
         RetailIncl: Retailinclusive,
-        RetailCost: Retailcost,
+        // RetailCost: Retailcost,
         priceGroup: Taxprice,
       })
     );
 
     window.confirm("Pricing Details Saved Successfully!!");
-    event.target.reset();
-    setRetailexclusive("");
-    setRetailinclusive("");
-    setTaxprice("");
-    setRetailcost("");
-    // navigate('/pricing');
+    // event.target.reset();
+    // setRetailexclusive("");
+    // setRetailinclusive("");
+    // setTaxprice("");
+    // setRetailcost("");
   };
 
   const UpdatePriceDetails = () => {
@@ -188,19 +199,18 @@ function ProdPricingScreen(PropTypes) {
         _id: pricingObj._id,
         RetailExcl: EditRetailexcl,
         RetailIncl: EditRetailincl,
-        RetailCost: EditRetailcost,
+        // RetailCost: EditRetailcost,
         priceGroup: EditTaxprice,
         productId: productId,
       })
     );
 
-    window.confirm("Pricing Update Saved Successfully!!");
-    event.target.reset();
-    setEditRetailexcl("");
-    setEditRetailincl("");
-    setEditTaxprice("");
-    setEditRetailcost("");
-    // navigate('/pricing');
+    window.confirm("Pricing Details Updated Successfully!!");
+    // event.target.reset();
+    // setEditRetailexcl("");
+    // setEditRetailincl("");
+    // setEditTaxprice("");
+    // setEditRetailcost("");
   };
   //   const [specificPrice, setSpecificprice] = useState(0);
   //   console.log("specificPrice", specificPrice);
@@ -319,18 +329,7 @@ function ProdPricingScreen(PropTypes) {
                 </Grid>
               </Box>
 
-              {/* <Typography sx={{ width: "40%" }}>
-                        <TextField
-                          // select
-                          fullWidth
-                          id="margin-normal"
-                          margin="normal"
-                        >
-                          <MenuItem>FR Taux standard (20%)</MenuItem>
-                        </TextField>
-                      </Typography> */}
-
-              <FormGroup sx={{ mt: "10px" }}>
+              {/* <FormGroup sx={{ mt: "10px" }}>
                 <FormControlLabel
                   control={<Checkbox size='small' defaultChecked />}
                   label={
@@ -369,13 +368,12 @@ function ProdPricingScreen(PropTypes) {
                       </InputAdornment>
                     ),
                   }}
-                //{...register("retailcost", { required: true })}
-                //error={errors.retailcost}
                 />
                 {errors.retailcost && (
                   <span className='formError'>retailcost is required</span>
                 )}
-              </Typography>
+              </Typography> */}
+              <br />
               <Typography>
                 <Button
                   variant='contained'
@@ -531,18 +529,7 @@ function ProdPricingScreen(PropTypes) {
                 </Grid>
               </Box>
 
-              {/* <Typography sx={{ width: "40%" }}>
-                        <TextField
-                          // select
-                          fullWidth
-                          id="margin-normal"
-                          margin="normal"
-                        >
-                          <MenuItem>FR Taux standard (20%)</MenuItem>
-                        </TextField>
-                      </Typography> */}
-
-              <FormGroup sx={{ mt: "10px" }}>
+              {/* <FormGroup sx={{ mt: "10px" }}>
                 <FormControlLabel
                   control={<Checkbox size='small' defaultChecked />}
                   label={
@@ -581,13 +568,14 @@ function ProdPricingScreen(PropTypes) {
                       </InputAdornment>
                     ),
                   }}
-                //{...register("retailcost", { required: true })}
-                //error={errors.retailcost}
+                {...register("retailcost", { required: true })}
+                error={errors.retailcost}
                 />
                 {errors.retailcost && (
                   <span className='formError'>retailcost is required</span>
                 )}
-              </Typography>
+              </Typography> */}
+              <br />
               <Typography>
                 <Button
                   variant='contained'

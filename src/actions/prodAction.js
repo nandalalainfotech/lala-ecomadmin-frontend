@@ -1,6 +1,9 @@
 import Axios from "axios";
 import {
   PRICING_DETAILS_FAIL,
+  PRICING_DETAILS_FINDONE_FAIL,
+  PRICING_DETAILS_FINDONE_REQUEST,
+  PRICING_DETAILS_FINDONE_SUCCESS,
   PRICING_DETAILS_LAST_LIST_FAIL,
   PRICING_DETAILS_LAST_LIST_REQUEST,
   PRICING_DETAILS_LAST_LIST_SUCCESS,
@@ -84,5 +87,23 @@ export const PricingLastListDetails = () => async (dispatch) => {
     dispatch({ type: PRICING_DETAILS_LAST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRICING_DETAILS_LAST_LIST_FAIL, payload: error.message });
+  }
+};
+
+
+
+export const PricingFindOneDetails = (priceid) => async (dispatch) => {
+  dispatch({ type: PRICING_DETAILS_FINDONE_REQUEST, payload: priceid });
+  try {
+    const { data } = await Axios.get(`/api/catpriceDetails/pricingOnelist/${priceid}`);
+    dispatch({ type: PRICING_DETAILS_FINDONE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRICING_DETAILS_FINDONE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

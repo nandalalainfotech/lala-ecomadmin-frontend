@@ -1,5 +1,8 @@
 import Axios from 'axios';
 import {
+  CAT_LAST_PRODUCT_FAIL,
+  CAT_LAST_PRODUCT_REQUEST,
+  CAT_LAST_PRODUCT_SUCCESS,
   CAT_PRODUCT_ACTIVE_UPDATE_FAIL,
   CAT_PRODUCT_ACTIVE_UPDATE_REQUEST,
   CAT_PRODUCT_ACTIVE_UPDATE_SUCCESS,
@@ -79,6 +82,18 @@ export const catProductList = () => async (dispatch) => {
     dispatch({ type: CAT_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: CAT_PRODUCT_FAIL, payload: error.message });
+  }
+};
+
+export const catLastProductList = () => async (dispatch) => {
+  dispatch({
+    type: CAT_LAST_PRODUCT_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/catProduct/lastcatProduct`);
+    dispatch({ type: CAT_LAST_PRODUCT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: CAT_LAST_PRODUCT_FAIL, payload: error.message });
   }
 };
 
@@ -334,24 +349,24 @@ export const deleteMultipleProduct = (empId) => async (dispatch, getState) => {
 
 
 export const deleteImages =
-(empId) => async (dispatch,) => {
-  console.log("empId",empId);
-  dispatch({ type:IMAGE_DELETE_REQUEST, payload: empId });
-  
-  try {
-    await Axios.delete(
-      "/api/uploads/deleteok/" + empId.porId,
-      { data: empId.item },
-     
-    );
+  (empId) => async (dispatch,) => {
+    console.log("empId", empId);
+    dispatch({ type: IMAGE_DELETE_REQUEST, payload: empId });
 
-    dispatch({ type: IMAGE_DELETE_SUCCESS });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({ type: IMAGE_DELETE_FAIL, payload: message });
-  }
-};
+    try {
+      await Axios.delete(
+        "/api/uploads/deleteok/" + empId.porId,
+        { data: empId.item },
+
+      );
+
+      dispatch({ type: IMAGE_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: IMAGE_DELETE_FAIL, payload: message });
+    }
+  };
 

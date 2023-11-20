@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "../../node_modules/react-router-dom/dist/index";
-import { QuantityListDetails, quantityDetail, updateQuantitydetail } from "../actions/ProductQuantitiesAction";
-import { catProductViewList } from "../actions/catProductAction";
+import { QuantityListDetails, QuantityfindOneaDetails, quantityDetail, updateQuantitydetail } from "../actions/ProductQuantitiesAction";
+import { catLastProductList, catProductViewList } from "../actions/catProductAction";
 import { PRODUCT_QUANTITIES_RESET, PRODUCT_QUANTITIES_UPDATE_RESET } from "../constants/productQuantitiesConstands";
 
 //import { PRODUCT_QUANTITIES_RESET } from '../constants/productQuantitiesConstands';
@@ -48,9 +48,20 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
 
+  const cataloglastProd = useSelector((state) => state.cataloglastProd);
+  const { lastcatProducts } = cataloglastProd;
+
+
+  const [Quantity, setQuantity] = useState();
+
   const prodObj = catProducts?.find((item) => item?._id === EditId);
+
+
   // eslint-disable-next-line no-unused-vars
   const [productId, setproductId] = useState([prodObj?._id]);
+
+  const QuantityFindOne = useSelector((state) => state.QuantityFindOne);
+  const { quantityOnelist } = QuantityFindOne;
 
 
   let productdata;
@@ -61,8 +72,8 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   }
   // console.log("catProducts======>", catProducts)
 
-  const [EditQuantiry, setEditQuantiry] = useState(quantityObj?.Qty);
-  const [EditMinQuantiry, setEditMinQuantiry] = useState(quantityObj?.minQty);
+  const [EditQuantiry, setEditQuantiry] = useState();
+  const [EditMinQuantiry, setEditMinQuantiry] = useState();
 
   const dispatch = useDispatch();
 
@@ -76,7 +87,7 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
     dispatch(
       quantityDetail({
         mprodId: productdata,
-        Qty: e.qty,
+        Qty: Quantity,
         minQty: e.mqty,
         // stoLoc: e.SLocation,
         // stolev: e.slevel,
@@ -88,10 +99,7 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
       })
     );
     window.confirm("Quantity Details Saved Successfully!!");
-    event.target.reset();
-    // setorderAction("");
-    // setchecked(false);
-    // navigate("/product");
+    // event.target.reset();
   };
 
   const updateQtyDetails = async () => {
@@ -105,10 +113,9 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
       })
     );
     window.confirm("Quantity Details Update Successfully!!");
-    event.target.reset();
-    setEditQuantiry("");
-    setEditMinQuantiry("");
-    // navigate("/countrygrid");
+    // event.target.reset();
+    // setEditQuantiry("");
+    // setEditMinQuantiry("");
   }
 
   useEffect(() => {
@@ -120,7 +127,20 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
     }
     dispatch(catProductViewList());
     dispatch(QuantityListDetails());
+    dispatch(QuantityfindOneaDetails(EditId));
+    dispatch(catLastProductList())
   }, [dispatch, QtySave, updatequantity]);
+
+  useEffect(() => {
+    setEditQuantiry(quantityOnelist?.Qty);
+    setEditMinQuantiry(quantityOnelist?.minQty)
+  }, [quantityOnelist])
+
+  useEffect(() => {
+    if (lastcatProducts?.length > 0) {
+      setQuantity(lastcatProducts[0]?.quantity)
+    }
+  }, [lastcatProducts])
 
   // const [orderAction, setorderAction] = useState("");
   // const [checked, setchecked] = useState(false);
@@ -250,12 +270,14 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
                     id='qty'
                     name='qty'
                     autoComplete='off'
-                    {...register("qty", { required: true })}
-                    error={errors.qty}
+                    value={Quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  // {...register("qty", { required: true })}
+                  // error={errors.qty}
                   />
-                  {errors.qty && (
+                  {/* {errors.qty && (
                     <span className='formError'>qty is required</span>
-                  )}
+                  )} */}
                 </Typography>
                 <Typography sx={{ mt: "10px" }}>
                   <TextField
