@@ -36,6 +36,8 @@ export default function ProductShippingScreen() {
 
   const shippingObj = shippingdetail?.find((item) => item?.mprodId === EditId);
 
+  console.log('shippingObj-----------', shippingObj);
+
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
 
@@ -50,9 +52,9 @@ export default function ProductShippingScreen() {
   const [EditHeight, setEditHeight] = useState(shippingObj?.height);
   const [EditDepth, setEditDepth] = useState(shippingObj?.depth);
   const [EditWeight, setEditWeight] = useState(shippingObj?.weight);
-  const [EditStock, setEditStock] = useState(shippingObj?.inStock);
-  const [EditOutStock, setEditOutStock] = useState(shippingObj?.outOfStock);
-  const [EditShipfees, setEditShipfees] = useState(shippingObj?.fees);
+  // const [EditStock, setEditStock] = useState(shippingObj?.inStock);
+  // const [EditOutStock, setEditOutStock] = useState(shippingObj?.outOfStock);
+  // const [EditShipfees, setEditShipfees] = useState(shippingObj?.fees);
 
   const dispatch = useDispatch();
   const saveShppingDetails = (e) => {
@@ -65,9 +67,9 @@ export default function ProductShippingScreen() {
         depth: e.depth,
         weight: e.weight,
         delTime: combination,
-        inStock: e.inStock,
-        outOfStock: e.outOfStock,
-        fees: e.fees,
+        // inStock: e.inStock,
+        // outOfStock: e.outOfStock,
+        // fees: e.fees,
         // carrier1: check1,
         // carrier2: check2,
         // carrier3: check3,
@@ -94,9 +96,9 @@ export default function ProductShippingScreen() {
         depth: EditDepth,
         weight: EditWeight,
         delTime: combination,
-        inStock: EditStock,
-        outOfStock: EditOutStock,
-        fees: EditShipfees,
+        // inStock: EditStock,
+        // outOfStock: EditOutStock,
+        // fees: EditShipfees,
         // carrier1: check1,
         // carrier2: check2,
         // carrier3: check3,
@@ -111,9 +113,9 @@ export default function ProductShippingScreen() {
     setEditHeight("");
     setEditDepth("");
     setEditWeight("");
-    setEditStock("");
-    setEditOutStock("");
-    setEditShipfees("");
+    // setEditStock("");
+    // setEditOutStock("");
+    // setEditShipfees("");
     // setcheck1(false);
     // setcheck2(false);
     // setcheck3(false);
