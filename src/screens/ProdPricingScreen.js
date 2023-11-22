@@ -17,7 +17,7 @@ import {
   Grid
 } from "../../node_modules/@material-ui/core/index";
 import { TaxesList } from "../actions/TaxesAction";
-import { PricingFindOneDetails, PricingLastListDetails, PricingListDetails, priceDetails, updatePricingdetail } from "../actions/prodAction";
+import { PricingFindOneDetails, PricingListDetails, priceDetails, updatePricingdetail } from "../actions/prodAction";
 import { PRICING_DETAILS_RESET, PRICING_DETAILS_UPDATE_RESET } from "../constants/prodConstants";
 import SpecificPriceGridScreen from "./SpecificPriceGridScreen";
 // import { useParams } from "react-router-dom";
@@ -68,6 +68,8 @@ function ProdPricingScreen(PropTypes) {
 
   const pricingObj = pricingdetail?.find((item) => item.mprodId === EditId)
 
+  // console.log('pricingObj-------', pricingObj);
+
   const PricingUpdate = useSelector((state) => state.PricingUpdate);
   const { success: updateprice } = PricingUpdate;
 
@@ -77,8 +79,10 @@ function ProdPricingScreen(PropTypes) {
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
 
-  const PriceLastList = useSelector((state) => state.PriceLastList);
-  const { pricinglist } = PriceLastList;
+  // const PriceLastList = useSelector((state) => state.PriceLastList);
+  // const { pricinglist } = PriceLastList;
+
+  // console.log('pricinglist================>>>>', pricinglist);
 
   const prodObj = catProducts?.find((item) => item?._id === EditId);
   // eslint-disable-next-line no-unused-vars
@@ -94,8 +98,8 @@ function ProdPricingScreen(PropTypes) {
   }
 
 
-  const [EditRetailexcl, setEditRetailexcl] = useState();
-  const [EditRetailincl, setEditRetailincl] = useState();
+  const [EditRetailexcl, setEditRetailexcl] = useState(pricingObj?.RetailExcl);
+  const [EditRetailincl, setEditRetailincl] = useState(pricingObj?.RetailIncl);
   // const [EditRetailcost, setEditRetailcost] = useState(pricingObj?.RetailCost);
   const [EditTaxprice, setEditTaxprice] = useState(pricingObj?.priceGroup);
   const dispatch = useDispatch();
@@ -109,7 +113,7 @@ function ProdPricingScreen(PropTypes) {
     dispatch(TaxesList());
     dispatch(PricingListDetails());
     dispatch(PricingFindOneDetails(EditId));
-    dispatch(PricingLastListDetails());
+    // dispatch(PricingLastListDetails());
   }, [dispatch, pricingSave, updateprice]);
 
   useEffect(() => {
@@ -117,12 +121,12 @@ function ProdPricingScreen(PropTypes) {
     setEditRetailincl(pricingOnelist?.RetailIncl);
   }, [pricingOnelist])
 
-  useEffect(() => {
-    if (pricinglist?.length > 0) {
-      setRetailexclusive(pricinglist[0]?.RetailExcl);
-      setRetailinclusive(pricinglist[0]?.RetailIncl);
-    }
-  }, [pricinglist])
+  // useEffect(() => {
+  //   if (pricinglist?.length > 0) {
+  //     setRetailexclusive(pricinglist[0]?.RetailExcl);
+  //     setRetailinclusive(pricinglist[0]?.RetailIncl);
+  //   }
+  // }, [pricinglist])
 
   const {
     //register,

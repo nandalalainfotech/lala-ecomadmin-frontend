@@ -192,6 +192,8 @@ function CatProductScreen() {
   const PriceFindOneList = useSelector((state) => state.PriceFindOneList);
   const { pricingOnelist } = PriceFindOneList;
 
+  console.log("pricingOnelist------------", pricingOnelist);
+
   let qtydata = []
   {
     quantitylist?.map((value) => (
@@ -237,8 +239,6 @@ function CatProductScreen() {
   const [description, setDescription] = useState("");
 
   const [tabIndex, setTabIndex] = useState(0);
-
-  console.log('tabIndex-------11111111111---->>>', tabIndex);
 
   // const [catId, setCatId] = useState();
   // const [catChildId, setCatChildId] = useState();
@@ -789,6 +789,7 @@ Not all shops sell new products.
   useEffect(() => {
     setEditProdexclusive(pricingOnelist?.RetailExcl);
     setEditProdinclusive(pricingOnelist?.RetailIncl);
+    setEditTaxprice(pricingOnelist?.priceGroup);
   }, [pricingOnelist])
 
   // *****************************************************edit cover Images**************************
@@ -2274,9 +2275,9 @@ Not all shops sell new products.
                                     onChange={(e) =>
                                       setNewQuantity(e.target.value)
                                     }
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                                    inputProps={
+                                      { readOnly: true, }
+                                    }
                                   />
                                 </Typography>
                               </Box>
@@ -2311,6 +2312,9 @@ Not all shops sell new products.
                                 value={EditProdexclusive}
                                 onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -2330,6 +2334,9 @@ Not all shops sell new products.
                                   label="Tax Rule"
                                   value={EditTaxprice}
                                   onChange={Edittaxesrule}
+                                  inputProps={
+                                    { readOnly: true, }
+                                  }
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -2351,6 +2358,9 @@ Not all shops sell new products.
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -3912,9 +3922,9 @@ Not all shops sell new products.
                                     onChange={(e) =>
                                       setNewQuantity(e.target.value)
                                     }
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                                    inputProps={
+                                      { readOnly: true, }
+                                    }
                                   />
                                 </Typography>
                               </Box>
@@ -3949,6 +3959,9 @@ Not all shops sell new products.
                                 value={EditProdexclusive}
                                 onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -3968,6 +3981,9 @@ Not all shops sell new products.
                                   label="Tax Rule"
                                   value={EditTaxprice}
                                   onChange={Edittaxesrule}
+                                  inputProps={
+                                    { readOnly: true, }
+                                  }
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -3989,6 +4005,9 @@ Not all shops sell new products.
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -5071,9 +5090,9 @@ Not all shops sell new products.
                                     {...register("quantity", {
                                       // required: true,
                                     })}
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                                    inputProps={
+                                      { readOnly: true, }
+                                    }
                                   />
                                 </Typography>
                               </Box>
@@ -5109,6 +5128,9 @@ Not all shops sell new products.
                                 onChange={handleProdexclusive}
                                 // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -5128,6 +5150,9 @@ Not all shops sell new products.
                                   label="Tax Rule"
                                   value={Taxprice}
                                   onChange={taxesrule}
+                                  inputProps={
+                                    { readOnly: true, }
+                                  }
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -5148,6 +5173,9 @@ Not all shops sell new products.
                                 onChange={(e) => setProdinclusive(e.target.value)}
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -6336,9 +6364,9 @@ Not all shops sell new products.
                                     {...register("quantity", {
                                       // required: true,
                                     })}
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                                    inputProps={
+                                      { readOnly: true, }
+                                    }
                                   />
                                 </Typography>
                               </Box>
@@ -6374,6 +6402,9 @@ Not all shops sell new products.
                                 onChange={handleProdexclusive}
                                 // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13, },
                                   startAdornment: (
@@ -6393,6 +6424,9 @@ Not all shops sell new products.
                                   label="Tax Rule"
                                   value={Taxprice}
                                   onChange={taxesrule}
+                                  inputProps={
+                                    { readOnly: true, }
+                                  }
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -6413,6 +6447,9 @@ Not all shops sell new products.
                                 onChange={(e) => setProdinclusive(e.target.value)}
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
+                                inputProps={
+                                  { readOnly: true, }
+                                }
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (

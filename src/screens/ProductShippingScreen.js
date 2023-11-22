@@ -1,40 +1,30 @@
-import InfoIcon from "@mui/icons-material/Info";
 import { Box, Typography } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "../../node_modules/react-router-dom/dist/index";
 import { ShipListDetails, shippingDetail, updateShipdetail } from "../actions/ProductShippingAction";
 import { PRODUCT_SHIPPING_DETAILS_RESET, PRODUCT_SHIPPING_UPDATE_RESET } from "../constants/ProductSippingConstants";
-import { useParams } from "../../node_modules/react-router-dom/dist/index";
 DataGrid;
 
 // import Card from "@mui/material/Card";
 export default function ProductShippingScreen() {
-  const delivery = `
-Display delivery time for a product is advised for merchants selling in Europe to comply with the local laws.
-`;
-  const shipping = `
-If a carrier has a tax, it will be added to the shipping fees. Does not apply to free shipping.
-`;
+  //   const delivery = `
+  // Display delivery time for a product is advised for merchants selling in Europe to comply with the local laws.
+  // `;
+  //   const shipping = `
+  // If a carrier has a tax, it will be added to the shipping fees. Does not apply to free shipping.
+  // `;
   // const navigate = useNavigate();
 
   const params = useParams();
   const EditId = params.id;
-  console.log(" EditId =====>", EditId)
   const ShippingSave = useSelector((state) => state.ShippingSave);
   const { success: shippingSave } = ShippingSave;
 
@@ -55,7 +45,6 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
       productdata = state?._id
     })
   }
-  console.log("catProducts====>", catProducts)
 
   const [EditWidth, setEditWidth] = useState(shippingObj?.width);
   const [EditHeight, setEditHeight] = useState(shippingObj?.height);
@@ -79,19 +68,19 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
         inStock: e.inStock,
         outOfStock: e.outOfStock,
         fees: e.fees,
-        carrier1: check1,
-        carrier2: check2,
-        carrier3: check3,
-        carrier4: check4,
+        // carrier1: check1,
+        // carrier2: check2,
+        // carrier3: check3,
+        // carrier4: check4,
       })
     );
     window.confirm("Shipping Details Saved Successfully!!");
     event.target.reset();
     setCombination("");
-    setcheck1(false);
-    setcheck2(false);
-    setcheck3(false);
-    setcheck4(false);
+    // setcheck1(false);
+    // setcheck2(false);
+    // setcheck3(false);
+    // setcheck4(false);
     // navigate("/product");
   };
 
@@ -108,10 +97,10 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
         inStock: EditStock,
         outOfStock: EditOutStock,
         fees: EditShipfees,
-        carrier1: check1,
-        carrier2: check2,
-        carrier3: check3,
-        carrier4: check4,
+        // carrier1: check1,
+        // carrier2: check2,
+        // carrier3: check3,
+        // carrier4: check4,
       })
     );
     window.confirm("Shipping Details Update Successfully!!");
@@ -125,10 +114,10 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
     setEditStock("");
     setEditOutStock("");
     setEditShipfees("");
-    setcheck1(false);
-    setcheck2(false);
-    setcheck3(false);
-    setcheck4(false);
+    // setcheck1(false);
+    // setcheck2(false);
+    // setcheck3(false);
+    // setcheck4(false);
     // navigate("/product");
   };
   useEffect(() => {
@@ -143,52 +132,51 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
 
   const {
     register,
-    formState: { errors },
+    // formState: { errors },
     handleSubmit,
   } = useForm();
   const [combination, setCombination] = useState("none");
-  const handleChangeradio = (event) => {
-    if (combination == "none") {
-      setCombination(event.target.value);
-    } else if (combination == "defDel") {
-      setCombination(event.target.value);
-    } else {
-      setCombination(event.target.value);
-    }
-  };
-  const [check1, setcheck1] = useState(false);
-  const onchangeCheck1 = (event) => {
-    //console.log('event.target.checked', event.target.checked);
-    if (event.target.checked === true) {
-      setcheck1(event.target.checked);
-    } else {
-      setcheck1(event.target.checked);
-    }
-  };
-  const [check2, setcheck2] = useState(false);
-  const onchangeCheck2 = (event) => {
-    if (event.target.checked === true) {
-      setcheck2(event.target.checked);
-    } else {
-      setcheck2(event.target.checked);
-    }
-  };
-  const [check3, setcheck3] = useState(false);
-  const onchangeCheck3 = (event) => {
-    if (event.target.checked === true) {
-      setcheck3(event.target.checked);
-    } else {
-      setcheck3(event.target.checked);
-    }
-  };
-  const [check4, setcheck4] = useState(false);
-  const onchangeCheck4 = (event) => {
-    if (event.target.checked === true) {
-      setcheck4(event.target.checked);
-    } else {
-      setcheck4(event.target.checked);
-    }
-  };
+  // const handleChangeradio = (event) => {
+  //   if (combination == "none") {
+  //     setCombination(event.target.value);
+  //   } else if (combination == "defDel") {
+  //     setCombination(event.target.value);
+  //   } else {
+  //     setCombination(event.target.value);
+  //   }
+  // };
+  // const [check1, setcheck1] = useState(false);
+  // const onchangeCheck1 = (event) => {
+  //   if (event.target.checked === true) {
+  //     setcheck1(event.target.checked);
+  //   } else {
+  //     setcheck1(event.target.checked);
+  //   }
+  // };
+  // const [check2, setcheck2] = useState(false);
+  // const onchangeCheck2 = (event) => {
+  //   if (event.target.checked === true) {
+  //     setcheck2(event.target.checked);
+  //   } else {
+  //     setcheck2(event.target.checked);
+  //   }
+  // };
+  // const [check3, setcheck3] = useState(false);
+  // const onchangeCheck3 = (event) => {
+  //   if (event.target.checked === true) {
+  //     setcheck3(event.target.checked);
+  //   } else {
+  //     setcheck3(event.target.checked);
+  //   }
+  // };
+  // const [check4, setcheck4] = useState(false);
+  // const onchangeCheck4 = (event) => {
+  //   if (event.target.checked === true) {
+  //     setcheck4(event.target.checked);
+  //   } else {
+  //     setcheck4(event.target.checked);
+  //   }
+  // };
   return (
     <>   {shippingObj ? (<>
       <Box onSubmit={handleSubmit(updateShppingDetails)} component='form'>
@@ -328,7 +316,7 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
               />
             </Box>
 
-            <Typography
+            {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -474,8 +462,6 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
 
             <FormGroup
               sx={{ mt: "20px" }}
-            // value={carrierAction}
-            // onChange={onChangeCheck}
             >
               <FormControlLabel
                 value='presta'
@@ -553,7 +539,7 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
                   required: false,
                 })}
               />
-            </FormGroup>
+            </FormGroup> */}
             <Typography>
               <Box sx={{ display: "flex" }}>
                 <Button
@@ -712,8 +698,8 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
                 }}
               />
             </Box>
-
-            <Typography
+            <br />
+            {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -860,8 +846,7 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
 
             <FormGroup
               sx={{ mt: "20px" }}
-            // value={carrierAction}
-            // onChange={onChangeCheck}
+            
             >
               <FormControlLabel
                 value='presta'
@@ -939,7 +924,7 @@ If a carrier has a tax, it will be added to the shipping fees. Does not apply to
                   required: false,
                 })}
               />
-            </FormGroup>
+            </FormGroup> */}
             <Typography>
               <Box sx={{ display: "flex" }}>
                 <Button

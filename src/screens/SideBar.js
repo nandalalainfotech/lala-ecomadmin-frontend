@@ -1,8 +1,9 @@
 import MenuIcon from "@mui/icons-material/Menu";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -11,7 +12,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
-import PaymentsIcon from "@mui/icons-material/Payments";
 // import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -21,25 +21,24 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupsIcon from "@mui/icons-material/Groups";
 // import HomeIcon from '@mui/icons-material/Home';
+import { makeStyles } from "@material-ui/core/styles";
+import ChildFriendlyIcon from "@mui/icons-material/ChildFriendly";
 import ContactsIcon from "@mui/icons-material/Contacts";
+import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import LanguageIcon from "@mui/icons-material/Language";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
+import PaymentIcon from "@mui/icons-material/Payment";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
-import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import Collapse from "@mui/material/Collapse";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@mui/material/Typography";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ChildFriendlyIcon from "@mui/icons-material/ChildFriendly";
-import PaymentIcon from "@mui/icons-material/Payment";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -129,11 +128,11 @@ export default function SideBar() {
   };
 
   const [sidopen, setSidopen] = useState();
-  const [stockopen, setstockopen] = useState();
+  // const [stockopen, setstockopen] = useState();
 
-  const handlestock = () => {
-    setstockopen(!stockopen);
-  };
+  // const handlestock = () => {
+  //   setstockopen(!stockopen);
+  // };
 
 
   const handleClick = () => {
@@ -428,6 +427,29 @@ export default function SideBar() {
                         </Link>
                       </ListItemButton>
                     </List>
+                    <List>
+                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                        <Link
+                          // reloadDocument
+                          to="/Stockmaintance"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <ListItemText
+                            sx={{ color: "#fff" }}
+                            primary={
+                              <Typography
+                                style={{
+                                  color: "#FFFFFF",
+                                  fontSize: 14,
+                                }}
+                              >
+                                Stock
+                              </Typography>
+                            }
+                          />
+                        </Link>
+                      </ListItemButton>
+                    </List>
                   </Collapse>
                 </>
               </ListItem>
@@ -589,60 +611,6 @@ export default function SideBar() {
               </ListItem>
             </List>
             <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handlestock}>
-                    <ListItemIcon>
-                      <ManageHistoryIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          General Setting
-                        </Typography>
-                      }
-                    />
-                    {stockopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={stockopen} timeout="auto" unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-                          to="/Stockmaintance"
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Stock
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
             <List>
               <ListItem disablePadding sx={{ display: "block" }}>
                 <>

@@ -119,7 +119,7 @@ export const AttributeMasterListDetails = () => async (dispatch) => {
 
 export const createAttributeVlaue =
   (Attributevalue) => async (dispatch, getState) => {
-    console.log("Attributevalue", Attributevalue);
+    // console.log("Attributevalue", Attributevalue);
     const fd = new FormData();
 
     fd.append("image", Attributevalue.imageFile);
@@ -268,40 +268,38 @@ export const updateAttribute = (attributedit) => async (dispatch, getState) => {
   }
 };
 
-export const updateAttributeValue =
-  (attributeditvalue) => async (dispatch, getState) => {
-    console.log("updateAttributeValue", updateAttributeValue);
-    const fd = new FormData();
+export const updateAttributeValue = (attributeditvalue) => async (dispatch, getState) => {
+  const fd = new FormData();
 
-    fd.append("image", attributeditvalue.imageFile);
-    fd.append("value", attributeditvalue.value);
-    fd.append("color", attributeditvalue.color);
-    fd.append("attributeVlaue", attributeditvalue.attributeVlaue);
-    fd.append("prodselect", attributeditvalue.prodselect);
-    dispatch({
-      type: ATTRIBUTE_VALUE_UPDATE_REQUEST,
-      payload: attributeditvalue,
-    });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    try {
-      const { data } = await Axios.put(
-        `/api/AttributeValue/update/${attributeditvalue._id}`,
-        fd,
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      dispatch({ type: ATTRIBUTE_VALUE_UPDATE_SUCCESS, payload: data });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({ type: ATTRIBUTE_VALUE_UPDATE_FAIL, error: message });
-    }
-  };
+  fd.append("image", attributeditvalue.imageFile);
+  fd.append("value", attributeditvalue.attEditvalue);
+  fd.append("color", attributeditvalue.color);
+  fd.append("attributeVlaue", attributeditvalue.atteditType);
+  fd.append("prodselect", attributeditvalue.prodselect);
+  dispatch({
+    type: ATTRIBUTE_VALUE_UPDATE_REQUEST,
+    payload: attributeditvalue,
+  });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(
+      `/api/AttributeValue/update/${attributeditvalue._id}`,
+      fd,
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({ type: ATTRIBUTE_VALUE_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ATTRIBUTE_VALUE_UPDATE_FAIL, error: message });
+  }
+};
 // *********************************FEATURES Section**************************
 
 export const updatefeature = (featureedit) => async (dispatch, getState) => {
@@ -357,7 +355,6 @@ export const updatefeatureValue =
 // **********************Attribute*****************************
 
 export const deleteAttribute = (productId) => async (dispatch, getState) => {
-  // console.log("productId=====>", productId)
   dispatch({ type: ATTRIBUTE_DELETE_REQUEST, payload: productId });
   const {
     userSignin: { userInfo },
@@ -650,7 +647,7 @@ export const updateFvalueEnable = (FvalueId) => async (dispatch, getState) => {
 
 // ******************************Delete Multiple**********************************
 export const deleteMultipleattId = (attId) => async (dispatch, getState) => {
-  console.log("attId", attId)
+  // console.log("attId", attId)
   dispatch({ type: ATTRIBUTE_MULTIPLE_DELETE_REQUEST, payload: attId });
   const {
     userSignin: { userInfo },
