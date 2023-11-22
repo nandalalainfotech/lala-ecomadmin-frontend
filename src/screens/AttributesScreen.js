@@ -684,6 +684,7 @@ function AttributesScreen() {
     successAttValueDelete,
     FeaturemutiDeletesuccess,
     FvalueDeletesuccess,
+    successvalueDelete,
   ]);
   const navigate = useNavigate();
 
@@ -980,7 +981,7 @@ function AttributesScreen() {
     },
 
     {
-      field: "",
+      field: "View",
       headerName: "Status",
       flex: 1,
       headerClassName: "super-app-theme--header",
@@ -990,6 +991,7 @@ function AttributesScreen() {
             <FormControlLabel
               control={
                 <Switch
+                  size="small"
                   className={classes.switch}
                   checked
                   onClick={(e) => handleChangeavalue(e, params.row.id)}
@@ -1001,7 +1003,7 @@ function AttributesScreen() {
           return (
             <FormControlLabel
               control={
-                <Switch onClick={(e) => handleChangeavalue(e, params.row.id)} />
+                <Switch size="small" onClick={(e) => handleChangeavalue(e, params.row.id)} />
               }
             />
           );
@@ -1209,7 +1211,7 @@ function AttributesScreen() {
       // valueGetter:getValue,
     },
     {
-      field: "",
+      field: "featuretype",
       headerName: "Feature Type",
       flex: 1,
       headerClassName: "super-app-theme--header",
@@ -1226,6 +1228,7 @@ function AttributesScreen() {
             <FormControlLabel
               control={
                 <Switch
+                  size="small"
                   className={classes.switch}
                   checked
                   onClick={(e) => handleChangeFvalue(e, params.row.id)}
@@ -1237,7 +1240,7 @@ function AttributesScreen() {
           return (
             <FormControlLabel
               control={
-                <Switch onClick={(e) => handleChangeFvalue(e, params.row.id)} />
+                <Switch size="small" onClick={(e) => handleChangeFvalue(e, params.row.id)} />
               }
             />
           );
@@ -1686,7 +1689,7 @@ function AttributesScreen() {
                     m: 2,
                   }}
                   columns={valuecolumn}
-                  rows={assemList}
+                  rows={assemList ? assemList : ""}
                   getRowId={(rows) => rows.id}
                   rowHeight={40}
                   headerHeight={35}
@@ -2021,7 +2024,7 @@ function AttributesScreen() {
                       m: 2,
                     }}
                     columns={featurevaluecolumn}
-                    rows={FeautureList}
+                    rows={FeautureList ? FeautureList : ""}
                     getRowId={(rows) => rows.id}
                     // pageSize={10}
                     // rowsPerPageOptions= {[25, 50, 100]}

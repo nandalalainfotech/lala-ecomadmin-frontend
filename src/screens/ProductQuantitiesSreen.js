@@ -48,8 +48,8 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
 
-  const cataloglastProd = useSelector((state) => state.cataloglastProd);
-  const { lastcatProducts } = cataloglastProd;
+  // const cataloglastProd = useSelector((state) => state.cataloglastProd);
+  // const { lastcatProducts } = cataloglastProd;
 
 
   const [Quantity, setQuantity] = useState();
@@ -136,11 +136,11 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
     setEditMinQuantiry(quantityOnelist?.minQty)
   }, [quantityOnelist])
 
-  useEffect(() => {
-    if (lastcatProducts?.length > 0) {
-      setQuantity(lastcatProducts[0]?.quantity)
-    }
-  }, [lastcatProducts])
+  // useEffect(() => {
+  //   if (lastcatProducts?.length > 0) {
+  //     setQuantity(lastcatProducts[0]?.quantity)
+  //   }
+  // }, [lastcatProducts])
 
   // const [orderAction, setorderAction] = useState("");
   // const [checked, setchecked] = useState(false);
