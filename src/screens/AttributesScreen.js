@@ -444,26 +444,26 @@ function AttributesScreen() {
     }
   };
   // *****************************Attr value Multidelete section****************************************
-  const [deleteopen1, setdeleteopen1] = useState(false);
+  // const [deleteopen1, setdeleteopen1] = useState(false);
   // console.log("setdeleteopen1=========", setdeleteopen1)
   const [checkeddelete1, setCheckeddelete1] = useState(false);
   // console.log("checkeddelete1========>", checkeddelete1)
 
-  const handleClickdelete1 = () => {
-    setdeleteopen1(true);
-    setCheckeddelete1(false);
-  };
-  const handleDeletrClose1 = () => {
-    setdeleteopen1(false);
-    setCheckeddelete1(false);
-  };
+  // const handleClickdelete1 = () => {
+  //   setdeleteopen1(true);
+  //   setCheckeddelete1(false);
+  // };
+  // const handleDeletrClose1 = () => {
+  //   setdeleteopen1(false);
+  //   setCheckeddelete1(false);
+  // };
 
   const handleChangedelete1 = (event) => {
     setCheckeddelete1(event.target.checked);
   };
 
   const handleClosecheckdelet1 = () => {
-    setdeleteopen1(false);
+    setvalueOpen(false);
     if (checkeddelete1 == true) {
       dispatch(deleteMultipleattvalue({ id: valeselectionModel }));
     }
@@ -566,24 +566,24 @@ function AttributesScreen() {
     }
   };
   // *********************************
-  const [deleteopen4, setdeleteopen4] = useState(false);
+  // const [deleteopen4, setdeleteopen4] = useState(false);
   const [checkeddelete4, setCheckeddelete4] = useState(false);
 
-  const handleClickdelete4 = () => {
-    setdeleteopen4(true);
-    setCheckeddelete4(false);
-  };
-  const handleDeletrClose4 = () => {
-    setdeleteopen4(false);
-    setCheckeddelete4(false);
-  };
+  // const handleClickdelete4 = () => {
+  //   setdeleteopen4(true);
+  //   setCheckeddelete4(false);
+  // };
+  // const handleDeletrClose4 = () => {
+  //   setdeleteopen4(false);
+  //   setCheckeddelete4(false);
+  // };
 
   const handleChangedelete4 = (event) => {
     setCheckeddelete4(event.target.checked);
   };
 
   const handleClosecheckdelet4 = () => {
-    setdeleteopen4(false);
+    setFvlaueOpen(false);
     if (checkeddelete4 == true) {
       dispatch(deleteMultiplefvalue({ id: FvlaueselectionModel }));
     }
@@ -1572,7 +1572,7 @@ function AttributesScreen() {
                   Bulk
                 </Button>
 
-                <Button
+                {/* <Button
                   sx={{
                     mr: 3,
                     mt: 5,
@@ -1584,7 +1584,7 @@ function AttributesScreen() {
                   onClick={handleClickdelete1}
                 >
                   Bulk Delete
-                </Button>
+                </Button> */}
               </Box>
               <Box>
                 <Dialog open={valueopen} onClose={handlevalueClose}>
@@ -1615,18 +1615,48 @@ function AttributesScreen() {
                         />
                       }
                     />
+                    <FormControlLabel
+                      label="Delete All"
+                      control={
+                        <Checkbox
+                          checked={checkeddelete1}
+                          onChange={handleChangedelete1}
+                          inputProps={{
+                            "aria-label": "controlled",
+                          }}
+                        />
+                      }
+                    />
                   </DialogContent>
-                  <DialogActions>
+                  {/* <DialogActions>
                     <Button autoFocus onClick={handlevalueDisClose}>
                       Cancel
                     </Button>
                     <Button onClick={handlevlaueClosecheck} autoFocus>
                       Done
                     </Button>
+                  </DialogActions> */}
+                  <DialogActions>
+                    <Button autoFocus onClick={handlevalueDisClose}>
+                      Cancel
+                    </Button>
+                    {checkeddelete1 === true ? (
+                      <>
+                        <Button onClick={handleClosecheckdelet1} autoFocus>
+                          Delete
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button onClick={handlevlaueClosecheck} autoFocus>
+                          Done
+                        </Button>
+                      </>
+                    )}
                   </DialogActions>
                 </Dialog>
               </Box>
-              <Box>
+              {/* <Box>
                 <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
                   <DialogTitle>Delete</DialogTitle>
                   <DialogContent>
@@ -1652,7 +1682,7 @@ function AttributesScreen() {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </Box>
+              </Box> */}
               <Box
                 sx={{
                   height: 325,
@@ -1907,7 +1937,7 @@ function AttributesScreen() {
                   >
                     Bulk
                   </Button>
-                  <Button
+                  {/* <Button
                     sx={{
                       mr: 3,
                       mt: 2,
@@ -1919,7 +1949,7 @@ function AttributesScreen() {
                     onClick={handleClickdelete4}
                   >
                     Bulk Delete
-                  </Button>
+                  </Button> */}
                 </Box>
                 <Box>
                   <Dialog open={Fvlaueopen} onClose={handleFvlaueClose}>
@@ -1950,18 +1980,48 @@ function AttributesScreen() {
                           />
                         }
                       />
+                      <FormControlLabel
+                        label="Delete All"
+                        control={
+                          <Checkbox
+                            checked={checkeddelete4}
+                            onChange={handleChangedelete4}
+                            inputProps={{
+                              "aria-label": "controlled",
+                            }}
+                          />
+                        }
+                      />
                     </DialogContent>
-                    <DialogActions>
+                    {/* <DialogActions>
                       <Button autoFocus onClick={handleFvlaueDisClose}>
                         Cancel
                       </Button>
                       <Button onClick={handleFvlaueClosecheck} autoFocus>
                         Done
                       </Button>
+                    </DialogActions> */}
+                    <DialogActions>
+                      <Button autoFocus onClick={handleFvlaueDisClose}>
+                        Cancel
+                      </Button>
+                      {checkeddelete4 === true ? (
+                        <>
+                          <Button onClick={handleClosecheckdelet4} autoFocus>
+                            Delete
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button onClick={handleFvlaueClosecheck} autoFocus>
+                            Done
+                          </Button>
+                        </>
+                      )}
                     </DialogActions>
                   </Dialog>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Dialog open={deleteopen4} onClose={handleDeletrClose4}>
                     <DialogTitle>Delete</DialogTitle>
                     <DialogContent>
@@ -1987,7 +2047,7 @@ function AttributesScreen() {
                       </Button>
                     </DialogActions>
                   </Dialog>
-                </Box>
+                </Box> */}
                 <Box
                   sx={{
                     height: 325,

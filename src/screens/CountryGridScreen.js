@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import { CountryListDetails, deleteCountryMasterlist, deleteMultiplecountry, updateCountryEnable, updatecountryActivate } from '../actions/CountryAction';
-import { COUNTRY_DETAIL_DELETE_RESET, COUNTRY_ENABLE_RESET, COUNTRY_ENABLE_UPDATES_RESET } from '../constants/CountryConstants';
+import { COUNTRY_DETAIL_DELETE_RESET, COUNTRY_ENABLE_RESET, COUNTRY_ENABLE_UPDATES_RESET, COUNTRY_MULTIPLE_DELETE_RESET } from '../constants/CountryConstants';
 const useStyles = makeStyles({
     switch: {
         "& .Mui-checked": {
@@ -142,11 +142,11 @@ export const CountryGridScreen = () => {
             dispatch({ type: COUNTRY_ENABLE_UPDATES_RESET })
         }
         if (deletealldetails) {
-            dispatch({ type: deletealldetails })
+            dispatch({ type: COUNTRY_MULTIPLE_DELETE_RESET })
         }
         dispatch(CountryListDetails());
         dispatch(deleteMultiplecountry())
-    }, [dispatch, countrylistdel, countryenable, enableallcheckbox, deletealldetails]);
+    }, [dispatch, countrylistdel, countryenable, enableallcheckbox]);
 
     const handleChangeEnabled = (e, params) => {
         if (e.target.checked === true) {
