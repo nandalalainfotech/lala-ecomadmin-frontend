@@ -159,7 +159,7 @@ export const GeneralSettingScreen = () => {
 
   //************************************************************************************
   useEffect(() => {
-    dispatch(GeneralDetails());
+    // dispatch(GeneralDetails());
     dispatch(genSettingList());
     dispatch(genSettingAllList());
     if (genUpdate) {
