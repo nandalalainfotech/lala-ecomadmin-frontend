@@ -31,6 +31,10 @@ import {
   ORDER_STATUSASSIGN_LIST_SUCCESS,
   ORDER_STATUSASSIGN_LIST_FAIL,
   ORDER_STATUSASSIGN_LIST_RESET,
+  ORDER_STATUS_MULTIPLE_DELETE_REQUEST,
+  ORDER_STATUS_MULTIPLE_DELETE_SUCCESS,
+  ORDER_STATUS_MULTIPLE_DELETE_FAIL,
+  ORDER_STATUS_MULTIPLE_DELETE_RESET,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -111,6 +115,21 @@ export const orderDeleteReducer = (state = {}, action) => {
     case ORDER_DELETE_FAIL:
       return { loading: false, error: action.payload };
     case ORDER_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const OrderMulDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_STATUS_MULTIPLE_DELETE_REQUEST:
+      return { loading: true };
+    case ORDER_STATUS_MULTIPLE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ORDER_STATUS_MULTIPLE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_STATUS_MULTIPLE_DELETE_RESET:
       return {};
     default:
       return state;

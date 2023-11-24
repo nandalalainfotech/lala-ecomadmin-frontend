@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   AssignStatusActivate,
+  deleteMultipleOrder,
   deleteOrder,
   listOrderMine,
 } from "../actions/orderActions";
@@ -29,7 +30,15 @@ import { useFieldArray, useForm } from "react-hook-form";
 import {
   ORDER_DELETE_RESET,
   ORDER_STATUSASSIGN_LIST_RESET,
+  ORDER_STATUS_MULTIPLE_DELETE_RESET,
 } from "../constants/orderConstants";
+import Button from "@mui/material/Button";
+
+import Checkbox from "@mui/material/Checkbox";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 // import { DataGrid } from "@mui/x-data-grid";
 export default function OrderHistoryScreen() {
   const {
@@ -54,6 +63,9 @@ export default function OrderHistoryScreen() {
   const updatedatagrid = useSelector((state) => state.updatedatagrid);
   const { success } = updatedatagrid;
 
+  const OrderMulDelete = useSelector((state) => state.OrderMulDelete);
+  const { success: multipledel } = OrderMulDelete;
+
   const orderDelete = useSelector((state) => state.orderDelete);
   const { success: deleteorder } = orderDelete;
   let defaultSelected = statusdatum?.find((opt) => !!opt.Status);
@@ -67,13 +79,41 @@ export default function OrderHistoryScreen() {
     if (success) {
       dispatch({ type: ORDER_STATUSASSIGN_LIST_RESET });
     }
+    if (multipledel) {
+      dispatch({ type: ORDER_STATUS_MULTIPLE_DELETE_RESET })
+    }
     dispatch(listOrderMine());
     dispatch(StatuslistOrderMine());
     dispatch(AssignStatusActivate());
-  }, [dispatch, success, deleteorder]);
+  }, [dispatch, success, deleteorder, multipledel]);
 
   const detailHandler = (order) => {
     navigate(`/order/${order.row._id}`);
+  };
+
+  const [valueopen, setvalueOpen] = useState(false);
+  const [deleteopen1, setdeleteopen1] = useState(false);
+  const [checkeddelete1, setCheckeddelete1] = useState(false);
+
+  const handleDeletrClose1 = () => {
+    setdeleteopen1(false);
+    setCheckeddelete1(false);
+  };
+  const handleClickdelete1 = () => {
+    setdeleteopen1(true);
+    setCheckeddelete1(false);
+  };
+
+  const handleChangedelete1 = (event) => {
+    setCheckeddelete1(event.target.checked);
+  };
+
+  const handleClosecheckdelet1 = () => {
+    setvalueOpen(false);
+    setdeleteopen1(false);
+    if (checkeddelete1 == true) {
+      dispatch(deleteMultipleOrder({ id: selectionModel }));
+    }
   };
 
   const deleteHandler = (id) => {
@@ -192,7 +232,7 @@ export default function OrderHistoryScreen() {
             value={params.row.Status}
             style={{ width: "100%", height: "30px" }}
             onChange={(e) => handlestatus(e.target.value)}
-            // onClick={(e) => handlechangezone(e.target.value)}
+          // onClick={(e) => handlechangezone(e.target.value)}
           >
             <option>{params.row.Status}</option>
             {statusdatum?.map((items, key) => {
@@ -272,8 +312,8 @@ export default function OrderHistoryScreen() {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-              theme.palette.action.selectedOpacity +
-              theme.palette.action.hoverOpacity
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
@@ -289,9 +329,53 @@ export default function OrderHistoryScreen() {
 
   return (
     <div>
-      <Typography style={{ marginTop: 30 }} variant='h5'>
-        Order History
-      </Typography>
+      <Box sx={{ display: "flex" }}>
+        <Typography style={{ marginTop: 30 }} variant='h5'>
+          Order History
+        </Typography>
+        <Box sx={{ ml: "auto" }}>
+          <Button
+            variant='contained'
+            sx={{
+              mr: 3,
+              mt: 3,
+              borderRadius: "20px",
+              backgroundColor: "#0099CC",
+              fontSize: 12,
+            }}
+            onClick={handleClickdelete1}
+          >
+            Bulk
+          </Button>
+        </Box>
+        <Box>
+          <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
+            <DialogTitle>Delete</DialogTitle>
+            <DialogContent>
+              <FormControlLabel
+                label="Delete All"
+                control={
+                  <Checkbox
+                    checked={checkeddelete1}
+                    onChange={handleChangedelete1}
+                    inputProps={{
+                      "aria-label": "controlled",
+                    }}
+                  />
+                }
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleDeletrClose1}>
+                Cancel
+              </Button>
+              <Button onClick={handleClosecheckdelet1} autoFocus>
+                Done
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+      </Box>
       {loading ? (
         <CircularProgress
           size={100}
@@ -324,10 +408,10 @@ export default function OrderHistoryScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
