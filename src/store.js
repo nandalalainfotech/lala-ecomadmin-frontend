@@ -18,6 +18,7 @@ import {
   orderDetailsReducer,
   orderListReducer,
   orderMineListReducer,
+  OrderMulDeleteReducer,
   orderPayReducer,
   orderSummaryReducer,
   UpdatedatagridReducer,
@@ -635,6 +636,7 @@ const reducer = combineReducers({
   QuantityFindOne: QuantityFindOneReducer,
   PriceFindOneList: PriceFindOneListReducer,
   cataloglastProd: cataloglastProdReducer,
+  OrderMulDelete: OrderMulDeleteReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

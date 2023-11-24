@@ -222,24 +222,22 @@ function ProductDetailsScreen() {
   }
 
   function getFeatureName(catProducts) {
-    return `${
-      catProducts?.row?.featureId
-        ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)
-            ?.featurename
-        : ""
-    }`;
+    return `${catProducts?.row?.featureId
+      ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)
+        ?.featurename
+      : ""
+      }`;
   }
 
   function getBrandName(params) {
-    return `${
-      params?.row?.brand
-        ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name
-        : ""
-    }`;
+    return `${params?.row?.brand
+      ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name
+      : ""
+      }`;
   }
   function getFullName(params) {
     return {
-      icon: <CurrencyRupeeIcon style={{ fill: "blue[500]" }} />,
+      icon: <CurrencyRupeeIcon style={{ fill: "blue[500]", fontSize: 20, ml: -5 }} />,
       label: params?.row?.taxexcluded,
     };
     // ${<CurrencyRupeeIcon /> || ''};
@@ -600,17 +598,17 @@ function ProductDetailsScreen() {
               fontSize: 10,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+            {
+              backgroundColor: "#808080",
+            },
           }}
         >
           <DataGrid
@@ -654,8 +652,8 @@ function ProductDetailsScreen() {
             component='img'
             // height="200"
             image={newImg}
-            // alt={"subimgnew.filename"}
-            // onMouseOver={handleChangeimage}
+          // alt={"subimgnew.filename"}
+          // onMouseOver={handleChangeimage}
           />
         </Box>
       </Dialog>
