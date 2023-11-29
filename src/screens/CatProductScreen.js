@@ -74,7 +74,7 @@ import {
   CategorygrandChildNewLists,
   grandChildCategoryLists,
 } from "../actions/categoryMasterAction";
-import { CAT_PRODUCT_UPDATE_RESET, COMBINATION_SAVE_RESET } from "../constants/catBrandConstant";
+import { CAT_PRODUCT_UPDATE_RESET, COMBINATION_SAVE_RESET, COMBINATION_UPDATE_RESET } from "../constants/catBrandConstant";
 
 import { useNavigate } from "react-router-dom";
 import { Autocomplete } from "../../node_modules/@mui/material/index";
@@ -158,6 +158,9 @@ function CatProductScreen() {
   const ComboUpdate = useSelector((state) => state.ComboUpdate);
   const { success: deleteCombo } = ComboUpdate;
 
+  const cominationstockupdate = useSelector((state) => state.cominationstockupdate);
+  const { success: updatecomina } = cominationstockupdate;
+
   const catalogProdUpdate = useSelector((state) => state.catalogProdUpdate);
   const { success: updateprod } = catalogProdUpdate;
 
@@ -172,7 +175,7 @@ function CatProductScreen() {
 
   const prodctObj = catProducts?.find((item) => item?._id === ProdId);
 
-  console.log('prodctObj------->>>>', prodctObj);
+  // console.log('prodctObj------->>>>', prodctObj);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -192,7 +195,7 @@ function CatProductScreen() {
   const PriceFindOneList = useSelector((state) => state.PriceFindOneList);
   const { pricingOnelist } = PriceFindOneList;
 
-  console.log("pricingOnelist------------", pricingOnelist);
+  // console.log("pricingOnelist------------", pricingOnelist);
 
   let qtydata = []
   {
@@ -342,8 +345,8 @@ function CatProductScreen() {
   // console.log("catttttt",catProducts)
   const handlereference = (e) => {
     setreferenced(e.target.value)
-    let code =e.target.value
-    for (let i = 0; i < catProducts?.length; i++){
+    let code = e.target.value
+    for (let i = 0; i < catProducts?.length; i++) {
       if (code === catProducts[i]?.reference) {
         window.confirm("This reference code is already exist");
       }
@@ -429,6 +432,11 @@ function CatProductScreen() {
     setCombStock([...CombStock, value]);
   };
 
+  const handleStockudateInput = (event, params) => {
+    let updateid = params?.row?.id;
+    setCombStockId([...CombStockId, updateid])
+  }
+
   const handleChangecombination = (event) => {
     if (combination == "Simple Product") {
       setCombination(event.target.value);
@@ -489,7 +497,7 @@ function CatProductScreen() {
     }
   }
   if (defaultOption) {
-    for (let i = 0; i < defaultOption.length; i++) {
+    for (let i = 0; i < defaultOption?.length; i++) {
       let item = {
         ["id"]: defaultOption[i]?._id,
         ["atributevalue"]: defaultOption[i]?.value,
@@ -525,7 +533,7 @@ function CatProductScreen() {
     }
   };
 
-  const HandlecombSave = () => {
+  const HandlecombSave = (event) => {
     dispatch(
       updateCatStock({
         StockId: CombStockId,
@@ -533,7 +541,6 @@ function CatProductScreen() {
       })
     );
     window.confirm("Combination Stock Save SuccessFully!!");
-    event.target.reset();
     setCombStock("");
     setCombStockId("");
   };
@@ -678,9 +685,8 @@ function CatProductScreen() {
       dispatch({ type: COMBO_DELETE_RESET });
     }
     if (updateprod) {
-      dispatch({ type: CAT_PRODUCT_UPDATE_RESET })
+      dispatch({ type: CAT_PRODUCT_UPDATE_RESET });
     }
-
     dispatch(catProductList());
     dispatch(FeaturesMasterListDetails());
     dispatch(brandList());
@@ -724,7 +730,15 @@ function CatProductScreen() {
       fetchBusines();
       fetchBusinesses();
     }
-  }, [successcom, deleteCombo]);
+  }, [updateprod, successcom, deleteCombo]);
+
+  useEffect(() => {
+    if (updatecomina) {
+      dispatch({ type: COMBINATION_UPDATE_RESET });
+    }
+    dispatch(CombinationChildList());
+  }, [updatecomina])
+
   var file = new File([subimg], "name");
 
   const handleTabChange = (event, newTabIndex) => {
@@ -1043,15 +1057,15 @@ Not all shops sell new products.
 
   const deleteHandlertest = async (i) => {
     let item = subimg[i];
-    console.log("i------->>>", item);
+    // console.log("i------->>>", item);
     // const formData = new FormData();
     // formData.append("image", item);
     try {
       const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, { data: item },
       );
-      console.log("data-------->>", data);
+      // console.log("data-------->>", data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -1149,7 +1163,7 @@ Not all shops sell new products.
   const handleSelectedItemss = (event, nodeId) => {
     setParent(nodeId);
   };
-// console.log("eeeeeeeeeeeeeeeee",e.reference)
+  // console.log("eeeeeeeeeeeeeeeee",e.reference)
   // **********************COMINATION SCREEN**************************************
 
   function getnumId(comproducts) {
@@ -1210,7 +1224,7 @@ Not all shops sell new products.
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => {
-        console.log("params?.row?.filename-------->>", params?.row?.filename);
+        // console.log("params?.row?.filename-------->>", params?.row?.filename);
         return (
           <Avatar
             onClick={handleComClickOpen}
@@ -1222,7 +1236,6 @@ Not all shops sell new products.
         );
       },
     },
-
     {
       field: "",
       headerName: "Product Name",
@@ -1230,7 +1243,6 @@ Not all shops sell new products.
       headerClassName: "super-app-theme--header",
       valueGetter: getnumId,
     },
-
     {
       field: "comname",
       headerName: "Attribute Name",
@@ -1249,14 +1261,15 @@ Not all shops sell new products.
       headerName: "Attribute Color",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      // valueGetter: getnumId,
+      renderCell: (params) => (
+        params.row.color == 'undefined' ? "" : params.row.color
+      ),
     },
     {
       field: "comstock",
-      headerName: "Stock",
+      headerName: "Current Stock",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      // valueGetter: getnumId,
     },
     {
       field: "Edit",
@@ -1268,7 +1281,8 @@ Not all shops sell new products.
           size="small"
           Value={CombStock}
           onChange={(event) => handleChangInput(event)}
-          onClick={() => setCombStockId([...CombStockId, params.row.id])}
+          onClick={(event) => handleStockudateInput(event, params)}
+          // onClick={() => setCombStockId([...CombStockId, params.row.id])}
           // onChangeinc={(event) => handleChangeUpdate(event)}
           // name={index}
           id="Stock"
@@ -2800,14 +2814,13 @@ Not all shops sell new products.
                             rowsPerPageOptions={[10]}
                           // checkboxSelection
                           />
-
                           <Button
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={HandlecombSave}
+                            onClick={(event) => HandlecombSave(event)}
                             type="Click"
                           >
-                            Save
+                            {assemList ? "Update" : "Save"}
                           </Button>
                         </Box>
                       </Grid>
@@ -5080,9 +5093,9 @@ Not all shops sell new products.
                                     }}
                                     width="20%"
                                     id="margin-normal"
-                                      margin="normal"
-                                      value={referenced}
-                                      onChange={handlereference}
+                                    margin="normal"
+                                    value={referenced}
+                                    onChange={handlereference}
                                     // {...register("reference", {
                                     //   required: true,
                                     // })}
@@ -5573,7 +5586,7 @@ Not all shops sell new products.
                             <Button
                               variant="contained"
                               sx={{ mt: 3, mb: 2 }}
-                              onClick={HandlecombSave}
+                              onClick={(event) => HandlecombSave(event)}
                               type="Click"
                             >
                               Save
@@ -6356,9 +6369,9 @@ Not all shops sell new products.
                                     }}
                                     width="20%"
                                     id="margin-normal"
-                                        margin="normal"
-                                        value={referenced}
-                                        onChange={handlereference}
+                                    margin="normal"
+                                    value={referenced}
+                                    onChange={handlereference}
                                     // {...register("reference", {
                                     //   required: true,
                                     // })}
