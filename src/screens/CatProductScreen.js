@@ -237,6 +237,8 @@ function CatProductScreen() {
 
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
+  const [referenced, setreferenced] = useState("");
+
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -335,6 +337,18 @@ function CatProductScreen() {
     setTaxprice(e.target.value);
   };
 
+  // const data=catProducts
+
+  // console.log("catttttt",catProducts)
+  const handlereference = (e) => {
+    setreferenced(e.target.value)
+    let code =e.target.value
+    for (let i = 0; i < catProducts?.length; i++){
+      if (code === catProducts[i]?.reference) {
+        window.confirm("This reference code is already exist");
+      }
+    }
+  }
   const setpercentage = (e) => {
     const taxper = taxes?.find((x) => x._id === e);
     let test = (Prodexclusive * (taxper ? taxper.Rate : 0)) / 100;
@@ -923,7 +937,7 @@ Not all shops sell new products.
           featurestypevalue: featurestypevalue,
           brand: brandId,
           search: e.search,
-          reference: e.reference,
+          reference: referenced,
           combination: combination,
           quantity: e.quantity,
           taxexcluded: Prodexclusive,
@@ -1135,7 +1149,7 @@ Not all shops sell new products.
   const handleSelectedItemss = (event, nodeId) => {
     setParent(nodeId);
   };
-
+// console.log("eeeeeeeeeeeeeeeee",e.reference)
   // **********************COMINATION SCREEN**************************************
 
   function getnumId(comproducts) {
@@ -5066,10 +5080,12 @@ Not all shops sell new products.
                                     }}
                                     width="20%"
                                     id="margin-normal"
-                                    margin="normal"
-                                    {...register("reference", {
-                                      required: true,
-                                    })}
+                                      margin="normal"
+                                      value={referenced}
+                                      onChange={handlereference}
+                                    // {...register("reference", {
+                                    //   required: true,
+                                    // })}
                                     InputProps={{
                                       style: { fontSize: 13 },
                                     }}
@@ -6340,10 +6356,12 @@ Not all shops sell new products.
                                     }}
                                     width="20%"
                                     id="margin-normal"
-                                    margin="normal"
-                                    {...register("reference", {
-                                      required: true,
-                                    })}
+                                        margin="normal"
+                                        value={referenced}
+                                        onChange={handlereference}
+                                    // {...register("reference", {
+                                    //   required: true,
+                                    // })}
                                     InputProps={{
                                       style: { fontSize: 13 },
                                     }}

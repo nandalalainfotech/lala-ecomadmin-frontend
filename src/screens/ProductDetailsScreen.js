@@ -39,6 +39,9 @@ import {
 } from "../constants/catBrandConstant";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Chip from "@material-ui/core/Chip";
+import { PricingListDetails } from "../actions/prodAction";
+import { QuantityListDetails } from "../actions/ProductQuantitiesAction";
+import { brandList } from "../actions/brandAction";
 
 const useStyles1 = makeStyles({
   switch: {
@@ -62,11 +65,12 @@ function ProductDetailsScreen() {
     navigate("/productadd");
   };
   // ***************************
-  const FeaturesList = useSelector((state) => state.FeaturesList);
-  const { Featuresdetails } = FeaturesList;
+  // const FeaturesList = useSelector((state) => state.FeaturesList);
+  // const { Featuresdetails } = FeaturesList;
 
   const brandReduce = useSelector((state) => state.brandReduce);
   const { brandLists } = brandReduce;
+  console.log("bbrandLists",brandLists)
 
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
@@ -79,10 +83,15 @@ function ProductDetailsScreen() {
 
   const ProductActive = useSelector((state) => state.ProductActive);
   const { success } = ProductActive;
+  const QuantityList = useSelector((state) => state.QuantityList);
+  const { quantity } = QuantityList;
 
   const catProddelete = useSelector((state) => state.catProddelete);
   const { success: deletedsuccess } = catProddelete;
   console.log("deletedsuccess", deletedsuccess);
+  const PriceList = useSelector((state) => state.PriceList);
+  const { pricingdetail } = PriceList;
+
   // ************************
 
   // const [deleteopen, setdeleteopen] = useState(false);
@@ -199,7 +208,26 @@ function ProductDetailsScreen() {
       );
     }
   };
+  //  { catProducts?.map((item) => {
+  //   console.log("item",item)
+  //  })
+  //   }
+  //   let pricedata = []
+  //   for (let i = 0; i < catProducts?.length; i++){
+  //     for (let j = 0; j < pricingdetail?.length; j++){
 
+  //       if (catProducts[i]._id === pricingdetail[j].mprodId) {
+  //         pricedata = [
+  //           ...pricedata,{
+  //             ["catProduct"]: catProducts[i],
+  //             ["price"]:pricingdetail[j].RetailExcl
+
+  //          }
+  //        ]
+  //       }
+  //     }
+  //   }
+  //   console.log("pricingdetail", pricedata)
   useEffect(() => {
     if (deletedsuccess) {
       dispatch({ type: CAT_PRODUCT_DELETE_RESET });
@@ -213,7 +241,9 @@ function ProductDetailsScreen() {
     if (success) {
       dispatch({ type: CAT_PRODUCT_ACTIVE_UPDATE_RESET });
     }
-
+    dispatch(brandList());
+    dispatch(QuantityListDetails());
+    dispatch(PricingListDetails());
     dispatch(catProductList());
   }, [success, successpro, successDelete, deletedsuccess]);
 
@@ -221,24 +251,50 @@ function ProductDetailsScreen() {
     return `${orders.row.createdAt.substring(0, 10) || ""}`;
   }
 
-  function getFeatureName(catProducts) {
-    return `${catProducts?.row?.featureId
-      ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)
-        ?.featurename
-      : ""
-      }`;
-  }
+  // function getFeatureName(catProducts) {
+  //   return `${
+  //     catProducts?.row?.featureId
+  //       ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)
+  //           ?.featurename
+  //       : ""
+  //   }`;
+  // }
 
   function getBrandName(params) {
-    return `${params?.row?.brand
-      ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name
-      : ""
-      }`;
+    console.log("params",params)
+    return `${
+      params?.row?.brand
+        ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name
+        : ""
+    }`;
   }
+
+  function getQuantity(params) {
+    
+    return `${
+      quantity?.find((x) => x?.mprodId === params?.row?._id)
+      ? quantity?.find((x) => x?.mprodId === params?.row?._id)
+          ?.Qty
+
+      : 0
+    }`;
+  }
+  console.log("quantity", quantity);
+  
+
   function getFullName(params) {
     return {
-      icon: <CurrencyRupeeIcon style={{ fill: "blue[500]", fontSize: 20, ml: -5 }} />,
-      label: params?.row?.taxexcluded,
+      icon: (
+        <CurrencyRupeeIcon
+          style={{ fill: "blue[500]", fontSize: 20, ml: -5 }}
+        />
+      ),
+      label: `${
+        pricingdetail?.find((x) => x?.mprodId === params?.row?._id)
+          ? pricingdetail?.find((x) => x?.mprodId === params?.row?._id)
+              ?.RetailExcl
+          : 0
+      }`,
     };
     // ${<CurrencyRupeeIcon /> || ''};
   }
@@ -273,7 +329,7 @@ function ProductDetailsScreen() {
             // onMouseOut={handleClose}
             sx={{ height: "50px", width: "50px", cursor: "pointer" }}
             src={`/api/uploads/showCatProd/${params.row._id}`}
-            alt='avatar'
+            alt="avatar"
           />
         );
       },
@@ -285,13 +341,13 @@ function ProductDetailsScreen() {
       headerClassName: "super-app-theme--header",
       valueGetter: getDate,
     },
-    {
-      field: "featureId",
-      headerName: "Feature",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-      valueGetter: getFeatureName,
-    },
+    // {
+    //   field: "featureId",
+    //   headerName: "Feature",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    //   valueGetter: getFeatureName,
+    // },
     {
       field: "reference",
       headerName: "Reference",
@@ -315,11 +371,12 @@ function ProductDetailsScreen() {
       headerName: "Quantity",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => {
-        return (
-          <Typography sx={{ fontSize: 13 }}>{params.row.quantity}</Typography>
-        );
-      },
+      // renderCell: (params) => {
+      //   return (
+      //     <Typography sx={{ fontSize: 13 }}>{params.row.quantity}</Typography>
+      //   );
+      // },
+      valueGetter: getQuantity,
     },
     {
       field: "taxexcluded",
@@ -329,7 +386,7 @@ function ProductDetailsScreen() {
       valueGetter: getFullName,
       renderCell: (params) => {
         return (
-          <Chip variant='outlined' size='small' {...getFullName(params)} />
+          <Chip variant="outlined" size="small" {...getFullName(params)} />
         );
       },
       // renderCell: () => {
@@ -351,7 +408,7 @@ function ProductDetailsScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={swicclasses.switch}
                   checked
                   onClick={(e) => handleChangedata(e, params.row._id)}
@@ -364,7 +421,7 @@ function ProductDetailsScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   onClick={(e) => handleChangedata(e, params.row._id)}
                 />
               }
@@ -400,7 +457,7 @@ function ProductDetailsScreen() {
   ];
   return (
     <>
-      <Typography variant='h6' sx={{ mt: -3 }}>
+      <Typography variant="h6" sx={{ mt: -3 }}>
         Products
       </Typography>
       <Box sx={{ display: "flex" }}>
@@ -418,11 +475,11 @@ function ProductDetailsScreen() {
 
         <Box sx={{ display: "flex", flexDerection: "row", mt: 0 }}>
           <Breadcrumbs
-            separator={<NavigateNextIcon fontSize='small' />}
-            aria-label='breadcrumb'
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
           >
             <Link
-              to='/'
+              to="/"
               style={{
                 color: "rgba(0, 0, 0, 0.6)",
                 fontSize: "13px",
@@ -436,7 +493,7 @@ function ProductDetailsScreen() {
 
         <Box sx={{ ml: "auto" }}>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               mr: 3,
 
@@ -465,8 +522,8 @@ function ProductDetailsScreen() {
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
-            size='small'
-            variant='contained'
+            size="small"
+            variant="contained"
             onClick={handleClickvalueOpen}
           >
             Bulk
@@ -492,10 +549,10 @@ function ProductDetailsScreen() {
             <DialogTitle>Select One</DialogTitle>
             <DialogContent>
               <FormControlLabel
-                label='Show All'
+                label="Show All"
                 control={
                   <Checkbox
-                    size='small'
+                    size="small"
                     checked={valuecheckedcheck}
                     onChange={handleChangevalue}
                     inputProps={{
@@ -506,10 +563,10 @@ function ProductDetailsScreen() {
               />
 
               <FormControlLabel
-                label='Hide All'
+                label="Hide All"
                 control={
                   <Checkbox
-                    size='small'
+                    size="small"
                     checked={valuedchecked}
                     onChange={handlevaluedisableChange}
                     inputProps={{
@@ -519,10 +576,10 @@ function ProductDetailsScreen() {
                 }
               />
               <FormControlLabel
-                label='Delete All'
+                label="Delete All"
                 control={
                   <Checkbox
-                    size='small'
+                    size="small"
                     checked={checkeddelete}
                     onChange={handleChangedelete}
                     inputProps={{
@@ -598,17 +655,17 @@ function ProductDetailsScreen() {
               fontSize: 10,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#330033",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+              {
+                backgroundColor: "#808080",
+              },
           }}
         >
           <DataGrid
@@ -620,7 +677,7 @@ function ProductDetailsScreen() {
             columns={columns}
             rows={catProducts ? catProducts : ""}
             getRowId={(rows) => rows._id}
-            VerticalAlignment='Center'
+            VerticalAlignment="Center"
             rowHeight={60}
             headerHeight={35}
             pagination
@@ -649,11 +706,11 @@ function ProductDetailsScreen() {
               cursor: "pointer",
               justifycontent: "space-between",
             }}
-            component='img'
+            component="img"
             // height="200"
             image={newImg}
-          // alt={"subimgnew.filename"}
-          // onMouseOver={handleChangeimage}
+            // alt={"subimgnew.filename"}
+            // onMouseOver={handleChangeimage}
           />
         </Box>
       </Dialog>

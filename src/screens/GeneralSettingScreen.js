@@ -27,7 +27,7 @@ export const GeneralSettingScreen = () => {
     setcoverimg(e.target.files);
   }
   const params = useParams();
-  console.log('params', params);
+  console.log("params", params);
   const AttId = params.id;
 
   const [selectedFile, setSelectedFile] = useState();
@@ -73,6 +73,7 @@ export const GeneralSettingScreen = () => {
   } = useForm();
 
   const SavegeneralDetails = async (e) => {
+    console.log("Finish---------->>>", Finish);
     if (Finish === 1) {
       const fd = new FormData();
       // fd.append("image", selectedFilenew);
@@ -134,7 +135,7 @@ export const GeneralSettingScreen = () => {
           name: EditName,
           imageFile: coverimg,
           track: EditUrl,
-        }),
+        })
       );
       window.confirm("Details Updated Successfully!!");
       event.target.reset();
@@ -148,7 +149,7 @@ export const GeneralSettingScreen = () => {
           name: EditName,
           imageFile: coverimg,
           track: EditUrl,
-        }),
+        })
       );
 
       navigate(`/costAndShip/${AttId}`);

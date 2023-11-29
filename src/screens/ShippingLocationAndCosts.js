@@ -69,6 +69,7 @@ export default function ShippingLocationAndCosts() {
   const freeshipdata = shippinglistdata?.find((x) => x.preId === AttId)
     ? shippinglistdata?.find((x) => x.preId === AttId)
     : undefined;
+  console.log("freeshipdata--------->>>",freeshipdata);
   // this.handlemethod(freeshipdata)
 
   // const freeshipdataa = shippinglistdata?.find((x) => x.preId = AttId);

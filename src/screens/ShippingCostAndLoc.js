@@ -53,6 +53,7 @@ import IconButton from "@mui/material/IconButton";
 export default function ShippingLocationAndCosts() {
   const params = useParams();
   const AttId = params.id;
+ 
 
   const shippinglist = useSelector((state) => state.shippinglist);
   const { success: shippingdetail } = shippinglist;
@@ -66,6 +67,7 @@ export default function ShippingLocationAndCosts() {
   //**************************ALL LIST FOR THIS SCREEN*****************/
   const shiploccostallList = useSelector((state) => state.shiploccostallList);
   const { shippinglistdata } = shiploccostallList;
+  console.log("shippinglistdata--------->>>", shippinglistdata);
 
   const freeShippingUpdate = useSelector((state) => state.freeShippingUpdate);
   const { success: freeShipping } = freeShippingUpdate;
@@ -271,7 +273,7 @@ export default function ShippingLocationAndCosts() {
     if (Finish === 1) {
       dispatch(
         shippingDetails({
-          preId: freeshipdata == undefined ? AttId : dataype?._id,
+          preId: dataype?._id,
           checked: checked,
           tax: behaviour,
           title: combination,
@@ -287,7 +289,7 @@ export default function ShippingLocationAndCosts() {
     } else {
       dispatch(
         shippingDetails({
-          preId: freeshipdata == undefined ? AttId : dataype?._id,
+          preId: dataype?._id,
           checked: checked,
           tax: behaviour,
           title: combination,
@@ -383,7 +385,7 @@ export default function ShippingLocationAndCosts() {
                 <React.Fragment>
                   <CssBaseline />
                   <Box
-                    variant='outlined'
+                    variant="outlined"
                     onSubmit={handleSubmit(UpdateshipDetails)}
                     sx={{
                       boxShadow: 3,
@@ -402,16 +404,16 @@ export default function ShippingLocationAndCosts() {
                       fontSize: "0.875rem",
                       fontWeight: "00",
                     }}
-                    component='form'
+                    component="form"
                   >
                     <Box>
-                      <Breadcrumbs aria-label='breadcrumb flat'>
-                        <div className='breadcrumb flat'>
-                          <Link to='/logicGrid'>Carriers</Link>
+                      <Breadcrumbs aria-label="breadcrumb flat">
+                        <div className="breadcrumb flat">
+                          <Link to="/logicGrid">Carriers</Link>
                           <Link to={`/logistic/${AttId}`}>
                             General Settings
                           </Link>
-                          <Link to='/costAndShip' className='active'>
+                          <Link to="/costAndShip" className="active">
                             Shipping locations and costs
                           </Link>
                           <Link to={`/sizeweightgroup/${AttId}`}>
@@ -459,12 +461,12 @@ export default function ShippingLocationAndCosts() {
                             onChange={handleChangeChekced1}
                           />
                         }
-                        labelPlacement='start'
+                        labelPlacement="start"
                       />
 
                       <Box sx={{ textAlign: "left" }}>
                         <FormControl>
-                          <FormLabel id='demo-radio-buttons-group-label'>
+                          <FormLabel id="demo-radio-buttons-group-label">
                             <Typography
                               sx={{ m: 0, ml: 40, fontSize: "0.875rem" }}
                             >
@@ -472,14 +474,14 @@ export default function ShippingLocationAndCosts() {
                             </Typography>
                           </FormLabel>
                           <RadioGroup
-                            aria-labelledby='demo-radio-buttons-group-label'
-                            name='radio-buttons-group'
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            name="radio-buttons-group"
                             value={EditCombination}
                             onChange={(e) => setEditCombination(e.target.value)}
                           >
                             <FormControlLabel
-                              value='According to total price'
-                              control={<Radio size='small' name='totalprice' />}
+                              value="According to total price"
+                              control={<Radio size="small" name="totalprice" />}
                               label={
                                 <Typography sx={{ fontSize: 13 }}>
                                   According to total price
@@ -488,9 +490,9 @@ export default function ShippingLocationAndCosts() {
                               sx={{ m: 0, ml: 48, fontSize: "1rem", mt: -3.5 }}
                             />
                             <FormControlLabel
-                              value=' According to total weight'
+                              value=" According to total weight"
                               control={
-                                <Radio size='small' name='totalweight' />
+                                <Radio size="small" name="totalweight" />
                               }
                               sx={{ m: 0, ml: 48, fontSize: "1rem" }}
                               label={
@@ -514,10 +516,10 @@ export default function ShippingLocationAndCosts() {
                             fontSize: "0.875rem",
                             width: "14.5rem",
                           }}
-                          labelId='demo-simple-select-label'
+                          labelId="demo-simple-select-label"
                           value={EditBehaviour}
                           onChange={(e) => setEditBehaviour(e.target.value)}
-                          size='small'
+                          size="small"
                         >
                           <MenuItem
                             sx={{ fontSize: "0.875rem" }}
@@ -568,7 +570,7 @@ export default function ShippingLocationAndCosts() {
                                       >
                                         <TextField
                                           // name="range1"
-                                          size='small'
+                                          size="small"
                                           sx={{
                                             width: "135px",
                                             p: 1,
@@ -585,7 +587,7 @@ export default function ShippingLocationAndCosts() {
                                           InputProps={{
                                             startAdornment: (
                                               <InputAdornment
-                                                position='start'
+                                                position="start"
                                                 sx={{
                                                   ml: -1.7,
                                                   padding: "17px 10px",
@@ -626,8 +628,8 @@ export default function ShippingLocationAndCosts() {
                                     }}
                                   >
                                     <TextField
-                                      name='range2'
-                                      size='small'
+                                      name="range2"
+                                      size="small"
                                       sx={{
                                         width: "135px",
                                         p: 1,
@@ -640,7 +642,7 @@ export default function ShippingLocationAndCosts() {
                                       InputProps={{
                                         startAdornment: (
                                           <InputAdornment
-                                            position='start'
+                                            position="start"
                                             sx={{
                                               ml: -1.7,
                                               padding: "17px 10px",
@@ -674,7 +676,7 @@ export default function ShippingLocationAndCosts() {
                                     <Checkbox
                                       defaultChecked
                                       sx={{ ml: 21 }}
-                                      size='small'
+                                      size="small"
                                     />
                                   }
                                 />
@@ -687,8 +689,8 @@ export default function ShippingLocationAndCosts() {
                                       }}
                                     >
                                       <TextField
-                                        name='range3'
-                                        size='small'
+                                        name="range3"
+                                        size="small"
                                         sx={{
                                           width: "120px",
                                           ml: 2,
@@ -702,7 +704,7 @@ export default function ShippingLocationAndCosts() {
                                         InputProps={{
                                           startAdornment: (
                                             <InputAdornment
-                                              position='start'
+                                              position="start"
                                               sx={{
                                                 ml: -1.7,
                                                 padding: "17px 10px",
@@ -738,7 +740,7 @@ export default function ShippingLocationAndCosts() {
                                         <Box>
                                           {" "}
                                           <Typography
-                                            component='li'
+                                            component="li"
                                             sx={{
                                               fontSize: "0.875rem",
                                               listStyleType: "none",
@@ -778,8 +780,8 @@ export default function ShippingLocationAndCosts() {
                                               }}
                                             >
                                               <TextField
-                                                name='data4'
-                                                size='small'
+                                                name="data4"
+                                                size="small"
                                                 sx={{
                                                   width: "118px",
                                                   ml: 2,
@@ -794,7 +796,7 @@ export default function ShippingLocationAndCosts() {
                                                 InputProps={{
                                                   startAdornment: (
                                                     <InputAdornment
-                                                      position='start'
+                                                      position="start"
                                                       sx={{
                                                         ml: -1.7,
                                                         padding: "17px 10px",
@@ -830,8 +832,8 @@ export default function ShippingLocationAndCosts() {
                         </FormGroup>
                       </Box>
                       <Button
-                        variant='outlined'
-                        size='small'
+                        variant="outlined"
+                        size="small"
                         onClick={handleappendupdate}
                         sx={{ mt: 2 }}
                       >
@@ -839,8 +841,8 @@ export default function ShippingLocationAndCosts() {
                       </Button>
 
                       <Button
-                        variant='outlined'
-                        size='small'
+                        variant="outlined"
+                        size="small"
                         onClick={() => remove(testindex)}
                         sx={{ mt: 2 }}
                       >
@@ -991,27 +993,27 @@ export default function ShippingLocationAndCosts() {
                       <div>
                         <Button
                           sx={{ ml: 10 }}
-                          variant='outlined'
-                          size='medium'
-                          type='submit'
+                          variant="outlined"
+                          size="medium"
+                          type="submit"
                           onClick={onPreviousChange1}
                         >
                           Previous
                         </Button>
                         <Button
                           sx={{ ml: 2 }}
-                          variant='outlined'
-                          size='medium'
-                          type='submit'
+                          variant="outlined"
+                          size="medium"
+                          type="submit"
                           onClick={() => setNext(2)}
                         >
                           Next
                         </Button>
                         <Button
                           sx={{ ml: 2 }}
-                          variant='outlined'
-                          size='medium'
-                          type='submit'
+                          variant="outlined"
+                          size="medium"
+                          type="submit"
                           onClick={() => setFinish(1)}
                         >
                           Finish
@@ -1033,7 +1035,7 @@ export default function ShippingLocationAndCosts() {
                   <React.Fragment>
                     <CssBaseline />
                     <Box
-                      variant='outlined'
+                      variant="outlined"
                       onSubmit={handleSubmit(SaveshipDetails)}
                       sx={{
                         boxShadow: 3,
@@ -1054,20 +1056,20 @@ export default function ShippingLocationAndCosts() {
                         fontSize: "0.875rem",
                         fontWeight: "00",
                       }}
-                      component='form'
+                      component="form"
                     >
                       <Box>
-                        <Breadcrumbs aria-label='breadcrumb flat'>
-                          <div className='breadcrumb flat'>
-                            <Link to='/logicGrid'>Carriers</Link>
-                            <Link className='deactive'>General Settings</Link>
-                            <Link to='/costAndShip' className='active'>
+                        <Breadcrumbs aria-label="breadcrumb flat">
+                          <div className="breadcrumb flat">
+                            <Link to="/logicGrid">Carriers</Link>
+                            <Link className="deactive">General Settings</Link>
+                            <Link to="/costAndShip" className="active">
                               Shipping locations and costs
                             </Link>
-                            <Link className='deactive'>
+                            <Link className="deactive">
                               Size,weight and group access
                             </Link>
-                            <Link className='deactive'>Summary</Link>
+                            <Link className="deactive">Summary</Link>
                           </div>
                         </Breadcrumbs>
                       </Box>
@@ -1109,12 +1111,12 @@ export default function ShippingLocationAndCosts() {
                               onChange={handleChangeChekced}
                             />
                           }
-                          labelPlacement='start'
+                          labelPlacement="start"
                         />
 
                         <Box sx={{ textAlign: "left" }}>
                           <FormControl>
-                            <FormLabel id='demo-radio-buttons-group-label'>
+                            <FormLabel id="demo-radio-buttons-group-label">
                               <Typography
                                 sx={{ m: 0, ml: 40, fontSize: "0.875rem" }}
                               >
@@ -1122,15 +1124,15 @@ export default function ShippingLocationAndCosts() {
                               </Typography>
                             </FormLabel>
                             <RadioGroup
-                              aria-labelledby='demo-radio-buttons-group-label'
-                              name='radio-buttons-group'
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="radio-buttons-group"
                               // value={AttId == 1 ? combination : viewdata?.title}
                               onChange={handlechangeradio}
                             >
                               <FormControlLabel
-                                value='According to total price'
+                                value="According to total price"
                                 control={
-                                  <Radio size='small' name='totalprice' />
+                                  <Radio size="small" name="totalprice" />
                                 }
                                 label={
                                   <Typography sx={{ fontSize: 13 }}>
@@ -1145,9 +1147,9 @@ export default function ShippingLocationAndCosts() {
                                 }}
                               />
                               <FormControlLabel
-                                value=' According to total weight'
+                                value=" According to total weight"
                                 control={
-                                  <Radio size='small' name='totalweight' />
+                                  <Radio size="small" name="totalweight" />
                                 }
                                 sx={{ m: 0, ml: 48, fontSize: "1rem" }}
                                 label={
@@ -1171,10 +1173,10 @@ export default function ShippingLocationAndCosts() {
                               fontSize: "0.875rem",
                               width: "14.5rem",
                             }}
-                            labelId='demo-simple-select-label'
+                            labelId="demo-simple-select-label"
                             onChange={(e) => setBehaviour(e.target.value)}
                             // value={behaviour }
-                            size='small'
+                            size="small"
                           >
                             <MenuItem
                               sx={{ fontSize: "0.875rem" }}
@@ -1240,7 +1242,7 @@ export default function ShippingLocationAndCosts() {
                                           >
                                             <TextField
                                               // name="range1"
-                                              size='small'
+                                              size="small"
                                               sx={{
                                                 width: "135px",
                                                 p: 1,
@@ -1258,7 +1260,7 @@ export default function ShippingLocationAndCosts() {
                                               InputProps={{
                                                 startAdornment: (
                                                   <InputAdornment
-                                                    position='start'
+                                                    position="start"
                                                     sx={{
                                                       ml: -1.7,
                                                       padding: "17px 10px",
@@ -1302,8 +1304,8 @@ export default function ShippingLocationAndCosts() {
                                         }}
                                       >
                                         <TextField
-                                          name='range2'
-                                          size='small'
+                                          name="range2"
+                                          size="small"
                                           sx={{
                                             width: "135px",
                                             p: 1,
@@ -1316,7 +1318,7 @@ export default function ShippingLocationAndCosts() {
                                           InputProps={{
                                             startAdornment: (
                                               <InputAdornment
-                                                position='start'
+                                                position="start"
                                                 sx={{
                                                   ml: -1.7,
                                                   padding: "17px 10px",
@@ -1350,7 +1352,7 @@ export default function ShippingLocationAndCosts() {
                                         <Checkbox
                                           defaultChecked
                                           sx={{ ml: 21 }}
-                                          size='small'
+                                          size="small"
                                         />
                                       }
                                     />
@@ -1363,8 +1365,8 @@ export default function ShippingLocationAndCosts() {
                                           }}
                                         >
                                           <TextField
-                                            name='range3'
-                                            size='small'
+                                            name="range3"
+                                            size="small"
                                             sx={{
                                               width: "120px",
                                               ml: 2,
@@ -1379,7 +1381,7 @@ export default function ShippingLocationAndCosts() {
                                             InputProps={{
                                               startAdornment: (
                                                 <InputAdornment
-                                                  position='start'
+                                                  position="start"
                                                   sx={{
                                                     ml: -1.7,
                                                     padding: "17px 10px",
@@ -1417,7 +1419,7 @@ export default function ShippingLocationAndCosts() {
                                             <Box>
                                               {" "}
                                               <Typography
-                                                component='li'
+                                                component="li"
                                                 sx={{
                                                   fontSize: "0.875rem",
                                                   listStyleType: "none",
@@ -1457,8 +1459,8 @@ export default function ShippingLocationAndCosts() {
                                                   }}
                                                 >
                                                   <TextField
-                                                    name='data4'
-                                                    size='small'
+                                                    name="data4"
+                                                    size="small"
                                                     sx={{
                                                       width: "118px",
                                                       ml: 2,
@@ -1473,7 +1475,7 @@ export default function ShippingLocationAndCosts() {
                                                     InputProps={{
                                                       startAdornment: (
                                                         <InputAdornment
-                                                          position='start'
+                                                          position="start"
                                                           sx={{
                                                             ml: -1.7,
                                                             padding:
@@ -1511,8 +1513,8 @@ export default function ShippingLocationAndCosts() {
                             </FormGroup>
                           </Box>
                           <Button
-                            variant='outlined'
-                            size='small'
+                            variant="outlined"
+                            size="small"
                             onClick={handleappendupdate}
                             sx={{ mt: 2 }}
                           >
@@ -1520,8 +1522,8 @@ export default function ShippingLocationAndCosts() {
                           </Button>
 
                           <Button
-                            variant='outlined'
-                            size='small'
+                            variant="outlined"
+                            size="small"
                             onClick={() => remove(testindex)}
                             sx={{ mt: 2 }}
                           >
@@ -1672,19 +1674,19 @@ export default function ShippingLocationAndCosts() {
                         <div>
                           <Button
                             sx={{ ml: 25 }}
-                            variant='outlined'
-                            size='medium'
-                            type='submit'
+                            variant="outlined"
+                            size="medium"
+                            type="submit"
                             onClick={() => setNext(2)}
                           >
                             Next
                           </Button>
                           <Button
                             sx={{ ml: 2 }}
-                            variant='outlined'
-                            size='medium'
-                            type='submit'
-                            color='success'
+                            variant="outlined"
+                            size="medium"
+                            type="submit"
+                            color="success"
                             onClick={() => setFinish(1)}
                           >
                             Finish
