@@ -111,7 +111,7 @@ export const catProductViewList = () => async (dispatch) => {
 
 export const updateCatProduct =
   (catProdUpdate) => async (dispatch, getState) => {
-    console.log('catProdUpdate', catProdUpdate);
+    // console.log('catProdUpdate', catProdUpdate);
     dispatch({ type: CAT_PRODUCT_UPDATE_REQUEST });
     const {
       userSignin: { userInfo },
@@ -183,7 +183,7 @@ export const catProdIndividualId = (productId) => async (dispatch) => {
   dispatch({ type: CAT_PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const { data } = await Axios.get(`/api/catProduct/${productId}`);
-    console.log('data', data);
+    // console.log('data', data);
     dispatch({ type: CAT_PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -253,7 +253,6 @@ export const CombinationChildList = () => async (dispatch) => {
 };
 
 export const updateCatStock = (StockId) => async (dispatch, getState) => {
-  // console.log('StockId',StockId);
   dispatch({ type: COMBINATION_UPDATE_REQUEST });
   const {
     userSignin: { userInfo },
@@ -300,7 +299,7 @@ export const updateproductactive = (attId) => async (dispatch, getState) => {
 };
 
 export const updateProductEnable = (EnableId) => async (dispatch, getState) => {
-  console.log('EnableId', EnableId);
+  // console.log('EnableId', EnableId);
   dispatch({ type: PRODUCT_ENABLE_UPDATE_REQUEST, payload: EnableId });
   const {
     userSignin: { userInfo },
@@ -350,7 +349,7 @@ export const deleteMultipleProduct = (empId) => async (dispatch, getState) => {
 
 export const deleteImages =
   (empId) => async (dispatch,) => {
-    console.log("empId", empId);
+    // console.log("empId", empId);
     dispatch({ type: IMAGE_DELETE_REQUEST, payload: empId });
 
     try {
