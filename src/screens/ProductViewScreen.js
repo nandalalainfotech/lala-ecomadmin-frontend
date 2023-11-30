@@ -33,8 +33,6 @@ function ProductViewScreen() {
   const catProdDetail = useSelector((state) => state.catProdDetail);
   const { loading, error, catalogIndProd } = catProdDetail;
 
-  console.log("catalogIndProd============>>>", catalogIndProd);
-
   const CategoryMasterallList = useSelector(
     (state) => state.CategoryMasterallList
   );
@@ -55,6 +53,7 @@ function ProductViewScreen() {
 
   const [images, setImage] = useState();
   const [subimg, setSubImage] = useState();
+
   const [categoryName, setCategoryName] = useState();
 
   const handleChangeimage = (e) => {
@@ -104,31 +103,33 @@ function ProductViewScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <Grid container spacing={2}>
-          {/* <Grid xs sx={{margin:10}}> */}
-
-          <Box sx={{ mt: 4, display: { xs: "none", sm: "none", md: "none" } }}>
-            <CardMedia
+        <Grid container spacing={3}>
+          {/* four imgae except moblie  */}
+          <Grid item lg={2}>
+            <Grid
               sx={{
-                border: "2px solid gray",
-                cursor: "pointer",
-                transition: "transform .5s ease",
-                "&:hover": {
-                  transform: "scale(1.1)",
+                zIndex: 1,
+                display: {
+                  xs: "none",
+                  md: "block",
+                  sm: "block",
+                  lg: "block",
+                  xl: "block",
                 },
-                margin: 1,
-                width: 120,
-                height: 150,
-                justifycontent: "space-between",
               }}
-              component="img"
-              // height="200"
-              image={`/api/uploads/show/${productId}`}
-              alt={"subimgnew.filename"}
-              onMouseOver={handleChangeimage}
-            />
-            {subimg?.map((subimgnew, index) => (
-              <Box key={index}>
+            >
+              <Box
+                sx={{
+                  padding: 0,
+                  margin: 0,
+                  mt: 10,
+                  listStyle: "none",
+                  display: "inline",
+                  flexFlow: "wrap column",
+                  flexDirection: "column",
+                  alignItems: "left",
+                }}
+              >
                 <CardMedia
                   sx={{
                     border: "2px solid gray",
@@ -138,40 +139,53 @@ function ProductViewScreen() {
                       transform: "scale(1.1)",
                     },
                     margin: 1,
-                    width: 120,
-                    height: 150,
+                    width: { xs: 60, sm: 50 },
+                    height: { xs: 90, sm: 50 },
                     justifycontent: "space-between",
                   }}
                   component="img"
                   // height="200"
-                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                  image={`/api/uploads/show/${productId}`}
                   alt={"subimgnew.filename"}
                   onMouseOver={handleChangeimage}
                 />
+                {subimg?.map((subimgnew, index) => (
+                  <Box key={index}>
+                    <CardMedia
+                      sx={{
+                        border: "2px solid gray",
+                        cursor: "pointer",
+                        transition: "transform .5s ease",
+                        "&:hover": {
+                          transform: "scale(1.1)",
+                        },
+                        margin: 1,
+
+                        width: { xs: 60, sm: 50 },
+                        height: { xs: 90, sm: 50 },
+                        justifycontent: "space-between",
+                      }}
+                      component="img"
+                      image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                      alt={"subimgnew.filename"}
+                      onMouseOver={handleChangeimage}
+                    />
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
-          {/* </Grid> */}
-          <Grid
-            item
-            sx={{
-              zIndex: 1,
-              display: {
-                xs: "none",
-                md: "block",
-                sm: "block",
-                lg: "block",
-                xl: "block",
-              },
-            }}
-          >
+            </Grid>
+          </Grid>
+          {/* single big image */}
+          <Grid item lg={6}>
+            {" "}
             <Box
               sx={{
                 borderRadius: 0,
                 width: "auto",
-                m: 3,
-                // boxShadow:
-                //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                mt: -4,
+                mb: 3,
+                mr: 10,
+                ml: -10,
               }}
             >
               <ReactImageMagnify
@@ -180,7 +194,7 @@ function ProductViewScreen() {
                     className: "large",
                     src: `${images}`,
                     width: 380,
-                    height: 490,
+                    height: 430,
                   },
                   largeImage: {
                     className: "small",
@@ -209,64 +223,8 @@ function ProductViewScreen() {
                
               </Box> */}
             </Box>
-            <Box
-              sx={{
-                padding: 0,
-                margin: 0,
-                mt: 10,
-                width: "auto",
-                listStyle: "none",
-                display: "flex",
-                flexFlow: "wrap row",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <CardMedia
-                sx={{
-                  border: "2px solid gray",
-                  cursor: "pointer",
-                  transition: "transform .5s ease",
-                  "&:hover": {
-                    transform: "scale(1.1)",
-                  },
-                  margin: 1,
-                  width: { xs: 60, sm: 120 },
-                  height: { xs: 90, sm: 150 },
-                  justifycontent: "space-between",
-                }}
-                component="img"
-                // height="200"
-                image={`/api/uploads/show/${productId}`}
-                alt={"subimgnew.filename"}
-                onMouseOver={handleChangeimage}
-              />
-              {subimg?.map((subimgnew, index) => (
-                <Box key={index}>
-                  <CardMedia
-                    sx={{
-                      border: "2px solid gray",
-                      cursor: "pointer",
-                      transition: "transform .5s ease",
-                      "&:hover": {
-                        transform: "scale(1.1)",
-                      },
-                      margin: 1,
-
-                      width: { xs: 60, sm: 120 },
-                      height: { xs: 90, sm: 150 },
-                      justifycontent: "space-between",
-                    }}
-                    component="img"
-                    // height="200"
-                    image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
-                    alt={"subimgnew.filename"}
-                    onMouseOver={handleChangeimage}
-                  />
-                </Box>
-              ))}
-            </Box>
           </Grid>
+          {/*  four image only for mobile view */}
           <Grid
             sx={{ mt: 4, display: { xs: "block", sm: "none", md: "none" } }}
           >
@@ -279,7 +237,7 @@ function ProductViewScreen() {
                 display: "flex",
                 flexFlow: "wrap row",
                 flexDirection: "row",
-                alignItems: "center",
+                alignItems: "right",
               }}
             >
               <CardMedia
@@ -327,94 +285,78 @@ function ProductViewScreen() {
               ))}
             </Box>
           </Grid>
-          <Grid
-            item
-            sx={{
-              display: {
-                xs: "block",
-                md: "none",
-                sm: "none",
-                lg: "none",
-                xl: "none",
-              },
-            }}
-          >
-            <Box>
-              <CardMedia
-                sx={{
+          {/* product details */}
+          <Grid item lg={4}>
+            <Box
+              sx={{
+                borderRadius: 0,
+                width: "auto",
+                mt: -3,
+                mb: 3,
+                mr: 10,
+                ml: -10,
+              }}
+            >
+              <Card
+                style={{
+                  padding: 30,
+                  border: 0,
                   borderRadius: 0,
-                  width: "100%",
-                  marginTop: 3,
-                  height: "100%",
-                  // boxShadow:
-                  //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  margin: 20,
+                  width: "365px",
                 }}
-                component="img"
-                src={images}
-              ></CardMedia>
-            </Box>
-          </Grid>
+              >
+                <Box>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      color: "#000",
+                      fontWeight: 800,
+                      textTransform: "capitalize",
+                      fontFamily: "Raleway",
+                    }}
+                  >
+                    {catalogIndProd.prodname}
+                  </Typography>
 
-          <Grid item sx={{ zIndex: 0 }}>
-            <Grid>
-              <Box>
-                <Card
-                  style={{
-                    padding: 30,
-                    borderRadius: 0,
-                    margin: 20,
-                    width: 570,
-                    height: 370,
-                    // boxShadow:
-                    //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      variant="h3"
-                      gutterBottom
-                      style={{ color: "#A02020", textTransform: "capitalize" }}
-                    >
-                      {catalogIndProd.prodname}
-                    </Typography>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      mt: 5,
+                    }}
+                    gutterBottom
+                  >
+                    {brandLists
+                      ?.filter((brand) => {
+                        return brand._id === catalogIndProd.brand;
+                      })
+                      .map((brand) => (
+                        <>
+                          <strong>Brand Name: </strong> {brand.name}
+                        </>
+                      ))}
+                  </Typography>
+                  {categoryName?.map((categoryname) => (
+                    <>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          color: "#000",
+                          textTransform: "capitalize",
+                          fontFamily: "Raleway",
+                          mt: 5,
+                        }}
+                        gutterBottom
+                      >
+                        <strong>Category :</strong> {categoryname.categoryname}
+                      </Typography>
+                    </>
+                  ))}
 
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: "#A02020",
-                        textTransform: "capitalize",
-                        mt: 5,
-                      }}
-                      gutterBottom
-                    >
-                      {brandLists
-                        ?.filter((brand) => {
-                          return brand._id === catalogIndProd.brand;
-                        })
-                        .map((brand) => (
-                          <>
-                            <strong>Brand Name: </strong> {brand.name}
-                          </>
-                        ))}
-                    </Typography>
-                    {categoryName?.map((categoryname) => (
-                      <>
-                        <Typography
-                          variant="h5"
-                          style={{
-                            color: "#A02020",
-                            textTransform: "capitalize",
-                            mt: 5,
-                          }}
-                          gutterBottom
-                        >
-                          <strong>Category :</strong>{" "}
-                          {categoryname.categoryname}
-                        </Typography>
-                      </>
-                    ))}
-
-                    {/* <Typography
+                  {/* <Typography
                     variant="body1"
                     style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
@@ -422,88 +364,100 @@ function ProductViewScreen() {
                     <strong>Description :</strong> {catalogIndProd.description}
                   </Typography> */}
 
-                    <Typography
-                      variant="h5"
-                      style={{ color: "#A02020", textTransform: "capitalize" }}
-                      gutterBottom
-                    >
-                      {categorymasterallList
-                        ?.filter((cat) => {
-                          return cat._id === catalogIndProd.catId;
-                        })
-                        ?.map((cat) => (
-                          <>
-                            <strong>Category : </strong>
-                            {cat.name}
-                          </>
-                        ))}
-                    </Typography>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      fontFamily: "Raleway",
+                    }}
+                    gutterBottom
+                  >
+                    {categorymasterallList
+                      ?.filter((cat) => {
+                        return cat._id === catalogIndProd.catId;
+                      })
+                      ?.map((cat) => (
+                        <>
+                          <strong>Category : </strong>
+                          <span style={{ fontSize: "18px" }}> {cat.name}</span>
+                        </>
+                      ))}
+                  </Typography>
 
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: "#A02020",
-                        textTransform: "capitalize",
-                        mt: 5,
-                      }}
-                      gutterBottom
-                    >
-                      {Featuresdetails?.filter((feature) => {
-                        return feature._id === catalogIndProd.featureId[0];
-                      }).map(
-                        (feature) => (
-                          console.log("feature=========>>>", feature),
-                          (
-                            <>
-                              <strong>Feature Name : </strong>{" "}
-                              {feature.featurename}
-                            </>
-                          )
-                        )
-                      )}
-                    </Typography>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      fontFamily: "Raleway",
+                      mt: 5,
+                    }}
+                    gutterBottom
+                  >
+                    {Featuresdetails?.filter((feature) => {
+                      return feature._id === catalogIndProd.featureId[0];
+                    }).map((feature) => (
+                      <>
+                        <strong>Feature Name : </strong>{" "}
+                        <span style={{ fontSize: "20px" }}>
+                          {feature.featurename}{" "}
+                        </span>
+                      </>
+                    ))}
+                  </Typography>
 
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: "#A02020",
-                        textTransform: "capitalize",
-                        mt: 5,
-                      }}
-                      gutterBottom
-                    >
-                      <strong>Reference No: </strong> {catalogIndProd.reference}
-                    </Typography>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      fontFamily: "'Times New Roman', Times, serif",
+                      mt: 5,
+                    }}
+                    gutterBottom
+                  >
+                    <strong>Reference No: </strong>
+                    <span style={{ fontSize: "20px" }}>
+                      {catalogIndProd.reference}
+                    </span>
+                  </Typography>
 
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: "#A02020",
-                        textTransform: "capitalize",
-                        mt: 5,
-                      }}
-                      gutterBottom
-                    >
-                      <strong>Tax Inclued : </strong>{" "}
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      fontFamily: "'Times New Roman', Times, serif",
+                      mt: 5,
+                    }}
+                    gutterBottom
+                  >
+                    <strong>Tax Inclued : </strong>{" "}
+                    <span style={{ fontSize: "20px" }}>
                       {catalogIndProd.taxincluded}
-                    </Typography>
+                    </span>
+                  </Typography>
 
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: "#A02020",
-                        textTransform: "capitalize",
-                        mt: 5,
-                      }}
-                      gutterBottom
-                    >
-                      <strong>Tax Exclued : </strong>{" "}
+                  <Typography
+                    variant="h6"
+                    style={{
+                      color: "#000",
+                      textTransform: "capitalize",
+                      fontFamily: "'Times New Roman', Times, serif",
+                      mt: 5,
+                    }}
+                    gutterBottom
+                  >
+                    <strong>Tax Exclued : </strong>
+                    <span style={{ fontSize: "20px" }}>
+                      {" "}
                       {catalogIndProd.taxexcluded}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Box>
-            </Grid>
+                    </span>
+                  </Typography>
+                </Box>
+              </Card>
+            </Box>
           </Grid>
         </Grid>
       )}

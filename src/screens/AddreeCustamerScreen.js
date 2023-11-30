@@ -3,6 +3,12 @@ import { deepPurple, red } from "@material-ui/core/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
@@ -38,7 +44,7 @@ function AddreeCustamerScreen() {
     dispatch(customerAddressList());
     dispatch(AddressBillList());
     setDetails([...custAddList, ...Adddatum]);
-  },[]);
+  }, []);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -51,66 +57,66 @@ function AddreeCustamerScreen() {
   };
 
   const columns = [
-    {
-      field: "custEmail",
-      headerName: "Customer Email",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "identificationNo",
-      headerName: "Identification Number",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "addresAlias",
-      headerName: "Address alias",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
+    // {
+    //   field: "custEmail",
+    //   headerName: "Customer Email",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "identificationNo",
+    //   headerName: "Identification Number",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "addresAlias",
+    //   headerName: "Address alias",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
     {
       field: "fname",
       headerName: "First name",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-    {
-      field: "lname",
-      headerName: "Last name",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "company",
-      headerName: "Company",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "vatNo",
-      headerName: "VAT number",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "Addres2",
-      headerName: "Address 2",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "zip",
-      headerName: "Zip/Postal code",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
+    // {
+    //   field: "lname",
+    //   headerName: "Last name",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "company",
+    //   headerName: "Company",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "vatNo",
+    //   headerName: "VAT number",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "address",
+    //   headerName: "Address",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "Addres2",
+    //   headerName: "Address 2",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "zip",
+    //   headerName: "Zip/Postal code",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
 
     {
       field: "city",
@@ -130,18 +136,18 @@ function AddreeCustamerScreen() {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-    {
-      field: "mobile",
-      headerName: "Mobile phone",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "other",
-      headerName: "Other",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
+    // {
+    //   field: "mobile",
+    //   headerName: "Mobile phone",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
+    // {
+    //   field: "other",
+    //   headerName: "Other",
+    //   flex: 1,
+    //   headerClassName: "super-app-theme--header",
+    // },
     {
       field: "checked",
       headerName: "Displayed",
@@ -183,6 +189,71 @@ function AddreeCustamerScreen() {
     },
   ];
 
+  // eslint-disable-next-line no-unused-vars
+  const [checkeddelete, setCheckeddelete] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [valueopen, setvalueOpen] = useState(false);
+  const [valuecheckedcheck, setvalueChecked] = useState(false);
+  const [valuedchecked, setvaluedisableChecked] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [valuedsablechecked, setvaluediChecked] = useState("");
+  const handleClickvalueOpen = () => {
+    setCheckeddelete(false);
+    setvalueOpen(true);
+  };
+
+  const handlevalueClose = () => {
+    setvalueOpen(false);
+  };
+
+  const handleChangevalue = (event) => {
+    setvalueChecked(event.target.checked);
+    setvaluedisableChecked(false);
+  };
+
+  const handlevaluedisableChange = (event) => {
+    setvaluedisableChecked(event.target.checked);
+    setvalueChecked(false);
+    if (valuedchecked === valuedchecked) {
+      setvaluediChecked(false);
+    }
+  };
+
+  const handleChangedelete = (event) => {
+    setCheckeddelete(event.target.checked);
+  };
+
+  const handlevalueDisClose = () => {
+    setvalueOpen(false);
+  };
+  const handleClosecheckdelet = () => {
+    setvalueOpen(false);
+  };
+ const handlevlaueClosecheck = () => {
+  setvalueOpen(false);
+  if (valuecheckedcheck === true) {
+    dispatch(
+      // eslint-disable-next-line no-undef
+      updateproductactive({
+        // eslint-disable-next-line no-undef
+        checkboxId: valeselectionModel,
+        checkedshow: valuecheckedcheck,
+      })
+    );
+    window.confirm("Active Successfully!!");
+  } else {
+    dispatch(
+      // eslint-disable-next-line no-undef
+      updateproductactive({
+        // eslint-disable-next-line no-undef
+        checkboxId: valeselectionModel,
+        checkedhide: valuedsablechecked,
+      })
+    );
+    window.confirm("De-Active Successfully!!");
+  }
+};
+
   return (
     <>
       <Typography variant="h6" sx={{ mt: -2 }}>
@@ -222,6 +293,93 @@ function AddreeCustamerScreen() {
       </Box>
 
       <Divider sx={{ mt: 3 }} />
+
+      <Box sx={{ display: "flex" }}>
+        <Button
+          sx={{
+            mr: 3,
+            mt: 2,
+            mb: 0,
+            ml: 2,
+            borderRadius: "20px",
+            backgroundColor: "#0099CC",
+            fontSize: 12,
+          }}
+          size="small"
+          variant="contained"
+          onClick={handleClickvalueOpen}
+        >
+          Bulk
+        </Button>
+      </Box>
+
+      <Box>
+        <Dialog open={valueopen} onClose={handlevalueClose}>
+          <DialogTitle>Select One</DialogTitle>
+          <DialogContent>
+            <FormControlLabel
+              label="Show All"
+              control={
+                <Checkbox
+                  size="small"
+                  checked={valuecheckedcheck}
+                  onChange={handleChangevalue}
+                  inputProps={{
+                    "aria-label": "controlled",
+                  }}
+                />
+              }
+            />
+
+            <FormControlLabel
+              label="Hide All"
+              control={
+                <Checkbox
+                  size="small"
+                  checked={valuedchecked}
+                  onChange={handlevaluedisableChange}
+                  inputProps={{
+                    "aria-label": "controlled",
+                  }}
+                />
+              }
+            />
+            <FormControlLabel
+              label="Delete All"
+              control={
+                <Checkbox
+                  size="small"
+                  checked={checkeddelete}
+                  onChange={handleChangedelete}
+                  inputProps={{
+                    "aria-label": "controlled",
+                  }}
+                />
+              }
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handlevalueDisClose}>
+              Cancel
+            </Button>
+            {checkeddelete == true ? (
+              <>
+                {" "}
+                <Button onClick={handleClosecheckdelet} autoFocus>
+                  Delete
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={handlevlaueClosecheck} autoFocus>
+                  Done
+                </Button>
+              </>
+            )}
+          </DialogActions>
+        </Dialog>
+      </Box>
+
       <Box
         sx={{
           height: 360,
