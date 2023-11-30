@@ -20,6 +20,7 @@ import {
   saveCustomerAddress,
   updatecustomerAddress,
 } from "../actions/customerAction";
+import { AddressBillList } from "../actions/addressActions";
 import { useNavigate } from "react-router-dom";
 
 function AdressScreen() {
@@ -31,11 +32,19 @@ function AdressScreen() {
 
   const params = useParams();
   const customindId = params.id;
-
+  console.log("params==>", params);
+  console.log("customindId==>", customindId);
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
-
-  const addressId = custAddList?.find((x) => x?._id === customindId);
+  const AddressList = useSelector((state) => state.AddressList);
+  const { Adddatum } = AddressList;
+  let custaddid = custAddList?.find((x) => x?._id === customindId);
+  let addressId = [];
+  if (custaddid) {
+    addressId = custAddList?.find((x) => x?._id === customindId);
+  } else {
+    addressId = Adddatum?.find((x) => x?._id === customindId);
+  }
 
   const theme = createTheme();
   const dispatch = useDispatch();
@@ -59,6 +68,7 @@ function AdressScreen() {
 
   useEffect(() => {
     dispatch(customerAddressList());
+    dispatch(AddressBillList());
   }, []);
 
   const submitHandler = (e) => {
@@ -112,14 +122,14 @@ function AdressScreen() {
 
   return (
     <>
-      <Typography variant='h5'>Create Customer Address</Typography>
+      <Typography variant="h5">Create Customer Address</Typography>
       <Box sx={{ display: "flex", mt: 2 }}>
         <Breadcrumbs
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
         >
           <Link
-            to='/'
+            to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "15px",
@@ -129,7 +139,7 @@ function AdressScreen() {
           </Link>
 
           <Link
-            to='/address'
+            to="/address"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "15px",
@@ -151,8 +161,8 @@ function AdressScreen() {
             <Box>
               <ThemeProvider theme={theme}>
                 <Container
-                  component='main'
-                  maxWidth='sm'
+                  component="main"
+                  maxWidth="sm"
                   sx={{
                     my: { xs: 3, md: 6, lg: 10 },
                     p: { xs: 2, md: 1 },
@@ -161,7 +171,7 @@ function AdressScreen() {
                   <CssBaseline />
 
                   <Box
-                    component='form'
+                    component="form"
                     onSubmit={handleSubmit(updateHandler)}
                     sx={{
                       display: "flex",
@@ -173,166 +183,166 @@ function AdressScreen() {
                       border: "1px solid #000000",
                     }}
                   >
-                    <Typography variant='h5' sx={{ textAlign: "center" }}>
+                    <Typography variant="h5" sx={{ textAlign: "center" }}>
                       {" "}
                       Create Employee Details
                     </Typography>
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Customer Email'
-                      autoComplete='off'
+                      label="Customer Email"
+                      autoComplete="off"
                       value={customEmail}
                       onChange={(e) => setcustomEmail(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Identification number'
-                      autoComplete='off'
+                      label="Identification number"
+                      autoComplete="off"
                       value={IdentNo}
                       onChange={(e) => setIdentNo(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address alias'
-                      autoComplete='off'
+                      label="Address alias"
+                      autoComplete="off"
                       value={addressAlias}
                       onChange={(e) => setaddressAlias(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='First name'
-                      autoComplete='off'
+                      label="First name"
+                      autoComplete="off"
                       value={fname}
                       onChange={(e) => setfname(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Last name'
-                      autoComplete='off'
+                      label="Last name"
+                      autoComplete="off"
                       value={lname}
                       onChange={(e) => setlname(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Company'
-                      autoComplete='off'
+                      label="Company"
+                      autoComplete="off"
                       value={comapny}
                       onChange={(e) => setcomapny(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='VAT number'
-                      autoComplete='off'
+                      label="VAT number"
+                      autoComplete="off"
                       value={vatNo}
                       onChange={(e) => setvatNo(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address'
-                      autoComplete='off'
+                      label="Address"
+                      autoComplete="off"
                       value={address}
                       onChange={(e) => setaddress(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address (2)'
-                      autoComplete='off'
+                      label="Address (2)"
+                      autoComplete="off"
                       value={address2}
                       onChange={(e) => setaddress2(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Zip/Postal code'
-                      autoComplete='off'
+                      label="Zip/Postal code"
+                      autoComplete="off"
                       value={zip}
                       onChange={(e) => setzip(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='City'
-                      autoComplete='off'
+                      label="City"
+                      autoComplete="off"
                       value={city}
                       onChange={(e) => setcity(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Country'
-                      autoComplete='off'
+                      label="Country"
+                      autoComplete="off"
                       value={country}
                       onChange={(e) => setcountry(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Phone'
-                      autoComplete='off'
+                      label="Phone"
+                      autoComplete="off"
                       value={phone}
                       onChange={(e) => setphone(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Mobile phone'
-                      autoComplete='off'
+                      label="Mobile phone"
+                      autoComplete="off"
                       value={mobile}
                       onChange={(e) => setmobile(e.target.value)}
                     />
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Other'
-                      autoComplete='off'
+                      label="Other"
+                      autoComplete="off"
                       value={other}
                       onChange={(e) => setother(e.target.value)}
                     />
 
                     <Box sx={{ display: "flex" }}>
                       <Button
-                        variant='contained'
+                        variant="contained"
                         sx={{ mt: 3, mb: 2, ml: 5 }}
-                        type='submit'
+                        type="submit"
                       >
                         Update
                       </Button>
@@ -349,8 +359,8 @@ function AdressScreen() {
             <Box>
               <ThemeProvider theme={theme}>
                 <Container
-                  component='main'
-                  maxWidth='sm'
+                  component="main"
+                  maxWidth="sm"
                   sx={{
                     my: { xs: 3, md: 6, lg: 10 },
                     p: { xs: 2, md: 1 },
@@ -359,7 +369,7 @@ function AdressScreen() {
                   <CssBaseline />
 
                   <Box
-                    component='form'
+                    component="form"
                     onSubmit={handleSubmit(submitHandler)}
                     sx={{
                       display: "flex",
@@ -371,216 +381,216 @@ function AdressScreen() {
                       border: "1px solid #000000",
                     }}
                   >
-                    <Typography variant='h5' sx={{ textAlign: "center" }}>
+                    <Typography variant="h5" sx={{ textAlign: "center" }}>
                       {" "}
                       Create Employee Details
                     </Typography>
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Customer Email'
-                      autoComplete='off'
+                      label="Customer Email"
+                      autoComplete="off"
                       {...register1("custEmail", { required: true })}
                       error={errors1.custEmail}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>First Name is required</span>
+                      <span className="formError">First Name is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Identification number'
-                      autoComplete='off'
+                      label="Identification number"
+                      autoComplete="off"
                       {...register1("identificationNo", { required: true })}
                       error={errors1.identificationNo}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>
+                      <span className="formError">
                         Identification Number is required
                       </span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address alias'
-                      autoComplete='off'
+                      label="Address alias"
+                      autoComplete="off"
                       {...register1("addresAlias", { required: true })}
                       error={errors1.addresAlias}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>
+                      <span className="formError">
                         Address alias is required
                       </span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='First name'
-                      autoComplete='off'
+                      label="First name"
+                      autoComplete="off"
                       {...register1("fname", { required: true })}
                       error={errors1.fname}
                     />
                     {errors1.fname && (
-                      <span className='formError'>First name is required</span>
+                      <span className="formError">First name is required</span>
                     )}
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Last name'
-                      autoComplete='off'
+                      label="Last name"
+                      autoComplete="off"
                       {...register1("lname", { required: true })}
                       error={errors1.lname}
                     />
                     {errors1.lname && (
-                      <span className='formError'>Last name is required</span>
+                      <span className="formError">Last name is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Company'
-                      autoComplete='off'
+                      label="Company"
+                      autoComplete="off"
                       {...register1("company", { required: true })}
                       error={errors1.company}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>Company is required</span>
+                      <span className="formError">Company is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='VAT number'
-                      autoComplete='off'
+                      label="VAT number"
+                      autoComplete="off"
                       {...register1("vatNo", { required: true })}
                       error={errors1.vatNo}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>VAT Number is required</span>
+                      <span className="formError">VAT Number is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address'
-                      autoComplete='off'
+                      label="Address"
+                      autoComplete="off"
                       {...register1("address", { required: true })}
                       error={errors1.address}
                     />
                     {errors1.address && (
-                      <span className='formError'>Address is required</span>
+                      <span className="formError">Address is required</span>
                     )}
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Address (2)'
-                      autoComplete='off'
+                      label="Address (2)"
+                      autoComplete="off"
                       {...register1("Addres2", { required: true })}
                       error={errors1.Addres2}
                     />
                     {errors1.eprofil && (
-                      <span className='formError'>Address 2 is required</span>
+                      <span className="formError">Address 2 is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Zip/Postal code'
-                      autoComplete='off'
+                      label="Zip/Postal code"
+                      autoComplete="off"
                       {...register1("zip", { required: true })}
                       error={errors1.zip}
                     />
                     {errors1.zip && (
-                      <span className='formError'>
+                      <span className="formError">
                         Zip/Postal code is required
                       </span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='City'
-                      autoComplete='off'
+                      label="City"
+                      autoComplete="off"
                       {...register1("city", { required: true })}
                       error={errors1.city}
                     />
                     {errors1.city && (
-                      <span className='formError'>City is required</span>
+                      <span className="formError">City is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Country'
-                      autoComplete='off'
+                      label="Country"
+                      autoComplete="off"
                       {...register1("country", { required: true })}
                       error={errors1.country}
                     />
                     {errors1.country && (
-                      <span className='formError'>Country is required</span>
+                      <span className="formError">Country is required</span>
                     )}
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Phone'
-                      autoComplete='off'
+                      label="Phone"
+                      autoComplete="off"
                       {...register1("phone", { required: true })}
                       error={errors1.phone}
                     />
                     {errors1.phone && (
-                      <span className='formError'>Phone is required</span>
+                      <span className="formError">Phone is required</span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Mobile phone'
-                      autoComplete='off'
+                      label="Mobile phone"
+                      autoComplete="off"
                       {...register1("mobile", { required: true })}
                       error={errors1.mobile}
                     />
                     {errors1.mobile && (
-                      <span className='formError'>
+                      <span className="formError">
                         Mobile Phone is required
                       </span>
                     )}
 
                     <TextField
-                      size='small'
-                      margin='normal'
+                      size="small"
+                      margin="normal"
                       fullWidth
-                      label='Other'
-                      autoComplete='off'
+                      label="Other"
+                      autoComplete="off"
                       {...register1("other", { required: true })}
                       error={errors1.other}
                     />
                     {errors1.other && (
-                      <span className='formError'>Others is required</span>
+                      <span className="formError">Others is required</span>
                     )}
 
                     <Box sx={{ display: "flex" }}>
                       <Button
-                        variant='contained'
+                        variant="contained"
                         sx={{ mt: 3, mb: 2, ml: 5 }}
-                        type='submit'
+                        type="submit"
                       >
                         Save
                       </Button>
