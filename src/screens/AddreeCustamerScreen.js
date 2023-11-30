@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useDispatch,
   useSelector,
@@ -15,6 +15,7 @@ import {
   customerAddressList,
   deletecustomerAddress,
 } from "../actions/customerAction";
+import { AddressBillList } from "../actions/addressActions";
 import { useNavigate } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -24,16 +25,20 @@ import { Divider } from "../../node_modules/@material-ui/core/index";
 function AddreeCustamerScreen() {
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
+  const AddressList = useSelector((state) => state.AddressList);
+  const { Adddatum } = AddressList;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [details, setDetails] = useState([]);
   const CustomAdditem = () => {
     navigate("/addressreg");
   };
 
   useEffect(() => {
     dispatch(customerAddressList());
-  }, []);
+    dispatch(AddressBillList());
+    setDetails([...custAddList, ...Adddatum]);
+  },[]);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -146,7 +151,7 @@ function AddreeCustamerScreen() {
       flex: 1,
       renderCell: (params) => {
         if (params.row.checked == true) {
-          return <Switch color='primary' checked />;
+          return <Switch color="primary" checked />;
         } else {
           return <Switch />;
         }
@@ -180,16 +185,16 @@ function AddreeCustamerScreen() {
 
   return (
     <>
-      <Typography variant='h6' sx={{ mt: -2 }}>
+      <Typography variant="h6" sx={{ mt: -2 }}>
         Customer Address
       </Typography>
       <Box sx={{ display: "flex", mt: 0 }}>
         <Breadcrumbs
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
         >
           <Link
-            to='/'
+            to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "13px",
@@ -208,7 +213,7 @@ function AddreeCustamerScreen() {
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
-            variant='contained'
+            variant="contained"
             onClick={CustomAdditem}
           >
             Add new addresses
@@ -253,9 +258,9 @@ function AddreeCustamerScreen() {
             m: 2,
           }}
           columns={columns}
-          rows={custAddList ? custAddList : ""}
+          rows={details ? details : ""}
           getRowId={(rows) => rows._id}
-          VerticalAlignment='Center'
+          VerticalAlignment="Center"
           rowHeight={40}
           headerHeight={35}
           pagination

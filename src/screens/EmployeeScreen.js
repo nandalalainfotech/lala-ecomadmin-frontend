@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuItem } from "../../node_modules/@material-ui/core/index";
+import ListItemText from "@mui/material/ListItemText";
 import {
   deleteEmployee,
   deleteEmployeeprofile,
@@ -166,7 +167,7 @@ function EmployeeScreen() {
         updateEmployeeactive({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
       window.confirm("Active Successfully!!");
     } else {
@@ -174,7 +175,7 @@ function EmployeeScreen() {
         updateEmployeeactive({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
       window.confirm("De-Active Successfully!!");
     }
@@ -243,7 +244,7 @@ function EmployeeScreen() {
         mobilenumber: Editmobile,
         roll: Editprofile,
         active: EditActive,
-      }),
+      })
     );
     window.confirm("Employee Details Update Successfully!!");
     setEditId("");
@@ -266,7 +267,7 @@ function EmployeeScreen() {
       updateEmployeeprofile({
         id: EditemployeeProfileId,
         profil: EditemployeeProfile,
-      }),
+      })
     );
     window.confirm("Employee Details Update Successfully!!");
     setEditemployeeProfileId("");
@@ -337,14 +338,14 @@ function EmployeeScreen() {
         updateEmployeeEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateEmployeeEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -488,7 +489,46 @@ function EmployeeScreen() {
     //   ),
     // },
   ];
+  const [age, setAge] = useState("");
+  const handleChangedrop = (event) => {
+    setAge(event.target.value);
+  };
 
+  const names = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+  ];
+
+  const [personName, setPersonName] = useState([]);
+
+  const handleChangeCheckbox = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
   const columns = [
     {
       field: "_id",
@@ -543,7 +583,7 @@ function EmployeeScreen() {
       <>
         {tabIndex === 0 && (
           <>
-            <Typography variant="h6" sx={{ mt: -3, ml: 2 }}>
+            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
               Employee Details
             </Typography>
             <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
@@ -585,7 +625,7 @@ function EmployeeScreen() {
 
         {tabIndex === 1 && (
           <>
-            <Typography variant="h6" sx={{ mt: -3, ml: 2 }}>
+            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
               Employee Profile
             </Typography>
             <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
@@ -621,6 +661,47 @@ function EmployeeScreen() {
                   Add New Profile
                 </Button>
               </Box>
+            </Box>
+          </>
+        )}
+        {tabIndex === 2 && (
+          <>
+            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
+              Employee Permission
+            </Typography>
+            <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
+              <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
+              >
+                <Link
+                  to="/"
+                  style={{
+                    color: "rgba(0, 0, 0, 0.6)",
+                    fontSize: "13px",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                </Link>
+
+                <Typography sx={{ fontSize: "13px" }}>
+                  Employee Permission
+                </Typography>
+              </Breadcrumbs>
+              {/* <Box sx={{ ml: "auto", float: "right", mt: -3 }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    mr: 3,
+                    borderRadius: "20px",
+                    backgroundColor: "#0099CC",
+                  }}
+                  type="Click"
+                  onClick={AddprofileChange}
+                >
+                  Add New Profile
+                </Button>
+              </Box> */}
             </Box>
           </>
         )}
@@ -1088,9 +1169,72 @@ function EmployeeScreen() {
         )}
 
         {tabIndex === 2 && (
-          <Box>
-            <h1>Hello </h1>
-          </Box>
+          <>
+            <Box>
+              <Button
+                sx={{
+                  mr: 3,
+                  mt: 0,
+                  mb: 0,
+                  ml: 1.5,
+                  borderRadius: "20px",
+                  backgroundColor: "#0099CC",
+                }}
+                variant="contained"
+                onClick={(e) => setAnchorEl2(e.currentTarget)}
+              >
+                Bulk
+              </Button>
+              <Menu
+                id="simple-menu2"
+                anchorEl={anchorEl2}
+                keepMounted
+                open={Boolean(anchorEl2)}
+                onClose={handleClosechcke}
+                MenuListProps={{ onMouseLeave: handleClosechcke }}
+              >
+                <MenuItem onClick={handleClosechcke}>Select All</MenuItem>
+                <MenuItem onClick={handleClosechcke}>De-Select</MenuItem>
+              </Menu>
+            </Box>
+            <Box sx={{ width: 500, marginTop: "20px", display: "inline-flex" }}>
+              <h5 style={{ padding: 5 }}>User Role:</h5>
+              <Select
+                style={{ width: "250px", height: "40px" }}
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={age}
+                onChange={handleChangedrop}
+                displayEmpty
+              >
+                {profiledetail?.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    <ListItemText primary={name?.empprofile} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <Box sx={{ width: 500, marginTop: "20px", display: "inline-flex" }}>
+              <h5 style={{ padding: 5 }}>Sales Staff Permission : </h5>
+              <Select
+                style={{ width: "250px", height: "40px" }}
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                onChange={handleChangeCheckbox}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    <Checkbox checked={personName.indexOf(name) > -1} />
+                    <ListItemText primary={name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+          </>
         )}
       </Box>
     </>
