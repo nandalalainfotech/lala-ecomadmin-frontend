@@ -37,8 +37,10 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ProfileListDetails } from "../actions/EmployeeAction";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -117,6 +119,7 @@ const useStyles = makeStyles({
 });
 
 export default function SideBar() {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -126,7 +129,24 @@ export default function SideBar() {
       setOpen(true);
     }
   };
+  const EmployeeProfile = useSelector((state) => state.EmployeeProfile);
+  const { profiledetail } = EmployeeProfile;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  let userInfodetails = userInfo.profile
+  let userdetails = []
+
+  profiledetail?.filter((index) => {
+    return userInfodetails == index._id
+  }).map((value) => {
+    userdetails.push(value.empprofile)
+  })
+
+  useEffect(() => {
+    dispatch(ProfileListDetails());
+  }, [dispatch]);
   const [sidopen, setSidopen] = useState();
   // const [stockopen, setstockopen] = useState();
 
@@ -165,6 +185,9 @@ export default function SideBar() {
     setOrderopen(!Orderopen);
   };
 
+  // const userSignin = useSelector((state) => state.userSignin);
+  // const { userInfo } = userSignin;
+
   const classes = useStyles();
   // const styles = (theme) => ({
   //   hover: {
@@ -196,902 +219,981 @@ export default function SideBar() {
         <Divider sx={{ mt: -1, mb: -1 }} />
         {open === true ? (
           <>
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Catelog department' ? (
                 <>
-                  <ListItemButton
-                    onClick={handleClick}
-                  // sx={{
-                  //   "&:hover": { backgroundColor: "red" },
-                  //   "&:active": { backgroundColor: "green" },
-                  // }}
-                  >
-                    <ListItemIcon>
-                      <LocationCityIcon sx={{ color: "#fff", mt: -1 }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography
-                          className={classes.text}
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                            paddingTop: -5,
-                          }}
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton
+                          onClick={handleClick}
+                        // sx={{
+                        //   "&:hover": { backgroundColor: "red" },
+                        //   "&:active": { backgroundColor: "green" },
+                        // }}
                         >
-                          Catalog
-                        </Typography>
-                      }
-                      sx={{ marginTop: 0, fontSize: 12 }}
-                    />
-                    {sidopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={sidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: 0 }}>
-                        <Link
-                          // reloadDocument
-                          to='/product'
-                          style={{ textDecoration: "none" }}
-                        >
+                          <ListItemIcon>
+                            <LocationCityIcon sx={{ color: "#fff", mt: -1 }} />
+                          </ListItemIcon>
                           <ListItemText
-                            sx={{ color: "#fff" }}
                             primary={
                               <Typography
-                                sx={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                  mt: -2,
-                                }}
-                              >
-                                Product
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/categorymaster'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
+                                className={classes.text}
                                 style={{
                                   color: "#FFFFFF",
-                                  fontSize: 14,
+                                  fontSize: 15,
+                                  paddingTop: -5,
                                 }}
                               >
-                                Categories
+                                Catalog
                               </Typography>
                             }
+                            sx={{ marginTop: 0, fontSize: 12 }}
                           />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/attributes'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                          {sidopen ? (
+                            <ExpandLess sx={{ color: "#fff" }} />
+                          ) : (
+                            <ExpandMore sx={{ color: "#fff" }} />
+                          )}
+                        </ListItemButton>
+                        <Collapse in={sidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton sx={{ pl: 4, mt: 0 }}>
+                              <Link
+                                // reloadDocument
+                                to='/product'
+                                style={{ textDecoration: "none" }}
                               >
-                                Attributes & Features
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/brand'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      sx={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                        mt: -2,
+                                      }}
+                                    >
+                                      Product
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                              <Link
+                                // reloadDocument
+                                to='/categorymaster'
+                                style={{ textDecoration: "none" }}
                               >
-                                Brand & Supplier
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/team'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Categories
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                              <Link
+                                // reloadDocument
+                                to='/attributes'
+                                style={{ textDecoration: "none" }}
                               >
-                                Team
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Attributes & Features
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                              <Link
+                                // reloadDocument
+                                to='/brand'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Brand & Supplier
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          {
+                            userdetails[0] == 'SuperAdmin' ? (
+                              <List>
+                                <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                                  <Link
+                                    to='/team'
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <ListItemText
+                                      sx={{ color: "#fff" }}
+                                      primary={
+                                        <Typography
+                                          style={{
+                                            color: "#FFFFFF",
+                                            fontSize: 14,
+                                          }}
+                                        >
+                                          Team
+                                        </Typography>
+                                      }
+                                    />
+                                  </Link>
+                                </ListItemButton>
+                              </List>
+                            ) : ('')
+                          }
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider sx={{ mt: -1, mb: -1 }} />
                 </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleOrder}>
+                        <ListItemIcon>
+                          <ShoppingBasketIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          sx={{ color: "#fff" }}
+                          primary={
+                            <Typography
+                              style={{
+                                color: "#FFFFFF",
+                                fontSize: 15,
+                              }}
+                            >
+                              Orders
+                            </Typography>
+                          }
+                        />
+                        {Orderopen ? (
+                          <ExpandLess sx={{ color: "#fff" }} />
+                        ) : (
+                          <ExpandMore sx={{ color: "#fff" }} />
+                        )}
+                      </ListItemButton>
+                      <Collapse in={Orderopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton sx={{ pl: 4 }}>
+                            <Link
+                              // reloadDocument
+
+                              to='/orderhistory'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Order
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                            <Link
+                              // reloadDocument
+
+                              to='/orderstatus'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Order Status
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                            <Link
+                              // reloadDocument
+                              to="/Stockmaintance"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Stock
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider sx={{ mt: -1, mb: -1 }} />
+              </>
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Customer department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleClickcustemer}>
+                        <ListItemIcon>
+                          <PersonIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              style={{
+                                color: "#FFFFFF",
+                                fontSize: 15,
+                              }}
+                            >
+                              Customers
+                            </Typography>
+                          }
+                        />
+                        {custemersidopen ? (
+                          <ExpandLess sx={{ color: "#fff" }} />
+                        ) : (
+                          <ExpandMore sx={{ color: "#fff" }} />
+                        )}
+                      </ListItemButton>
+                      <Collapse in={custemersidopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton sx={{ pl: 4, mt: 0 }}>
+                            <Link
+                              // reloadDocument
+                              to='/custemer'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Customers
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                            <Link
+                              // reloadDocument
+                              to='/address'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Addresses
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton sx={{ pl: 4, mt: -3 }}>
+                            <Link
+                              // reloadDocument
+                              to='/prodEnquiry'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Customer Enquiry
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider sx={{ mt: -1, mb: -1 }} />
+              </>) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleClickship}>
+                        <ListItemIcon>
+                          <LocalShippingIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          sx={{ color: "#fff" }}
+                          primary={
+                            <Typography
+                              style={{
+                                color: "#FFFFFF",
+                                fontSize: 15,
+                              }}
+                            >
+                              Shipping
+                            </Typography>
+                          }
+                        />
+                        {shipsidopen ? (
+                          <ExpandLess sx={{ color: "#fff" }} />
+                        ) : (
+                          <ExpandMore sx={{ color: "#fff" }} />
+                        )}
+                      </ListItemButton>
+                      <Collapse in={shipsidopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton sx={{ pl: 4 }}>
+                            <Link
+                              // reloadDocument
+
+                              to='/logicGrid'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemText
+                                sx={{ color: "#fff" }}
+                                primary={
+                                  <Typography
+                                    style={{
+                                      color: "#FFFFFF",
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    Logistics
+                                  </Typography>
+                                }
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider sx={{ mt: -1, mb: -1 }} />
+              </>) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (
                 <>
-                  <ListItemButton onClick={handleOrder}>
-                    <ListItemIcon>
-                      <ShoppingBasketIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          Orders
-                        </Typography>
-                      }
-                    />
-                    {Orderopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={Orderopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handleClickapp}>
+                          <ListItemIcon>
+                            <LanguageIcon sx={{ color: "#fff" }} />
+                          </ListItemIcon>
+                          <ListItemText
+                            sx={{ color: "#fff" }}
+                            primary={
+                              <Typography
+                                style={{
+                                  color: "#FFFFFF",
+                                  fontSize: 15,
+                                }}
+                              >
+                                International
+                              </Typography>
+                            }
+                          />
+                          {appsidopen ? (
+                            <ExpandLess sx={{ color: "#fff" }} />
+                          ) : (
+                            <ExpandMore sx={{ color: "#fff" }} />
+                          )}
+                        </ListItemButton>
+                        <Collapse in={appsidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <Link
+                                // reloadDocument
 
-                          to='/orderhistory'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                                to='/hometaxes'
+                                style={{ textDecoration: "none" }}
                               >
-                                Order
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Taxes
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <Link
+                                // reloadDocument
 
-                          to='/orderstatus'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                                to='/locatgrid'
+                                style={{ textDecoration: "none" }}
                               >
-                                Order Status
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to="/Stockmaintance"
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Stock
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Locations
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider sx={{ mt: -1, mb: -1 }} />
                 </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Catelog department' ? (
                 <>
-                  <ListItemButton onClick={handleClickcustemer}>
-                    <ListItemIcon>
-                      <PersonIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          Customers
-                        </Typography>
-                      }
-                    />
-                    {custemersidopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={custemersidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: 0 }}>
-                        <Link
-                          // reloadDocument
-                          to='/custemer'
-                          style={{ textDecoration: "none" }}
-                        >
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handleClickappp}>
+                          <ListItemIcon>
+                            <SettingsSuggestIcon sx={{ color: "#fff" }} />
+                          </ListItemIcon>
                           <ListItemText
                             sx={{ color: "#fff" }}
                             primary={
                               <Typography
                                 style={{
                                   color: "#FFFFFF",
-                                  fontSize: 14,
+                                  fontSize: 15,
                                 }}
                               >
-                                Customers
+                                Settings
                               </Typography>
                             }
                           />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/address'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
+                          {settingssidopen ? (
+                            <ExpandLess sx={{ color: "#fff" }} />
+                          ) : (
+                            <ExpandMore sx={{ color: "#fff" }} />
+                          )}
+                        </ListItemButton>
+                        <Collapse in={settingssidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <Link
+                                // reloadDocument
+
+                                to='/application'
+                                style={{ textDecoration: "none" }}
                               >
-                                Addresses
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton sx={{ pl: 4, mt: -3 }}>
-                        <Link
-                          // reloadDocument
-                          to='/prodEnquiry'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Customer Enquiry
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Application Settings
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider sx={{ mt: -1, mb: -1 }} />
                 </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Payment department' ? (
                 <>
-                  <ListItemButton onClick={handleClickship}>
-                    <ListItemIcon>
-                      <LocalShippingIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          Shipping
-                        </Typography>
-                      }
-                    />
-                    {shipsidopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={shipsidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-
-                          to='/logicGrid'
-                          style={{ textDecoration: "none" }}
-                        >
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handlePayment}>
+                          <ListItemIcon>
+                            <PaymentIcon sx={{ color: "#fff" }} />
+                          </ListItemIcon>
                           <ListItemText
                             sx={{ color: "#fff" }}
                             primary={
                               <Typography
                                 style={{
                                   color: "#FFFFFF",
-                                  fontSize: 14,
+                                  fontSize: 15,
                                 }}
                               >
-                                Logistics
+                                Payment
                               </Typography>
                             }
                           />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                          {paymentopen ? (
+                            <ExpandLess sx={{ color: "#fff" }} />
+                          ) : (
+                            <ExpandMore sx={{ color: "#fff" }} />
+                          )}
+                        </ListItemButton>
+                        <Collapse in={paymentopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <Link
+                                // reloadDocument
+
+                                to='/gateway'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemText
+                                  sx={{ color: "#fff" }}
+                                  primary={
+                                    <Typography
+                                      style={{
+                                        color: "#FFFFFF",
+                                        fontSize: 14,
+                                      }}
+                                    >
+                                      Gateway
+                                    </Typography>
+                                  }
+                                />
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider sx={{ mt: -1, mb: -1 }} />
                 </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickapp}>
-                    <ListItemIcon>
-                      <LanguageIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          International
-                        </Typography>
-                      }
-                    />
-                    {appsidopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={appsidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-
-                          to='/hometaxes'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Taxes
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-
-                          to='/locatgrid'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Locations
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickappp}>
-                    <ListItemIcon>
-                      <SettingsSuggestIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          Settings
-                        </Typography>
-                      }
-                    />
-                    {settingssidopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={settingssidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-
-                          to='/application'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Application Settings
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handlePayment}>
-                    <ListItemIcon>
-                      <PaymentIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ color: "#fff" }}
-                      primary={
-                        <Typography
-                          style={{
-                            color: "#FFFFFF",
-                            fontSize: 15,
-                          }}
-                        >
-                          Payment
-                        </Typography>
-                      }
-                    />
-                    {paymentopen ? (
-                      <ExpandLess sx={{ color: "#fff" }} />
-                    ) : (
-                      <ExpandMore sx={{ color: "#fff" }} />
-                    )}
-                  </ListItemButton>
-                  <Collapse in={paymentopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          // reloadDocument
-
-                          to='/gateway'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemText
-                            sx={{ color: "#fff" }}
-                            primary={
-                              <Typography
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Gateway
-                              </Typography>
-                            }
-                          />
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider sx={{ mt: -1, mb: -1 }} />
+              ) : ("")
+            }
           </>
         ) : (
           <>
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Catelog department' ? (
                 <>
-                  <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                      <LocationCityIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={sidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/product'
-                          style={{ textDecoration: "none" }}
-                        >
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handleClick}>
                           <ListItemIcon>
-                            <ProductionQuantityLimitsIcon
-                              sx={{ color: "#fff" }}
-                            />
+                            <LocationCityIcon sx={{ color: "#fff" }} />
                           </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/categorymaster'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <CategoryIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/attributes'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <FeaturedPlayListIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/brand'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <BrandingWatermarkIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/team'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <GroupsIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                        </ListItemButton>
+                        <Collapse in={sidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+                                to='/product'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <ProductionQuantityLimitsIcon
+                                    sx={{ color: "#fff" }}
+                                  />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+                                to='/categorymaster'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <CategoryIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+                                to='/attributes'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <FeaturedPlayListIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+                                to='/brand'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <BrandingWatermarkIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+                                to='/team'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <GroupsIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider />
                 </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleOrder}>
-                    <ListItemIcon>
-                      <ShoppingBasketIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={Orderopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleOrder}>
+                        <ListItemIcon>
+                          <ShoppingBasketIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
+                      </ListItemButton>
+                      <Collapse in={Orderopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
 
-                          to='/orderhistory'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <ShoppingBasketIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
+                              to='/orderhistory'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <ShoppingBasketIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
 
-                          to='/orderstatus'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <ShoppingBasketIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickcustemer}>
-                    <ListItemIcon>
-                      <PersonIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={custemersidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/custemer'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <PeopleIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/address'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <ContactsIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-                          to='/prodEnquiry'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <PersonOffIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickship}>
-                    <ListItemIcon>
-                      <LocalShippingIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={shipsidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
+                              to='/orderstatus'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <ShoppingBasketIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider />
+              </>
+              ) : ("")
+            }
 
-                          to='/logistic'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <ChildFriendlyIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Customer department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleClickcustemer}>
+                        <ListItemIcon>
+                          <PersonIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
                       </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickapp}>
-                    <ListItemIcon>
-                      <LanguageIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={appsidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
+                      <Collapse in={custemersidopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
+                              to='/custemer'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <PeopleIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
+                              to='/address'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <ContactsIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
+                              to='/prodEnquiry'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <PersonOffIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider />
+              </>) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (<>
+                <List>
+                  <ListItem disablePadding sx={{ display: "block" }}>
+                    <>
+                      <ListItemButton onClick={handleClickship}>
+                        <ListItemIcon>
+                          <LocalShippingIcon sx={{ color: "#fff" }} />
+                        </ListItemIcon>
+                      </ListItemButton>
+                      <Collapse in={shipsidopen} timeout='auto' unmountOnExit>
+                        <List>
+                          <ListItemButton>
+                            <Link
+                              // reloadDocument
 
-                          to='/hometaxes'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <CurrencyRupeeIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <>
-                  <ListItemButton onClick={handleClickappp}>
-                    <ListItemIcon>
-                      <SettingsSuggestIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={settingssidopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
+                              to='/logistic'
+                              style={{ textDecoration: "none" }}
+                            >
+                              <ListItemIcon>
+                                <ChildFriendlyIcon sx={{ color: "#fff" }} />
+                              </ListItemIcon>
+                            </Link>
+                          </ListItemButton>
+                        </List>
+                      </Collapse>
+                    </>
+                  </ListItem>
+                </List>
+                <Divider />
+              </>) : ("")
+            }
+            {
 
-                          to='/application'
-                          style={{ textDecoration: "none" }}
-                        >
-                          <ListItemIcon>
-                            <SettingsApplicationsIcon sx={{ color: "#fff" }} />
-                          </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Product department' ? (
                 <>
-                  <ListItemButton onClick={handlePayment}>
-                    <ListItemIcon>
-                      <PaymentIcon sx={{ color: "#fff" }} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                  <Collapse in={paymentopen} timeout='auto' unmountOnExit>
-                    <List>
-                      <ListItemButton>
-                        <Link
-                          // reloadDocument
-
-                          to='/gateway'
-                          style={{ textDecoration: "none" }}
-                        >
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handleClickapp}>
                           <ListItemIcon>
-                            <PaymentsIcon sx={{ color: "#fff" }} />
+                            <LanguageIcon sx={{ color: "#fff" }} />
                           </ListItemIcon>
-                        </Link>
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
+                        </ListItemButton>
+                        <Collapse in={appsidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+
+                                to='/hometaxes'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <CurrencyRupeeIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider />
                 </>
-              </ListItem>
-            </List>
-            <Divider />
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Catelog department' ? (
+                <>
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handleClickappp}>
+                          <ListItemIcon>
+                            <SettingsSuggestIcon sx={{ color: "#fff" }} />
+                          </ListItemIcon>
+                        </ListItemButton>
+                        <Collapse in={settingssidopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+
+                                to='/application'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <SettingsApplicationsIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider />
+                </>
+              ) : ("")
+            }
+            {
+              userdetails[0] == 'SuperAdmin' || userdetails[0] == 'Payment department' ? (
+                <>
+                  <List>
+                    <ListItem disablePadding sx={{ display: "block" }}>
+                      <>
+                        <ListItemButton onClick={handlePayment}>
+                          <ListItemIcon>
+                            <PaymentIcon sx={{ color: "#fff" }} />
+                          </ListItemIcon>
+                        </ListItemButton>
+                        <Collapse in={paymentopen} timeout='auto' unmountOnExit>
+                          <List>
+                            <ListItemButton>
+                              <Link
+                                // reloadDocument
+
+                                to='/gateway'
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ListItemIcon>
+                                  <PaymentsIcon sx={{ color: "#fff" }} />
+                                </ListItemIcon>
+                              </Link>
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
+                      </>
+                    </ListItem>
+                  </List>
+                  <Divider />
+                </>
+              ) : ("")
+            }
           </>
         )}
       </Drawer>

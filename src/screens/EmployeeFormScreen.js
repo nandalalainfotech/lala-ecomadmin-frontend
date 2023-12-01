@@ -45,12 +45,13 @@ function EmployeeFormScreen() {
           lastname: e.lname,
           email: e.email,
           mobile: e.mnumber,
+          password: e.password,
           EmpProfile: EmployeProfile,
           active: EmployeActive,
         })
       );
       window.confirm('Profile Saved Successfully!!');
-      e.target.reset();
+      // e.target.reset();
       setEmployeProfile('');
       setEmployeActive('');
     } else {
@@ -60,6 +61,7 @@ function EmployeeFormScreen() {
           lastname: e.lname,
           email: e.email,
           mobile: e.mnumber,
+          password: e.password,
           EmpProfile: EmployeProfile,
           active: EmployeActive,
         })
@@ -192,6 +194,22 @@ function EmployeeFormScreen() {
                 size="small"
                 margin="normal"
                 fullWidth
+                id="password"
+                label="Password"
+                name="password"
+                type="password"
+                autoComplete="off"
+                {...register1('password', { required: true })}
+                error={errors1.email}
+              />
+              {errors1.eprofil && (
+                <span className="formError">Password is required</span>
+              )}
+
+              <TextField
+                size="small"
+                margin="normal"
+                fullWidth
                 id="Number"
                 label="Mobile Number"
                 name="mnumber"
@@ -211,7 +229,7 @@ function EmployeeFormScreen() {
                   onChange={(e) => setEmployeProfile(e.target.value)}
                 >
                   {profiledetail?.map((item) => (
-                    <MenuItem key={item._id} value={item._id}>
+                    <MenuItem key={item.empprofile} value={item._id}>
                       {item.empprofile}
                     </MenuItem>
                   ))}
