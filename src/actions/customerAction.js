@@ -98,14 +98,13 @@ export const updatecustomerAddress =
   };
 
 export const updatecustomeraddressactive = (attId) => async (dispatch, getState) => {
-  console.log("attId===>",attId);
   dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST, payload: attId });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const { data } = await Axios.put(
-      `/api/catProduct/attactive/${attId.checkboxId}`,
+      `/api/customerAddress/addresscust/${attId.checkboxId}`,
       attId,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },

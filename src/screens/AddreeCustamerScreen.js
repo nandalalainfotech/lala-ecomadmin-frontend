@@ -28,29 +28,51 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
+import { makeStyles } from "../../node_modules/@material-ui/styles/index";
+import { CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET } from "../constants/customerConstant";
+
+const useStyles1 = makeStyles({
+  switch: {
+    "& .Mui-checked": {
+      color: "#00CC00",
+      // transform: "translateX(25px) !important"
+    },
+    "& .MuiSwitch-track": {
+      backgroundColor: "#00CC00 !important",
+    },
+  },
+});
 
 function AddreeCustamerScreen() {
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
-  const AddressList = useSelector((state) => state.AddressList);
-  const { Adddatum } = AddressList;
+  // const AddressList = useSelector((state) => state.AddressList);
+  // const { Adddatum } = AddressList;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const swicclasses = useStyles1();
   const [details, setDetails] = useState([]);
 
   const CustomAdditem = () => {
     navigate("/addressreg");
   };
-
+  const customerAddressActive = useSelector(
+    (state) => state.customerAddressActive
+  );
+  const { success: activesucess } = customerAddressActive;
   useEffect(() => {
     dispatch(customerAddressList());
     dispatch(AddressBillList());
   }, []);
   useEffect(() => {
-    if (custAddList && Adddatum) {
-      setDetails([...custAddList, ...Adddatum]);
+    if (custAddList) {
+      setDetails(custAddList);
     }
-  }, [custAddList, Adddatum]);
+    if (activesucess) {
+      dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET });
+      dispatch(customerAddressList());
+    }
+  }, [custAddList, activesucess]);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -162,10 +184,20 @@ function AddreeCustamerScreen() {
       sortable: false,
       flex: 1,
       renderCell: (params) => {
-        if (params.row.checked == true) {
-          return <Switch color="primary" checked />;
+        console.log(
+          "params.row.status === true  <======>",
+          params.row.status === true
+        );
+        if (params.row.status === true) {
+          return (
+            <FormControlLabel
+              control={
+                <Switch size="small" className={swicclasses.switch} checked />
+              }
+            />
+          );
         } else {
-          return <Switch />;
+          return <FormControlLabel control={<Switch size="small" />} />;
         }
       },
     },
