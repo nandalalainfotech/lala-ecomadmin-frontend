@@ -223,6 +223,8 @@ function EmployeeScreen() {
   const [Editmobile, setEditmobile] = useState("");
   const [Editprofile, setEditprofile] = useState("");
   const [EditActive, setEditActive] = useState("");
+  const [password, setpassword] = useState("");
+
 
   const editEmployeeDetails = (params) => {
     setEditId(params._id);
@@ -232,6 +234,7 @@ function EmployeeScreen() {
     setEditmobile(params.mobile);
     setEditprofile(params.profile);
     setEditActive(params.active);
+    setpassword(params.password)
   };
 
   const Updatehandele = () => {
@@ -244,6 +247,7 @@ function EmployeeScreen() {
         mobilenumber: Editmobile,
         roll: Editprofile,
         active: EditActive,
+        password: password,
       })
     );
     window.confirm("Employee Details Update Successfully!!");
@@ -254,6 +258,7 @@ function EmployeeScreen() {
     setEditmobile("");
     setEditprofile("");
     setEditActive("");
+    setpassword("");
   };
   const [EditemployeeProfileId, setEditemployeeProfileId] = useState("");
   const [EditemployeeProfile, setEditemployeeProfile] = useState("");
@@ -352,9 +357,9 @@ function EmployeeScreen() {
 
   function getprofileId(params) {
     return `${params?.row?.profile
-        ? profiledetail?.find((x) => x?._id === params?.row?.profile)
-          ?.empprofile
-        : ""
+      ? profiledetail?.find((x) => x?._id === params?.row?.profile)
+        ?.empprofile
+      : ""
       }`;
   }
 
@@ -852,7 +857,6 @@ function EmployeeScreen() {
                       }}
                     >
                       <CssBaseline />
-
                       <Box
                         onSubmit={handleSubmit1(Updatehandele)}
                         component="form"
@@ -911,6 +915,18 @@ function EmployeeScreen() {
                           margin="normal"
                           fullWidth
                           id="Number"
+                          label="Password"
+                          name="Password"
+                          autoComplete="off"
+                          value={password}
+                          onChange={(e) => setpassword(e.target.value)}
+                        />
+
+                        <TextField
+                          size="small"
+                          margin="normal"
+                          fullWidth
+                          id="Number"
                           label="Mobile Number"
                           name="mnumber"
                           autoComplete="off"
@@ -926,7 +942,7 @@ function EmployeeScreen() {
                             label="Attributes Type"
                             onChange={(e) => setEditprofile(e.target.value)}
                           >
-                            {profiledetail.map((item) => (
+                            {profiledetail?.map((item) => (
                               <MenuItem key={item._id} value={item._id}>
                                 {item.empprofile}
                               </MenuItem>
@@ -1225,7 +1241,7 @@ function EmployeeScreen() {
                 renderValue={(selected) => selected.join(", ")}
                 MenuProps={MenuProps}
               >
-                {names.map((name) => (
+                {names?.map((name) => (
                   <MenuItem key={name} value={name}>
                     <Checkbox checked={personName.indexOf(name) > -1} />
                     <ListItemText primary={name} />

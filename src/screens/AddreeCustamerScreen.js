@@ -19,6 +19,7 @@ import {
 } from "../../node_modules/react-redux/es/exports";
 import {
   customerAddressList,
+  deleteMultipleaddress,
   deletecustomerAddress,
   updatecustomeraddressactive,
 } from "../actions/customerAction";
@@ -29,7 +30,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import { makeStyles } from "../../node_modules/@material-ui/styles/index";
-import { CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET } from "../constants/customerConstant";
+import { CUSTOMER_ADDRESS_BULK_DELETE_RESET, CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET } from "../constants/customerConstant";
 
 const useStyles1 = makeStyles({
   switch: {
@@ -46,6 +47,9 @@ const useStyles1 = makeStyles({
 function AddreeCustamerScreen() {
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
+
+  const customerAddressdelete = useSelector((state) => state.customerAddressdelete);
+  const { success: deleteall } = customerAddressdelete;
   // const AddressList = useSelector((state) => state.AddressList);
   // const { Adddatum } = AddressList;
   const dispatch = useDispatch();
@@ -72,7 +76,11 @@ function AddreeCustamerScreen() {
       dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET });
       dispatch(customerAddressList());
     }
-  }, [custAddList, activesucess]);
+    if (deleteall) {
+      dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_RESET });
+      dispatch(customerAddressList());
+    }
+  }, [custAddList, activesucess, deleteall]);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -184,10 +192,6 @@ function AddreeCustamerScreen() {
       sortable: false,
       flex: 1,
       renderCell: (params) => {
-        console.log(
-          "params.row.status === true  <======>",
-          params.row.status === true
-        );
         if (params.row.status === true) {
           return (
             <FormControlLabel
@@ -266,6 +270,9 @@ function AddreeCustamerScreen() {
   };
   const handleClosecheckdelet = () => {
     setvalueOpen(false);
+    if (checkeddelete == true) {
+      dispatch(deleteMultipleaddress({ id: valeselectionModel }));
+    }
   };
   const handlevlaueClosecheck = () => {
     setvalueOpen(false);
@@ -430,17 +437,17 @@ function AddreeCustamerScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+          {
+            backgroundColor: "#330033",
+            color: "#ffffff",
+          },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+          {
+            backgroundColor: "#808080",
+          },
         }}
       >
         <DataGrid
