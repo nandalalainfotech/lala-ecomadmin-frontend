@@ -18,7 +18,7 @@ import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
 import Badge from "@mui/material/Badge";
 import { makeStyles } from "@material-ui/core/styles";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+// import AccountCircle from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -427,56 +427,63 @@ function App() {
                               </Box>
                             </div>
                           ) : (
-                            <Tooltip title="signIn" arrow>
-                              <IconButton
-                                sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                                color="inherit"
-                              >
-                                <Link style={{ color: "inherit" }} to="/signin">
-                                  <Avatar
-                                    sx={{
-                                      border: "2px solid #fff",
-                                      bgcolor: "inherit",
-                                      "&:hover": { color: "#ff7519" },
-                                    }}
-                                  >
-                                    <AccountCircle />
-                                  </Avatar>
-                                </Link>
-                              </IconButton>
-                            </Tooltip>
+                            <>
+                            </>
+                            // <Tooltip title="signIn" arrow>
+                            //   <IconButton
+                            //     sx={{ p: 0, pt: 1, "&:hover": { color: "#ff7519" } }}
+                            //     color="inherit"
+                            //   >
+                            //     <Link style={{ color: "inherit" }} to="/signin">
+                            //       <Avatar
+                            //         sx={{
+                            //           border: "2px solid #fff",
+                            //           bgcolor: "inherit",
+                            //           "&:hover": { color: "#ff7519" },
+                            //         }}
+                            //       >
+                            //         <AccountCircle />
+                            //       </Avatar>
+                            //     </Link>
+                            //   </IconButton>
+                            // </Tooltip>
                           )}
                         </Box>
-
-                        <Box sx={{ display: { xs: "flex" } }}>
-                          <IconButton
-                            x={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                            aria-label="show 4 new mails"
-                            color="inherit"
-                            onClick={handleToggleSidebar}
-                          >
-                            <Badge
-                              badgeContent={notificationlist?.length}
-                              color="warning"
-                            >
-                              <Avatar
-                                sx={{
-                                  border: "2px solid #fff",
-                                  bgcolor: "inherit",
-                                  "&:hover": { color: "#ff7519" },
-                                }}
-                              >
-                                <Tooltip title="Notification" arrow>
-                                  <NotificationsIcon />
-                                </Tooltip>
-                              </Avatar>
-                              <NotificationSidebar
-                                open={open}
-                                onClose={handleToggleSidebar}
-                              />
-                            </Badge>
-                          </IconButton>
-                        </Box>
+                        {
+                          userInfo ? (
+                            <>
+                              <Box sx={{ display: { xs: "flex" } }}>
+                                <IconButton
+                                  x={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                  aria-label="show 4 new mails"
+                                  color="inherit"
+                                  onClick={handleToggleSidebar}
+                                >
+                                  <Badge
+                                    badgeContent={notificationlist?.length}
+                                    color="warning"
+                                  >
+                                    <Avatar
+                                      sx={{
+                                        border: "2px solid #fff",
+                                        bgcolor: "inherit",
+                                        "&:hover": { color: "#ff7519" },
+                                      }}
+                                    >
+                                      <Tooltip title="Notification" arrow>
+                                        <NotificationsIcon />
+                                      </Tooltip>
+                                    </Avatar>
+                                    <NotificationSidebar
+                                      open={open}
+                                      onClose={handleToggleSidebar}
+                                    />
+                                  </Badge>
+                                </IconButton>
+                              </Box>
+                            </>
+                          ) : ("")
+                        }
                         <Box sx={{ display: { xs: "flex" } }}>
                           {userInfo && (
                             <Tooltip title="Log Out" arrow>

@@ -351,12 +351,11 @@ function EmployeeScreen() {
   };
 
   function getprofileId(params) {
-    return `${
-      params?.row?.profile
+    return `${params?.row?.profile
         ? profiledetail?.find((x) => x?._id === params?.row?.profile)
-            ?.empprofile
+          ?.empprofile
         : ""
-    }`;
+      }`;
   }
 
   const employee = [
@@ -984,17 +983,17 @@ function EmployeeScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#330033",
-                      color: "#ffffff",
-                    },
+                  {
+                    backgroundColor: "#330033",
+                    color: "#ffffff",
+                  },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                    },
+                  {
+                    backgroundColor: "#808080",
+                  },
                 }}
               >
                 <DataGrid
@@ -1133,17 +1132,17 @@ function EmployeeScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#330033",
-                      color: "#ffffff",
-                    },
+                  {
+                    backgroundColor: "#330033",
+                    color: "#ffffff",
+                  },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                    },
+                  {
+                    backgroundColor: "#808080",
+                  },
                 }}
               >
                 <DataGrid
