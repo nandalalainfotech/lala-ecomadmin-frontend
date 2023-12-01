@@ -51,7 +51,7 @@ function EmployeeFormScreen() {
         })
       );
       window.confirm('Profile Saved Successfully!!');
-      // e.target.reset();
+      event.target.reset();
       setEmployeProfile('');
       setEmployeActive('');
     } else {
@@ -67,7 +67,7 @@ function EmployeeFormScreen() {
         })
       );
       window.confirm('Profile Saved Successfully!!');
-      e.target.reset();
+      event.target.reset();
       setEmployeProfile('');
       setEmployeActive('');
     }
