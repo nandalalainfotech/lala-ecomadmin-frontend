@@ -15,6 +15,9 @@ import {
   CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST,
   CUSTOMER_PRODUCT_ACTIVE_UPDATE_SUCCESS,
   CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL,
+  CUSTOMER_ADDRESS_BULK_DELETE_REQUEST,
+  CUSTOMER_ADDRESS_BULK_DELETE_SUCCESS,
+  CUSTOMER_ADDRESS_BULK_DELETE_FAIL,
 } from "../constants/customerConstant";
 
 export const saveCustomerAddress =
@@ -117,5 +120,28 @@ export const updatecustomeraddressactive = (attId) => async (dispatch, getState)
         ? error.response.data.message
         : error.message;
     dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL, error: message });
+  }
+};
+
+export const deleteMultipleaddress = (empId) => async (dispatch, getState) => {
+  dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_REQUEST, payload: empId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    await Axios.delete(
+      "/api/customerAddress/addresmasterdelete/" + empId,
+      { data: empId },
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_FAIL, payload: message });
   }
 };

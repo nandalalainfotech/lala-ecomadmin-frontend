@@ -191,6 +191,7 @@ import {
   customAddListReducer,
   customAddressUpdateReducer,
   customerAddressActiveReducer,
+  customerAddressbulkdeleteReducer,
   customerAddressReducer,
 } from "./reducers/customerReducer";
 import {
@@ -434,8 +435,8 @@ const reducer = combineReducers({
   customAddressList: customAddListReducer,
   customAddressUpdate: customAddressUpdateReducer,
   customAddDelete: customAddDeleteReducer,
-  customerAddressActive:customerAddressActiveReducer,
-
+  customerAddressActive: customerAddressActiveReducer,
+  customerAddressdelete: customerAddressbulkdeleteReducer,
   categoryList: categoryListReducer,
   childcategory: childcategoryCreateReducer,
   ChildCategoryLis: ChildCategoryListReducer,
