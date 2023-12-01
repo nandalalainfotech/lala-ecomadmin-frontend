@@ -14,6 +14,10 @@ import {
   CUSTOMER_ADDRESS_UPDATE_REQUEST,
   CUSTOMER_ADDRESS_UPDATE_RESET,
   CUSTOMER_ADDRESS_UPDATE_SUCCESS,
+  CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL,
+  CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST,
+  CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET,
+  CUSTOMER_PRODUCT_ACTIVE_UPDATE_SUCCESS,
 } from "../constants/customerConstant";
 
 export const customerAddressReducer = (state = {}, customerAddress) => {
@@ -21,7 +25,11 @@ export const customerAddressReducer = (state = {}, customerAddress) => {
     case CUSTOMER_ADDRESS_REQUEST:
       return { loading: true };
     case CUSTOMER_ADDRESS_SUCCESS:
-      return { loading: false, success: true, product: customerAddress.payload };
+      return {
+        loading: false,
+        success: true,
+        product: customerAddress.payload,
+      };
     case CUSTOMER_ADDRESS_FAIL:
       return { loading: false, error: customerAddress.payload };
     case CUSTOMER_ADDRESS_RESET:
@@ -32,7 +40,9 @@ export const customerAddressReducer = (state = {}, customerAddress) => {
 };
 
 export const customAddListReducer = (
-  state = { loading: true, custAddList: [] },action) => {
+  state = { loading: true, custAddList: [] },
+  action
+) => {
   switch (action.type) {
     case CUSTOMER_ADDRESS_LIST_REQUEST:
       return { loading: true };
@@ -72,6 +82,21 @@ export const customAddDeleteReducer = (state = {}, action) => {
     case CUSTOMER_ADDRESS_DELETE_FAIL:
       return { loading: false, error: action.payload };
     case CUSTOMER_ADDRESS_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const customerAddressActiveReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST:
+      return { loading: true };
+    case CUSTOMER_PRODUCT_ACTIVE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET:
       return {};
     default:
       return state;

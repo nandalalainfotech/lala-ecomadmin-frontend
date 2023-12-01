@@ -20,6 +20,7 @@ import {
 import {
   customerAddressList,
   deletecustomerAddress,
+  updatecustomeraddressactive,
 } from "../actions/customerAction";
 import { AddressBillList } from "../actions/addressActions";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +37,7 @@ function AddreeCustamerScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [details, setDetails] = useState([]);
+
   const CustomAdditem = () => {
     navigate("/addressreg");
   };
@@ -43,8 +45,12 @@ function AddreeCustamerScreen() {
   useEffect(() => {
     dispatch(customerAddressList());
     dispatch(AddressBillList());
-    setDetails([...custAddList, ...Adddatum]);
   }, []);
+  useEffect(() => {
+    if (custAddList && Adddatum) {
+      setDetails([...custAddList, ...Adddatum]);
+    }
+  }, [custAddList, Adddatum]);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -195,7 +201,7 @@ function AddreeCustamerScreen() {
   const [valueopen, setvalueOpen] = useState(false);
   const [valuecheckedcheck, setvalueChecked] = useState(false);
   const [valuedchecked, setvaluedisableChecked] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+  const [valeselectionModel, setvalueSelectionModel] = useState([]);
   const [valuedsablechecked, setvaluediChecked] = useState("");
   const handleClickvalueOpen = () => {
     setCheckeddelete(false);
@@ -229,30 +235,26 @@ function AddreeCustamerScreen() {
   const handleClosecheckdelet = () => {
     setvalueOpen(false);
   };
- const handlevlaueClosecheck = () => {
-  setvalueOpen(false);
-  if (valuecheckedcheck === true) {
-    dispatch(
-      // eslint-disable-next-line no-undef
-      updateproductactive({
-        // eslint-disable-next-line no-undef
-        checkboxId: valeselectionModel,
-        checkedshow: valuecheckedcheck,
-      })
-    );
-    window.confirm("Active Successfully!!");
-  } else {
-    dispatch(
-      // eslint-disable-next-line no-undef
-      updateproductactive({
-        // eslint-disable-next-line no-undef
-        checkboxId: valeselectionModel,
-        checkedhide: valuedsablechecked,
-      })
-    );
-    window.confirm("De-Active Successfully!!");
-  }
-};
+  const handlevlaueClosecheck = () => {
+    setvalueOpen(false);
+    if (valuecheckedcheck === true) {
+      dispatch(
+        updatecustomeraddressactive({
+          checkboxId: valeselectionModel,
+          checkedshow: valuecheckedcheck,
+        })
+      );
+      window.confirm("Active Successfully!!");
+    } else {
+      dispatch(
+        updatecustomeraddressactive({
+          checkboxId: valeselectionModel,
+          checkedhide: valuedsablechecked,
+        })
+      );
+      window.confirm("De-Active Successfully!!");
+    }
+  };
 
   return (
     <>
@@ -426,6 +428,9 @@ function AddreeCustamerScreen() {
           // rowsPerPageOptions={[25, 50, 100]}
 
           checkboxSelection
+          onSelectionModelChange={(newSelectionModel) => {
+            setvalueSelectionModel(newSelectionModel);
+          }}
         />
       </Box>
     </>

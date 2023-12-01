@@ -26,7 +26,6 @@ export const AddressBillList = () => async (dispatch) => {
   try {
     const { data } = await Axios.get("/api/registerDetails/Address");
     dispatch({ type: CUS_LIST_SUCCESS, payload: data });
-    console.log("data", data);
   } catch (error) {
     dispatch({ type: CUS_LIST_FAIL, payload: error.message });
   }
