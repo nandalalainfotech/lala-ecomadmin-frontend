@@ -16,6 +16,10 @@ import {
 import MessageBox from "../components/MessageBox";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Typography } from "../../node_modules/@material-ui/core/index";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Divider } from "../../node_modules/@material-ui/core/index";
+import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -80,7 +84,7 @@ export default function OrderHistoryScreen() {
       dispatch({ type: ORDER_STATUSASSIGN_LIST_RESET });
     }
     if (multipledel) {
-      dispatch({ type: ORDER_STATUS_MULTIPLE_DELETE_RESET })
+      dispatch({ type: ORDER_STATUS_MULTIPLE_DELETE_RESET });
     }
     dispatch(listOrderMine());
     dispatch(StatuslistOrderMine());
@@ -209,7 +213,7 @@ export default function OrderHistoryScreen() {
       valueGetter: getFullName,
       renderCell: (params) => {
         return (
-          <Chip variant='outlined' size='small' {...getFullName(params)} />
+          <Chip variant="outlined" size="small" {...getFullName(params)} />
         );
       },
     },
@@ -232,7 +236,7 @@ export default function OrderHistoryScreen() {
             value={params.row.Status}
             style={{ width: "100%", height: "30px" }}
             onChange={(e) => handlestatus(e.target.value)}
-          // onClick={(e) => handlechangezone(e.target.value)}
+            // onClick={(e) => handlechangezone(e.target.value)}
           >
             <option>{params.row.Status}</option>
             {statusdatum?.map((items, key) => {
@@ -312,8 +316,8 @@ export default function OrderHistoryScreen() {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-            theme.palette.action.selectedOpacity +
-            theme.palette.action.hoverOpacity
+              theme.palette.action.selectedOpacity +
+              theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
@@ -330,12 +334,31 @@ export default function OrderHistoryScreen() {
   return (
     <div>
       <Box sx={{ display: "flex" }}>
-        <Typography style={{ marginTop: 30 }} variant='h5'>
+        <Typography variant="h6" sx={{ mt: -1}}>
           Order History
         </Typography>
+        <Box sx={{ display: "flex", mt: 5, ml: -16.5 }}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
+              }}
+            >
+              <Typography>Home</Typography>
+            </Link>
+
+            <Typography sx={{ fontSize: "15px" }}> Order History</Typography>
+          </Breadcrumbs>
+        </Box>
+        <Divider sx={{ mt: 4 }} />
         <Box sx={{ ml: "auto" }}>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               mr: 3,
               mt: 3,
@@ -347,33 +370,33 @@ export default function OrderHistoryScreen() {
           >
             Bulk
           </Button>
-        </Box>
-        <Box>
-          <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
-            <DialogTitle>Delete</DialogTitle>
-            <DialogContent>
-              <FormControlLabel
-                label="Delete All"
-                control={
-                  <Checkbox
-                    checked={checkeddelete1}
-                    onChange={handleChangedelete1}
-                    inputProps={{
-                      "aria-label": "controlled",
-                    }}
-                  />
-                }
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleDeletrClose1}>
-                Cancel
-              </Button>
-              <Button onClick={handleClosecheckdelet1} autoFocus>
-                Done
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <Box>
+            <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
+              <DialogTitle>Delete</DialogTitle>
+              <DialogContent>
+                <FormControlLabel
+                  label="Delete All"
+                  control={
+                    <Checkbox
+                      checked={checkeddelete1}
+                      onChange={handleChangedelete1}
+                      inputProps={{
+                        "aria-label": "controlled",
+                      }}
+                    />
+                  }
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleDeletrClose1}>
+                  Cancel
+                </Button>
+                <Button onClick={handleClosecheckdelet1} autoFocus>
+                  Done
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
         </Box>
       </Box>
       {loading ? (
@@ -391,7 +414,7 @@ export default function OrderHistoryScreen() {
           }}
         ></CircularProgress>
       ) : error ? (
-        <MessageBox variant='danger'>{error}</MessageBox>
+        <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Box
           sx={{
@@ -408,10 +431,10 @@ export default function OrderHistoryScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#330033",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
@@ -426,7 +449,7 @@ export default function OrderHistoryScreen() {
             columns={columns}
             rows={orders}
             getRowId={(rows) => rows._id}
-            VerticalAlignment='Center'
+            VerticalAlignment="Center"
             rowHeight={40}
             headerHeight={35}
             getRowClassName={(params) =>

@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 import Box from "@mui/material/Box";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Divider } from "../../node_modules/@material-ui/core/index";
+import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
@@ -130,6 +133,39 @@ export default function OrderScreen() {
   }, [dispatch]);
   return (
     <div>
+        <Box sx={{ display: "flex" }}>
+        <Typography variant="h6" sx={{ mt: -1}}>
+          Order Details
+        </Typography>
+        <Box sx={{ display: "flex", mt: 5, ml: -16.5 }}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
+              }}
+            >
+              <Typography>Home</Typography>
+            </Link>
+
+            <Link
+            to="/orderhistory"
+            style={{
+              color: "rgba(0, 0, 0, 0.6)",
+              fontSize: "15px",
+            }}
+          >
+            <Typography>Order History</Typography>
+          </Link>
+            <Typography sx={{ fontSize: "15px" }}> Order Details</Typography>
+          </Breadcrumbs>
+        </Box>
+        <Divider sx={{ mt: 4 }} />
+      </Box>
       <Box sx={{ flexGrow: 1, m: 2 }}>
         <Grid container spacing={2} columns={16}>
           <Grid item xs={8}>
