@@ -12,6 +12,9 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Typography from "@mui/material/Typography";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -47,12 +50,31 @@ export default function OrderStatus() {
     <div>
       <>
         <Box sx={{ display: "flex" }}>
-          <Typography variant='h6' sx={{ mt: -1 }}>
+          <Typography variant="h6" sx={{ mt: -1 }}>
             Order Status
           </Typography>
+          <Box sx={{ display: "flex", mt: 4, ml: -16 }}>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "15px",
+                }}
+              >
+                <Typography>Home</Typography>
+              </Link>
+
+              <Typography sx={{ fontSize: "15px" }}>Order Status</Typography>
+            </Breadcrumbs>
+          </Box>
+          <Divider sx={{ mt: 4 }} />
           <Box sx={{ ml: "auto" }}>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 mr: 3,
                 mt: -1,
@@ -74,11 +96,11 @@ export default function OrderStatus() {
           <>
             {" "}
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align='left'>Id</TableCell>
-                    <TableCell align='left'>Status</TableCell>
+                    <TableCell align="left">Id</TableCell>
+                    <TableCell align="left">Status</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
@@ -94,8 +116,8 @@ export default function OrderStatus() {
                       key={row.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell align='left'>{key + 1}</TableCell>
-                      <TableCell align='left'>{row.Status}</TableCell>
+                      <TableCell align="left">{key + 1}</TableCell>
+                      <TableCell align="left">{row.Status}</TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>
