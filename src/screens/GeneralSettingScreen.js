@@ -21,6 +21,7 @@ import {
 } from "../actions/GeneralAction";
 import "./breadcrumb.css";
 import { GENERAL_DETAIL_UPDATE_RESET } from "../constants/GeneralConstants";
+import { ShippingAllList } from "../actions/shippingLocAction";
 // import Card from "@mui/material/Card";
 export const GeneralSettingScreen = () => {
   function handleChange(e) {
@@ -47,6 +48,14 @@ export const GeneralSettingScreen = () => {
   const generalallalllist = useSelector((state) => state.generalallalllist);
   const { generaldatum } = generalallalllist;
 
+  const shiploccostallList = useSelector((state) => state.shiploccostallList);
+  const { shippinglistdata } = shiploccostallList;
+  const freeshipdata = shippinglistdata?.find((x) => x.preId === AttId)
+  ? shippinglistdata?.find((x) => x.preId === AttId)
+  : undefined;
+
+
+  console.log("freeshipdata---------->>>", freeshipdata);
   let sample;
   {
     generaldatum?.map((item) => {
@@ -73,7 +82,7 @@ export const GeneralSettingScreen = () => {
   } = useForm();
 
   const SavegeneralDetails = async (e) => {
-    console.log("Finish---------->>>", Finish);
+    
     if (Finish === 1) {
       const fd = new FormData();
       // fd.append("image", selectedFilenew);
@@ -152,7 +161,12 @@ export const GeneralSettingScreen = () => {
         })
       );
 
-      navigate(`/costAndShip/${AttId}`);
+      // navigate(`/costAndShip/${AttId}`);
+      {
+        freeshipdata == undefined
+          ? navigate(`/costAndShip/${1}`)
+          : navigate(`/costAndShip/${AttId}`);
+      }
       setNext(0);
       setFinish("");
     }
@@ -163,6 +177,7 @@ export const GeneralSettingScreen = () => {
     // dispatch(GeneralDetails());
     dispatch(genSettingList());
     dispatch(genSettingAllList());
+    dispatch(ShippingAllList());
     if (genUpdate) {
       dispatch({ type: GENERAL_DETAIL_UPDATE_RESET });
     }

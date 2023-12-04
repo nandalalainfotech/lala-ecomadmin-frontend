@@ -185,7 +185,7 @@ function AdressScreen() {
                   >
                     <Typography variant="h5" sx={{ textAlign: "center" }}>
                       {" "}
-                      Create Employee Details
+                      Update Customer Details
                     </Typography>
 
                     <TextField
@@ -383,7 +383,7 @@ function AdressScreen() {
                   >
                     <Typography variant="h5" sx={{ textAlign: "center" }}>
                       {" "}
-                      Create Employee Details
+                      Save Customer Details
                     </Typography>
 
                     <TextField
