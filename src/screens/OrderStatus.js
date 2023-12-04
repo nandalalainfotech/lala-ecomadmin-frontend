@@ -26,7 +26,6 @@ export default function OrderStatus() {
 
   const statusDlete = useSelector((state) => state.statusDlete);
   const { success: deleted } = statusDlete;
-  console.log("deleted", deleted);
 
   useEffect(() => {
     if (deleted) {
@@ -89,10 +88,10 @@ export default function OrderStatus() {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ mt: 2, mb: 1 }}>
+        <Box sx={{ mt: 2, mb: 2 }}>
           <Divider />
         </Box>
-        <Box sx={{ height: 400, width: "100%" }}>
+        <Box sx={{ height: 350, width: "100%" }}>
           <>
             {" "}
             <TableContainer component={Paper}>

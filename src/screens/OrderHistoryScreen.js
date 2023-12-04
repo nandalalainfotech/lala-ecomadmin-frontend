@@ -73,7 +73,6 @@ export default function OrderHistoryScreen() {
   const orderDelete = useSelector((state) => state.orderDelete);
   const { success: deleteorder } = orderDelete;
   let defaultSelected = statusdatum?.find((opt) => !!opt.Status);
-  console.log("defaultSelected------->>", defaultSelected);
   const [status, setStatus] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -121,7 +120,6 @@ export default function OrderHistoryScreen() {
   };
 
   const deleteHandler = (id) => {
-    console.log("id", id);
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteOrder(id));
     }
@@ -129,12 +127,7 @@ export default function OrderHistoryScreen() {
   function getDate(orders) {
     return `${orders.row.createdAt.substring(0, 10) || ""}`;
   }
-  console.log("keyvalue", keyvalue);
-  console.log("age", age);
-  console.log("age1", age1);
   const handleChange = (event) => {
-    console.log("event", event.target.value);
-
     setAge(event.target.value);
   };
 
@@ -146,20 +139,16 @@ export default function OrderHistoryScreen() {
   }
 
   const [File, setFile] = useState("");
-  console.log("File", File);
   const handleChange1 = (event) => {
     setFile(event.target.value);
     // row.selectedFile = event.target.value;
   };
-  console.log("status", status);
   const handlestatus = (e) => {
     setStatus(e);
     dispatch(
       AssignStatusActivate({
         checkboxId: selectionModel,
         checkedshow: e,
-
-        // zoneId: zone,
       })
     );
   };
@@ -193,7 +182,7 @@ export default function OrderHistoryScreen() {
     },
     {
       field: "createdAt",
-      headerName: "DATE",
+      headerName: "Date",
       width: 110,
       headerClassName: "super-app-theme--header",
       valueGetter: getDate,
@@ -236,22 +225,19 @@ export default function OrderHistoryScreen() {
             value={params.row.Status}
             style={{ width: "100%", height: "30px" }}
             onChange={(e) => handlestatus(e.target.value)}
-            // onClick={(e) => handlechangezone(e.target.value)}
           >
             <option>{params.row.Status}</option>
-            {statusdatum?.map((items, key) => {
-              return (
+            {statusdatum
+              ?.filter((index) => {
+                return index.Status !== params.row.Status
+              })
+              .map((status) => (
                 <>
-                  <option
-                    style={{ border: "1px solid #f0f0f5" }}
-                    key={items._id}
-                    value={items.Status}
-                  >
-                    {items.Status}
+                  <option key={status._id} value={status.Status}>
+                    {status?.Status}
                   </option>
                 </>
-              );
-            })}
+              ))}
           </select>
         </Box>
       ),
@@ -316,8 +302,8 @@ export default function OrderHistoryScreen() {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-              theme.palette.action.selectedOpacity +
-              theme.palette.action.hoverOpacity
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
@@ -334,7 +320,7 @@ export default function OrderHistoryScreen() {
   return (
     <div>
       <Box sx={{ display: "flex" }}>
-        <Typography variant="h6" sx={{ mt: -1}}>
+        <Typography variant="h6" sx={{ mt: -1 }}>
           Order History
         </Typography>
         <Box sx={{ display: "flex", mt: 5, ml: -16.5 }}>
@@ -355,53 +341,55 @@ export default function OrderHistoryScreen() {
             <Typography sx={{ fontSize: "15px" }}> Order History</Typography>
           </Breadcrumbs>
         </Box>
-        <Divider sx={{ mt: 4 }} />
-        <Box sx={{ ml: "auto" }}>
-          <Button
-            variant="contained"
-            sx={{
-              mr: 3,
-              mt: 3,
-              borderRadius: "20px",
-              backgroundColor: "#0099CC",
-              fontSize: 12,
-            }}
-            onClick={handleClickdelete1}
-          >
-            Bulk
-          </Button>
-          <Box>
-            <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
-              <DialogTitle>Delete</DialogTitle>
-              <DialogContent>
-                <FormControlLabel
-                  label="Delete All"
-                  control={
-                    <Checkbox
-                      checked={checkeddelete1}
-                      onChange={handleChangedelete1}
-                      inputProps={{
-                        "aria-label": "controlled",
-                      }}
-                    />
-                  }
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button autoFocus onClick={handleDeletrClose1}>
-                  Cancel
-                </Button>
-                <Button onClick={handleClosecheckdelet1} autoFocus>
-                  Done
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Box>
+      </Box>
+      <Box sx={{ mt: 1, mb: 1 }}>
+        <Divider />
+      </Box>
+      <Box sx={{ ml: "auto" }}>
+        <Button
+          variant="contained"
+          sx={{
+            ml: 3,
+            mt: 1,
+            borderRadius: "20px",
+            backgroundColor: "#0099CC",
+            fontSize: 12,
+          }}
+          onClick={handleClickdelete1}
+        >
+          Bulk
+        </Button>
+        <Box>
+          <Dialog open={deleteopen1} onClose={handleDeletrClose1}>
+            <DialogTitle>Delete</DialogTitle>
+            <DialogContent>
+              <FormControlLabel
+                label="Delete All"
+                control={
+                  <Checkbox
+                    checked={checkeddelete1}
+                    onChange={handleChangedelete1}
+                    inputProps={{
+                      "aria-label": "controlled",
+                    }}
+                  />
+                }
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleDeletrClose1}>
+                Cancel
+              </Button>
+              <Button onClick={handleClosecheckdelet1} autoFocus>
+                Done
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Box>
       {loading ? (
         <CircularProgress
-          size={100}
+          size={80}
           sx={{
             flex: 1,
             // marginTop: 24,
@@ -418,25 +406,29 @@ export default function OrderHistoryScreen() {
       ) : (
         <Box
           sx={{
-            height: 460,
+            height: 340,
             width: "100%",
             "& .super-app-theme--header": {
               backgroundColor: "#808080",
               color: "#ffffff",
             },
             "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-              fontSize: 16,
+              fontSize: 14,
             },
             ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
-              fontSize: 13,
+              fontSize: 10,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
+            },
+            ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+            {
+              backgroundColor: "#808080",
             },
           }}
         >
@@ -450,7 +442,7 @@ export default function OrderHistoryScreen() {
             rows={orders}
             getRowId={(rows) => rows._id}
             VerticalAlignment="Center"
-            rowHeight={40}
+            rowHeight={50}
             headerHeight={35}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"

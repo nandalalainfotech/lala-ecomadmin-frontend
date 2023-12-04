@@ -48,7 +48,6 @@ import SearchBox from "./components/SearchBox";
 import SellerRoute from "./components/SellerRoute";
 import AccountCreation from "./screens/AccountCreation";
 import AdmininScreen from "./screens/AdmininScreen";
-import ApplicationScreen from "./screens/ApplicationScreen";
 import CollectionScreen from "./screens/CollectionScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import MapScreen from "./screens/MapScreen";
@@ -135,6 +134,7 @@ import WishListScreen from "./screens/WishListScreen";
 import ZoneScreen from "./screens/ZoneScreen";
 import Stockmaintance from "./screens/Stockmaintance";
 import NotificationSidebar from "./screens/NotificationSidebar";
+import ApplicationScreen from "./screens/ApplicationScreen";
 // Search bar section End*************************************
 
 // eslint-disable-next-line no-unused-vars
@@ -978,14 +978,20 @@ function App() {
                     </AdminRoute>
                   }
                 />
+
                 <Route
+                  path='/application'
+                  element={<ApplicationScreen />}
+                  exact
+                ></Route>
+                {/* <Route
                   path='/application'
                   element={
                     <AdminRoute>
                       <ApplicationScreen />
                     </AdminRoute>
                   }
-                />
+                /> */}
 
                 <Route
                   path='/product/:id'

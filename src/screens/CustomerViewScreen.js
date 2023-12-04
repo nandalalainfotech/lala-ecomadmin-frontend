@@ -101,6 +101,7 @@ export default function CustomerViewScreen() {
                   alignItems: "center",
                   borderRadius: "0px",
                   p: 5,
+                  mt: 2,
                   border: "1px solid #000000",
                 }}
               >

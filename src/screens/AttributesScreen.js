@@ -1535,9 +1535,7 @@ function AttributesScreen() {
       )}
       <Box>
         <Divider
-          fullWidth
-          sx={{ backgroundColor: "#000000", mt: 1 }}
-          showlabels="true"
+          sx={{ mt: 1 }}
         />
       </Box>
       <Box>

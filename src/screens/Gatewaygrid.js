@@ -345,7 +345,13 @@ export default function GatewayGrid() {
             <Button
               // fullWidth
               variant="contained"
-              sx={{ mb: 2, ml: 3 }}
+              sx={{
+                ml: 3,
+                mt: 1,
+                borderRadius: "20px",
+                backgroundColor: "#0099CC",
+                fontSize: 12,
+              }}
               onClick={handleClickOpencheck}
             >
               bulk
