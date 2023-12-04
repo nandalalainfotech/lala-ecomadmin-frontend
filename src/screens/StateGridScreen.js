@@ -380,7 +380,12 @@ export default function StateGridScreen() {
             <Button
               // fullWidth
               variant="contained"
-              sx={{ mb: 2, ml: 50 }}
+              sx={{
+                mb: 2, ml: 50,
+                borderRadius: "20px",
+                backgroundColor: "#0099CC",
+                fontSize: 12,
+              }}
               onClick={handleClickOpencheck}
             >
               bulk
@@ -521,7 +526,7 @@ export default function StateGridScreen() {
         <Box>
           <Box
             sx={{
-              height: 360,
+              height: 320,
               width: "100%",
 
               "& .super-app-theme--header": {
@@ -535,17 +540,17 @@ export default function StateGridScreen() {
                 fontSize: 12,
               },
               ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                {
-                  backgroundColor: "#808080",
-                  color: "#ffffff",
-                },
+              {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
               ".css-h4y409-MuiList-root": {
                 display: "grid",
               },
               ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                {
-                  backgroundColor: "#808080",
-                },
+              {
+                backgroundColor: "#808080",
+              },
             }}
           >
             <DataGrid

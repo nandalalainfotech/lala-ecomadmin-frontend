@@ -27,6 +27,7 @@ import { Switch, makeStyles } from "@material-ui/core";
 import {
   APPLICATION_DELETE_RESET,
   APPLICATION_ENABLE_UPDATE_RESET,
+  APPLICATION_SETTING_RESET,
 } from "../constants/applicationConstant";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -87,6 +88,9 @@ function ApplicationScreen() {
   const applicationDelete = useSelector((state) => state.applicationDelete);
   const { success: deletesuccess } = applicationDelete;
 
+  const applicationCreate = useSelector((state) => state.applicationCreate);
+  const { success: savesuccess } = applicationCreate;
+
   const appEnable = useSelector((state) => state.appEnable);
   const { success: enablesuccess } = appEnable;
 
@@ -97,8 +101,12 @@ function ApplicationScreen() {
     if (deletesuccess) {
       dispatch({ type: APPLICATION_DELETE_RESET });
     }
+    if (savesuccess) {
+      dispatch({ type: APPLICATION_SETTING_RESET });
+
+    }
     dispatch(applicatinSettingList());
-  }, [dispatch, deletesuccess, enablesuccess]);
+  }, [dispatch, deletesuccess, enablesuccess, savesuccess]);
 
   const deletevalueHandler = (params) => {
     if (window.confirm("Are you sure to delete?")) {
@@ -318,17 +326,17 @@ function ApplicationScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+          {
+            backgroundColor: "#330033",
+            color: "#ffffff",
+          },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+          {
+            backgroundColor: "#808080",
+          },
         }}
       >
         <DataGrid
@@ -367,8 +375,8 @@ function ApplicationScreen() {
             component='img'
             // height="200"
             image={newImg}
-            // alt={"subimgnew.filename"}
-            // onMouseOver={handleChangeimage}
+          // alt={"subimgnew.filename"}
+          // onMouseOver={handleChangeimage}
           />
         </Box>
       </Dialog>

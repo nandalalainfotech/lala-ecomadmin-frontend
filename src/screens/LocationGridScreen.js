@@ -309,8 +309,13 @@ export default function LocationGridScreen() {
             {" "}
             <Button
               // fullWidth
+              sx={{
+                mb: 2, ml: 50,
+                borderRadius: "20px",
+                backgroundColor: "#0099CC",
+                fontSize: 12,
+              }}
               variant="contained"
-              sx={{ mb: 2, ml: 50 }}
               onClick={handleClickOpencheck}
             >
               bulk
@@ -395,7 +400,7 @@ export default function LocationGridScreen() {
         </Box>
         <Box
           sx={{
-            height: 360,
+            height: 330,
             width: "100%",
 
             "& .super-app-theme--header": {

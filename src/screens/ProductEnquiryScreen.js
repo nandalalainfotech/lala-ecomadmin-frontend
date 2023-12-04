@@ -377,7 +377,7 @@ function ProductEnquiryScreen() {
 
       <Box
         sx={{
-          height: 360,
+          height: 400,
           width: "100%",
 
           "& .super-app-theme--header": {

@@ -323,7 +323,12 @@ export const CountryGridScreen = () => {
                     </Breadcrumbs>
                     <Box>
                         <Button
-                            sx={{ mb: 2, ml: 50 }}
+                            sx={{
+                                mb: 2, ml: 50,
+                                borderRadius: "20px",
+                                backgroundColor: "#0099CC",
+                                fontSize: 12,
+                            }}
                             variant='contained'
                             onClick={handleClickOpencheck}
                         >
@@ -409,7 +414,7 @@ export const CountryGridScreen = () => {
 
                 <Box
                     sx={{
-                        height: 400,
+                        height: 330,
                         width: "100%",
                         "& .super-app-theme--header": {
                             backgroundColor: "#808080",

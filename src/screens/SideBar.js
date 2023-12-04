@@ -461,7 +461,7 @@ export default function SideBar() {
                             </Link>
                           </ListItemButton>
                         </List>
-                        <List>
+                        {/* <List>
                           <ListItemButton sx={{ pl: 4, mt: -3 }}>
                             <Link
                               // reloadDocument
@@ -483,7 +483,7 @@ export default function SideBar() {
                               />
                             </Link>
                           </ListItemButton>
-                        </List>
+                        </List> */}
                       </Collapse>
                     </>
                   </ListItem>

@@ -108,7 +108,7 @@ export default function CategoryMasterScreen() {
   ]);
 
   const editHandler = (id) => {
-    navigate(`/testFrom/` + id,{state:{child:"Parent"}});
+    navigate(`/testFrom/` + id, { state: { child: "Parent" } });
   };
 
   const ViewHandeler = (id) => {
@@ -419,7 +419,7 @@ export default function CategoryMasterScreen() {
 
       <Box
         sx={{
-          height: 460,
+          height: 400,
           width: "100%",
         }}
       >
@@ -550,17 +550,17 @@ export default function CategoryMasterScreen() {
               fontSize: 12,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#808080",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+            {
+              backgroundColor: "#808080",
+            },
           }}
         >
           <DataGrid

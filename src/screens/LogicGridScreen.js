@@ -637,7 +637,7 @@ export default function LogicGridScreen() {
         </Box>
         <Box
           sx={{
-            height: 400,
+            height: 380,
             width: "100%",
 
             "& .super-app-theme--header": {
@@ -651,17 +651,17 @@ export default function LogicGridScreen() {
               fontSize: 12,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#808080",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+            {
+              backgroundColor: "#808080",
+            },
           }}
         >
           <DataGrid

@@ -482,34 +482,37 @@ function CustomerScreen() {
       </Box>
       <Box
         sx={{
-          height: 360,
+          height: 380,
           width: "100%",
           "& .super-app-theme--header": {
             backgroundColor: "#808080",
             color: "#ffffff",
           },
           "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-            fontSize: 14,
+            fontSize: 16,
           },
-          ".css-18cq9do-MuiDataGrid-root .MuiDataGrid-cellContent": {
-            fontSize: 12,
+          ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+            fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+          {
+            backgroundColor: "#330033",
+            color: "#ffffff",
+          },
           ".css-h4y409-MuiList-root": {
             display: "grid",
+          },
+          ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+          {
+            backgroundColor: "#808080",
           },
         }}
       >
         <DataGrid
           sx={{
             boxShadow: 10,
-            m: 1,
             borderRadius: 0,
-            fontSize: "14px",
+            m: 2,
           }}
           columns={columns}
           rows={customers ? customers : ""}

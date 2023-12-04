@@ -582,6 +582,9 @@ function EmployeeScreen() {
     },
   ];
 
+  // const [ProfileId, setProfileId] = useState();
+  // console.log("newbrandId-------->", newbrandId)
+
   return (
     <>
       <>
@@ -1185,7 +1188,7 @@ function EmployeeScreen() {
 
         {tabIndex === 2 && (
           <>
-            <Box>
+            {/* <Box>
               <Button
                 sx={{
                   mr: 3,
@@ -1211,44 +1214,48 @@ function EmployeeScreen() {
                 <MenuItem onClick={handleClosechcke}>Select All</MenuItem>
                 <MenuItem onClick={handleClosechcke}>De-Select</MenuItem>
               </Menu>
+            </Box> */}
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ width: 300, marginTop: "20px" }}>
+                <h5 style={{ padding: 5 }}>User Role:</h5>
+                <Select
+                  style={{ width: "250px", height: "40px" }}
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={age}
+
+                  onChange={handleChangedrop}
+                  displayEmpty
+                >
+                  {profiledetail?.map((name) => (
+                    <MenuItem key={name} value={name._id}>
+                      <ListItemText primary={name?.empprofile} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box sx={{ width: 300, marginTop: "20px" }}>
+                <h5 style={{ padding: 5 }}>Sales Staff Permission : </h5>
+                <Select
+                  style={{ width: "250px", height: "40px" }}
+                  labelId="demo-multiple-checkbox-label"
+                  id="demo-multiple-checkbox"
+                  multiple
+                  value={personName}
+                  onChange={handleChangeCheckbox}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {names?.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      <Checkbox checked={personName.indexOf(name) > -1} />
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
             </Box>
-            <Box sx={{ width: 500, marginTop: "20px", display: "inline-flex" }}>
-              <h5 style={{ padding: 5 }}>User Role:</h5>
-              <Select
-                style={{ width: "250px", height: "40px" }}
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value={age}
-                onChange={handleChangedrop}
-                displayEmpty
-              >
-                {profiledetail?.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    <ListItemText primary={name?.empprofile} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box sx={{ width: 500, marginTop: "20px", display: "inline-flex" }}>
-              <h5 style={{ padding: 5 }}>Sales Staff Permission : </h5>
-              <Select
-                style={{ width: "250px", height: "40px" }}
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={personName}
-                onChange={handleChangeCheckbox}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {names?.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    <Checkbox checked={personName.indexOf(name) > -1} />
-                    <ListItemText primary={name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
+            <Button style={{ marginTop: '10px' }} variant="contained">Submit</Button>
           </>
         )}
       </Box>
