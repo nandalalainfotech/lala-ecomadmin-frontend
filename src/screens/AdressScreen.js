@@ -93,6 +93,7 @@ function AdressScreen() {
     );
     window.confirm("Address Details Saved SuccessFully!!");
     event.target.reset();
+    navigate("/address")
   };
 
   const updateHandler = () => {
