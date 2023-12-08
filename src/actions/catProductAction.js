@@ -299,7 +299,7 @@ export const updateproductactive = (attId) => async (dispatch, getState) => {
 };
 
 export const updateProductEnable = (EnableId) => async (dispatch, getState) => {
-  // console.log('EnableId', EnableId);
+  console.log('EnableId', EnableId);
   dispatch({ type: PRODUCT_ENABLE_UPDATE_REQUEST, payload: EnableId });
   const {
     userSignin: { userInfo },

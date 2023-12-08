@@ -70,7 +70,7 @@ function ProductDetailsScreen() {
 
   const brandReduce = useSelector((state) => state.brandReduce);
   const { brandLists } = brandReduce;
-  console.log("bbrandLists",brandLists)
+  // console.log("bbrandLists",brandLists)
 
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
@@ -88,7 +88,7 @@ function ProductDetailsScreen() {
 
   const catProddelete = useSelector((state) => state.catProddelete);
   const { success: deletedsuccess } = catProddelete;
-  console.log("deletedsuccess", deletedsuccess);
+  // console.log("deletedsuccess", deletedsuccess);
   const PriceList = useSelector((state) => state.PriceList);
   const { pricingdetail } = PriceList;
 
@@ -261,7 +261,7 @@ function ProductDetailsScreen() {
   // }
 
   function getBrandName(params) {
-    console.log("params",params)
+    // console.log("params",params)
     return `${
       params?.row?.brand
         ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name
@@ -279,7 +279,7 @@ function ProductDetailsScreen() {
       : 0
     }`;
   }
-  console.log("quantity", quantity);
+  // console.log("quantity", quantity);
   
 
   function getFullName(params) {

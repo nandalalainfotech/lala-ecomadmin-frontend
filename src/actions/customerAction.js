@@ -18,6 +18,9 @@ import {
   CUSTOMER_ADDRESS_BULK_DELETE_REQUEST,
   CUSTOMER_ADDRESS_BULK_DELETE_SUCCESS,
   CUSTOMER_ADDRESS_BULK_DELETE_FAIL,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_REQUEST,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_SUCCESS,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_FAIL,
 } from "../constants/customerConstant";
 
 export const saveCustomerAddress =
@@ -100,28 +103,29 @@ export const updatecustomerAddress =
     }
   };
 
-export const updatecustomeraddressactive = (attId) => async (dispatch, getState) => {
-  dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST, payload: attId });
-  const {
-    userSignin: { userInfo },
-  } = getState();
-  try {
-    const { data } = await Axios.put(
-      `/api/customerAddress/addresscust/${attId.checkboxId}`,
-      attId,
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
-    dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL, error: message });
-  }
-};
+export const updatecustomeraddressactive =
+  (attId) => async (dispatch, getState) => {
+    dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_REQUEST, payload: attId });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.put(
+        `/api/customerAddress/addresscust/${attId.checkboxId}`,
+        attId,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_FAIL, error: message });
+    }
+  };
 
 export const deleteMultipleaddress = (empId) => async (dispatch, getState) => {
   dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_REQUEST, payload: empId });
@@ -145,3 +149,34 @@ export const deleteMultipleaddress = (empId) => async (dispatch, getState) => {
     dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_FAIL, payload: message });
   }
 };
+
+export const updatecustomeraddressEnable =
+  (EnableId) => async (dispatch, getState) => {
+    console.log("EnableId", EnableId);
+    dispatch({
+      type: CUSTOMER_ADDRESS_ENABLE_UPDATE_REQUEST,
+      payload: EnableId,
+    });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.put(
+        `/api/customerAddress/customeraddressupdateEnables/${EnableId.id}`,
+        EnableId,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: CUSTOMER_ADDRESS_ENABLE_UPDATE_SUCCESS,
+        payload: data.Attmaster,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: CUSTOMER_ADDRESS_ENABLE_UPDATE_FAIL, error: message });
+    }
+  };
