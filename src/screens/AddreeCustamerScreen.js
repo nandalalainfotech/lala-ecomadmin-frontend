@@ -21,6 +21,7 @@ import {
   customerAddressList,
   deleteMultipleaddress,
   deletecustomerAddress,
+  updatecustomeraddressEnable,
   updatecustomeraddressactive,
 } from "../actions/customerAction";
 import { AddressBillList } from "../actions/addressActions";
@@ -30,7 +31,11 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import { makeStyles } from "../../node_modules/@material-ui/styles/index";
-import { CUSTOMER_ADDRESS_BULK_DELETE_RESET, CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET } from "../constants/customerConstant";
+import {
+  CUSTOMER_ADDRESS_BULK_DELETE_RESET,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_RESET,
+  CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET,
+} from "../constants/customerConstant";
 
 const useStyles1 = makeStyles({
   switch: {
@@ -48,7 +53,9 @@ function AddreeCustamerScreen() {
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
 
-  const customerAddressdelete = useSelector((state) => state.customerAddressdelete);
+  const customerAddressdelete = useSelector(
+    (state) => state.customerAddressdelete
+  );
   const { success: deleteall } = customerAddressdelete;
   // const AddressList = useSelector((state) => state.AddressList);
   // const { Adddatum } = AddressList;
@@ -64,6 +71,11 @@ function AddreeCustamerScreen() {
     (state) => state.customerAddressActive
   );
   const { success: activesucess } = customerAddressActive;
+  const customeraddressEnable = useSelector(
+    (state) => state.updatecustomeraddressEnable
+  );
+  const { success: successpro } = customeraddressEnable;
+
   useEffect(() => {
     dispatch(customerAddressList());
     dispatch(AddressBillList());
@@ -76,11 +88,15 @@ function AddreeCustamerScreen() {
       dispatch({ type: CUSTOMER_PRODUCT_ACTIVE_UPDATE_RESET });
       dispatch(customerAddressList());
     }
+    if (successpro) {
+      dispatch({ type: CUSTOMER_ADDRESS_ENABLE_UPDATE_RESET });
+      dispatch(customerAddressList());
+    }
     if (deleteall) {
       dispatch({ type: CUSTOMER_ADDRESS_BULK_DELETE_RESET });
       dispatch(customerAddressList());
     }
-  }, [custAddList, activesucess, deleteall]);
+  }, [custAddList, activesucess, deleteall, successpro]);
 
   const editHandler = (cusAddIndId) => {
     navigate("/addressreg/" + cusAddIndId);
@@ -89,6 +105,23 @@ function AddreeCustamerScreen() {
   const deleteHandler = (params) => {
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deletecustomerAddress(params.row._id));
+    }
+  };
+  const handleChangedata = (e, params) => {
+    if (e.target.checked === true) {
+      dispatch(
+        updatecustomeraddressEnable({
+          id: params,
+          active: e.target.checked,
+        })
+      );
+    } else {
+      dispatch(
+        updatecustomeraddressEnable({
+          id: params,
+          deactive: e.target.checked,
+        })
+      );
     }
   };
 
@@ -196,12 +229,26 @@ function AddreeCustamerScreen() {
           return (
             <FormControlLabel
               control={
-                <Switch size="small" className={swicclasses.switch} checked />
+                <Switch
+                  size="small"
+                  className={swicclasses.switch}
+                  checked
+                  onClick={(e) => handleChangedata(e, params.row._id)}
+                />
               }
             />
           );
         } else {
-          return <FormControlLabel control={<Switch size="small" />} />;
+          return (
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  onClick={(e) => handleChangedata(e, params.row._id)}
+                />
+              }
+            />
+          );
         }
       },
     },
@@ -437,17 +484,17 @@ function AddreeCustamerScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#330033",
-            color: "#ffffff",
-          },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#808080",
-          },
+            {
+              backgroundColor: "#808080",
+            },
         }}
       >
         <DataGrid

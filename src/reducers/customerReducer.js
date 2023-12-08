@@ -7,6 +7,10 @@ import {
   CUSTOMER_ADDRESS_DELETE_REQUEST,
   CUSTOMER_ADDRESS_DELETE_RESET,
   CUSTOMER_ADDRESS_DELETE_SUCCESS,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_FAIL,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_REQUEST,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_RESET,
+  CUSTOMER_ADDRESS_ENABLE_UPDATE_SUCCESS,
   CUSTOMER_ADDRESS_FAIL,
   CUSTOMER_ADDRESS_LIST_FAIL,
   CUSTOMER_ADDRESS_LIST_REQUEST,
@@ -116,6 +120,21 @@ export const customerAddressbulkdeleteReducer = (state = {}, action) => {
     case CUSTOMER_ADDRESS_BULK_DELETE_FAIL:
       return { loading: false, error: action.payload };
     case CUSTOMER_ADDRESS_BULK_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const updatecustomeraddressEnableReducer = (state = {}, action) => {
+  switch (action.type) {
+    case  CUSTOMER_ADDRESS_ENABLE_UPDATE_REQUEST:
+      return { loading: true };
+    case  CUSTOMER_ADDRESS_ENABLE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case CUSTOMER_ADDRESS_ENABLE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case  CUSTOMER_ADDRESS_ENABLE_UPDATE_RESET:
       return {};
     default:
       return state;
