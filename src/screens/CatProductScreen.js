@@ -421,16 +421,39 @@ function CatProductScreen() {
   // eslint-disable-next-line no-unused-vars
   const [ind, setInd] = useState("");
 
-  const [CombStock, setCombStock] = useState("");
+  const [CombStock, setCombStock] = useState([]);
   const [CombStockId, setCombStockId] = useState("");
   const [ComnewImg, setComNewimg] = useState();
   const [Comopen, setComOpen] = useState(false);
   const [gridComopen, setgridComOpen] = useState(0);
 
-  const handleChangInput = (e) => {
+  const handleChangInput = (e, index) => {
     let value = e.target.value;
-    setCombStock([...CombStock, value]);
+    let values = value;
+    // setCombStock(values)
+    CombStock.push({ id: index, val: values });
   };
+
+  const [finalValue, setfinalValue] = useState([]);
+  const stockCount = () => {
+    console.log("CombStock------->", CombStock)
+    let arr = [];
+    let indexes = [];
+    CombStock.map((items, index) => {
+      console.log("items", items)
+      if (!arr.includes(items.id)) {
+        console.log("items.id--------->", items.id)
+        arr.push(items.id);
+        indexes?.push(index, arr)
+        finalValue?.push({ id: CombStock[index - 1]?.id, val: CombStock[index - 1]?.val });
+      }
+    })
+
+    let lastValue = CombStock[CombStock.length - 1];
+    finalValue.splice(0, 1)
+    finalValue.push(lastValue)
+    console.log("finalValue--------->", finalValue)
+  }
 
   const handleStockudateInput = (event, params) => {
     let updateid = params?.row?.id;
@@ -534,13 +557,18 @@ function CatProductScreen() {
   };
 
   const HandlecombSave = (event) => {
-    dispatch(
-      updateCatStock({
-        StockId: CombStockId,
-        Stock: CombStock,
-      })
-    );
-    window.confirm("Combination Stock Save SuccessFully!!");
+    stockCount();
+    let stockData = []
+    for (let i = 0; i < finalValue.length; i++) {
+      let obj = {
+        id: finalValue[i].id.id,
+        val: finalValue[i].val
+      }
+      stockData.push(obj)
+    }
+    // let datas = stockData.shift()
+    dispatch(updateCatStock(stockData));
+    // window.confirm("Combination Stock Save SuccessFully!!");
     setCombStock("");
     setCombStockId("");
   };
@@ -1280,7 +1308,7 @@ Not all shops sell new products.
         <TextField
           size="small"
           Value={CombStock}
-          onChange={(event) => handleChangInput(event)}
+          onChange={(event) => handleChangInput(event, params)}
           onClick={(event) => handleStockudateInput(event, params)}
           // onClick={() => setCombStockId([...CombStockId, params.row.id])}
           // onChangeinc={(event) => handleChangeUpdate(event)}
