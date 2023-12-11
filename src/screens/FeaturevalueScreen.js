@@ -107,239 +107,241 @@ function FeaturevalueScreen() {
   return (
     <>
       {FuterueId?._id ? (
-        <Box>
-          <Typography variant='h5'>Feature Value</Typography>
-          <Box>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize='small' />}
-              aria-label='breadcrumb'
-            >
-              <Link
-                to='/'
-                style={{
-                  color: "rgba(0, 0, 0, 0.6)",
-                  fontSize: "15px",
-                }}
-              >
-                <Typography>Home</Typography>
-              </Link>
-              <Link
-                to='/attributes'
-                style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
-              >
-                <Typography>Feature</Typography>
-              </Link>
-              <Typography sx={{ fontSize: "15px" }}>
-                Update Feature Value{" "}
-              </Typography>
-            </Breadcrumbs>
-
-            <Divider
-              fullWidth
-              sx={{ backgroundColor: "#000000", mt: 3 }}
-              showlabels='true'
-            />
-          </Box>
-          <ThemeProvider theme={theme}>
-            <Container
-              component='main'
-              maxWidth='sm'
-              sx={{
-                my: { xs: 3, md: 6, lg: 10 },
-                p: { xs: 2, md: 1 },
+        <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Update Feature Value
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
               }}
             >
-              <CssBaseline />
-
-              <Box
-                onSubmit={handleSubmit3(updateFeatureValue)}
-                component='form'
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/attributes"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Feature</Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              Update Feature Value
+            </Typography>
+          </Breadcrumbs>
+          <Divider />
+          <Box sx={{ mt: -5, mb: -5 }}>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
                 sx={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "0px",
-                  p: 5,
-                  border: "1px solid #000000",
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
                 }}
               >
-                <Typography variant='h5' sx={{ textAlign: "center" }}>
-                  {" "}
-                  Update Features Type
-                </Typography>
-                <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Feature Type</InputLabel>
-                  <Select
-                    id='standard-simple-select'
-                    value={FeatureeditvalueType}
-                    label='Attributes Type'
-                    onChange={(e) => setFeaturestypeValueEdit(e.target.value)}
-                  >
-                    {Featuresdetails.map((Feature) => (
-                      <MenuItem key={Feature._id} value={Feature._id}>
-                        {Feature.featurename}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <CssBaseline />
 
-                <TextField
-                  size='small'
-                  margin='normal'
-                  fullWidth
-                  id='fvalue'
-                  label='Value'
-                  name='fvalue'
-                  autoComplete='off'
-                  value={FeaturEditvalue}
-                  onChange={(e) => setEditFeatureValue(e.target.value)}
-                />
-
-                <Button
-                  fullWidth
-                  variant='contained'
+                <Box
+                  onSubmit={handleSubmit3(updateFeatureValue)}
+                  component="form"
                   sx={{
-                    mt: 3,
-                    mb: 2,
-                    borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
                   }}
-                  type='submit'
                 >
-                  Update
-                </Button>
-              </Box>
-            </Container>
-          </ThemeProvider>
-        </Box>
-      ) : (
-        <Box>
-          <Typography variant='h5'>Feature Value</Typography>
-          <Box>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize='small' />}
-              aria-label='breadcrumb'
-            >
-              <Link
-                to='/'
-                style={{
-                  color: "rgba(0, 0, 0, 0.6)",
-                  fontSize: "15px",
-                }}
-              >
-                <Typography>Home</Typography>
-              </Link>
-              <Link
-                to='/attributes'
-                style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
-              >
-                <Typography>Feature</Typography>
-              </Link>
-              <Typography sx={{ fontSize: "15px" }}>
-                Add Feature Value{" "}
-              </Typography>
-            </Breadcrumbs>
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    {" "}
+                    Update Features Type
+                  </Typography>
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel>Feature Type</InputLabel>
+                    <Select
+                      id="standard-simple-select"
+                      value={FeatureeditvalueType}
+                      label="Attributes Type"
+                      onChange={(e) => setFeaturestypeValueEdit(e.target.value)}
+                    >
+                      {Featuresdetails?.map((Feature) => (
+                        <MenuItem key={Feature._id} value={Feature._id}>
+                          {Feature.featurename}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
 
-            <Divider
-              fullWidth
-              sx={{ backgroundColor: "#000000", mt: 3 }}
-              showlabels='true'
-            />
-          </Box>
-          <ThemeProvider theme={theme}>
-            <Container
-              component='main'
-              maxWidth='sm'
-              sx={{
-                my: { xs: 3, md: 6, lg: 10 },
-                p: { xs: 2, md: 1 },
-              }}
-            >
-              <CssBaseline />
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="fvalue"
+                    label="Value"
+                    name="fvalue"
+                    autoComplete="off"
+                    value={FeaturEditvalue}
+                    onChange={(e) => setEditFeatureValue(e.target.value)}
+                  />
 
-              <Box
-                onSubmit={handleSubmit3(createFeatureValue)}
-                component='form'
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "0px",
-                  p: 5,
-                  border: "1px solid #000000",
-                }}
-              >
-                <Typography variant='h5' sx={{ textAlign: "center" }}>
-                  {" "}
-                  Create Features Type
-                </Typography>
-                <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Feature Type</InputLabel>
-                  <Select
-                    id='standard-simple-select'
-                    value={featurestype}
-                    label='Attributes Type'
-                    onChange={(e) => setFeaturestype(e.target.value)}
-                  >
-                    {Featuresdetails?.map((Feature) => (
-                      <MenuItem key={Feature._id} value={Feature._id}>
-                        {Feature.featurename}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <TextField
-                  size='small'
-                  margin='normal'
-                  fullWidth
-                  id='fvalue'
-                  label='Value'
-                  name='fvalue'
-                  autoComplete='off'
-                  {...register3("fvalue", { required: true })}
-                  error={errors3.fvalue}
-                />
-                {errors3.name && (
-                  <span className='formError'>Value is required</span>
-                )}
-                <Box sx={{ display: "flex" }}>
                   <Button
-                    variant='contained'
+                    // fullWidth
+                    variant="contained"
                     sx={{
-                      mr: 3,
-
-                      ml: 5,
+                      mt: 3,
+                      mb: 2,
                       borderRadius: "20px",
                       backgroundColor: "#0099CC",
                     }}
-                    type='Click'
-                    onClick={() => setBtnFeatureVlaueAnother(2)}
+                    type="submit"
                   >
-                    Save And Another Value
-                  </Button>
-
-                  <Button
-                    variant='contained'
-                    sx={{
-                      mr: 3,
-
-                      ml: 5,
-                      borderRadius: "20px",
-                      backgroundColor: "#0099CC",
-                    }}
-                    type='Click'
-                    onClick={() => setBtnFeatureVlaue(1)}
-                  >
-                    Save
+                    Update
                   </Button>
                 </Box>
-              </Box>
-            </Container>
-          </ThemeProvider>
-        </Box>
+              </Container>
+            </ThemeProvider>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Create Feature Value
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/attributes"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Feature</Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              Create Feature Value
+            </Typography>
+          </Breadcrumbs>
+          <Divider />
+          <Box sx={{ mt: -3, mb: -2 }}>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
+                sx={{
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
+                }}
+              >
+                <CssBaseline />
+
+                <Box
+                  onSubmit={handleSubmit3(createFeatureValue)}
+                  component="form"
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
+                  }}
+                >
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    {" "}
+                    Create Features Type
+                  </Typography>
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel>Feature Type</InputLabel>
+                    <Select
+                      id="standard-simple-select"
+                      value={featurestype}
+                      label="Attributes Type"
+                      onChange={(e) => setFeaturestype(e.target.value)}
+                    >
+                      {Featuresdetails?.map((Feature) => (
+                        <MenuItem key={Feature._id} value={Feature._id}>
+                          {Feature.featurename}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="fvalue"
+                    label="Value"
+                    name="fvalue"
+                    autoComplete="off"
+                    {...register3("fvalue", { required: true })}
+                    error={errors3.fvalue}
+                  />
+                  {errors3.name && (
+                    <span className="formError">Value is required</span>
+                  )}
+                  <Box sx={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mr: 3,
+
+                        ml: 5,
+                        borderRadius: "20px",
+                        backgroundColor: "#0099CC",
+                      }}
+                      type="Click"
+                      onClick={() => setBtnFeatureVlaueAnother(2)}
+                    >
+                      Save And Another Value
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mr: 3,
+
+                        ml: 5,
+                        borderRadius: "20px",
+                        backgroundColor: "#0099CC",
+                      }}
+                      type="Click"
+                      onClick={() => setBtnFeatureVlaue(1)}
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Box>
+              </Container>
+            </ThemeProvider>
+          </Box>
+        </>
       )}
     </>
   );

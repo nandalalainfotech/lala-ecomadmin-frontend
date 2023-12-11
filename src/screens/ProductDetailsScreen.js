@@ -270,17 +270,13 @@ function ProductDetailsScreen() {
   }
 
   function getQuantity(params) {
-    
     return `${
       quantity?.find((x) => x?.mprodId === params?.row?._id)
-      ? quantity?.find((x) => x?.mprodId === params?.row?._id)
-          ?.Qty
-
-      : 0
+        ? quantity?.find((x) => x?.mprodId === params?.row?._id)?.Qty
+        : 0
     }`;
   }
   // console.log("quantity", quantity);
-  
 
   function getFullName(params) {
     return {
@@ -457,46 +453,33 @@ function ProductDetailsScreen() {
   ];
   return (
     <>
-      <Typography variant="h6" sx={{ mt: -3 }}>
+      <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
         Products
       </Typography>
-      <Box sx={{ display: "flex" }}>
-        {/* <Typography
-          sx={{
-            p: 2,
-            display: "flex",
-            flexDirection: "row",
-            backgroundColor: "#fff",
-            fontSize: "50px",
-          }}
+      <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+          sx={{ display: "flex", flexDerection: "row" }}
         >
-          Products
-        </Typography> */}
-
-        <Box sx={{ display: "flex", flexDerection: "row", mt: 0 }}>
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
+          <Link
+            to="/"
+            style={{
+              color: "rgba(0, 0, 0, 0.6)",
+              fontSize: "12px",
+            }}
           >
-            <Link
-              to="/"
-              style={{
-                color: "rgba(0, 0, 0, 0.6)",
-                fontSize: "13px",
-              }}
-            >
-              <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-            </Link>
-            <Typography sx={{ fontSize: "13px" }}>Products</Typography>
-          </Breadcrumbs>
-        </Box>
+            <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+          </Link>
+          <Typography sx={{ fontSize: "14px" }}>Products</Typography>
+        </Breadcrumbs>
 
         <Box sx={{ ml: "auto" }}>
           <Button
             variant="contained"
             sx={{
               mr: 3,
-
+              mt: -2,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
@@ -508,16 +491,14 @@ function ProductDetailsScreen() {
           </Button>
         </Box>
       </Box>
-      <Divider />
-
+      <Divider sx={{ mt: 1 }} />
       <>
         <Box sx={{ display: "flex" }}>
           <Button
             sx={{
               mr: 3,
-              mt: 2,
-              mb: 0,
-              ml: 2,
+              mt: 1,
+              mb: -1,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
@@ -689,7 +670,6 @@ function ProductDetailsScreen() {
           />
         </Box>
       </>
-
       <Dialog
         // fullWidth={fullWidth}
         // maxWidth={maxWidth}

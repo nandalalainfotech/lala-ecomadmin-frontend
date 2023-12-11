@@ -53,12 +53,12 @@ const useStyles = makeStyles({
 export default function CategoryMasterScreen() {
   const classes = useStyles();
   const CategoryMasterallList = useSelector(
-    (state) => state.CategoryMasterallList,
+    (state) => state.CategoryMasterallList
   );
   const { categorymasterallList, loading } = CategoryMasterallList;
 
   const CategoryMasterDelete = useSelector(
-    (state) => state.CategoryMasterDelete,
+    (state) => state.CategoryMasterDelete
   );
   const { success: successDelete } = CategoryMasterDelete;
 
@@ -168,14 +168,14 @@ export default function CategoryMasterScreen() {
         updatecategoryActivate({
           checkboxId: selectionModel,
           checkedshow: checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updatecategoryActivate({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
     }
   };
@@ -190,14 +190,14 @@ export default function CategoryMasterScreen() {
         updateParentEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateParentEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -367,34 +367,25 @@ export default function CategoryMasterScreen() {
 
   return (
     <Box>
-      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 2 }}>
+      <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
         Category
       </Typography>
-      <Box
-        component="div"
-        sx={{
-          p: 2,
-          display: "flex",
-          flexDirection: "row",
-          backgroundColor: "#fff",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          sx={{ mt: -2 }}
+          sx={{ display: "flex", flexDerection: "row" }}
         >
           <Link
             to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
+              fontSize: "12px",
             }}
           >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Home</Typography>
           </Link>
-
-          <Typography sx={{ fontSize: "13px" }}>Category</Typography>
+          <Typography sx={{ fontSize: "14px" }}>Category</Typography>
         </Breadcrumbs>
 
         <Box sx={{ ml: "auto" }}>
@@ -402,20 +393,19 @@ export default function CategoryMasterScreen() {
             variant="contained"
             sx={{
               mr: 3,
-              mt: -5,
-              ml: 2,
+              mt: -2,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
             onClick={submitHandler}
           >
-            <AddCircleOutlineIcon /> Add New Category
+            <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
+            Add New Product
           </Button>
-          {/* <Button variant="outlined">Help</Button> */}
         </Box>
       </Box>
-      <Divider sx={{ mt: -3 }} />
+      <Divider />
 
       <Box
         sx={{
@@ -429,7 +419,6 @@ export default function CategoryMasterScreen() {
               mr: 3,
               mt: 2,
               mb: 0,
-              ml: 3,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
@@ -550,17 +539,17 @@ export default function CategoryMasterScreen() {
               fontSize: 12,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+              {
+                backgroundColor: "#808080",
+              },
           }}
         >
           <DataGrid
