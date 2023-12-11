@@ -1401,7 +1401,7 @@ Not all shops sell new products.
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:2 }}
           >
             <Link
               to="/"
@@ -1432,7 +1432,7 @@ Not all shops sell new products.
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1 ,mb:1}}
           >
             <Link
               to="/"

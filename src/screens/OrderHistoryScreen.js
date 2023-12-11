@@ -229,7 +229,7 @@ export default function OrderHistoryScreen() {
             <option>{params.row.Status}</option>
             {statusdatum
               ?.filter((index) => {
-                return index.Status !== params.row.Status
+                return index.Status !== params.row.Status;
               })
               .map((status) => (
                 <>
@@ -302,8 +302,8 @@ export default function OrderHistoryScreen() {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-            theme.palette.action.selectedOpacity +
-            theme.palette.action.hoverOpacity
+              theme.palette.action.selectedOpacity +
+              theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
@@ -319,38 +319,33 @@ export default function OrderHistoryScreen() {
 
   return (
     <div>
-      <Box sx={{ display: "flex" }}>
-        <Typography variant="h6" sx={{ mt: -1 }}>
-          Order History
-        </Typography>
-        <Box sx={{ display: "flex", mt: 5, ml: -16.5 }}>
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
-            <Link
-              to="/"
-              style={{
-                color: "rgba(0, 0, 0, 0.6)",
-                fontSize: "15px",
-              }}
-            >
-              <Typography>Home</Typography>
-            </Link>
-
-            <Typography sx={{ fontSize: "15px" }}> Order History</Typography>
-          </Breadcrumbs>
-        </Box>
-      </Box>
-      <Box sx={{ mt: 1, mb: 1 }}>
-        <Divider />
-      </Box>
+      <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+        Order History
+      </Typography>
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+        sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+      >
+        <Link
+          to="/"
+          style={{
+            color: "rgba(0, 0, 0, 0.6)",
+            fontSize: "12px",
+          }}
+        >
+          <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+        </Link>
+        <Typography sx={{ fontSize: "14px" }}> Order History</Typography>
+      </Breadcrumbs>
+      <Divider />
       <Box sx={{ ml: "auto" }}>
         <Button
           variant="contained"
           sx={{
-            ml: 3,
+            mr: 3,
             mt: 1,
+            mb: -1,
             borderRadius: "20px",
             backgroundColor: "#0099CC",
             fontSize: 12,
@@ -419,17 +414,17 @@ export default function OrderHistoryScreen() {
               fontSize: 10,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#330033",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+              {
+                backgroundColor: "#808080",
+              },
           }}
         >
           <DataGrid

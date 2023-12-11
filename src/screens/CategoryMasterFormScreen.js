@@ -228,14 +228,13 @@ export default function CategoryMasterFormScreen() {
   for (let i = 0; i < categorymasterallList?.length; i++) {
     for (let j = 0; j < categorymasterallList[i]?.children?.length; j++) {
       if (categorymasterallList[i].children[j]._id === parent) {
-      
         NewArry.push({
           ["parenttest"]: categorymasterallList[i].children[j].parent,
           ["parenttestname"]: "child-1",
           ["childIndex"]: j,
         });
       }
-      for ( 
+      for (
         let k = 0;
         k < categorymasterallList[i].children[j].children.length;
         k++
@@ -547,225 +546,221 @@ export default function CategoryMasterFormScreen() {
         {categorychildObj ? (
           <>
             <>
-                <Box>
-                  <Typography variant="h6" sx={{ mt: -2 }}>
-                    Update Category
-                  </Typography>
-                  <Box
-                    component="div"
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "row",
-                      backgroundColor: "#fff",
-                    }}
+              <Box>
+                <Typography variant="h6" sx={{ mt: -2 }}>
+                  Update Category
+                </Typography>
+                <Box
+                  component="div"
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "row",
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <Breadcrumbs
+                    sx={{ mt: -2, ml: -2, mb: 2 }}
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
                   >
-                    <Breadcrumbs
-                      sx={{ mt: -2, ml: -2 }}
-                      separator={<NavigateNextIcon fontSize="small" />}
-                      aria-label="breadcrumb"
+                    <Link
+                      to="/"
+                      style={{
+                        color: "rgba(0, 0, 0, 0.6)",
+                        fontSize: "13px",
+                      }}
                     >
-                      <Link
-                        to="/"
-                        style={{
-                          color: "rgba(0, 0, 0, 0.6)",
-                          fontSize: "13px",
-                        }}
-                      >
-                        <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-                      </Link>
-                      <Link
-                        to="/categorymaster"
-                        style={{
-                          color: "rgba(0, 0, 0, 0.6)",
-                          fontSize: "13px",
-                        }}
-                      >
-                        <Typography sx={{ fontSize: "13px" }}>
-                          Category
-                        </Typography>
-                      </Link>
-                      <Link
-                        to={`/categorychild/${categorychildObj.parent}`}
-                        style={{
-                          color: "rgba(0, 0, 0, 0.6)",
-                          fontSize: "15px",
-                        }}
-                      >
-                        <Typography sx={{ fontSize: "13px" }}>
-                          {categoryParentObj?.name}
-                        </Typography>
-                      </Link>
-
+                      <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                    </Link>
+                    <Link
+                      to="/categorymaster"
+                      style={{
+                        color: "rgba(0, 0, 0, 0.6)",
+                        fontSize: "13px",
+                      }}
+                    >
                       <Typography sx={{ fontSize: "13px" }}>
-                        Update Category
+                        Category
                       </Typography>
-                    </Breadcrumbs>
-                  </Box>
-                  <Divider sx={{ mt: -2 }} />
-                  <Box sx={{ mt: -10, mb: -18 }}>
-                    {" "}
-                    <ThemeProvider theme={theme}>
-                      <Container
-                        component="main"
-                        maxWidth="sm"
+                    </Link>
+                    <Link
+                      to={`/categorychild/${categorychildObj.parent}`}
+                      style={{
+                        color: "rgba(0, 0, 0, 0.6)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "13px" }}>
+                        {categoryParentObj?.name}
+                      </Typography>
+                    </Link>
+
+                    <Typography sx={{ fontSize: "13px" }}>
+                      Update Category
+                    </Typography>
+                  </Breadcrumbs>
+                </Box>
+                <Divider sx={{ mt: -2 }} />
+                <Box sx={{ mt: -10, mb: -18 }}>
+                  {" "}
+                  <ThemeProvider theme={theme}>
+                    <Container
+                      component="main"
+                      maxWidth="sm"
+                      sx={{
+                        my: { xs: 3, md: 6, lg: 10 },
+                        p: { xs: 2, md: 1 },
+                      }}
+                    >
+                      <CssBaseline />
+                      <Box
+                        onSubmit={handleSubmit(UpdateHandler)}
+                        component="form"
                         sx={{
-                          my: { xs: 3, md: 6, lg: 10 },
-                          p: { xs: 2, md: 1 },
+                          display: "flex",
+                          width: "100%",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          borderRadius: "0px",
+                          p: 5,
+                          border: "1px solid #000000",
                         }}
                       >
-                        <CssBaseline />
-                        <Box
-                          onSubmit={handleSubmit(UpdateHandler)}
-                          component="form"
-                          sx={{
-                            display: "flex",
-                            width: "100%",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            borderRadius: "0px",
-                            p: 5,
-                            border: "1px solid #000000",
-                          }}
+                        <Typography
+                          variant="h6"
+                          sx={{ textAlign: "center", mt: -5 }}
                         >
-                          <Typography
-                            variant="h6"
-                            sx={{ textAlign: "center", mt: -5 }}
-                          >
-                            {" "}
-                            Category Update
-                          </Typography>
-                          <TextField
-                            size="small"
-                            margin="normal"
-                            fullWidth
-                            id="categoryTittel"
-                            label="Name"
-                            name="name"
-                            autoComplete="off"
-                            value={childName}
-                            onChange={(e) => setChildName(e.target.value)}
-                            inputProps={{ style: { fontSize: 13 } }}
-                          />
-                          {errors.name && (
-                            <span className="formError">Name is required</span>
-                          )}
-                          <Box sx={{ display: "flex" }}>
-                            <Box sx={{ mt: 5 }}>
-                              <InputLabel sx={{ fontSize: 13, ml: 1 }}>
-                                {" "}
-                                Status
-                              </InputLabel>
-                              {check === true ? (
-                                <>
-                                  <Switch
-                                    className={classes.switch}
-                                    onChange={(e) =>
-                                      setchildchecked(e.target.checked)
-                                    }
-                                    checked={childchecked}
-                                  />
-                                </>
-                              ) : (
-                                <>
-                                  <Switch
-                                    onChange={(e) =>
-                                      setchildchecked(e.target.checked)
-                                    }
-                                    checked={childchecked}
-                                  />
-                                </>
-                              )}
-                            </Box>
-                            <Box sx={{ ml: 15 }}>
+                          {" "}
+                          Category Update
+                        </Typography>
+                        <TextField
+                          size="small"
+                          margin="normal"
+                          fullWidth
+                          id="categoryTittel"
+                          label="Name"
+                          name="name"
+                          autoComplete="off"
+                          value={childName}
+                          onChange={(e) => setChildName(e.target.value)}
+                          inputProps={{ style: { fontSize: 13 } }}
+                        />
+                        {errors.name && (
+                          <span className="formError">Name is required</span>
+                        )}
+                        <Box sx={{ display: "flex" }}>
+                          <Box sx={{ mt: 5 }}>
+                            <InputLabel sx={{ fontSize: 13, ml: 1 }}>
                               {" "}
-                              <InputLabel sx={{ mb: 1, fontSize: 13 }}>
-                                {" "}
-                                Parent category
-                              </InputLabel>
-                              <TreeView
-                                aria-label="rich object"
-                                defaultCollapseIcon={<ExpandMoreIcon />}
-                                defaultExpanded={["root"]}
-                                defaultExpandIcon={<ChevronRightIcon />}
-                                // onChange={(nodeId) => setParent(nodeId)}
-                                onNodeSelect={handleSelectedItems}
-                                sx={{
-                                  border: "1px solid black",
-                                  p: 1,
-                                  ".MuiTreeItem-root": {
-                                    ".Mui-focused:not(.Mui-selected)":
-                                      classes.focused,
-                                    ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
-                                      classes.selected,
-                                  },
-                                }}
-                              >
-                                {categorymasterallList?.map((item) =>
-                                  renderTree(item)
-                                )}
-                              </TreeView>
-                            </Box>
+                              Status
+                            </InputLabel>
+                            {check === true ? (
+                              <>
+                                <Switch
+                                  className={classes.switch}
+                                  onChange={(e) =>
+                                    setchildchecked(e.target.checked)
+                                  }
+                                  checked={childchecked}
+                                />
+                              </>
+                            ) : (
+                              <>
+                                <Switch
+                                  onChange={(e) =>
+                                    setchildchecked(e.target.checked)
+                                  }
+                                  checked={childchecked}
+                                />
+                              </>
+                            )}
                           </Box>
-
-                          <InputLabel sx={{ mt: 1, fontSize: 13 }}>
-                            Description
-                          </InputLabel>
-                          <TextareaAutosize
-                            minRows={3}
-                            placeholder="Type in here..."
-                            id="comment"
-                            style={{ width: "100%" }}
-                            name="description"
-                            value={childdescription}
-                            onChange={(e) =>
-                              setchildDescription(e.target.value)
-                            }
-                          />
-
-                          <InputLabel sx={{ mt: 1, fontSize: 13 }}>
-                            Cover image
-                          </InputLabel>
-                          <TextField
-                            style={{ margin: "10px 0px" }}
-                            inputProps={{
-                              style: { fontSize: 14 },
-                              accept: "image/*",
-                            }}
-                            size="small"
-                            fullWidth
-                            type="file"
-                            id="imageFile"
-                            name="coverimg"
-                            autoComplete="off"
-                            onChange={handleChange}
-                          />
-                          <CardMedia
-                            component="img"
-                            height="125"
-                            sx={{ border: "1px solid black", width: "25%" }}
-                            image={`/api/categorymaster/show/${categorychildObj?.coverimg}`}
-                            alt={categorychildObj?.coverimg}
-                          />
-
-                          <Button
-                            // fullWidth
-                            size="small"
-                            variant="contained"
-                            sx={{ mt: 3, mb: -2 }}
-                            type="submit"
-                          >
-                            Update
-                          </Button>
+                          <Box sx={{ ml: 15 }}>
+                            {" "}
+                            <InputLabel sx={{ mb: 1, fontSize: 13 }}>
+                              {" "}
+                              Parent category
+                            </InputLabel>
+                            <TreeView
+                              aria-label="rich object"
+                              defaultCollapseIcon={<ExpandMoreIcon />}
+                              defaultExpanded={["root"]}
+                              defaultExpandIcon={<ChevronRightIcon />}
+                              // onChange={(nodeId) => setParent(nodeId)}
+                              onNodeSelect={handleSelectedItems}
+                              sx={{
+                                border: "1px solid black",
+                                p: 1,
+                                ".MuiTreeItem-root": {
+                                  ".Mui-focused:not(.Mui-selected)":
+                                    classes.focused,
+                                  ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                    classes.selected,
+                                },
+                              }}
+                            >
+                              {categorymasterallList?.map((item) =>
+                                renderTree(item)
+                              )}
+                            </TreeView>
+                          </Box>
                         </Box>
-                      </Container>
-                    </ThemeProvider>
-                  </Box>
+
+                        <InputLabel sx={{ mt: 1, fontSize: 13 }}>
+                          Description
+                        </InputLabel>
+                        <TextareaAutosize
+                          minRows={3}
+                          placeholder="Type in here..."
+                          id="comment"
+                          style={{ width: "100%" }}
+                          name="description"
+                          value={childdescription}
+                          onChange={(e) => setchildDescription(e.target.value)}
+                        />
+
+                        <InputLabel sx={{ mt: 1, fontSize: 13 }}>
+                          Cover image
+                        </InputLabel>
+                        <TextField
+                          style={{ margin: "10px 0px" }}
+                          inputProps={{
+                            style: { fontSize: 14 },
+                            accept: "image/*",
+                          }}
+                          size="small"
+                          fullWidth
+                          type="file"
+                          id="imageFile"
+                          name="coverimg"
+                          autoComplete="off"
+                          onChange={handleChange}
+                        />
+                        <CardMedia
+                          component="img"
+                          height="125"
+                          sx={{ border: "1px solid black", width: "25%" }}
+                          image={`/api/categorymaster/show/${categorychildObj?.coverimg}`}
+                          alt={categorychildObj?.coverimg}
+                        />
+
+                        <Button
+                          // fullWidth
+                          size="small"
+                          variant="contained"
+                          sx={{ mt: 3, mb: -2 }}
+                          type="submit"
+                        >
+                          Update
+                        </Button>
+                      </Box>
+                    </Container>
+                  </ThemeProvider>
                 </Box>
-              </>
-           
+              </Box>
             </>
-          
+          </>
         ) : (
           <Box>
             <Typography variant="h6" sx={{ mt: -2 }}>
@@ -781,7 +776,7 @@ export default function CategoryMasterFormScreen() {
               }}
             >
               <Breadcrumbs
-                sx={{ mt: -2, ml: -2 }}
+                sx={{ mt: -2, ml: -2, mb: 1 }}
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
               >

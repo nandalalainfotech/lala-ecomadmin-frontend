@@ -374,7 +374,7 @@ export default function CategoryMasterScreen() {
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          sx={{ display: "flex", flexDerection: "row" }}
+          sx={{ display: "flex", flexDerection: "row", mb: 2 }}
         >
           <Link
             to="/"
@@ -401,7 +401,7 @@ export default function CategoryMasterScreen() {
             onClick={submitHandler}
           >
             <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
-            Add New Product
+            Add New Category
           </Button>
         </Box>
       </Box>

@@ -327,7 +327,7 @@ function CustomerScreen() {
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box>
-      <Box>
+      {/* <Box>
         <Typography variant="h6" sx={{ mt: -2, ml: 2 }}>
           Customer Details
         </Typography>
@@ -370,7 +370,45 @@ function CustomerScreen() {
             onClick={AddcustomerReg}
           >
             Add New Customer
-          </Button> */}
+          </Button> 
+        </Box>
+      </Box>
+      <Divider sx={{ mt: 1 }} /> */}
+      <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
+        Customer Details
+      </Typography>
+      <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+          sx={{ display: "flex", flexDerection: "row" }}
+        >
+          <Link
+            to="/"
+            style={{
+              color: "rgba(0, 0, 0, 0.6)",
+              fontSize: "12px",
+            }}
+          >
+            <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+          </Link>
+          <Typography sx={{ fontSize: "14px" }}> Customer Details</Typography>
+        </Breadcrumbs>
+
+        <Box sx={{ ml: "auto" }}>
+          <Button
+            variant="contained"
+            sx={{
+              mr: 3,
+              mt: -2,
+              borderRadius: "20px",
+              backgroundColor: "#0099CC",
+              fontSize: 12,
+            }}
+            onClick={AddcustomerReg}
+          >
+            Add New Customer
+          </Button>
         </Box>
       </Box>
       <Divider sx={{ mt: 1 }} />
@@ -379,9 +417,8 @@ function CustomerScreen() {
         <Button
           sx={{
             mr: 3,
-            mt: 0.5,
-            mb: 0,
-            ml: 2,
+            mt: 1,
+            mb: -1,
             borderRadius: "20px",
             backgroundColor: "#0099CC",
             fontSize: 12,
@@ -482,7 +519,7 @@ function CustomerScreen() {
       </Box>
       <Box
         sx={{
-          height: 380,
+          height: 360,
           width: "100%",
           "& .super-app-theme--header": {
             backgroundColor: "#808080",
@@ -495,17 +532,17 @@ function CustomerScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#330033",
-            color: "#ffffff",
-          },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#808080",
-          },
+            {
+              backgroundColor: "#808080",
+            },
         }}
       >
         <DataGrid

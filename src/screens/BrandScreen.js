@@ -561,6 +561,7 @@ function BrandScreen() {
                   <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}
                     aria-label="breadcrumb"
+                    sx={{ mb: 1 }}
                   >
                     <Link
                       to="/"
@@ -596,9 +597,9 @@ function BrandScreen() {
                 </Typography>
                 <Box sx={{ display: "flex", mt: 2 }}>
                   <Breadcrumbs
-                    sx={{ mt: -2 }}
+                    sx={{ mt: -2,mb:1 }}
                     separator={<NavigateNextIcon fontSize="small" />}
-                    aria-label="breadcrumb"
+                      aria-label="breadcrumb"                     
                   >
                     <Link
                       to="/"
@@ -675,7 +676,7 @@ function BrandScreen() {
       <Box>
         <Box>
           <Tabs value={brand} onChange={handleTabChange}>
-            <Tab sx={{ fontSize: 13, ml: -2  }} label="Brands" />
+            <Tab sx={{ fontSize: 13, ml: -2 }} label="Brands" />
             <Tab sx={{ fontSize: 13 }} label="Supplier" />
           </Tabs>
         </Box>
