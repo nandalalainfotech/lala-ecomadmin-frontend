@@ -460,7 +460,7 @@ function ProductDetailsScreen() {
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          sx={{ display: "flex", flexDerection: "row" }}
+          sx={{ display: "flex", flexDerection: "row",mb:1 }}
         >
           <Link
             to="/"

@@ -351,6 +351,7 @@ function AddreeCustamerScreen() {
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
+          sx={{ mt: 1, mb: 1 }}
         >
           <Link
             to="/"
@@ -386,9 +387,8 @@ function AddreeCustamerScreen() {
         <Button
           sx={{
             mr: 3,
-            mt: 2,
-            mb: 0,
-            ml: 2,
+            mt: 1,
+            mb: -1,
             borderRadius: "20px",
             backgroundColor: "#0099CC",
             fontSize: 12,

@@ -147,7 +147,7 @@ function AttributeValueScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:1 }}
           >
             <Link
               to="/"
@@ -296,7 +296,7 @@ function AttributeValueScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:1 }}
           >
             <Link
               to="/"

@@ -32,8 +32,8 @@ function AdressScreen() {
 
   const params = useParams();
   const customindId = params.id;
-  console.log("params==>", params);
-  console.log("customindId==>", customindId);
+  // console.log("params==>", params);
+  // console.log("customindId==>", customindId);
   const customAddressList = useSelector((state) => state.customAddressList);
   const { custAddList } = customAddressList;
   const AddressList = useSelector((state) => state.AddressList);
@@ -93,7 +93,7 @@ function AdressScreen() {
     );
     window.confirm("Address Details Saved SuccessFully!!");
     event.target.reset();
-    navigate("/address")
+    navigate("/address");
   };
 
   const updateHandler = () => {
@@ -123,41 +123,42 @@ function AdressScreen() {
 
   return (
     <>
-      <Typography variant="h5">Create Customer Address</Typography>
-      <Box sx={{ display: "flex", mt: 2 }}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link
-            to="/"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "15px",
-            }}
-          >
-            <Typography>Home</Typography>
-          </Link>
-
-          <Link
-            to="/address"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "15px",
-            }}
-          >
-            <Typography>Customer Address</Typography>
-          </Link>
-
-          <Typography sx={{ fontSize: "15px" }}>
-            Create Customer Address
-          </Typography>
-        </Breadcrumbs>
-      </Box>
-
-      <Divider sx={{ mt: 3 }} />
       {customindId ? (
         <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Update Customer Address
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/address"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>
+                Customer Address
+              </Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              Update Customer Address
+            </Typography>
+          </Breadcrumbs>
+
+          <Divider sx={{ mt: 1 }} />
           <Box>
             <Box>
               <ThemeProvider theme={theme}>
@@ -356,6 +357,40 @@ function AdressScreen() {
         </>
       ) : (
         <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Create Customer Address
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/address"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>
+                Customer Address
+              </Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              Create Customer Address
+            </Typography>
+          </Breadcrumbs>
+
+          <Divider sx={{ mt: 1 }} />
           <Box>
             <Box>
               <ThemeProvider theme={theme}>
@@ -384,7 +419,7 @@ function AdressScreen() {
                   >
                     <Typography variant="h5" sx={{ textAlign: "center" }}>
                       {" "}
-                      Save Customer Details
+                      Create Customer Details
                     </Typography>
 
                     <TextField

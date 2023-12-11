@@ -12,10 +12,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Divider,
-  Typography,
-} from "../../node_modules/@material-ui/core/index";
+import { Divider } from "../../node_modules/@material-ui/core/index";
+import Typography from "@mui/material/Typography";
 import { catProductList } from "../actions/catProductAction";
 import {
   deleteenquiry,
@@ -71,7 +69,7 @@ function ProductEnquiryScreen() {
         email: email,
         phone: phone,
         reqmessage: reqmessage,
-      }),
+      })
     );
   };
 
@@ -257,28 +255,26 @@ function ProductEnquiryScreen() {
 
   return (
     <>
-      <Typography variant="h6" sx={{ mt: -4 }}>
+      <Typography variant="h6" sx={{ mt: -1 }}>
         Customer Enquiry
       </Typography>
-      <Box sx={{ display: "flex", mt: 0 }}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+        sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 2 }}
+      >
+        <Link
+          to="/"
+          style={{
+            color: "rgba(0, 0, 0, 0.6)",
+            fontSize: "12px",
+          }}
         >
-          <Link
-            to="/"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-          </Link>
-
-          <Typography sx={{ fontSize: "13px" }}>Customer Enquiry</Typography>
-        </Breadcrumbs>
-      </Box>
-      <Divider sx={{ mt: 3 }} />
+          <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+        </Link>
+        <Typography sx={{ fontSize: "14px" }}> Customer Enquiry</Typography>
+      </Breadcrumbs>
+      <Divider sx={{ mt: 1 }} />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -289,84 +285,80 @@ function ProductEnquiryScreen() {
           ?.filter((item) => {
             return item._id === ProdId;
           })
-          .map(
-            (item) => (
-              (
-                <>
-                  <DialogContent
-                    sx={{
-                      width: 500,
-                      hight: 700,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        borderRadius: "10px",
-                        border: "1px solid black",
-                      }}
-                    >
-                      <Box sx={{ color: "red", p: "10px" }}>
-                        <h2>Order Detail</h2>
-                      </Box>
-                      <section className="vh-100 gradient-custom-2">
-                        <div className="container py-5 h-100">
-                          <div className="row d-flex justify-content-center align-items-center h-100">
-                            <div className="col-md-10 col-lg-8 col-xl-6">
-                              <div
-                                className="card card-stepper"
-                                style={{ borderRadius: 16 }}
-                              >
-                                <div className="card-header p-4">
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div>
-                                      <p className="text-muted mb-2">
-                                        Prodname :{" "}
-                                        <span className="fw-bold text-body">
-                                          {item.prodname}
-                                        </span>
-                                      </p>
-                                      <p className="text-muted mb-0">
-                                        {" "}
-                                        Quantity :{" "}
-                                        <span className="fw-bold text-body">
-                                          {item.quantity}
-                                        </span>{" "}
-                                      </p>
-                                      <p className="text-muted mb-2">
-                                        Price :{" "}
-                                        <span className="fw-bold text-body">
-                                          ₹{item.taxincluded}
-                                        </span>
-                                      </p>
-                                    </div>
-                                  </div>
+          .map((item) => (
+            <>
+              <DialogContent
+                sx={{
+                  width: 500,
+                  hight: 700,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "10px",
+                    border: "1px solid black",
+                  }}
+                >
+                  <Box sx={{ color: "red", p: "10px" }}>
+                    <h2>Order Detail</h2>
+                  </Box>
+                  <section className="vh-100 gradient-custom-2">
+                    <div className="container py-5 h-100">
+                      <div className="row d-flex justify-content-center align-items-center h-100">
+                        <div className="col-md-10 col-lg-8 col-xl-6">
+                          <div
+                            className="card card-stepper"
+                            style={{ borderRadius: 16 }}
+                          >
+                            <div className="card-header p-4">
+                              <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                  <p className="text-muted mb-2">
+                                    Prodname :{" "}
+                                    <span className="fw-bold text-body">
+                                      {item.prodname}
+                                    </span>
+                                  </p>
+                                  <p className="text-muted mb-0">
+                                    {" "}
+                                    Quantity :{" "}
+                                    <span className="fw-bold text-body">
+                                      {item.quantity}
+                                    </span>{" "}
+                                  </p>
+                                  <p className="text-muted mb-2">
+                                    Price :{" "}
+                                    <span className="fw-bold text-body">
+                                      ₹{item.taxincluded}
+                                    </span>
+                                  </p>
                                 </div>
-                                <div className="card-body p-4">
-                                  <div className="d-flex flex-row mb-4 pb-2">
-                                    <div>
-                                      <img
-                                        className="align-self-center img-fluid"
-                                        src={`/api/uploads/showCatProd/${item._id}`}
-                                        width={250}
-                                      />
-                                    </div>
-                                  </div>
+                              </div>
+                            </div>
+                            <div className="card-body p-4">
+                              <div className="d-flex flex-row mb-4 pb-2">
+                                <div>
+                                  <img
+                                    className="align-self-center img-fluid"
+                                    src={`/api/uploads/showCatProd/${item._id}`}
+                                    width={250}
+                                  />
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </section>
-                      <Button onClick={handleview}>View Deatils</Button>
-                    </Box>
-                  </DialogContent>
-                </>
-              )
-            ),
-          )}
+                      </div>
+                    </div>
+                  </section>
+                  <Button onClick={handleview}>View Deatils</Button>
+                </Box>
+              </DialogContent>
+            </>
+          ))}
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={handleClose} autoFocus>
@@ -377,7 +369,7 @@ function ProductEnquiryScreen() {
 
       <Box
         sx={{
-          height: 400,
+          height: 350,
           width: "100%",
 
           "& .super-app-theme--header": {
@@ -391,17 +383,17 @@ function ProductEnquiryScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#330033",
-            color: "#ffffff",
-          },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#808080",
-          },
+            {
+              backgroundColor: "#808080",
+            },
         }}
       >
         <DataGrid

@@ -1304,7 +1304,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row" }}
+                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
                 >
                   <Link
                     onClick={refreshPage}
@@ -1414,7 +1414,7 @@ function AttributesScreen() {
                     <Breadcrumbs
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
-                      sx={{ display: "flex", flexDerection: "row" }}
+                      sx={{ display: "flex", flexDerection: "row",mb:1 }}
                     >
                       <Link
                         to="/"
@@ -1486,7 +1486,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row" }}
+                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
                 >
                   <Link
                     onClick={refreshPage}
@@ -1552,7 +1552,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row" }}
+                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
                 >
                   <Link
                     to="/"

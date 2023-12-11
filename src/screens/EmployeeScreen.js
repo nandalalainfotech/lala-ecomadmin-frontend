@@ -225,7 +225,6 @@ function EmployeeScreen() {
   const [EditActive, setEditActive] = useState("");
   const [password, setpassword] = useState("");
 
-
   const editEmployeeDetails = (params) => {
     setEditId(params._id);
     setEditfirstname(params.firstname);
@@ -234,7 +233,7 @@ function EmployeeScreen() {
     setEditmobile(params.mobile);
     setEditprofile(params.profile);
     setEditActive(params.active);
-    setpassword(params.password)
+    setpassword(params.password);
   };
 
   const Updatehandele = () => {
@@ -356,11 +355,12 @@ function EmployeeScreen() {
   };
 
   function getprofileId(params) {
-    return `${params?.row?.profile
-      ? profiledetail?.find((x) => x?._id === params?.row?.profile)
-        ?.empprofile
-      : ""
-      }`;
+    return `${
+      params?.row?.profile
+        ? profiledetail?.find((x) => x?._id === params?.row?.profile)
+            ?.empprofile
+        : ""
+    }`;
   }
 
   const employee = [
@@ -498,18 +498,7 @@ function EmployeeScreen() {
     setAge(event.target.value);
   };
 
-  const names = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-  ];
+  const names = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
   const [personName, setPersonName] = useState([]);
 
@@ -590,90 +579,98 @@ function EmployeeScreen() {
       <>
         {tabIndex === 0 && (
           <>
-            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
+            <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
               Employee Details
             </Typography>
-            <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
+            <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
               <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
+                sx={{ display: "flex", flexDerection: "row",mb:1}}
               >
                 <Link
                   to="/"
                   style={{
                     color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
+                    fontSize: "12px",
                   }}
                 >
-                  <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                  <Typography sx={{ fontSize: "14px" }}>Home</Typography>
                 </Link>
-
-                <Typography sx={{ fontSize: "13px" }}>
+                <Typography sx={{ fontSize: "14px" }}>
+                  {" "}
                   Employee Details
                 </Typography>
               </Breadcrumbs>
-              <Box sx={{ ml: "auto", float: "right", mt: -3 }}>
+
+              <Box sx={{ ml: "auto" }}>
                 <Button
                   variant="contained"
                   sx={{
                     mr: 3,
+                    mt: -2,
                     borderRadius: "20px",
                     backgroundColor: "#0099CC",
+                    fontSize: 12,
                   }}
-                  type="Click"
                   onClick={AddEmployeeChange}
                 >
-                  Add New Employee
+                  Add New Employee Details
                 </Button>
               </Box>
             </Box>
+            <Divider sx={{ mt: 1 }} />
           </>
         )}
 
         {tabIndex === 1 && (
           <>
-            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
+            <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
               Employee Profile
             </Typography>
-            <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
+            <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
               <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
+                sx={{ display: "flex", flexDerection: "row",mb:1}}
               >
                 <Link
                   to="/"
                   style={{
                     color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
+                    fontSize: "12px",
                   }}
                 >
-                  <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                  <Typography sx={{ fontSize: "14px" }}>Home</Typography>
                 </Link>
-
-                <Typography sx={{ fontSize: "13px" }}>
+                <Typography sx={{ fontSize: "14px" }}>
+                  {" "}
                   Employee Profile
                 </Typography>
               </Breadcrumbs>
-              <Box sx={{ ml: "auto", float: "right", mt: -3 }}>
+
+              <Box sx={{ ml: "auto" }}>
                 <Button
                   variant="contained"
                   sx={{
                     mr: 3,
+                    mt: -2,
                     borderRadius: "20px",
                     backgroundColor: "#0099CC",
+                    fontSize: 12,
                   }}
-                  type="Click"
                   onClick={AddprofileChange}
                 >
                   Add New Profile
                 </Button>
               </Box>
             </Box>
+            <Divider sx={{ mt: 1 }} />
           </>
         )}
         {tabIndex === 2 && (
           <>
-            <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
+            {/* <Typography variant="h6" sx={{ mt: 0, ml: 2 }}>
               Employee Permission
             </Typography>
             <Box sx={{ display: "flex", mt: 0, ml: 2 }}>
@@ -695,29 +692,54 @@ function EmployeeScreen() {
                   Employee Permission
                 </Typography>
               </Breadcrumbs>
-              {/* <Box sx={{ ml: "auto", float: "right", mt: -3 }}>
+            </Box> */}
+            <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
+              Employee Permission
+            </Typography>
+            <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
+              <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
+                sx={{ display: "flex", flexDerection: "row",mb:1}}
+              >
+                <Link
+                  to="/"
+                  style={{
+                    color: "rgba(0, 0, 0, 0.6)",
+                    fontSize: "12px",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+                </Link>
+                <Typography sx={{ fontSize: "14px" }}>
+                  {" "}
+                  Employee Permission
+                </Typography>
+              </Breadcrumbs>
+
+              {/* <Box sx={{ ml: "auto" }}>
                 <Button
                   variant="contained"
                   sx={{
                     mr: 3,
+                    mt: -2,
                     borderRadius: "20px",
                     backgroundColor: "#0099CC",
+                    fontSize: 12,
                   }}
-                  type="Click"
                   onClick={AddprofileChange}
                 >
                   Add New Profile
                 </Button>
               </Box> */}
             </Box>
+            <Divider sx={{ mt: 1 }} />
           </>
         )}
       </>
-
-      <Divider sx={{ mt: 3 }} />
       <Box>
         <Tabs value={tabIndex} onChange={handleTabChange}>
-          <Tab sx={{ fontSize: 13 }} label="Employees" />
+          <Tab sx={{ fontSize: 13, ml: -2 }} label="Employees" />
           <Tab sx={{ fontSize: 13 }} label="Profiles" />
           <Tab sx={{ fontSize: 13 }} label="Permission" />
         </Tabs>
@@ -728,9 +750,8 @@ function EmployeeScreen() {
               <Button
                 sx={{
                   mr: 3,
-                  mt: 2,
-                  mb: 0,
-                  ml: 1,
+                  mt: 1,
+                  mb: -1,
                   borderRadius: "20px",
                   backgroundColor: "#0099CC",
                 }}
@@ -988,7 +1009,7 @@ function EmployeeScreen() {
             ) : (
               <Box
                 sx={{
-                  height: 350,
+                  height: 325,
                   width: "100%",
 
                   "& .super-app-theme--header": {
@@ -1002,17 +1023,17 @@ function EmployeeScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#330033",
-                    color: "#ffffff",
-                  },
+                    {
+                      backgroundColor: "#330033",
+                      color: "#ffffff",
+                    },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                    },
                 }}
               >
                 <DataGrid
@@ -1046,9 +1067,8 @@ function EmployeeScreen() {
             <Button
               sx={{
                 mr: 3,
-                mt: 0,
-                mb: 0,
-                ml: 1.5,
+                mt: 1,
+                mb: -1,
                 borderRadius: "20px",
                 backgroundColor: "#0099CC",
               }}
@@ -1136,7 +1156,7 @@ function EmployeeScreen() {
             ) : (
               <Box
                 sx={{
-                  height: 300,
+                  height: 325,
                   width: "100%",
 
                   "& .super-app-theme--header": {
@@ -1151,17 +1171,17 @@ function EmployeeScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#330033",
-                    color: "#ffffff",
-                  },
+                    {
+                      backgroundColor: "#330033",
+                      color: "#ffffff",
+                    },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                    },
                 }}
               >
                 <DataGrid
@@ -1223,7 +1243,6 @@ function EmployeeScreen() {
                   labelId="demo-simple-select-helper-label"
                   id="demo-simple-select-helper"
                   value={age}
-
                   onChange={handleChangedrop}
                   displayEmpty
                 >
@@ -1255,7 +1274,21 @@ function EmployeeScreen() {
                 </Select>
               </Box>
             </Box>
-            <Button style={{ marginTop: '10px' }} variant="contained">Submit</Button>
+            <Box sx={{ display: "flex" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  ml: 0,
+                  borderRadius: "20px",
+                  backgroundColor: "#0099CC",
+                }}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Box>
           </>
         )}
       </Box>

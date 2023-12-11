@@ -98,6 +98,7 @@ function BrandFromScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
+            sx={{mb:1}}
           >
             <Link
               to="/"
