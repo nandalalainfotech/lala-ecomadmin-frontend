@@ -135,7 +135,7 @@ function BrandScreen() {
         editor: neweditor,
         ckeditor: newckeditor,
         checked: newchecked,
-      }),
+      })
     );
     window.confirm("Brand Details Updated SuccessFully!!");
     navigate("/home");
@@ -159,7 +159,7 @@ function BrandScreen() {
         phone: newphone,
         mobile: newmobile,
         other: newother,
-      }),
+      })
     );
     window.confirm("Brand Address Details Updated SuccessFully!!");
     setBrandAddId(0);
@@ -302,14 +302,14 @@ function BrandScreen() {
         updateActivate({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
     } else {
       dispatch(
         updateActivate({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
     }
   };
@@ -320,14 +320,14 @@ function BrandScreen() {
         updatebrandEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updatebrandEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -675,7 +675,7 @@ function BrandScreen() {
       <Box>
         <Box>
           <Tabs value={brand} onChange={handleTabChange}>
-            <Tab sx={{ fontSize: 13 }} label="Brands" />
+            <Tab sx={{ fontSize: 13, ml: -2  }} label="Brands" />
             <Tab sx={{ fontSize: 13 }} label="Supplier" />
           </Tabs>
         </Box>
@@ -995,9 +995,9 @@ function BrandScreen() {
                             <Button
                               sx={{
                                 mr: 3,
-                                mt: 2,
-                                mb: 0,
-
+                                mt: 1,
+                                mb: -1,
+                                ml: 0,
                                 borderRadius: "20px",
                                 backgroundColor: "#0099CC",
                                 fontSize: 12,
@@ -1201,7 +1201,7 @@ function BrandScreen() {
                           </Typography>
                           <Box
                             sx={{
-                              height: 560,
+                              height: 325,
                               width: "100%",
 
                               "& .super-app-theme--header": {
@@ -1239,7 +1239,8 @@ function BrandScreen() {
                               rows={brandAddLists ? brandAddLists : ""}
                               getRowId={(rows) => rows._id}
                               VerticalAlignment="Center"
-                              rowHeight={64}
+                              rowHeight={60}
+                              headerHeight={35}
                               pagination
                               // pageSize={10}
                               // rowsPerPageOptions={[25, 50, 100]}

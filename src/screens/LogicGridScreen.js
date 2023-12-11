@@ -11,8 +11,11 @@ import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 import {
   genSettingAllList,
@@ -409,7 +412,7 @@ export default function LogicGridScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   // className={classes.switch}
                   checked={params.row.status}
                   onClick={() => handleChangeEnablefree(params.row)}
@@ -424,7 +427,7 @@ export default function LogicGridScreen() {
                 <Switch
                   className={classes.switch}
                   checked={params.row.status}
-                  size='small'
+                  size="small"
                   onClick={() => handleChangeEnablefree(params.row)}
                 />
               }
@@ -446,7 +449,7 @@ export default function LogicGridScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={classes.switch}
                   checked={params.row.enable}
                   onClick={() => handleChangeEnablestatus(params.row)}
@@ -459,7 +462,7 @@ export default function LogicGridScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   checked={params.row.enable}
                   onClick={() => handleChangeEnablestatus(params.row)}
                 />
@@ -511,30 +514,55 @@ export default function LogicGridScreen() {
   ];
   return (
     <div>
-      <Box sx={{ display: "flex" }}>
-        <Typography variant='h6' sx={{ mt: -1 }}>
-          Carriers
-        </Typography>
+      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 2 }}>
+        Carriers
+      </Typography>
+      <Box
+        component="div"
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "row",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+          sx={{ mt: -2 }}
+        >
+          <Link
+            to="/"
+            style={{
+              color: "rgba(0, 0, 0, 0.6)",
+              fontSize: "13px",
+            }}
+          >
+            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+          </Link>
+
+          <Typography sx={{ fontSize: "13px" }}> Carriers</Typography>
+        </Breadcrumbs>
+
         <Box sx={{ ml: "auto" }}>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               mr: 3,
-              mt: -1,
+              mt: -5,
+              ml: 2,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
             onClick={onProdctChange}
           >
-            <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
-            Add New Carrier
+            <AddCircleOutlineIcon /> Add New Category
           </Button>
+          {/* <Button variant="outlined">Help</Button> */}
         </Box>
       </Box>
-      <Box sx={{ mt: 2, mb: 1 }}>
-        <Divider />
-      </Box>
+      <Divider sx={{ mt: -10 }} />
       <Box>
         <Box sx={{ display: "flex" }}>
           <Button
@@ -547,7 +575,7 @@ export default function LogicGridScreen() {
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
-            variant='contained'
+            variant="contained"
             onClick={handleClickOpencheck}
           >
             Bulk
@@ -558,15 +586,15 @@ export default function LogicGridScreen() {
             fullScreen={fullScreen}
             open={opencheck}
             onClose={handleDisClose}
-            aria-labelledby='responsive-dialog-title'
+            aria-labelledby="responsive-dialog-title"
           >
-            <DialogTitle id='responsive-dialog-title'>
+            <DialogTitle id="responsive-dialog-title">
               {"Selected One"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
                 <FormControlLabel
-                  label='Enable'
+                  label="Enable"
                   control={
                     <Checkbox
                       checked={checkedcheck}
@@ -579,7 +607,7 @@ export default function LogicGridScreen() {
                 />
 
                 <FormControlLabel
-                  label='Disable'
+                  label="Disable"
                   control={
                     <Checkbox
                       checked={dchecked}
@@ -593,7 +621,7 @@ export default function LogicGridScreen() {
               </DialogContentText>
               <DialogContent open={deleteopen} onClose={handleDeletrClose}>
                 <FormControlLabel
-                  label='Delete'
+                  label="Delete"
                   sx={{ ml: -4.5, mt: -2 }}
                   control={
                     <Checkbox
@@ -651,17 +679,17 @@ export default function LogicGridScreen() {
               fontSize: 12,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+              {
+                backgroundColor: "#808080",
+              },
           }}
         >
           <DataGrid
@@ -673,7 +701,7 @@ export default function LogicGridScreen() {
             columns={columns}
             rows={item4 ? item4 : ""}
             getRowId={(rows) => rows.id}
-            VerticalAlignment='Center'
+            VerticalAlignment="Center"
             rowHeight={40}
             headerHeight={35}
             loading={loading}

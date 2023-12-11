@@ -12,7 +12,8 @@ import { useState, useEffect } from "react";
 
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Divider from "@mui/material/Divider";
+// import Divider from "@mui/material/Divider";
+import { Divider } from "../../node_modules/@material-ui/core/index";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -51,7 +52,7 @@ function AttributeFormScreen() {
   const AttEdit = attributeMasterdetails?.find((x) => x?._id === AttId);
 
   const [attributupdtename, setAttriNameupdate] = useState(
-    AttEdit?.attributename,
+    AttEdit?.attributename
   );
   const [attributupdte, setAttriupdate] = useState(AttEdit?.attributetype);
 
@@ -61,7 +62,7 @@ function AttributeFormScreen() {
         AttributeCategory({
           name: e.name,
           attributestype: attributestype,
-        }),
+        })
       );
       window.confirm("Attribute Saved Successfully!!");
       navigate("/attributes");
@@ -75,7 +76,7 @@ function AttributeFormScreen() {
         AttributeCategory({
           name: e.name,
           attributestype: attributestype,
-        }),
+        })
       );
       window.confirm("Attribute Saved Successfully!!");
       event.target.reset();
@@ -90,7 +91,7 @@ function AttributeFormScreen() {
         _id: AttEdit?._id,
         attributename: attributupdtename,
         attributetype: attributupdte,
-      }),
+      })
     );
     window.confirm("Attribute Update Successfully!!");
     navigate("/attributes");
@@ -104,48 +105,74 @@ function AttributeFormScreen() {
 
   return (
     <>
-      <Typography variant="h6" sx={{ mt: -2 }}>
-        Add Attribute{" "}
-      </Typography>
       <Box>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link
-            to="/"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-          </Link>
-          <Link
-            to="/attributes"
-            style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Attribute</Typography>
-          </Link>
-
-          {AttId ? (
-            <>
-              <Typography sx={{ fontSize: "13px" }}>
-                Update Attribute{" "}
+        {AttId ? (
+          <>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Update Attribute
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/attributes"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Attribute</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}>
+                Update Attribute
               </Typography>
-            </>
-          ) : (
-            <>
-              <Typography sx={{ fontSize: "13px" }}>Add Attribute </Typography>
-            </>
-          )}
-        </Breadcrumbs>
-
-        <Divider
-          fullWidth
-          sx={{ backgroundColor: "#000000", mt: 1 }}
-          showlabels="true"
-        />
+            </Breadcrumbs>
+          </>
+        ) : (
+          <>
+            {/* <Typography sx={{ fontSize: "13px" }}>Add Attribute </Typography> */}
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Add Attribute
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/attributes"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Attribute</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}>Add Attribute </Typography>
+            </Breadcrumbs>
+          </>
+        )}
+        <Divider sx={{ mt: 3 }} />
       </Box>
 
       {AttEdit?._id ? (

@@ -19,7 +19,7 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 // import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from '@mui/material/InputLabel';
+import InputLabel from "@mui/material/InputLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
@@ -45,7 +45,7 @@ import {
   saveCatologProduct,
   saveCombination,
   updateCatProduct,
-  updateCatStock
+  updateCatStock,
 } from "../actions/catProductAction";
 DataGrid;
 
@@ -74,7 +74,11 @@ import {
   CategorygrandChildNewLists,
   grandChildCategoryLists,
 } from "../actions/categoryMasterAction";
-import { CAT_PRODUCT_UPDATE_RESET, COMBINATION_SAVE_RESET, COMBINATION_UPDATE_RESET } from "../constants/catBrandConstant";
+import {
+  CAT_PRODUCT_UPDATE_RESET,
+  COMBINATION_SAVE_RESET,
+  COMBINATION_UPDATE_RESET,
+} from "../constants/catBrandConstant";
 
 import { useNavigate } from "react-router-dom";
 import { Autocomplete } from "../../node_modules/@mui/material/index";
@@ -88,9 +92,17 @@ import SeoScreen from "./SeoScreen";
 // import ListItemText from "@mui/material/ListItemText";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 // import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { QuantityLastdataDetails, QuantityListDetails, QuantityfindOneaDetails } from "../actions/ProductQuantitiesAction";
+import {
+  QuantityLastdataDetails,
+  QuantityListDetails,
+  QuantityfindOneaDetails,
+} from "../actions/ProductQuantitiesAction";
 import { TaxesList } from "../actions/TaxesAction";
-import { PricingFindOneDetails, PricingLastListDetails, PricingListDetails } from "../actions/prodAction";
+import {
+  PricingFindOneDetails,
+  PricingLastListDetails,
+  PricingListDetails,
+} from "../actions/prodAction";
 
 function CatProductScreen() {
   const {
@@ -158,7 +170,9 @@ function CatProductScreen() {
   const ComboUpdate = useSelector((state) => state.ComboUpdate);
   const { success: deleteCombo } = ComboUpdate;
 
-  const cominationstockupdate = useSelector((state) => state.cominationstockupdate);
+  const cominationstockupdate = useSelector(
+    (state) => state.cominationstockupdate
+  );
   const { success: updatecomina } = cominationstockupdate;
 
   const catalogProdUpdate = useSelector((state) => state.catalogProdUpdate);
@@ -182,8 +196,6 @@ function CatProductScreen() {
     name: "test",
   });
 
-
-
   /************* Product Quantity and Pricing details Updated*/
 
   const QuantityLastList = useSelector((state) => state.QuantityLastList);
@@ -197,21 +209,17 @@ function CatProductScreen() {
 
   // console.log("pricingOnelist------------", pricingOnelist);
 
-  let qtydata = []
+  let qtydata = [];
   {
-    quantitylist?.map((value) => (
-      qtydata.push(value._id)
-    ))
+    quantitylist?.map((value) => qtydata.push(value._id));
   }
 
   const PriceLastList = useSelector((state) => state.PriceLastList);
   const { pricinglist } = PriceLastList;
 
-  let pricedata = []
+  let pricedata = [];
   {
-    pricinglist?.map((item) => (
-      pricedata.push(item._id)
-    ))
+    pricinglist?.map((item) => pricedata.push(item._id));
   }
 
   const taxesList = useSelector((state) => state.taxesList);
@@ -221,14 +229,14 @@ function CatProductScreen() {
   const { quantity } = QuantityList;
 
   const qunObj = quantity?.find((item) => item?.mprodId === ProdId);
-  const [quantityId, setquantityId] = useState([qunObj?._id])
+  const [quantityId, setquantityId] = useState([qunObj?._id]);
 
   const PriceList = useSelector((state) => state.PriceList);
   const { pricingdetail } = PriceList;
 
   const pricingObj = pricingdetail?.find((item) => item?.mprodId === ProdId);
 
-  const [priceId, setpriceId] = useState([pricingObj?._id])
+  const [priceId, setpriceId] = useState([pricingObj?._id]);
 
   // **********************Edit Section********************************
 
@@ -241,7 +249,6 @@ function CatProductScreen() {
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
   const [referenced, setreferenced] = useState("");
-
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -344,14 +351,14 @@ function CatProductScreen() {
 
   // console.log("catttttt",catProducts)
   const handlereference = (e) => {
-    setreferenced(e.target.value)
-    let code = e.target.value
+    setreferenced(e.target.value);
+    let code = e.target.value;
     for (let i = 0; i < catProducts?.length; i++) {
       if (code === catProducts[i]?.reference) {
         window.confirm("This reference code is already exist");
       }
     }
-  }
+  };
   const setpercentage = (e) => {
     const taxper = taxes?.find((x) => x._id === e);
     let test = (Prodexclusive * (taxper ? taxper.Rate : 0)) / 100;
@@ -366,7 +373,7 @@ function CatProductScreen() {
     let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
     let amt = test + parseInt(e.target.value);
     setProdinclusive(amt);
-  }
+  };
 
   /************Tax update method */
   const [EditProdexclusive, setEditProdexclusive] = useState();
@@ -393,12 +400,11 @@ function CatProductScreen() {
     let test = (e.target.value * (taxper ? taxper.Rate : 0)) / 100;
     let amt = test + parseInt(e.target.value);
     setEditProdinclusive(amt);
-  }
+  };
 
   /****************Category*********** */
 
   const handleSelectedItemsupdate = (event, nodeId) => {
-
     const items = nodeId.split("-");
     let parent = items[0];
     let child = items[1];
@@ -436,29 +442,32 @@ function CatProductScreen() {
 
   const [finalValue, setfinalValue] = useState([]);
   const stockCount = () => {
-    console.log("CombStock------->", CombStock)
+    console.log("CombStock------->", CombStock);
     let arr = [];
     let indexes = [];
     CombStock.map((items, index) => {
-      console.log("items", items)
+      console.log("items", items);
       if (!arr.includes(items.id)) {
-        console.log("items.id--------->", items.id)
+        console.log("items.id--------->", items.id);
         arr.push(items.id);
-        indexes?.push(index, arr)
-        finalValue?.push({ id: CombStock[index - 1]?.id, val: CombStock[index - 1]?.val });
+        indexes?.push(index, arr);
+        finalValue?.push({
+          id: CombStock[index - 1]?.id,
+          val: CombStock[index - 1]?.val,
+        });
       }
-    })
+    });
 
     let lastValue = CombStock[CombStock.length - 1];
-    finalValue.splice(0, 1)
-    finalValue.push(lastValue)
-    console.log("finalValue--------->", finalValue)
-  }
+    finalValue.splice(0, 1);
+    finalValue.push(lastValue);
+    console.log("finalValue--------->", finalValue);
+  };
 
   const handleStockudateInput = (event, params) => {
     let updateid = params?.row?.id;
-    setCombStockId([...CombStockId, updateid])
-  }
+    setCombStockId([...CombStockId, updateid]);
+  };
 
   const handleChangecombination = (event) => {
     if (combination == "Simple Product") {
@@ -558,13 +567,13 @@ function CatProductScreen() {
 
   const HandlecombSave = (event) => {
     stockCount();
-    let stockData = []
+    let stockData = [];
     for (let i = 0; i < finalValue.length; i++) {
       let obj = {
         id: finalValue[i].id.id,
-        val: finalValue[i].val
-      }
-      stockData.push(obj)
+        val: finalValue[i].val,
+      };
+      stockData.push(obj);
     }
     // let datas = stockData.shift()
     dispatch(updateCatStock(stockData));
@@ -765,7 +774,7 @@ function CatProductScreen() {
       dispatch({ type: COMBINATION_UPDATE_RESET });
     }
     dispatch(CombinationChildList());
-  }, [updatecomina])
+  }, [updatecomina]);
 
   var file = new File([subimg], "name");
 
@@ -839,14 +848,14 @@ Not all shops sell new products.
   };
 
   useEffect(() => {
-    setNewQuantity(quantityOnelist?.Qty)
-  }, [quantityOnelist])
+    setNewQuantity(quantityOnelist?.Qty);
+  }, [quantityOnelist]);
 
   useEffect(() => {
     setEditProdexclusive(pricingOnelist?.RetailExcl);
     setEditProdinclusive(pricingOnelist?.RetailIncl);
     setEditTaxprice(pricingOnelist?.priceGroup);
-  }, [pricingOnelist])
+  }, [pricingOnelist]);
 
   // *****************************************************edit cover Images**************************
   const [Checkededit, setCheckededit] = useState("");
@@ -911,44 +920,45 @@ Not all shops sell new products.
 
   const dispatch = useDispatch();
 
+  useEffect(
+    () => {
+      setNewProdname(prodctObj?.prodname),
+        setNewreference(prodctObj?.reference),
+        setNewQuantity(prodctObj?.quantity),
+        setNewtaxexcluded(prodctObj?.taxexcluded),
+        setNewtaxincluded(prodctObj?.taxincluded),
+        settreeId(prodctObj?.catId),
+        setchildId(prodctObj?.catChildId),
+        setGrandchildId(prodctObj?.grandchildId);
+      if (prodctObj) {
+        const fetchBusinesses = async () => {
+          const img = await Axios.get(
+            `/api/uploads/productshow/${prodctObj?._id}`,
+            {
+              // responseType: "blob",
+            }
+          );
 
-  useEffect(() => {
-    setNewProdname(prodctObj?.prodname),
-      setNewreference(prodctObj?.reference),
-      setNewQuantity(prodctObj?.quantity),
-      setNewtaxexcluded(prodctObj?.taxexcluded),
-      setNewtaxincluded(prodctObj?.taxincluded),
-      settreeId(prodctObj?.catId),
-      setchildId(prodctObj?.catChildId),
-      setGrandchildId(prodctObj?.grandchildId)
-    if (prodctObj) {
-      const fetchBusinesses = async () => {
-        const img = await Axios.get(
-          `/api/uploads/productshow/${prodctObj?._id}`,
-          {
-            // responseType: "blob",
-          }
-        );
+          setImage(img.data);
+        };
 
-        setImage(img.data);
-      };
-
-      const fetchBusines = async () => {
-        const subimg = await Axios.get(
-          `/api/uploads/proshowsub/${prodctObj?._id}`,
-          {}
-        );
-        setSubImage(subimg.data);
-      };
-      fetchBusines();
-      fetchBusinesses();
-    }
-  },
-    [prodctObj?.prodname], [prodctObj?.imageId], [prodctObj?.combination]
-  )
+        const fetchBusines = async () => {
+          const subimg = await Axios.get(
+            `/api/uploads/proshowsub/${prodctObj?._id}`,
+            {}
+          );
+          setSubImage(subimg.data);
+        };
+        fetchBusines();
+        fetchBusinesses();
+      }
+    },
+    [prodctObj?.prodname],
+    [prodctObj?.imageId],
+    [prodctObj?.combination]
+  );
 
   const submitHandler = async (e) => {
-
     const formData = new FormData();
     formData.append("image", dropImage);
     formData.append("coverstatus", CoverStatus);
@@ -1089,8 +1099,9 @@ Not all shops sell new products.
     // const formData = new FormData();
     // formData.append("image", item);
     try {
-      const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, { data: item },
-      );
+      const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, {
+        data: item,
+      });
       // console.log("data-------->>", data);
     } catch (err) {
       // console.log(err);
@@ -1195,11 +1206,12 @@ Not all shops sell new products.
   // **********************COMINATION SCREEN**************************************
 
   function getnumId(comproducts) {
-    return `${comproducts.row.CombinationId
-      ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
-        ?.prodname
-      : ""
-      }`;
+    return `${
+      comproducts.row.CombinationId
+        ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
+            ?.prodname
+        : ""
+    }`;
   }
   const navigate = useNavigate();
   const editCombination = (obj) => {
@@ -1289,9 +1301,8 @@ Not all shops sell new products.
       headerName: "Attribute Color",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => (
-        params.row.color == 'undefined' ? "" : params.row.color
-      ),
+      renderCell: (params) =>
+        params.row.color == "undefined" ? "" : params.row.color,
     },
     {
       field: "comstock",
@@ -1384,10 +1395,13 @@ Not all shops sell new products.
     <>
       {prodctObj ? (
         <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Update Products
+          </Typography>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: -2 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
           >
             <Link
               to="/"
@@ -1412,10 +1426,13 @@ Not all shops sell new products.
         </>
       ) : (
         <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Create Products
+          </Typography>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: -2 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
           >
             <Link
               to="/"
@@ -1440,9 +1457,6 @@ Not all shops sell new products.
         </>
       )}
 
-      <Typography variant="h6" sx={{ mt: 1 }}>
-        Create Products
-      </Typography>
       <Divider sx={{ mt: 1 }} />
 
       <>
@@ -1489,7 +1503,7 @@ Not all shops sell new products.
                     >
                       <Grid container spacing={3}>
                         <Grid item xs={8}>
-                          <Box>
+                          <Box sx={{mr:-5}}>
                             <Box>
                               <Typography
                                 sx={{
@@ -1963,8 +1977,8 @@ Not all shops sell new products.
                                                   newfeaturestypevalue[index]
                                                     ?.id
                                                     ? newfeaturestypevalue[
-                                                      index
-                                                    ]?.id
+                                                        index
+                                                      ]?.id
                                                     : id
                                                 }
                                                 // ref={register()}
@@ -2287,7 +2301,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip >
+                              <Tooltip>
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -2331,9 +2345,7 @@ Not all shops sell new products.
                                     onChange={(e) =>
                                       setNewQuantity(e.target.value)
                                     }
-                                    inputProps={
-                                      { readOnly: true, }
-                                    }
+                                    inputProps={{ readOnly: true }}
                                   />
                                 </Typography>
                               </Box>
@@ -2368,9 +2380,7 @@ Not all shops sell new products.
                                 value={EditProdexclusive}
                                 onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -2382,23 +2392,28 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
-                                <InputLabel id="demo-simple-select-label">Tax Rule</InputLabel>
+                              <FormControl
+                                sx={{ width: "100%", mt: 0.7 }}
+                                size="small"
+                              >
+                                <InputLabel id="demo-simple-select-label">
+                                  Tax Rule
+                                </InputLabel>
                                 <Select
                                   labelId="demo-simple-select-label"
-                                  size='small'
+                                  size="small"
                                   label="Tax Rule"
                                   value={EditTaxprice}
                                   onChange={Edittaxesrule}
-                                  inputProps={
-                                    { readOnly: true, }
-                                  }
+                                  inputProps={{ readOnly: true }}
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
                                       key={index}
                                       value={item._id}
-                                      onClick={() => setEditpercentage(item._id)}
+                                      onClick={() =>
+                                        setEditpercentage(item._id)
+                                      }
                                     >
                                       {item.Name}
                                     </MenuItem>
@@ -2414,9 +2429,7 @@ Not all shops sell new products.
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -2428,8 +2441,7 @@ Not all shops sell new products.
                                   ),
                                   fontSize: 12,
                                 }}
-                              />
-                              {" "}
+                              />{" "}
                             </Box>
                           </Grid>
                           <Grid item xs={8}>
@@ -2478,13 +2490,13 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
+                                              size="small"
                                               sx={{ mt: -1 }}
-                                              name='file'
+                                              name="file"
                                               defaultChecked={true}
-                                            // checked={checkedtreeupdate}
-                                            // checked={true}
-                                            // onChange={handleChangecheckbox}
+                                              // checked={checkedtreeupdate}
+                                              // checked={true}
+                                              // onChange={handleChangecheckbox}
                                             />
                                           }
                                           label={
@@ -2499,8 +2511,8 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               sx={{ mt: -1 }}
-                                              size='small'
-                                              name='file'
+                                              size="small"
+                                              name="file"
                                             />
                                           }
                                           label={
@@ -2528,14 +2540,14 @@ Not all shops sell new products.
                                             }
                                             label={
                                               newchildCategory ===
-                                                childItem._id ? (
+                                              childItem._id ? (
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      name='file'
+                                                      name="file"
                                                       defaultChecked={true}
                                                       sx={{ mt: -1 }}
-                                                      size='small'
+                                                      size="small"
                                                     />
                                                   }
                                                   label={
@@ -2551,9 +2563,9 @@ Not all shops sell new products.
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      size='small'
+                                                      size="small"
                                                       sx={{ mt: -1 }}
-                                                      name='file'
+                                                      name="file"
                                                     />
                                                   }
                                                   label={
@@ -2588,14 +2600,16 @@ Not all shops sell new products.
                                                     }
                                                     label={
                                                       grandchildCategory ===
-                                                        grandItem._id ? (
+                                                      grandItem._id ? (
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              name='file'
-                                                              size='small'
-                                                              defaultChecked={true}
+                                                              name="file"
+                                                              size="small"
+                                                              defaultChecked={
+                                                                true
+                                                              }
                                                             />
                                                           }
                                                           label={
@@ -2613,10 +2627,10 @@ Not all shops sell new products.
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
-                                                              size='small '
+                                                              size="small "
                                                               sx={{ mt: -1 }}
-                                                              name='file'
-                                                            // onChange={handleChange}
+                                                              name="file"
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={
@@ -2840,7 +2854,7 @@ Not all shops sell new products.
                             rowHeight={64}
                             pageSize={10}
                             rowsPerPageOptions={[10]}
-                          // checkboxSelection
+                            // checkboxSelection
                           />
                           <Button
                             variant="contained"
@@ -3614,8 +3628,8 @@ Not all shops sell new products.
                                                   newfeaturestypevalue[index]
                                                     ?.id
                                                     ? newfeaturestypevalue[
-                                                      index
-                                                    ]?.id
+                                                        index
+                                                      ]?.id
                                                     : id
                                                 }
                                                 // ref={register()}
@@ -3740,51 +3754,56 @@ Not all shops sell new products.
                               ) : (
                                 <></>
                               )}
-                              {brand === 1 ? (<>
-                                <Box sx={{ p: 1, m: 1 }}>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      mt: "10px",
-                                      justifyContent: "space-between",
-                                    }}
-                                  >
-                                    <Typography
+                              {brand === 1 ? (
+                                <>
+                                  <Box sx={{ p: 1, m: 1 }}>
+                                    <Box
                                       sx={{
-                                        fontSize: "14px",
-                                        fontWeight: "700",
+                                        display: "flex",
+                                        mt: "10px",
+                                        justifyContent: "space-between",
                                       }}
                                     >
-                                      Brand
-                                    </Typography>
-                                  </Box>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      mt: "20px",
-                                      justifyContent: "space-between",
-                                    }}
-                                  >
-                                    <FormControl sx={{ width: "40%" }}>
-                                      <Select
-                                        size="small"
-                                        value={newbrandId}
-                                        onChange={(e) =>
-                                          setNewbrandId(e.target.value)
-                                        }
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "700",
+                                        }}
                                       >
-                                        {brandLists?.map((item, index) => (
-                                          <MenuItem
-                                            key={index}
-                                            value={item._id}
-                                          >
-                                            {item.name}
-                                          </MenuItem>
-                                        ))}
-                                      </Select>
-                                    </FormControl>
+                                        Brand
+                                      </Typography>
+                                    </Box>
+                                    <Box
+                                      sx={{
+                                        display: "flex",
+                                        mt: "20px",
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <FormControl sx={{ width: "40%" }}>
+                                        <Select
+                                          size="small"
+                                          value={newbrandId}
+                                          onChange={(e) =>
+                                            setNewbrandId(e.target.value)
+                                          }
+                                        >
+                                          {brandLists?.map((item, index) => (
+                                            <MenuItem
+                                              key={index}
+                                              value={item._id}
+                                            >
+                                              {item.name}
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </Box>
                                   </Box>
-                                </Box></>) : (<></>)}
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </>
 
                             <Typography
@@ -3933,7 +3952,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip >
+                              <Tooltip>
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -3977,9 +3996,7 @@ Not all shops sell new products.
                                     onChange={(e) =>
                                       setNewQuantity(e.target.value)
                                     }
-                                    inputProps={
-                                      { readOnly: true, }
-                                    }
+                                    inputProps={{ readOnly: true }}
                                   />
                                 </Typography>
                               </Box>
@@ -4014,9 +4031,7 @@ Not all shops sell new products.
                                 value={EditProdexclusive}
                                 onChange={handleEditProdexclusive}
                                 sx={{ m: 1 }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -4028,23 +4043,28 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
-                                <InputLabel id="demo-simple-select-label">Tax Rule</InputLabel>
+                              <FormControl
+                                sx={{ width: "100%", mt: 0.7 }}
+                                size="small"
+                              >
+                                <InputLabel id="demo-simple-select-label">
+                                  Tax Rule
+                                </InputLabel>
                                 <Select
                                   labelId="demo-simple-select-label"
-                                  size='small'
+                                  size="small"
                                   label="Tax Rule"
                                   value={EditTaxprice}
                                   onChange={Edittaxesrule}
-                                  inputProps={
-                                    { readOnly: true, }
-                                  }
+                                  inputProps={{ readOnly: true }}
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
                                       key={index}
                                       value={item._id}
-                                      onClick={() => setEditpercentage(item._id)}
+                                      onClick={() =>
+                                        setEditpercentage(item._id)
+                                      }
                                     >
                                       {item.Name}
                                     </MenuItem>
@@ -4060,9 +4080,7 @@ Not all shops sell new products.
                                 }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1 }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -4074,8 +4092,7 @@ Not all shops sell new products.
                                   ),
                                   fontSize: 12,
                                 }}
-                              />
-                              {" "}
+                              />{" "}
                             </Box>
                           </Grid>
                           <Grid item xs={8}>
@@ -4124,13 +4141,13 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
+                                              size="small"
                                               sx={{ mt: -1 }}
-                                              name='file'
+                                              name="file"
                                               defaultChecked={true}
-                                            // checked={checkedtreeupdate}
-                                            // checked={true}
-                                            // onChange={handleChangecheckbox}
+                                              // checked={checkedtreeupdate}
+                                              // checked={true}
+                                              // onChange={handleChangecheckbox}
                                             />
                                           }
                                           label={
@@ -4145,8 +4162,8 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               sx={{ mt: -1 }}
-                                              size='small'
-                                              name='file'
+                                              size="small"
+                                              name="file"
                                             />
                                           }
                                           label={
@@ -4174,14 +4191,14 @@ Not all shops sell new products.
                                             }
                                             label={
                                               newchildCategory ===
-                                                childItem._id ? (
+                                              childItem._id ? (
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      name='file'
+                                                      name="file"
                                                       defaultChecked={true}
                                                       sx={{ mt: -1 }}
-                                                      size='small'
+                                                      size="small"
                                                     />
                                                   }
                                                   label={
@@ -4197,9 +4214,9 @@ Not all shops sell new products.
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      size='small'
+                                                      size="small"
                                                       sx={{ mt: -1 }}
-                                                      name='file'
+                                                      name="file"
                                                     />
                                                   }
                                                   label={
@@ -4234,14 +4251,16 @@ Not all shops sell new products.
                                                     }
                                                     label={
                                                       grandchildCategory ===
-                                                        grandItem._id ? (
+                                                      grandItem._id ? (
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              name='file'
-                                                              size='small'
-                                                              defaultChecked={true}
+                                                              name="file"
+                                                              size="small"
+                                                              defaultChecked={
+                                                                true
+                                                              }
                                                             />
                                                           }
                                                           label={
@@ -4259,10 +4278,10 @@ Not all shops sell new products.
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
-                                                              size='small '
+                                                              size="small "
                                                               sx={{ mt: -1 }}
-                                                              name='file'
-                                                            // onChange={handleChange}
+                                                              name="file"
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={
@@ -4842,7 +4861,7 @@ Not all shops sell new products.
                                               onChange={(e) =>
                                                 handleFeatureValue(e, index)
                                               }
-                                            // onClick={() => removeName(index)}
+                                              // onClick={() => removeName(index)}
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
@@ -5101,7 +5120,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip >
+                              <Tooltip>
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -5147,9 +5166,7 @@ Not all shops sell new products.
                                     {...register("quantity", {
                                       // required: true,
                                     })}
-                                    inputProps={
-                                      { readOnly: true, }
-                                    }
+                                    inputProps={{ readOnly: true }}
                                   />
                                 </Typography>
                               </Box>
@@ -5185,9 +5202,7 @@ Not all shops sell new products.
                                 onChange={handleProdexclusive}
                                 // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -5199,17 +5214,20 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
-                                <InputLabel id="demo-select-small-label">Tax Rule</InputLabel>
+                              <FormControl
+                                sx={{ width: "100%", mt: 0.7 }}
+                                size="small"
+                              >
+                                <InputLabel id="demo-select-small-label">
+                                  Tax Rule
+                                </InputLabel>
                                 <Select
                                   labelId="demo-select-small-label"
-                                  size='small'
+                                  size="small"
                                   label="Tax Rule"
                                   value={Taxprice}
                                   onChange={taxesrule}
-                                  inputProps={
-                                    { readOnly: true, }
-                                  }
+                                  inputProps={{ readOnly: true }}
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -5227,12 +5245,12 @@ Not all shops sell new products.
                                 label="Tax included"
                                 // {...register("taxincluded", { required: true })}
                                 value={Prodinclusive}
-                                onChange={(e) => setProdinclusive(e.target.value)}
+                                onChange={(e) =>
+                                  setProdinclusive(e.target.value)
+                                }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -5244,7 +5262,6 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-
                             </Box>
                           </Grid>
 
@@ -5294,9 +5311,9 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
+                                              size="small"
                                               sx={{ mt: -1 }}
-                                              name='file'
+                                              name="file"
                                               checked={checkedtree}
                                             />
                                           }
@@ -5311,8 +5328,8 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
-                                              name='file'
+                                              size="small"
+                                              name="file"
                                               sx={{ mt: -1 }}
                                             />
                                           }
@@ -5345,8 +5362,8 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       sx={{ mt: -1 }}
-                                                      size='small'
-                                                      name='file'
+                                                      size="small"
+                                                      name="file"
                                                       checked={checkedtree}
                                                     />
                                                   }
@@ -5365,8 +5382,8 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       sx={{ mt: -1 }}
-                                                      size='small'
-                                                      name='file'
+                                                      size="small"
+                                                      name="file"
                                                     />
                                                   }
                                                   label={
@@ -5401,7 +5418,7 @@ Not all shops sell new products.
                                                     }
                                                     label={
                                                       grandchildId ===
-                                                        grandItem._id ? (
+                                                      grandItem._id ? (
                                                         <FormControlLabel
                                                           sx={{
                                                             fontSize: "12px",
@@ -5409,12 +5426,12 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              size='small'
-                                                              name='file'
+                                                              size="small"
+                                                              name="file"
                                                               checked={
                                                                 checkedtree
                                                               }
-                                                            // onChange={handleChange}
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={
@@ -5436,9 +5453,9 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              size='small'
-                                                              name='file'
-                                                            // onChange={handleChange}
+                                                              size="small"
+                                                              name="file"
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={
@@ -5583,7 +5600,7 @@ Not all shops sell new products.
                               rowHeight={64}
                               pageSize={10}
                               rowsPerPageOptions={[10]}
-                            // checkboxSelection
+                              // checkboxSelection
                             />
                             <Box>
                               <Dialog
@@ -5605,8 +5622,8 @@ Not all shops sell new products.
                                     component="img"
                                     // height="200"
                                     image={ComnewImg}
-                                  // alt={"subimgnew.filename"}
-                                  // onMouseOver={handleChangeimage}
+                                    // alt={"subimgnew.filename"}
+                                    // onMouseOver={handleChangeimage}
                                   />
                                 </Box>
                               </Dialog>
@@ -6118,7 +6135,7 @@ Not all shops sell new products.
                                               onChange={(e) =>
                                                 handleFeatureValue(e, index)
                                               }
-                                            // onClick={() => removeName(index)}
+                                              // onClick={() => removeName(index)}
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
@@ -6377,7 +6394,7 @@ Not all shops sell new products.
                               }}
                             >
                               Quantity
-                              <Tooltip >
+                              <Tooltip>
                                 <InfoIcon sx={{ fontSize: 12 }} />
                               </Tooltip>
                             </Typography>
@@ -6423,9 +6440,7 @@ Not all shops sell new products.
                                     {...register("quantity", {
                                       // required: true,
                                     })}
-                                    inputProps={
-                                      { readOnly: true, }
-                                    }
+                                    inputProps={{ readOnly: true }}
                                   />
                                 </Typography>
                               </Box>
@@ -6461,11 +6476,9 @@ Not all shops sell new products.
                                 onChange={handleProdexclusive}
                                 // {...register("taxexcluded", { required: true })}
                                 sx={{ m: 1, width: "100%" }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
-                                  style: { fontSize: 13, },
+                                  style: { fontSize: 13 },
                                   startAdornment: (
                                     <InputAdornment position="start">
                                       <CurrencyRupeeIcon
@@ -6475,17 +6488,20 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-                              <FormControl sx={{ width: "100%", mt: 0.7 }} size="small">
-                                <InputLabel id="demo-select-small-label">Tax Rule</InputLabel>
+                              <FormControl
+                                sx={{ width: "100%", mt: 0.7 }}
+                                size="small"
+                              >
+                                <InputLabel id="demo-select-small-label">
+                                  Tax Rule
+                                </InputLabel>
                                 <Select
                                   labelId="demo-select-small-label"
-                                  size='small'
+                                  size="small"
                                   label="Tax Rule"
                                   value={Taxprice}
                                   onChange={taxesrule}
-                                  inputProps={
-                                    { readOnly: true, }
-                                  }
+                                  inputProps={{ readOnly: true }}
                                 >
                                   {taxes?.map((item, index) => (
                                     <MenuItem
@@ -6503,12 +6519,12 @@ Not all shops sell new products.
                                 label="Tax included"
                                 // {...register("taxincluded", { required: true })}
                                 value={Prodinclusive}
-                                onChange={(e) => setProdinclusive(e.target.value)}
+                                onChange={(e) =>
+                                  setProdinclusive(e.target.value)
+                                }
                                 id="outlined-start-adornment"
                                 sx={{ m: 1, width: "100%" }}
-                                inputProps={
-                                  { readOnly: true, }
-                                }
+                                inputProps={{ readOnly: true }}
                                 InputProps={{
                                   style: { fontSize: 13 },
                                   startAdornment: (
@@ -6520,7 +6536,6 @@ Not all shops sell new products.
                                   ),
                                 }}
                               />
-
                             </Box>
                           </Grid>
 
@@ -6570,9 +6585,9 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
+                                              size="small"
                                               sx={{ mt: -1 }}
-                                              name='file'
+                                              name="file"
                                               checked={checkedtree}
                                             />
                                           }
@@ -6587,8 +6602,8 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              size='small'
-                                              name='file'
+                                              size="small"
+                                              name="file"
                                               sx={{ mt: -1 }}
                                             />
                                           }
@@ -6621,8 +6636,8 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       sx={{ mt: -1 }}
-                                                      size='small'
-                                                      name='file'
+                                                      size="small"
+                                                      name="file"
                                                       checked={checkedtree}
                                                     />
                                                   }
@@ -6641,8 +6656,8 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       sx={{ mt: -1 }}
-                                                      size='small'
-                                                      name='file'
+                                                      size="small"
+                                                      name="file"
                                                     />
                                                   }
                                                   label={
@@ -6677,7 +6692,7 @@ Not all shops sell new products.
                                                     }
                                                     label={
                                                       grandchildId ===
-                                                        grandItem._id ? (
+                                                      grandItem._id ? (
                                                         <FormControlLabel
                                                           sx={{
                                                             fontSize: "12px",
@@ -6685,12 +6700,12 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              size='small'
-                                                              name='file'
+                                                              size="small"
+                                                              name="file"
                                                               checked={
                                                                 checkedtree
                                                               }
-                                                            // onChange={handleChange}
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={
@@ -6712,9 +6727,9 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               sx={{ mt: -1 }}
-                                                              size='small'
-                                                              name='file'
-                                                            // onChange={handleChange}
+                                                              size="small"
+                                                              name="file"
+                                                              // onChange={handleChange}
                                                             />
                                                           }
                                                           label={

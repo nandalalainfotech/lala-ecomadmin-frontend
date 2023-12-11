@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Divider from "@mui/material/Divider";
+import { Divider } from "../../node_modules/@material-ui/core/index";
 import { ColorPicker } from "material-ui-color";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,10 +71,10 @@ function AttributeValueScreen() {
   };
 
   const AttributeType = attributeMasterdetails?.find(
-    (x) => x?._id === AttributeVlaue,
+    (x) => x?._id === AttributeVlaue
   )?.attributetype;
   const AttributeType1 = attributeMasterdetails?.find(
-    (x) => x?._id === AtteditType,
+    (x) => x?._id === AtteditType
   )?.attributetype;
   // console.log("AttributeType", AttributeType);
   const theme = createTheme();
@@ -87,7 +87,7 @@ function AttributeValueScreen() {
         attEditvalue: AttEditvalue,
         imageFile: e.imageFile,
         prodselect: check1,
-      }),
+      })
     );
     window.confirm("Attribute Update Successfully!!");
     navigate("/attributes");
@@ -102,7 +102,7 @@ function AttributeValueScreen() {
           color: color.name,
           imageFile: e.imageFile,
           prodselect: check1,
-        }),
+        })
       );
       window.confirm("Attribute Value Saved Successfully!!");
       navigate("/attributes");
@@ -121,7 +121,7 @@ function AttributeValueScreen() {
           color: color.name,
           imageFile: e.imageFile,
           prodselect: check1,
-        }),
+        })
       );
       window.confirm("Attribute Value Saved Successfully!!");
       event.target.reset();
@@ -139,304 +139,333 @@ function AttributeValueScreen() {
   }, [dispatch]);
   return (
     <>
-      <Typography variant="h6" sx={{ mt: -2 }}>
-        Add Attribute Value{" "}
-      </Typography>
-      <Box>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link
-            to="/"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: 13 }}>Home</Typography>
-          </Link>
-          <Link
-            to="/attributes"
-            style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
-          >
-            <Typography sx={{ fontSize: 13 }}>Attribute</Typography>
-          </Link>
-          <Typography sx={{ fontSize: "13px" }}>
-            Add Attribute Value{" "}
-          </Typography>
-        </Breadcrumbs>
-
-        <Divider
-          fullWidth
-          sx={{ backgroundColor: "#000000", mt: 3 }}
-          showlabels="true"
-        />
-      </Box>
-
       {Attvalue?._id ? (
-        <Box>
-          <ThemeProvider theme={theme}>
-            <Container
-              component="main"
-              maxWidth="sm"
-              sx={{
-                my: { xs: 3, md: 6, lg: 10 },
-                p: { xs: 2, md: 1 },
+        <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Update Attribute Value
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
               }}
             >
-              <CssBaseline />
-
-              <Box
-                component="form"
-                onSubmit={handleSubmit1(UpdatEditValue)}
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/attributes"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Attribute</Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              {" "}
+              Update Attribute Value
+            </Typography>
+          </Breadcrumbs>
+          <Divider />
+          <Box>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
                 sx={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "0px",
-                  p: 5,
-                  border: "1px solid #000000",
-                  mt: -7,
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
                 }}
               >
-                <Typography variant="h5" sx={{ textAlign: "center" }}>
-                  {" "}
-                  Update Attributes Value
-                </Typography>
-                <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Attributes Type</InputLabel>
-                  <Select
-                    id="standard-simple-select"
-                    value={AtteditType}
-                    label="Attributes Type"
-                    onChange={(e) => setAttValueType(e.target.value)}
-                  >
-                    {attributeMasterdetails?.map((detail) => (
-                      <MenuItem key={detail._id} value={detail._id}>
-                        {detail.attributename}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <TextField
-                  size="small"
-                  margin="normal"
-                  fullWidth
-                  id="value"
-                  label="Value"
-                  name="value"
-                  autoComplete="off"
-                  value={AttEditvalue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                />
+                <CssBaseline />
 
-                {AttributeType1 === "Color or Texture" ? (
-                  <>
-                    <ColorPicker
-                      defaultValue="transparent"
-                      id="ColorPic"
-                      name="ColorPic"
-                      value={color}
-                      onChange={setColor}
-                    />
-
-                    <Typography variant="h6">Texture</Typography>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-                {/* <TextField
-                  style={{ margin: "10px 0px" }}
-                  inputProps={{
-                    style: { fontSize: 14 },
-                    accept: "image/*",
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit1(UpdatEditValue)}
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
+                    mt: -7,
                   }}
-                  size='small'
-                  fullWidth
-                  type='file'
-                  id='imageFile'
-                  name='imageFile'
-                  autoComplete='off'
-                  // onChange={(e) => onSelectFile(e)}
-                  {...register1("imageFile", {
-                    required: false,
-                  })}
-                  error={errors1.imageFile}
-                />
-                {Attvalue?.filename ? (
-                  <CardMedia
-                    component='img'
-                    height='125'
-                    sx={{
-                      border: "1px solid black",
-                      width: "25%",
-                    }}
-                    image={`/api/AttributeValue/view/${Attvalue?.filename}`}
-                    alt={Attvalue.filename}
-                  />
-                ) : (
-                  <></>
-                )} */}
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  type="submit"
                 >
-                  Update
-                </Button>
-              </Box>
-            </Container>
-          </ThemeProvider>
-        </Box>
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    {" "}
+                    Update Attributes Value
+                  </Typography>
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel>Attributes Type</InputLabel>
+                    <Select
+                      id="standard-simple-select"
+                      value={AtteditType}
+                      label="Attributes Type"
+                      onChange={(e) => setAttValueType(e.target.value)}
+                    >
+                      {attributeMasterdetails?.map((detail) => (
+                        <MenuItem key={detail._id} value={detail._id}>
+                          {detail.attributename}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="value"
+                    label="Value"
+                    name="value"
+                    autoComplete="off"
+                    value={AttEditvalue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                  />
+
+                  {AttributeType1 === "Color or Texture" ? (
+                    <>
+                      <ColorPicker
+                        defaultValue="transparent"
+                        id="ColorPic"
+                        name="ColorPic"
+                        value={color}
+                        onChange={setColor}
+                      />
+
+                      <Typography variant="h6">Texture</Typography>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {/* <TextField
+      style={{ margin: "10px 0px" }}
+      inputProps={{
+        style: { fontSize: 14 },
+        accept: "image/*",
+      }}
+      size='small'
+      fullWidth
+      type='file'
+      id='imageFile'
+      name='imageFile'
+      autoComplete='off'
+      // onChange={(e) => onSelectFile(e)}
+      {...register1("imageFile", {
+        required: false,
+      })}
+      error={errors1.imageFile}
+    />
+    {Attvalue?.filename ? (
+      <CardMedia
+        component='img'
+        height='125'
+        sx={{
+          border: "1px solid black",
+          width: "25%",
+        }}
+        image={`/api/AttributeValue/view/${Attvalue?.filename}`}
+        alt={Attvalue.filename}
+      />
+    ) : (
+      <></>
+    )} */}
+                  <Box sx={{ mb: -1 }}>
+                    <Button variant="contained" sx={{ mt: 3 }} type="submit">
+                      Update
+                    </Button>
+                  </Box>
+                </Box>
+              </Container>
+            </ThemeProvider>
+          </Box>
+        </>
       ) : (
-        <Box>
-          <ThemeProvider theme={theme}>
-            <Container
-              component="main"
-              maxWidth="sm"
-              sx={{
-                my: { xs: 3, md: 6, lg: 10 },
-                p: { xs: 2, md: 1 },
+        <>
+          <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+            Add Attribute Value
+          </Typography>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ display: "flex", flexDerection: "row", mt: 1 }}
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
               }}
             >
-              <CssBaseline />
-
-              <Box
-                component="form"
-                onSubmit={handleSubmit1(createAttributeValue)}
+              <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+            </Link>
+            <Link
+              to="/attributes"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "12px",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>Attribute</Typography>
+            </Link>
+            <Typography sx={{ fontSize: "14px" }}>
+              {" "}
+              Add Attribute Value
+            </Typography>
+          </Breadcrumbs>
+          <Divider />
+          <Box>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
                 sx={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "0px",
-                  p: 5,
-                  border: "1px solid #000000",
-                  mt: -7,
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
                 }}
               >
-                <Typography variant="h6" sx={{ textAlign: "center", mt: -3 }}>
-                  {" "}
-                  Create Attributes Value
-                </Typography>
-                <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Attributes Type</InputLabel>
-                  <Select
-                    size="small"
-                    id="standard-simple-select"
-                    value={AttributeVlaue}
-                    label="Attributes Type"
-                    onChange={(e) => setAttributeVlaue(e.target.value)}
-                  >
-                    {attributeMasterdetails?.map((detail) => (
-                      // console.log("detail==>", detail),
-                      <MenuItem key={detail._id} value={detail._id}>
-                        {detail.attributename}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <TextField
-                  size="small"
-                  margin="normal"
-                  fullWidth
-                  id="value"
-                  label="Value"
-                  name="value"
-                  autoComplete="off"
-                  {...register1("value", {
-                    required: true,
-                  })}
-                  error={errors1.value}
-                />
-                {errors1.value && (
-                  <span className="formError">value is required</span>
-                )}
-                <Checkbox
-                  checked={check1}
-                  onChange={onchangeCheck1}
-                  name="presta"
-                />
-                {AttributeType === "Color or Texture" ? (
-                  <>
-                    <ColorPicker
-                      defaultValue="transparent"
-                      id="ColorPic"
-                      name="ColorPic"
-                      value={color}
-                      onChange={setColor}
-                    />
-                    {errors1.ColorPic && (
-                      <span className="formError">ColorPic is required</span>
-                    )}
-                    <Typography variant="h6">Texture</Typography>
-                  </>
-                ) : (
-                  <></>
-                )}
+                <CssBaseline />
 
-                {/* <TextField
-                  style={{ margin: "10px 0px" }}
-                  inputProps={{
-                    style: { fontSize: 14 },
-                    accept: "image/*",
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit1(createAttributeValue)}
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
+                    mt: -7,
                   }}
-                  size='small'
-                  fullWidth
-                  type='file'
-                  id='imageFile'
-                  name='imageFile'
-                  autoComplete='off'
-                  // onChange={(e) => onSelectFile(e)}
-                  {...register1("imageFile", {
-                    required: false,
-                  })}
-                  error={errors1.imageFile}
-                />
-                {errors1?.imageFile?.type === "required" && (
-                  <span className='formError'>File is required</span>
-                )} */}
-                <Box sx={{ display: "flex" }}>
-                  <Button
-                    // fullWidth
-                    variant="contained"
-                    sx={{
-                      mt: 3,
-                      mb: 2,
-                      mr: 2,
-                      borderRadius: "20px",
-                      backgroundColor: "#0099CC",
-                    }}
-                    type="Click"
-                    onClick={() => setBtnattValueAnother(2)}
-                  >
-                    Save And Another Value
-                  </Button>
-                  <Button
-                    // fullWidth
-                    variant="contained"
-                    sx={{
-                      mt: 3,
-                      mb: 2,
-                      mr: 2,
-                      borderRadius: "20px",
-                      backgroundColor: "#0099CC",
-                    }}
-                    type="Click"
-                    onClick={() => setBtnattValue(1)}
-                  >
-                    Save
-                  </Button>
+                >
+                  <Typography variant="h6" sx={{ textAlign: "center", mt: -3 }}>
+                    {" "}
+                    Create Attributes Value
+                  </Typography>
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel>Attributes Type</InputLabel>
+                    <Select
+                      size="small"
+                      id="standard-simple-select"
+                      value={AttributeVlaue}
+                      label="Attributes Type"
+                      onChange={(e) => setAttributeVlaue(e.target.value)}
+                    >
+                      {attributeMasterdetails?.map((detail) => (
+                        // console.log("detail==>", detail),
+                        <MenuItem key={detail._id} value={detail._id}>
+                          {detail.attributename}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="value"
+                    label="Value"
+                    name="value"
+                    autoComplete="off"
+                    {...register1("value", {
+                      required: true,
+                    })}
+                    error={errors1.value}
+                  />
+                  {errors1.value && (
+                    <span className="formError">value is required</span>
+                  )}
+                  <Checkbox
+                    checked={check1}
+                    onChange={onchangeCheck1}
+                    name="presta"
+                  />
+                  {AttributeType === "Color or Texture" ? (
+                    <>
+                      <ColorPicker
+                        defaultValue="transparent"
+                        id="ColorPic"
+                        name="ColorPic"
+                        value={color}
+                        onChange={setColor}
+                      />
+                      {errors1.ColorPic && (
+                        <span className="formError">ColorPic is required</span>
+                      )}
+                      <Typography variant="h6">Texture</Typography>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {/* <TextField
+      style={{ margin: "10px 0px" }}
+      inputProps={{
+        style: { fontSize: 14 },
+        accept: "image/*",
+      }}
+      size='small'
+      fullWidth
+      type='file'
+      id='imageFile'
+      name='imageFile'
+      autoComplete='off'
+      // onChange={(e) => onSelectFile(e)}
+      {...register1("imageFile", {
+        required: false,
+      })}
+      error={errors1.imageFile}
+    />
+    {errors1?.imageFile?.type === "required" && (
+      <span className='formError'>File is required</span>
+    )} */}
+                  <Box sx={{ display: "flex", mb: -1 }}>
+                    <Button
+                      // fullWidth
+                      variant="contained"
+                      sx={{
+                        mt: 3,
+                        mb: 0,
+                        mr: 2,
+                        borderRadius: "20px",
+                        backgroundColor: "#0099CC",
+                      }}
+                      type="Click"
+                      onClick={() => setBtnattValueAnother(2)}
+                    >
+                      Save And Another Value
+                    </Button>
+                    <Button
+                      // fullWidth
+                      variant="contained"
+                      sx={{
+                        mt: 3,
+                        mb: 0,
+                        mr: 2,
+                        borderRadius: "20px",
+                        backgroundColor: "#0099CC",
+                      }}
+                      type="Click"
+                      onClick={() => setBtnattValue(1)}
+                    >
+                      Save
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            </Container>
-          </ThemeProvider>
-        </Box>
+              </Container>
+            </ThemeProvider>
+          </Box>
+        </>
       )}
     </>
   );

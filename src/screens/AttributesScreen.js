@@ -130,12 +130,12 @@ function AttributesScreen() {
   const { success: successDelete } = attributeDelete;
 
   const attributeValueUpdate = useSelector(
-    (state) => state.attributeValueUpdate,
+    (state) => state.attributeValueUpdate
   );
   const { success: successvalueUpdate } = attributeValueUpdate;
 
   const attributeValueDelete = useSelector(
-    (state) => state.attributeValueDelete,
+    (state) => state.attributeValueDelete
   );
   const { success: successvalueDelete } = attributeValueDelete;
 
@@ -236,7 +236,7 @@ function AttributesScreen() {
         updateAttactive({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
       window.confirm("Active Successfully!!");
       setAttribute(0);
@@ -245,7 +245,7 @@ function AttributesScreen() {
         updateAttactive({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
       window.confirm("De-Active Successfully!!");
       setAttribute(0);
@@ -295,7 +295,7 @@ function AttributesScreen() {
         updateFeaturactive({
           checkboxId: FselectionModel,
           checkedshow: Fcheckedcheck,
-        }),
+        })
       );
       window.confirm("Active Successfully!!");
       setAttribute(0);
@@ -304,7 +304,7 @@ function AttributesScreen() {
         updateFeaturactive({
           checkboxId: FselectionModel,
           checkedhide: Fdsablechecked,
-        }),
+        })
       );
       window.confirm("De-Active Successfully!!");
       setAttribute(0);
@@ -353,7 +353,7 @@ function AttributesScreen() {
         updateFeatureValueactive({
           checkboxId: FvlaueselectionModel,
           checkedshow: Fvlauecheckedcheck,
-        }),
+        })
       );
       window.confirm("Active Successfully!!");
       setAttribute(0);
@@ -362,7 +362,7 @@ function AttributesScreen() {
         updateFeatureValueactive({
           checkboxId: FvlaueselectionModel,
           checkedhide: Fvlauedsablechecked,
-        }),
+        })
       );
       window.confirm("De-Active Successfully!!");
       setAttribute(0);
@@ -412,7 +412,7 @@ function AttributesScreen() {
         updateValueactive({
           checkboxId: valeselectionModel,
           checkedshow: valuecheckedcheck,
-        }),
+        })
       );
       window.confirm("Active Successfully!!");
     } else {
@@ -420,7 +420,7 @@ function AttributesScreen() {
         updateValueactive({
           checkboxId: valeselectionModel,
           checkedhide: valuedsablechecked,
-        }),
+        })
       );
       window.confirm("De-Active Successfully!!");
     }
@@ -475,14 +475,14 @@ function AttributesScreen() {
         updateAttvalueEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateAttvalueEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -697,14 +697,14 @@ function AttributesScreen() {
         updateAttEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateAttEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -715,14 +715,14 @@ function AttributesScreen() {
         updatefeatureEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updatefeatureEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -733,14 +733,14 @@ function AttributesScreen() {
         updateFvalueEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateFvalueEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -1003,7 +1003,10 @@ function AttributesScreen() {
           return (
             <FormControlLabel
               control={
-                <Switch size="small" onClick={(e) => handleChangeavalue(e, params.row.id)} />
+                <Switch
+                  size="small"
+                  onClick={(e) => handleChangeavalue(e, params.row.id)}
+                />
               }
             />
           );
@@ -1188,11 +1191,12 @@ function AttributesScreen() {
   ];
 
   function getValue(products) {
-    return `${products.row.featuretype
-      ? Featuresdetails?.find((x) => x._id === products.row.featuretype)
-        ?.featurename
-      : "arraa"
-      }`;
+    return `${
+      products.row.featuretype
+        ? Featuresdetails?.find((x) => x._id === products.row.featuretype)
+            ?.featurename
+        : "arraa"
+    }`;
   }
 
   const featurevaluecolumn = [
@@ -1240,7 +1244,10 @@ function AttributesScreen() {
           return (
             <FormControlLabel
               control={
-                <Switch size="small" onClick={(e) => handleChangeFvalue(e, params.row.id)} />
+                <Switch
+                  size="small"
+                  onClick={(e) => handleChangeFvalue(e, params.row.id)}
+                />
               }
             />
           );
@@ -1290,51 +1297,55 @@ function AttributesScreen() {
         <>
           {viewitem._id ? (
             <>
-              <Typography variant="h5">{viewitem.attributename}</Typography>
-              <Box sx={{ display: "flex", flexDerection: "row", mt: 5 }}>
+              <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
+                {viewitem.attributename}
+              </Typography>
+              <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
+                  sx={{ display: "flex", flexDerection: "row" }}
                 >
                   <Link
+                    onClick={refreshPage}
                     to="/"
                     style={{
                       color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "15px",
+                      fontSize: "12px",
                     }}
                   >
-                    <Typography>Home</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>Home</Typography>
                   </Link>
                   <Link
-                    onClick={refreshPage}
                     to="/attributes"
                     style={{
                       color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "15px",
+                      fontSize: "12px",
                     }}
                   >
-                    <Typography>Attributes</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>
+                      Attributes
+                    </Typography>
                   </Link>
-                  <Typography sx={{ fontSize: "15px" }}>
+                  <Typography sx={{ fontSize: "14px" }}>
                     {viewitem.attributename}
                   </Typography>
                 </Breadcrumbs>
 
                 <Box sx={{ ml: "auto" }}>
-                  <>
-                    <Button
-                      sx={{
-                        mr: 3,
-                        borderRadius: "20px",
-                        backgroundColor: "#0099CC",
-                      }}
-                      variant="contained"
-                      type="Click"
-                      onClick={AttvlaueChange}
-                    >
-                      Add New value
-                    </Button>
-                  </>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mr: 3,
+                      mt: -2,
+                      borderRadius: "20px",
+                      backgroundColor: "#0099CC",
+                      fontSize: 12,
+                    }}
+                    onClick={AttvlaueChange}
+                  >
+                    Add New value
+                  </Button>
                 </Box>
               </Box>
             </>
@@ -1342,8 +1353,8 @@ function AttributesScreen() {
             <>
               {Attribute === 0 ? (
                 <>
-                  <Typography variant="h6" sx={{ mt: -3 }}>
-                    Attributes
+                  {/* <Typography variant="h6" sx={{ mt: -3 }}>
+                    Attributes hello
                   </Typography>
                   <Box sx={{ display: "flex", flexDerection: "row", mt: 0 }}>
                     <Breadcrumbs
@@ -1395,6 +1406,59 @@ function AttributesScreen() {
                         </Button>
                       </>
                     </Box>
+                  </Box> */}
+                  <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
+                    Attributes
+                  </Typography>
+                  <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon fontSize="small" />}
+                      aria-label="breadcrumb"
+                      sx={{ display: "flex", flexDerection: "row" }}
+                    >
+                      <Link
+                        to="/"
+                        style={{
+                          color: "rgba(0, 0, 0, 0.6)",
+                          fontSize: "12px",
+                        }}
+                      >
+                        <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+                      </Link>
+                      <Typography sx={{ fontSize: "14px" }}>
+                        Attributes
+                      </Typography>
+                    </Breadcrumbs>
+
+                    <Box sx={{ ml: "auto" }}>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          mr: 3,
+                          mt: -2,
+                          borderRadius: "20px",
+                          backgroundColor: "#0099CC",
+                          fontSize: 12,
+                        }}
+                        onClick={Attchange}
+                      >
+                        Add New Attribute
+                      </Button>
+                      <Button
+                        sx={{
+                          mr: 3,
+                          mt: -2,
+                          borderRadius: "20px",
+                          backgroundColor: "#0099CC",
+                          fontSize: 12,
+                        }}
+                        variant="contained"
+                        type="Click"
+                        onClick={AttvlaueChange}
+                      >
+                        Add New value
+                      </Button>
+                    </Box>
                   </Box>
                 </>
               ) : (
@@ -1415,52 +1479,53 @@ function AttributesScreen() {
         <>
           {feautureview?.id ? (
             <>
-              <Typography variant="h6" sx={{ mt: -3 }}>
+              <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
                 {feautureview.row.featurename}
               </Typography>
-              <Box sx={{ display: "flex", flexDerection: "row", mt: 1 }}>
+              <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
+                  sx={{ display: "flex", flexDerection: "row" }}
                 >
                   <Link
+                    onClick={refreshPage}
                     to="/"
                     style={{
                       color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "13px",
+                      fontSize: "12px",
                     }}
                   >
-                    <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>Home</Typography>
                   </Link>
                   <Link
-                    onClick={refreshPage}
                     to="/attributes"
                     style={{
                       color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "13px",
+                      fontSize: "12px",
                     }}
                   >
-                    <Typography>Feature</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>Feature</Typography>
                   </Link>
-                  <Typography sx={{ fontSize: "13px" }}>
+                  <Typography sx={{ fontSize: "14px" }}>
                     {feautureview.row.featurename}
                   </Typography>
                 </Breadcrumbs>
 
                 <Box sx={{ ml: "auto" }}>
-                  <>
-                    <Button
-                      sx={{
-                        mr: 3,
-                        borderRadius: "20px",
-                        backgroundColor: "#0099CC",
-                      }}
-                      variant="contained"
-                      onClick={featurevalueChaneg}
-                    >
-                      Add New value
-                    </Button>
-                  </>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mr: 3,
+                      mt: -2,
+                      borderRadius: "20px",
+                      backgroundColor: "#0099CC",
+                      fontSize: 12,
+                    }}
+                    onClick={featurevalueChaneg}
+                  >
+                    Add New value
+                  </Button>
                 </Box>
               </Box>
               {/* <Box sx={{ ml: "auto" }}>
@@ -1477,29 +1542,30 @@ function AttributesScreen() {
                     </Button>
                   </Box> */}
             </>
-            // ==================>.....Edit section....................<=======================
           ) : (
+            // ==================>.....Edit section....................<=======================
             <>
-              <Typography variant="h6" sx={{ mt: -3 }}>
+              <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
                 Features
               </Typography>
-              <Box sx={{ display: "flex", flexDerection: "row", mt: 0 }}>
+              <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
+                  sx={{ display: "flex", flexDerection: "row" }}
                 >
                   <Link
                     to="/"
                     style={{
                       color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "13px",
+                      fontSize: "12px",
                     }}
                   >
-                    <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>Home</Typography>
                   </Link>
-
-                  <Typography sx={{ fontSize: "13px" }}>Features</Typography>
+                  <Typography sx={{ fontSize: "14px" }}>Features </Typography>
                 </Breadcrumbs>
+
                 <Box sx={{ ml: "auto" }}>
                   <Button
                     variant="contained"
@@ -1533,21 +1599,22 @@ function AttributesScreen() {
           )}
         </>
       )}
-      <Box>
-        <Divider
-          sx={{ mt: 1 }}
-        />
-      </Box>
+      <Divider />
       <Box>
         <Tabs
           value={tabIndex}
           textColor="secondary"
           indicatorColor="secondary"
+          TabIndicatorProps={{
+            sx: {
+              marginTop: "2px",
+            },
+          }}
           // centered
           onChange={handleTabChange}
         >
-          <Tab sx={{ fontSize: "12px" }} label="Attributes" />
-          <Tab sx={{ fontSize: "12px" }} label="Features" />
+          <Tab sx={{ fontSize: "12px", ml: -2 }} label="Attributes " />
+          <Tab sx={{ fontSize: "12px"}} label="Features  " />
         </Tabs>
       </Box>
 
@@ -1559,7 +1626,9 @@ function AttributesScreen() {
                 <Button
                   sx={{
                     mr: 3,
-                    mt: 5,
+                    mt: 1,
+                    mb: -1,
+                    ml: 0,
                     borderRadius: "20px",
                     backgroundColor: "#0099CC",
                     fontSize: 12,
@@ -1697,17 +1766,17 @@ function AttributesScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                    color: "#ffffff",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                      color: "#ffffff",
+                    },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                    },
                 }}
               >
                 <DataGrid
@@ -1738,9 +1807,9 @@ function AttributesScreen() {
                 <Button
                   sx={{
                     mr: 3,
-                    mt: 2,
-                    mb: 0,
-                    ml: 1,
+                    mt: 1,
+                    mb: -1,
+                    ml: 0,
                     borderRadius: "20px",
                     backgroundColor: "#0099CC",
                     fontSize: 12,
@@ -1876,17 +1945,17 @@ function AttributesScreen() {
                     fontSize: 13,
                   },
                   ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                    color: "#ffffff",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                      color: "#ffffff",
+                    },
                   ".css-h4y409-MuiList-root": {
                     display: "grid",
                   },
                   ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                  {
-                    backgroundColor: "#808080",
-                  },
+                    {
+                      backgroundColor: "#808080",
+                    },
                 }}
               >
                 <DataGrid
@@ -1925,8 +1994,9 @@ function AttributesScreen() {
                   <Button
                     sx={{
                       mr: 3,
-                      mt: 2,
-                      mb: 0,
+                      mt: 1,
+                      mb: -1,
+                      ml: 0,
                       borderRadius: "20px",
                       backgroundColor: "#0099CC",
                     }}
@@ -2062,17 +2132,17 @@ function AttributesScreen() {
                       fontSize: 13,
                     },
                     ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                      color: "#ffffff",
-                    },
+                      {
+                        backgroundColor: "#808080",
+                        color: "#ffffff",
+                      },
                     ".css-h4y409-MuiList-root": {
                       display: "grid",
                     },
                     ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                    },
+                      {
+                        backgroundColor: "#808080",
+                      },
                   }}
                 >
                   <DataGrid
@@ -2101,9 +2171,9 @@ function AttributesScreen() {
                   <Button
                     sx={{
                       mr: 3,
-                      mt: 2,
-                      mb: 0,
-                      ml: 1,
+                      mt: 1,
+                      mb: -1,
+                      ml: 0,
                       borderRadius: "20px",
                       backgroundColor: "#0099CC",
                       fontSize: 12,
@@ -2235,17 +2305,17 @@ function AttributesScreen() {
                       fontSize: 13,
                     },
                     ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                      color: "#ffffff",
-                    },
+                      {
+                        backgroundColor: "#808080",
+                        color: "#ffffff",
+                      },
                     ".css-h4y409-MuiList-root": {
                       display: "grid",
                     },
                     ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                    {
-                      backgroundColor: "#808080",
-                    },
+                      {
+                        backgroundColor: "#808080",
+                      },
                   }}
                 >
                   <DataGrid
