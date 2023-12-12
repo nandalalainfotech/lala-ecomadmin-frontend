@@ -127,203 +127,201 @@ export default function StateSreen() {
     <>
       {EditId ? (
         <>
-          {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 20px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant='h6' sx={{ mt: -1 }}>
-                Add New
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize='small' />}
-                aria-label='breadcrumb'
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Update State
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
               >
-                <Link
-                  to='/'
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to='/stategrid'
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>States</Typography>
-                </Link>
-              </Breadcrumbs>
-              <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
-                <Box>
-                  {" "}
-                  <ThemeProvider theme={theme}>
-                    <Container
-                      component='main'
-                      maxWidth='sm'
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/stategrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> State</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Update State</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box sx={{ mt: 0, mb: -20 }}>
+              <Box>
+                {" "}
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{
+                      my: { xs: 3, md: 6, lg: 10 },
+                      p: { xs: 2, md: 1 },
+                    }}
+                  >
+                    <CssBaseline />
+                    <Box
+                      component="form"
+                      onSubmit={handleSubmit(UpdateStateDetails)}
                       sx={{
-                        my: { xs: 3, md: 6, lg: 10 },
-                        p: { xs: 2, md: 1 },
+                        display: "flex",
+                        width: "120%",
+                        height: 380,
+                        flexDirection: "column",
+                        borderRadius: "0px",
+                        p: 5,
+                        border: "1px solid #888888",
+                        mt: -7,
+                        ml: -8,
                       }}
                     >
-                      <CssBaseline />
-                      <Box
-                        component='form'
-                        onSubmit={handleSubmit(UpdateStateDetails)}
-                        sx={{
-                          display: "flex",
-                          width: "100%",
-                          flexDirection: "column",
-                          borderRadius: "0px",
-                          p: 10,
-                          border: "1px solid #888888",
-                          mt: -10,
-                          boxShadow: " 1px 1px 1px 1px #909090",
-                          mb: -5,
-                        }}
-                      >
-                        <Box sx={{ ml: 15, mt: 15 }}>
-                          {" "}
-                          <Box sx={{ display: "flex", mt: -23, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Zone:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  onChange={(e) => setEditZone(e.target.value)}
-                                  value={EditZone}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {zonedatum
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?.zoneName}
-                                        style={{ fontSize: 13 }}
-                                      >
-                                        {item?.zoneName}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 0, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Country:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  onChange={(e) =>
-                                    setEditCountry(e.target.value)
-                                  }
-                                  value={EditCountry}
-                                >
-                                  {country
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?.Country}
-                                        style={{ fontSize: 13, ml: 1 }}
-                                      >
-                                        {item?.Country}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>State:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 5 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                onChange={(e) => setEditState(e.target.value)}
-                                value={EditState}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>ISO Code:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 1.9 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                onChange={(e) => setEditIso(e.target.value)}
-                                value={EditIso}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 3 }}>
-                              <span style={{ color: "red" }}>*</span>Active:
-                            </Typography>
-                            <Box sx={{ ml: 3, mt: 2 }}>
-                              <Switch
-                                className={classes.switch}
-                                checked={EditChecked}
-                                // color="success"
-                                onChange={(e) =>
-                                  setEditChecked(e.target.checked)
-                                }
-
-                                // size="small"
-                              />
-                            </Box>
-                          </Box>
-                          <Box>
-                            <Button
-                              // fullWidth
-                              variant='contained'
-                              sx={{ mt: 3, ml: 10 }}
-                              type='submit'
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 30, mb: 3 }}
+                        >
+                          Update State
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Zone:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              onChange={(e) => setEditZone(e.target.value)}
+                              value={EditZone}
+                              inputProps={{ style: { fontSize: 15 } }}
                             >
-                              update
-                            </Button>
-                          </Box>
+                              {zonedatum
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?.zoneName}
+                                    style={{ fontSize: 13 }}
+                                  >
+                                    {item?.zoneName}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
                         </Box>
                       </Box>
-                    </Container>
-                  </ThemeProvider>
-                </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2}}>
+                          <span style={{ color: "red" }}>*</span>Country:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              onChange={(e) => setEditCountry(e.target.value)}
+                              value={EditCountry}
+                            >
+                              {country
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?.Country}
+                                    style={{ fontSize: 13, ml: 1 }}
+                                  >
+                                    {item?.Country}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 2 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>State:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 5, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            onChange={(e) => setEditState(e.target.value)}
+                            value={EditState}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 2 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>ISO Code:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 1.9, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            onChange={(e) => setEditIso(e.target.value)}
+                            value={EditIso}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Active:
+                        </Typography>
+                        <Box sx={{ ml: 3, mt: 1 }}>
+                          <Switch
+                            className={classes.switch}
+                            checked={EditChecked}
+                            // color="success"
+                            onChange={(e) => setEditChecked(e.target.checked)}
+
+                            // size="small"
+                          />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button
+                          // fullWidth
+                          variant="contained"
+                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          type="submit"
+                        >
+                          update
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
               </Box>
             </Box>
           </div>
@@ -331,196 +329,199 @@ export default function StateSreen() {
       ) : (
         <>
           {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 20px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant='h6' sx={{ mt: -1 }}>
-                Add New
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize='small' />}
-                aria-label='breadcrumb'
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Add New State
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
               >
-                <Link
-                  to='/'
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to='/stategrid'
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>States</Typography>
-                </Link>
-              </Breadcrumbs>
-              <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
-                <Box>
-                  {" "}
-                  <ThemeProvider theme={theme}>
-                    <Container
-                      component='main'
-                      maxWidth='sm'
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/stategrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> State</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Add New State</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box sx={{ mt: 0, mb: -20 }}>
+              <Box>
+                {" "}
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{
+                      my: { xs: 3, md: 6, lg: 10 },
+                      p: { xs: 2, md: 1 },
+                    }}
+                  >
+                    <CssBaseline />
+                    <Box
+                      component="form"
+                      onSubmit={handleSubmit(SaveStateDetails)}
                       sx={{
-                        my: { xs: 3, md: 6, lg: 10 },
-                        p: { xs: 2, md: 1 },
+                        display: "flex",
+                        width: "120%",
+                        height: 380,
+                        flexDirection: "column",
+                        borderRadius: "0px",
+                        p: 5,
+                        border: "1px solid #888888",
+                        mt: -7,
+                        ml: -8,
                       }}
                     >
-                      <CssBaseline />
-                      <Box
-                        component='form'
-                        onSubmit={handleSubmit(SaveStateDetails)}
-                        sx={{
-                          display: "flex",
-                          width: "100%",
-                          flexDirection: "column",
-                          borderRadius: "0px",
-                          p: 10,
-                          border: "1px solid #888888",
-                          mt: -10,
-                          boxShadow: " 1px 1px 1px 1px #909090",
-                          mb: -5,
-                        }}
-                      >
-                        <Box sx={{ ml: 15, mt: 15 }}>
-                          {" "}
-                          <Box sx={{ display: "flex", mt: -23, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Zone:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  // value={Zone}
-                                  onChange={(e) => setZone(e.target.value)}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {zonedatum
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?._id}
-                                        style={{ fontSize: 13 }}
-                                      >
-                                        {item?.zoneName}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 0, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Country:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  onChange={(e) => setCountry(e.target.value)}
-                                >
-                                  {country
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?._id}
-                                        style={{ fontSize: 13, ml: 1 }}
-                                      >
-                                        {item?.Country}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>State:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 5 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                {...register("state", { required: true })}
-                                error={errors.state}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>ISO Code:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 1.9 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                {...register("iso", { required: true })}
-                                error={errors.iso}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 3 }}>
-                              <span style={{ color: "red" }}>*</span>Active:
-                            </Typography>
-                            <Box sx={{ ml: 3, mt: 2 }}>
-                              <Switch
-                                className={classes.switch}
-                                checked={Checked}
-                                // color="success"
-                                onChange={(e) => setChecked(e.target.checked)}
-                                // size="small"
-                              />
-                            </Box>
-                          </Box>
-                          <Box>
-                            <Button
-                              // fullWidth
-                              variant='contained'
-                              sx={{ mt: 3, ml: 10 }}
-                              type='submit'
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 30, mb: 3 }}
+                        >
+                          Add New State
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Zone:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              // value={Zone}
+                              onChange={(e) => setZone(e.target.value)}
+                              inputProps={{ style: { fontSize: 15 } }}
                             >
-                              Save
-                            </Button>
-                          </Box>
+                              {zonedatum
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?._id}
+                                    style={{ fontSize: 13 }}
+                                  >
+                                    {item?.zoneName}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
                         </Box>
                       </Box>
-                    </Container>
-                  </ThemeProvider>
-                </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Country:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              onChange={(e) => setCountry(e.target.value)}
+                            >
+                              {country
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?._id}
+                                    style={{ fontSize: 13, ml: 1 }}
+                                  >
+                                    {item?.Country}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>State:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 5, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            {...register("state", { required: true })}
+                            error={errors.state}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>ISO Code:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 1.9, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            {...register("iso", { required: true })}
+                            error={errors.iso}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 12 }}>
+                        <Typography sx={{ fontSize: 13, mt: 3 }}>
+                          <span style={{ color: "red" }}>*</span>Active:
+                        </Typography>
+                        <Box sx={{ ml: 3, mt: 2 }}>
+                          <Switch
+                            className={classes.switch}
+                            checked={Checked}
+                            // color="success"
+                            onChange={(e) => setChecked(e.target.checked)}
+                            // size="small"
+                          />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button
+                          // fullWidth
+                          variant="contained"
+                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
               </Box>
             </Box>
           </div>

@@ -167,640 +167,253 @@ export default function CityScreen() {
       {EditId ? (
         <>
           {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 20px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant='h6' sx={{ mt: -1 }}>
-                Add New
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize='small' />}
-                aria-label='breadcrumb'
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Update City
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
               >
-                <Link
-                  to='/'
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to='/citygrid'
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Cities</Typography>
-                </Link>
-              </Breadcrumbs>
-              <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
-                <Box>
-                  {" "}
-                  <ThemeProvider theme={theme}>
-                    <Container
-                      component='main'
-                      maxWidth='sm'
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/citygrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> City</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Update City</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box sx={{ mt: 0, mb: 2 }}>
+              <Box>
+                {" "}
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{
+                      my: { xs: 3, md: 6, lg: 10 },
+                      p: { xs: 2, md: 1 },
+                    }}
+                  >
+                    <CssBaseline />
+                    <Box
+                      component="form"
+                      onSubmit={handleSubmit(UpdateStateDetails)}
                       sx={{
-                        my: { xs: 3, md: 6, lg: 10 },
-                        p: { xs: 2, md: 1 },
+                        display: "flex",
+                        height: "auto",
+                        width: 650,
+                        flexDirection: "column",
+                        borderRadius: "0px",
+                        p: 5,
+                        border: "1px solid #888888",
+                        mt: -10,
+                        mb: -10,
                       }}
                     >
-                      <CssBaseline />
-                      <Box
-                        component='form'
-                        onSubmit={handleSubmit(UpdateStateDetails)}
-                        sx={{
-                          display: "flex",
-                          width: "110%",
-                          flexDirection: "column",
-                          borderRadius: "0px",
-                          p: 10,
-                          border: "1px solid #888888",
-                          mt: -10,
-                          boxShadow: " 1px 1px 1px 1px #909090",
-                          mb: -5,
-                        }}
-                      >
-                        <Box sx={{ ml: 15, mt: 15 }}>
-                          {" "}
-                          <Box sx={{ display: "flex", mt: -23, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Zone:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  onChange={(e) => setEditZone(e.target.value)}
-                                  value={EditZone}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {zonedatum
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?.zoneName}
-                                        style={{ fontSize: 13 }}
-                                      >
-                                        {item?.zoneName}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 0, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Country:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  value={EditCountry}
-                                  onChange={(e) =>
-                                    setEditCountry(e.target.value)
-                                  }
-                                >
-                                  {country
-                                    ?.filter((state) => {
-                                      return state.checked === true;
-                                    })
-                                    ?.map(
-                                      (item) => (
-                                        console.log("item", item),
-                                        (
-                                          <MenuItem
-                                            key={item?._id}
-                                            value={item?.Country}
-                                            style={{ fontSize: 13, ml: 1 }}
-                                          >
-                                            {item?.Country}
-                                          </MenuItem>
-                                        )
-                                      )
-                                    )}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>State:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 0 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  value={EditState}
-                                  onChange={(e) => setEditState(e.target.value)}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {Statedatum?.filter((state) => {
-                                    return state.checked === true;
-                                  })?.map((item) => (
-                                    <MenuItem
-                                      key={item?._id}
-                                      value={item?.state}
-                                      style={{ fontSize: 13 }}
-                                    >
-                                      {item?.state}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>City:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 6 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                value={EditCity}
-                                onChange={(e) => setEditCity(e.target.value)}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>ISO Code:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 1.9 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                onChange={(e) => setEditIso(e.target.value)}
-                                value={EditIso}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>PinCode:
-                              </Typography>
-                            </Box>
-                            <Box
-                              sx={{
-                                ml: 1.5,
-                                overflow: "auto",
-                                height: 200,
-                              }}
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 25, mb: 2 }}
+                        >
+                          Update City
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Zone:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              onChange={(e) => setEditZone(e.target.value)}
+                              value={EditZone}
+                              inputProps={{ style: { fontSize: 15 } }}
                             >
-                              {" "}
-                              {fields ? (
-                                <>
-                                  {fields.map((item, index) => {
-                                    return (
-                                      <>
-                                        <Box sx={{ display: "flex" }}>
-                                          <Box
-                                            sx={{
-                                              "& .MuiTextField-root": {
-                                                m: 1,
-                                                width: "16ch",
-                                              },
-                                            }}
-                                            noValidate
-                                            autoComplete='off'
-                                          >
-                                            <Controller
-                                              control={control}
-                                              name={name}
-                                              render={({ field }) => (
-                                                <TextField
-                                                  size='small'
-                                                  fullWidth
-                                                  name={`pincode[${index}].From`}
-                                                  defaultValue={item.From}
-                                                  {...register(
-                                                    `pincode.${index}.From`,
-                                                    {
-                                                      required: true,
-                                                      pattern: {
-                                                        value: /^\d{6}$/,
-                                                      },
-                                                      maxLength: 6,
-                                                      minLength: 6,
-                                                    }
-                                                  )}
-                                                  // error={!!errors?.From}
-                                                />
-                                              )}
-                                            />
-                                            {errors?.From?.type ===
-                                              "required" && (
-                                              <span className='formError'>
-                                                Mobile number is required
-                                              </span>
-                                            )}
-                                            {errors?.From?.type ===
-                                              "pattern" && (
-                                              <span className='formError'>
-                                                Mobile number is invalid
-                                              </span>
-                                            )}
-                                            {errors?.From?.type ===
-                                              "maxLength" && (
-                                              <span className='formError'>
-                                                Mobile number is invalid
-                                              </span>
-                                            )}
-                                            {errors?.From?.type ===
-                                              "minLength" && (
-                                              <span className='formError'>
-                                                Mobile number is invalid
-                                              </span>
-                                            )}
-                                          </Box>
-                                          <Box
-                                            sx={{
-                                              "& .MuiTextField-root": {
-                                                m: 1,
-                                                width: "16ch",
-                                              },
-                                            }}
-                                            noValidate
-                                            autoComplete='off'
-                                          >
-                                            <Controller
-                                              control={control}
-                                              name={name}
-                                              render={({ field }) => (
-                                                <TextField
-                                                  size='small'
-                                                  fullWidth
-                                                  name={`pincode[${index}].To`}
-                                                  defaultValue={item.To}
-                                                  {...register(
-                                                    `pincode.${index}.To`,
-                                                    {
-                                                      required: true,
-                                                      pattern: {
-                                                        value: /^\d{6}$/,
-                                                      },
-                                                      maxLength: 6,
-                                                      minLength: 6,
-                                                    }
-                                                  )}
-                                                />
-                                              )}
-                                            />
-                                          </Box>
-                                          <Box
-                                            sx={{
-                                              "& > :not(style)": {
-                                                m: 2,
-                                              },
-                                            }}
-                                          >
-                                            {" "}
-                                          </Box>
-
-                                          <IconButton
-                                            type='button'
-                                            onClick={() => {
-                                              append({
-                                                From: "",
-                                                To: "",
-                                              });
-                                            }}
-                                          >
-                                            <AddIcon
-                                              sx={{
-                                                color: "#fff",
-                                                backgroundColor: "green",
-                                                borderRadius: "50%",
-                                                fontSize: 25,
-                                              }}
-                                            />
-                                          </IconButton>
-                                          <IconButton
-                                            type='button'
-                                            onClick={() => remove(index)}
-                                          >
-                                            <ClearIcon
-                                              sx={{
-                                                color: "#fff",
-                                                backgroundColor: "red",
-                                                borderRadius: "50%",
-                                                fontSize: 25,
-                                              }}
-                                            />
-                                          </IconButton>
-                                        </Box>
-                                      </>
-                                    );
-                                  })}
-                                </>
-                              ) : (
-                                <> </>
-                              )}
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 3 }}>
-                              <span style={{ color: "red" }}>*</span>Active:
-                            </Typography>
-                            <Box sx={{ ml: 3, mt: 2 }}>
-                              <Switch
-                                className={classes.switch}
-                                checked={EditChecked}
-                                // color="success"
-                                onChange={(e) =>
-                                  setEditChecked(e.target.checked)
-                                }
-
-                                // size="small"
-                              />
-                            </Box>
-                          </Box>
-                          <Box>
-                            <Button
-                              // fullWidth
-                              variant='contained'
-                              sx={{ mt: 3, ml: 10 }}
-                              type='submit'
-                            >
-                              update
-                            </Button>
-                          </Box>
+                              {zonedatum
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?.zoneName}
+                                    style={{ fontSize: 13 }}
+                                  >
+                                    {item?.zoneName}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
                         </Box>
                       </Box>
-                    </Container>
-                  </ThemeProvider>
-                </Box>
-              </Box>
-            </Box>
-          </div>
-        </>
-      ) : (
-        <>
-          {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 20px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant='h6' sx={{ mt: -1 }}>
-                Add New
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize='small' />}
-                aria-label='breadcrumb'
-              >
-                <Link
-                  to='/'
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to='/citygrid'
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Cities</Typography>
-                </Link>
-              </Breadcrumbs>
-              <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
-                <Box>
-                  {" "}
-                  <ThemeProvider theme={theme}>
-                    <Container
-                      component='main'
-                      maxWidth='sm'
-                      sx={{
-                        my: { xs: 3, md: 6, lg: 10 },
-                        p: { xs: 2, md: 1 },
-                      }}
-                    >
-                      <CssBaseline />
-                      <Box
-                        component='form'
-                        onSubmit={handleSubmit(SaveStateDetails)}
-                        sx={{
-                          display: "flex",
-                          width: "110%",
-                          flexDirection: "column",
-                          borderRadius: "0px",
-                          p: 10,
-                          border: "1px solid #888888",
-                          mt: -10,
-                          boxShadow: " 1px 1px 1px 1px #909090",
-                          mb: -5,
-                        }}
-                      >
-                        <Box sx={{ ml: 15, mt: 15 }}>
-                          {" "}
-                          <Box sx={{ display: "flex", mt: -23, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Zone:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  // value={Zone}
-                                  onChange={(e) => setZone(e.target.value)}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {zonedatum
-                                    ?.filter((item) => {
-                                      return item.checked === true;
-                                    })
-                                    ?.map((item) => (
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Country:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={EditCountry}
+                              onChange={(e) => setEditCountry(e.target.value)}
+                            >
+                              {country
+                                ?.filter((state) => {
+                                  return state.checked === true;
+                                })
+                                ?.map(
+                                  (item) => (
+                                    console.log("item", item),
+                                    (
                                       <MenuItem
                                         key={item?._id}
-                                        value={item?._id}
-                                        style={{ fontSize: 13 }}
-                                      >
-                                        {item?.zoneName}
-                                      </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 0, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>Country:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  onChange={(e) => setCountry(e.target.value)}
-                                >
-                                  {country
-                                    ?.filter((state) => {
-                                      return state.checked === true;
-                                    })
-                                    ?.map((item) => (
-                                      <MenuItem
-                                        key={item?._id}
-                                        value={item?._id}
+                                        value={item?.Country}
                                         style={{ fontSize: 13, ml: 1 }}
                                       >
                                         {item?.Country}
                                       </MenuItem>
-                                    ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 0, ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 2 }}>
-                              <span style={{ color: "red" }}>*</span>State:
-                            </Typography>
-                            <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
-                              <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'></InputLabel>
-                                <Select
-                                  size='small'
-                                  labelId='demo-simple-select-label'
-                                  id='demo-simple-select'
-                                  // value={Zone}
-                                  onChange={(e) => setState(e.target.value)}
-                                  inputProps={{ style: { fontSize: 15 } }}
-                                >
-                                  {Statedatum?.filter((state) => {
-                                    return state.checked === true;
-                                  })?.map((item) => (
-                                    <MenuItem
-                                      key={item?._id}
-                                      value={item?._id}
-                                      style={{ fontSize: 13 }}
-                                    >
-                                      {item?.state}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>City:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 6 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                {...register("city", { required: true })}
-                                error={errors.city}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>ISO Code:
-                              </Typography>
-                            </Box>
-                            <Box sx={{ ml: 1.9 }}>
-                              {" "}
-                              <TextField
-                                fullWidth
-                                id='outlined-size-small'
-                                size='small'
-                                {...register("iso", { required: true })}
-                                error={errors.iso}
-                                inputProps={{ style: { fontSize: 15 } }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", mt: 2, ml: -20 }}>
-                            <Box>
-                              <Typography sx={{ fontSize: 13, mt: 2 }}>
-                                {" "}
-                                <span style={{ color: "red" }}>*</span>PinCode:
-                              </Typography>
-                            </Box>
-                            <Box
-                              sx={{
-                                ml: 1.5,
-                                overflow: "auto",
-                                height: 200,
-                              }}
+                                    )
+                                  )
+                                )}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 2 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>State:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={EditState}
+                              onChange={(e) => setEditState(e.target.value)}
+                              inputProps={{ style: { fontSize: 15 } }}
                             >
-                              {" "}
-                              {fields ? (
-                                <>
-                                  {fields?.map((item, index) => {
-                                    return (
-                                      <>
-                                        <Box sx={{ display: "flex" }}>
-                                          <Box
-                                            sx={{
-                                              "& .MuiTextField-root": {
-                                                m: 1,
-                                                width: "16ch",
-                                              },
-                                            }}
-                                            autoComplete='off'
-                                          >
+                              {Statedatum?.filter((state) => {
+                                return state.checked === true;
+                              })?.map((item) => (
+                                <MenuItem
+                                  key={item?._id}
+                                  value={item?.state}
+                                  style={{ fontSize: 13 }}
+                                >
+                                  {item?.state}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 2 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>City:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 6, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            value={EditCity}
+                            onChange={(e) => setEditCity(e.target.value)}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>ISO Code:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 1.9, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            onChange={(e) => setEditIso(e.target.value)}
+                            value={EditIso}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>PinCode:
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            ml: 1.5,
+                            mt: 2,
+                            overflowY: "auto",
+                            overflowX: "hidden",
+                            height: 120,
+                          }}
+                        >
+                          {" "}
+                          {fields ? (
+                            <>
+                              {fields.map((item, index) => {
+                                return (
+                                  <>
+                                    <Box sx={{ display: "flex" }}>
+                                      <Box
+                                        sx={{
+                                          "& .MuiTextField-root": {
+                                            m: 1,
+                                            width: "16ch",
+                                          },
+                                        }}
+                                        noValidate
+                                        autoComplete="off"
+                                      >
+                                        <Controller
+                                          control={control}
+                                          name={name}
+                                          render={({ field }) => (
                                             <TextField
-                                              size='small'
-                                              pattern='^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$'
-                                              id='outlined-size-normal'
-                                              name={`pincode.${index}.From`}
-                                              key={item.From}
-                                              placeholder='From'
+                                              size="small"
+                                              fullWidth
+                                              name={`pincode[${index}].From`}
+                                              defaultValue={item.From}
                                               {...register(
                                                 `pincode.${index}.From`,
                                                 {
@@ -812,10 +425,399 @@ export default function CityScreen() {
                                                   minLength: 6,
                                                 }
                                               )}
-
-                                              // error={errors?.pincode[0]?.From}
+                                              // error={!!errors?.From}
                                             />
-                                            {/* {errors?.pincode[0]?.From
+                                          )}
+                                        />
+                                        {errors?.From?.type === "required" && (
+                                          <span className="formError">
+                                            Mobile number is required
+                                          </span>
+                                        )}
+                                        {errors?.From?.type === "pattern" && (
+                                          <span className="formError">
+                                            Mobile number is invalid
+                                          </span>
+                                        )}
+                                        {errors?.From?.type === "maxLength" && (
+                                          <span className="formError">
+                                            Mobile number is invalid
+                                          </span>
+                                        )}
+                                        {errors?.From?.type === "minLength" && (
+                                          <span className="formError">
+                                            Mobile number is invalid
+                                          </span>
+                                        )}
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          "& .MuiTextField-root": {
+                                            m: 1,
+                                            width: "16ch",
+                                          },
+                                        }}
+                                        noValidate
+                                        autoComplete="off"
+                                      >
+                                        <Controller
+                                          control={control}
+                                          name={name}
+                                          render={({ field }) => (
+                                            <TextField
+                                              size="small"
+                                              fullWidth
+                                              name={`pincode[${index}].To`}
+                                              defaultValue={item.To}
+                                              {...register(
+                                                `pincode.${index}.To`,
+                                                {
+                                                  required: true,
+                                                  pattern: {
+                                                    value: /^\d{6}$/,
+                                                  },
+                                                  maxLength: 6,
+                                                  minLength: 6,
+                                                }
+                                              )}
+                                            />
+                                          )}
+                                        />
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          "& > :not(style)": {
+                                            m: 2,
+                                          },
+                                        }}
+                                      >
+                                        {" "}
+                                      </Box>
+
+                                      <IconButton
+                                        type="button"
+                                        onClick={() => {
+                                          append({
+                                            From: "",
+                                            To: "",
+                                          });
+                                        }}
+                                      >
+                                        <AddIcon
+                                          sx={{
+                                            color: "#fff",
+                                            backgroundColor: "green",
+                                            borderRadius: "50%",
+                                            fontSize: 25,
+                                          }}
+                                        />
+                                      </IconButton>
+                                      <IconButton
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                      >
+                                        <ClearIcon
+                                          sx={{
+                                            color: "#fff",
+                                            backgroundColor: "red",
+                                            borderRadius: "50%",
+                                            fontSize: 25,
+                                          }}
+                                        />
+                                      </IconButton>
+                                    </Box>
+                                  </>
+                                );
+                              })}
+                            </>
+                          ) : (
+                            <> </>
+                          )}
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 3 }}>
+                          <span style={{ color: "red" }}>*</span>Active:
+                        </Typography>
+                        <Box sx={{ ml: 3, mt: 2 }}>
+                          <Switch
+                            className={classes.switch}
+                            checked={EditChecked}
+                            // color="success"
+                            onChange={(e) => setEditChecked(e.target.checked)}
+
+                            // size="small"
+                          />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button
+                          // fullWidth
+                          variant="contained"
+                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          type="submit"
+                        >
+                          update
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
+              </Box>
+            </Box>
+          </div>
+        </>
+      ) : (
+        <>
+          {" "}
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Add City
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/citygrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> City</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Add City</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box sx={{ mt: 0, mb: 2 }}>
+              <Box>
+                {" "}
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{
+                      my: { xs: 3, md: 6, lg: 10 },
+                      p: { xs: 2, md: 1 },
+                    }}
+                  >
+                    <CssBaseline />
+                    <Box
+                      component="form"
+                      onSubmit={handleSubmit(SaveStateDetails)}
+                      sx={{
+                        display: "flex",
+                        height: "auto",
+                        width: 650,
+                        flexDirection: "column",
+                        borderRadius: "0px",
+                        p: 5,
+                        border: "1px solid #888888",
+                        mt: -10,
+                        mb: -10,
+                      }}
+                    >
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 25, mb: 2 }}
+                        >
+                          Add City
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Zone:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              // value={Zone}
+                              onChange={(e) => setZone(e.target.value)}
+                              inputProps={{ style: { fontSize: 15 } }}
+                            >
+                              {zonedatum
+                                ?.filter((item) => {
+                                  return item.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?._id}
+                                    style={{ fontSize: 13 }}
+                                  >
+                                    {item?.zoneName}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>Country:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              onChange={(e) => setCountry(e.target.value)}
+                            >
+                              {country
+                                ?.filter((state) => {
+                                  return state.checked === true;
+                                })
+                                ?.map((item) => (
+                                  <MenuItem
+                                    key={item?._id}
+                                    value={item?._id}
+                                    style={{ fontSize: 13, ml: 1 }}
+                                  >
+                                    {item?.Country}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
+                          <span style={{ color: "red" }}>*</span>State:
+                        </Typography>
+                        <Box sx={{ minWidth: 320, ml: 5, mt: 1 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                              size="small"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              // value={Zone}
+                              onChange={(e) => setState(e.target.value)}
+                              inputProps={{ style: { fontSize: 15 } }}
+                            >
+                              {Statedatum?.filter((state) => {
+                                return state.checked === true;
+                              })?.map((item) => (
+                                <MenuItem
+                                  key={item?._id}
+                                  value={item?._id}
+                                  style={{ fontSize: 13 }}
+                                >
+                                  {item?.state}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>City:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 6, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            {...register("city", { required: true })}
+                            error={errors.city}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>ISO Code:
+                          </Typography>
+                        </Box>
+                        <Box sx={{ ml: 1.9, mt: 1 }}>
+                          {" "}
+                          <TextField
+                            fullWidth
+                            id="outlined-size-small"
+                            size="small"
+                            {...register("iso", { required: true })}
+                            error={errors.iso}
+                            inputProps={{ style: { fontSize: 15 } }}
+                          />
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Box>
+                          <Typography sx={{ fontSize: 13, mt: 2 }}>
+                            {" "}
+                            <span style={{ color: "red" }}>*</span>PinCode:
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            ml: 1.5,
+                            overflow: "auto",
+                            height: 120,
+                          }}
+                        >
+                          {" "}
+                          {fields ? (
+                            <>
+                              {fields?.map((item, index) => {
+                                return (
+                                  <>
+                                    <Box sx={{ display: "flex" }}>
+                                      <Box
+                                        sx={{
+                                          "& .MuiTextField-root": {
+                                            m: 1,
+                                            width: "16ch",
+                                          },
+                                        }}
+                                        autoComplete="off"
+                                      >
+                                        <TextField
+                                          size="small"
+                                          pattern="^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$"
+                                          id="outlined-size-normal"
+                                          name={`pincode.${index}.From`}
+                                          key={item.From}
+                                          placeholder="From"
+                                          {...register(
+                                            `pincode.${index}.From`,
+                                            {
+                                              required: true,
+                                              pattern: {
+                                                value: /^\d{6}$/,
+                                              },
+                                              maxLength: 6,
+                                              minLength: 6,
+                                            }
+                                          )}
+
+                                          // error={errors?.pincode[0]?.From}
+                                        />
+                                        {/* {errors?.pincode[0]?.From
                                                 ?.type === "required" && (
                                                 <Typography
                                                   sx={{
@@ -852,112 +854,107 @@ export default function CityScreen() {
                                                   Pincode is too short
                                                 </Typography>
                                               )} */}
-                                          </Box>
+                                      </Box>
 
-                                          <Box
-                                            sx={{
-                                              "& .MuiTextField-root": {
-                                                m: 1,
-                                                width: "16ch",
-                                              },
-                                            }}
-                                            autoComplete='off'
-                                          >
-                                            <TextField
-                                              size='small'
-                                              pattern='[1-9][0-9]{5}'
-                                              id='outlined-size-normal'
-                                              key={item.To}
-                                              placeholder='To'
-                                              name={`pincode.${index}.To`}
-                                              {...register(
-                                                `pincode.${index}.To`,
-                                                {
-                                                  required: true,
-                                                  pattern: {
-                                                    value: /^\d{6}$/,
-                                                  },
-                                                  maxLength: 6,
-                                                  minLength: 6,
-                                                }
-                                              )}
-                                            />
-                                          </Box>
-                                          <Box
-                                            sx={{
-                                              "& > :not(style)": {
-                                                m: 2,
-                                              },
-                                            }}
-                                          >
-                                            {" "}
-                                          </Box>
+                                      <Box
+                                        sx={{
+                                          "& .MuiTextField-root": {
+                                            m: 1,
+                                            width: "16ch",
+                                          },
+                                        }}
+                                        autoComplete="off"
+                                      >
+                                        <TextField
+                                          size="small"
+                                          pattern="[1-9][0-9]{5}"
+                                          id="outlined-size-normal"
+                                          key={item.To}
+                                          placeholder="To"
+                                          name={`pincode.${index}.To`}
+                                          {...register(`pincode.${index}.To`, {
+                                            required: true,
+                                            pattern: {
+                                              value: /^\d{6}$/,
+                                            },
+                                            maxLength: 6,
+                                            minLength: 6,
+                                          })}
+                                        />
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          "& > :not(style)": {
+                                            m: 2,
+                                          },
+                                        }}
+                                      >
+                                        {" "}
+                                      </Box>
 
-                                          <IconButton
-                                            type='button'
-                                            onClick={handleappendupdate}
-                                          >
-                                            <AddIcon
-                                              sx={{
-                                                color: "#fff",
-                                                backgroundColor: "green",
-                                                borderRadius: "50%",
-                                                fontSize: 25,
-                                              }}
-                                            />
-                                          </IconButton>
-                                          <IconButton
-                                            type='button'
-                                            onClick={() => remove(index)}
-                                          >
-                                            <ClearIcon
-                                              sx={{
-                                                color: "#fff",
-                                                backgroundColor: "red",
-                                                borderRadius: "50%",
-                                                fontSize: 25,
-                                              }}
-                                            />
-                                          </IconButton>
-                                        </Box>
-                                      </>
-                                    );
-                                  })}
-                                </>
-                              ) : (
-                                <> </>
-                              )}
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: "flex", ml: -20 }}>
-                            <Typography sx={{ fontSize: 13, mt: 3 }}>
-                              <span style={{ color: "red" }}>*</span>Active:
-                            </Typography>
-                            <Box sx={{ ml: 3, mt: 2 }}>
-                              <Switch
-                                className={classes.switch}
-                                checked={Checked}
-                                // color="success"
-                                onChange={(e) => setChecked(e.target.checked)}
-                                // size="small"
-                              />
-                            </Box>
-                          </Box>
-                          <Box>
-                            <Button
-                              // fullWidth
-                              variant='contained'
-                              sx={{ mt: 3, ml: 10, mb: -10 }}
-                              type='submit'
-                            >
-                              Save
-                            </Button>
-                          </Box>
+                                      <IconButton
+                                        type="button"
+                                        onClick={handleappendupdate}
+                                      >
+                                        <AddIcon
+                                          sx={{
+                                            color: "#fff",
+                                            backgroundColor: "green",
+                                            borderRadius: "50%",
+                                            fontSize: 25,
+                                          }}
+                                        />
+                                      </IconButton>
+                                      <IconButton
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                      >
+                                        <ClearIcon
+                                          sx={{
+                                            color: "#fff",
+                                            backgroundColor: "red",
+                                            borderRadius: "50%",
+                                            fontSize: 25,
+                                          }}
+                                        />
+                                      </IconButton>
+                                    </Box>
+                                  </>
+                                );
+                              })}
+                            </>
+                          ) : (
+                            <> </>
+                          )}
                         </Box>
                       </Box>
-                    </Container>
-                  </ThemeProvider>
-                </Box>
+                      <Box sx={{ display: "flex", ml: 5 }}>
+                        <Typography sx={{ fontSize: 13, mt: 3 }}>
+                          <span style={{ color: "red" }}>*</span>Active:
+                        </Typography>
+                        <Box sx={{ ml: 3, mt: 2 }}>
+                          <Switch
+                            className={classes.switch}
+                            checked={Checked}
+                            // color="success"
+                            onChange={(e) => setChecked(e.target.checked)}
+                            // size="small"
+                          />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button
+                          // fullWidth
+                          variant="contained"
+                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
               </Box>
             </Box>
           </div>

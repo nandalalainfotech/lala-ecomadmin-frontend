@@ -103,7 +103,6 @@ function ApplicationScreen() {
     }
     if (savesuccess) {
       dispatch({ type: APPLICATION_SETTING_RESET });
-
     }
     dispatch(applicatinSettingList());
   }, [dispatch, deletesuccess, enablesuccess, savesuccess]);
@@ -173,7 +172,7 @@ function ApplicationScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={classes.switch}
                   checked
                   onClick={(e) => handleChangedata(e, params.row._id)}
@@ -186,7 +185,7 @@ function ApplicationScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   onClick={(e) => handleChangedata(e, params.row._id)}
                 />
               }
@@ -213,41 +212,37 @@ function ApplicationScreen() {
 
   return (
     <>
-      <Typography variant='h6' sx={{ mt: -2 }}>
+      <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
         Application Settings
       </Typography>
-      <Box sx={{ display: "flex", mt: 0 }}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+        sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+      >
+        <Link
+          to="/"
+          style={{
+            color: "rgba(0, 0, 0, 0.6)",
+            fontSize: "12px",
+          }}
         >
-          <Link
-            to='/'
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-          </Link>
-
-          <Typography sx={{ fontSize: "13px" }}>
-            Application Settings
-          </Typography>
-        </Breadcrumbs>
-      </Box>
+          <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+        </Link>
+        <Typography sx={{ fontSize: "14px" }}> Application Settings</Typography>
+      </Breadcrumbs>
       <Divider sx={{ mt: 1 }} />
       <ThemeProvider theme={theme}>
         <Box sx={{ mt: -8 }}>
           {" "}
           <Container
-            component='main'
-            maxWidth='sm'
+            component="main"
+            maxWidth="sm"
             sx={{ my: { xs: 3, md: 6, lg: 10 }, p: { xs: 2, md: 1 } }}
           >
             <CssBaseline />
             <Box
-              component='form'
+              component="form"
               onSubmit={handleSubmit(submitHandler)}
               sx={{
                 display: "flex",
@@ -260,47 +255,47 @@ function ApplicationScreen() {
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
             >
-              <Typography variant='h6'>Application Settings</Typography>
+              <Typography variant="h6">Application Settings</Typography>
 
               <TextField
                 inputProps={{ style: { fontSize: 13 } }}
-                size='small'
-                margin='normal'
+                size="small"
+                margin="normal"
                 fullWidth
-                id='name'
-                label='Name'
-                name='name'
-                autoComplete='off'
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="off"
                 // onChange={(e) => setName(e.target.value)}
                 {...register("name", { required: true })}
                 error={errors.name}
               />
               {errors.name && (
-                <span className='formError'>Name is required</span>
+                <span className="formError">Name is required</span>
               )}
 
               <TextField
                 style={{ margin: "10px 0px" }}
                 inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
-                size='small'
+                size="small"
                 fullWidth
-                type='file'
-                id='imageFile'
-                name='imageFile'
-                autoComplete='off'
+                type="file"
+                id="imageFile"
+                name="imageFile"
+                autoComplete="off"
                 // onChange={(e) => onSelectFile(e)}
                 {...register("imageFile", { required: true })}
                 error={errors.imageFile}
               />
               {errors?.imageFile?.type === "required" && (
-                <span className='formError'>File is required</span>
+                <span className="formError">File is required</span>
               )}
 
               <Button
-                size='small'
-                variant='contained'
+                size="small"
+                variant="contained"
                 sx={{ mt: 3, mb: 0 }}
-                type='submit'
+                type="submit"
               >
                 Upload
               </Button>
@@ -326,17 +321,17 @@ function ApplicationScreen() {
             fontSize: 13,
           },
           ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#330033",
-            color: "#ffffff",
-          },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
           ".css-h4y409-MuiList-root": {
             display: "grid",
           },
           ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            backgroundColor: "#808080",
-          },
+            {
+              backgroundColor: "#808080",
+            },
         }}
       >
         <DataGrid
@@ -348,7 +343,7 @@ function ApplicationScreen() {
           columns={appColumns}
           rows={appSettingList ? appSettingList : ""}
           getRowId={(rows) => rows._id}
-          VerticalAlignment='Center'
+          VerticalAlignment="Center"
           rowHeight={60}
           headerHeight={35}
           pagination
@@ -372,11 +367,11 @@ function ApplicationScreen() {
               cursor: "pointer",
               justifycontent: "space-between",
             }}
-            component='img'
+            component="img"
             // height="200"
             image={newImg}
-          // alt={"subimgnew.filename"}
-          // onMouseOver={handleChangeimage}
+            // alt={"subimgnew.filename"}
+            // onMouseOver={handleChangeimage}
           />
         </Box>
       </Dialog>

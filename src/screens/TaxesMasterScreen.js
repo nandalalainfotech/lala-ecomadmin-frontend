@@ -144,14 +144,14 @@ export default function TaxesMasterScreen() {
         updatetaxActivate({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
     } else {
       dispatch(
         updatetaxActivate({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
     }
   };
@@ -162,14 +162,14 @@ export default function TaxesMasterScreen() {
         updateTaxEnable({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         updateTaxEnable({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -312,35 +312,26 @@ export default function TaxesMasterScreen() {
   // ****************************child data grid*********************************
 
   return (
-    <Box>
-      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 2 }}>
+    <>
+      <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
         Taxes
       </Typography>
-      <Box
-        component="div"
-        sx={{
-          // p: 2,
-          display: "flex",
-          flexDirection: "row",
-          backgroundColor: "#fff",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
         <Breadcrumbs
-          sx={{ ml: 2 }}
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
+          sx={{ display: "flex", flexDerection: "row", mb: 1 }}
         >
           <Link
             to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
+              fontSize: "12px",
             }}
           >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Home</Typography>
           </Link>
-
-          <Typography sx={{ fontSize: "13px" }}>Taxes</Typography>
+          <Typography sx={{ fontSize: "14px" }}>Taxes</Typography>
         </Breadcrumbs>
 
         <Box sx={{ ml: "auto" }}>
@@ -348,194 +339,189 @@ export default function TaxesMasterScreen() {
             variant="contained"
             sx={{
               mr: 3,
-              // mt: 5,
+              mt: -2,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
             onClick={submitHandler}
           >
-            <AddCircleOutlineIcon /> Add New Taxes
+            <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
+            Add New Taxes
           </Button>
-          {/* <Button variant="outlined">Help</Button> */}
         </Box>
       </Box>
-      <Divider />
-
-      <Box
-      // sx={{
-      //   height: 560,
-      //   width: "100%",
-      // }}
-      >
-        <Box sx={{ display: "flex" }}>
-          <Button
-            sx={{
-              mr: 3,
-              mt: 2,
-              mb: 0,
-              ml: 2,
-              borderRadius: "20px",
-              backgroundColor: "#0099CC",
-              fontSize: 12,
-            }}
-            variant="contained"
-            onClick={handleClickOpencheck}
-          >
-            Bulk
-          </Button>
-
-          {/* <Button
-            sx={{
-              mr: 3,
-              mt: 2,
-              mb: 0,
-              borderRadius: "20px",
-              backgroundColor: "#0099CC",
-              fontSize: 12,
-            }}
-            variant='contained'
-            onClick={handleClickdelete}
-          >
-            Bulk Delete
-          </Button> */}
-        </Box>
-
+      <Divider sx={{ mt: 1 }} />
+      <Box>
         <Box>
-          <Dialog
-            fullScreen={fullScreen}
-            open={opencheck}
-            onClose={handleDisClose}
-            aria-labelledby="responsive-dialog-title"
-          >
-            <DialogTitle id="responsive-dialog-title">
-              {"Selected One"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <FormControlLabel
-                  label="Show All"
-                  control={
-                    <Checkbox
-                      checked={checkedcheck}
-                      onChange={handleChange}
-                      inputProps={{
-                        "aria-label": "controlled",
-                      }}
-                    />
-                  }
-                />
+          <Box sx={{ display: "flex" }}>
+            <Button
+              sx={{
+                mr: 3,
+                mt: 1,
+                mb: -1,
+                borderRadius: "20px",
+                backgroundColor: "#0099CC",
+                fontSize: 12,
+              }}
+              variant="contained"
+              onClick={handleClickOpencheck}
+            >
+              Bulk
+            </Button>
 
-                <FormControlLabel
-                  label="Hide All"
-                  control={
-                    <Checkbox
-                      checked={dchecked}
-                      onChange={handledisableChange}
-                      inputProps={{
-                        "aria-label": "controlled",
-                      }}
-                    />
-                  }
-                />
-                <FormControlLabel
-                  label="Delete All"
-                  control={
-                    <Checkbox
-                      checked={checkeddelete}
-                      onChange={handleChangedelete}
-                      inputProps={{
-                        "aria-label": "controlled",
-                      }}
-                    />
-                  }
-                />
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleDisClose}>
-                Cancel
-              </Button>
-              {checkeddelete == true ? (
-                <>
-                  <Button onClick={handleClosecheckdelet} autoFocus>
-                    Delete
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {" "}
-                  <Button onClick={handleClosecheck} autoFocus>
-                    Done
-                  </Button>
-                </>
-              )}
-            </DialogActions>
-          </Dialog>
-        </Box>
+            {/* <Button
+      sx={{
+        mr: 3,
+        mt: 2,
+        mb: 0,
+        borderRadius: "20px",
+        backgroundColor: "#0099CC",
+        fontSize: 12,
+      }}
+      variant='contained'
+      onClick={handleClickdelete}
+    >
+      Bulk Delete
+    </Button> */}
+          </Box>
 
-        {/* <Box>
-          <Dialog open={deleteopen} onClose={handleDeletrClose}>
-            <DialogTitle>Delete</DialogTitle>
-            <DialogContent></DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleDeletrClose}>
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box> */}
-        <Box
-          sx={{
-            height: 360,
-            width: "100%",
+          <Box>
+            <Dialog
+              fullScreen={fullScreen}
+              open={opencheck}
+              onClose={handleDisClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                {"Selected One"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <FormControlLabel
+                    label="Show All"
+                    control={
+                      <Checkbox
+                        checked={checkedcheck}
+                        onChange={handleChange}
+                        inputProps={{
+                          "aria-label": "controlled",
+                        }}
+                      />
+                    }
+                  />
 
-            "& .super-app-theme--header": {
-              backgroundColor: "#808080",
-              color: "#ffffff",
-            },
-            "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-              fontSize: 14,
-            },
-            ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
-              fontSize: 12,
-            },
-            ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
+                  <FormControlLabel
+                    label="Hide All"
+                    control={
+                      <Checkbox
+                        checked={dchecked}
+                        onChange={handledisableChange}
+                        inputProps={{
+                          "aria-label": "controlled",
+                        }}
+                      />
+                    }
+                  />
+                  <FormControlLabel
+                    label="Delete All"
+                    control={
+                      <Checkbox
+                        checked={checkeddelete}
+                        onChange={handleChangedelete}
+                        inputProps={{
+                          "aria-label": "controlled",
+                        }}
+                      />
+                    }
+                  />
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleDisClose}>
+                  Cancel
+                </Button>
+                {checkeddelete == true ? (
+                  <>
+                    <Button onClick={handleClosecheckdelet} autoFocus>
+                      Delete
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <Button onClick={handleClosecheck} autoFocus>
+                      Done
+                    </Button>
+                  </>
+                )}
+              </DialogActions>
+            </Dialog>
+          </Box>
+
+          {/* <Box>
+      <Dialog open={deleteopen} onClose={handleDeletrClose}>
+        <DialogTitle>Delete</DialogTitle>
+        <DialogContent></DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleDeletrClose}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box> */}
+          <Box
+            sx={{
+              height: 360,
+              width: "100%",
+
+              "& .super-app-theme--header": {
                 backgroundColor: "#808080",
                 color: "#ffffff",
               },
-            ".css-h4y409-MuiList-root": {
-              display: "grid",
-            },
-            ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
+              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                fontSize: 14,
               },
-          }}
-        >
-          <DataGrid
-            sx={{
-              boxShadow: 10,
-              borderRadius: 0,
-              m: 2,
+              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+                fontSize: 12,
+              },
+              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                {
+                  backgroundColor: "#808080",
+                  color: "#ffffff",
+                },
+              ".css-h4y409-MuiList-root": {
+                display: "grid",
+              },
+              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                {
+                  backgroundColor: "#808080",
+                },
             }}
-            columns={columns}
-            rows={taxes ? taxes : ""}
-            getRowId={(rows) => rows._id}
-            VerticalAlignment="Center"
-            loading={loading}
-            rowHeight={40}
-            headerHeight={35}
-            pagination
-            checkboxSelection
-            onSelectionModelChange={(newSelectionModel) => {
-              setSelectionModel(newSelectionModel);
-            }}
-            selectionModel={selectionModel}
-          />
+          >
+            <DataGrid
+              sx={{
+                boxShadow: 10,
+                borderRadius: 0,
+                m: 2,
+              }}
+              columns={columns}
+              rows={taxes ? taxes : ""}
+              getRowId={(rows) => rows._id}
+              VerticalAlignment="Center"
+              loading={loading}
+              rowHeight={40}
+              headerHeight={35}
+              pagination
+              checkboxSelection
+              onSelectionModelChange={(newSelectionModel) => {
+                setSelectionModel(newSelectionModel);
+              }}
+              selectionModel={selectionModel}
+            />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

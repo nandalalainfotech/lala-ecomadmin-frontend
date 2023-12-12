@@ -514,34 +514,25 @@ export default function LogicGridScreen() {
   ];
   return (
     <div>
-      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 2 }}>
+      <Typography variant="h6" sx={{ mt: -2, mb: 1 }}>
         Carriers
       </Typography>
-      <Box
-        component="div"
-        sx={{
-          p: 2,
-          display: "flex",
-          flexDirection: "row",
-          backgroundColor: "#fff",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDerection: "row", mt: -1 }}>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          sx={{ mt: -2 }}
+          sx={{ display: "flex", flexDerection: "row", mb: 1 }}
         >
           <Link
             to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
+              fontSize: "12px",
             }}
           >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Home</Typography>
           </Link>
-
-          <Typography sx={{ fontSize: "13px" }}> Carriers</Typography>
+          <Typography sx={{ fontSize: "14px" }}>Carriers</Typography>
         </Breadcrumbs>
 
         <Box sx={{ ml: "auto" }}>
@@ -549,28 +540,26 @@ export default function LogicGridScreen() {
             variant="contained"
             sx={{
               mr: 3,
-              mt: -5,
-              ml: 2,
+              mt: -2,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
             }}
             onClick={onProdctChange}
           >
-            <AddCircleOutlineIcon /> Add New Category
+            <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
+            Add New Product
           </Button>
-          {/* <Button variant="outlined">Help</Button> */}
         </Box>
       </Box>
-      <Divider sx={{ mt: -10 }} />
+      <Divider sx={{ mt: 1 }} />
       <Box>
         <Box sx={{ display: "flex" }}>
           <Button
             sx={{
               mr: 3,
-              mt: 0,
-              mb: 0,
-              ml: 2,
+              mt: 1,
+              mb: -1,
               borderRadius: "20px",
               backgroundColor: "#0099CC",
               fontSize: 12,
@@ -665,7 +654,7 @@ export default function LogicGridScreen() {
         </Box>
         <Box
           sx={{
-            height: 380,
+            height: 360,
             width: "100%",
 
             "& .super-app-theme--header": {
