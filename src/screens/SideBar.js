@@ -51,7 +51,7 @@ const openedMixin = (theme) => ({
   }),
   zIndex: 1,
   overflowX: "hidden",
-  backgroundColor: "#006997",
+  backgroundColor: "#00A787",
   color: "white",
 });
 
@@ -63,7 +63,7 @@ const closedMixin = (theme) => ({
   zIndex: 1,
   overflowX: "hidden",
 
-  backgroundColor: "#006997",
+  backgroundColor: "#00A787",
   color: "white",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {

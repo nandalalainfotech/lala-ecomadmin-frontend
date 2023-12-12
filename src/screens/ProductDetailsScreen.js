@@ -460,7 +460,7 @@ function ProductDetailsScreen() {
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          sx={{ display: "flex", flexDerection: "row",mb:1 }}
+          sx={{ display: "flex", flexDerection: "row", mb: 1 }}
         >
           <Link
             to="/"
@@ -481,8 +481,9 @@ function ProductDetailsScreen() {
               mr: 3,
               mt: -2,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
               fontSize: 12,
+              "&:hover": { backgroundColor: "#00A787" },
             }}
             onClick={onProdctChange}
           >
@@ -500,8 +501,9 @@ function ProductDetailsScreen() {
               mt: 1,
               mb: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
               fontSize: 12,
+              backgroundColor: "#00A787",             
+              "&:hover": { backgroundColor: "#00A787" },
             }}
             size="small"
             variant="contained"
@@ -515,8 +517,9 @@ function ProductDetailsScreen() {
               mt: 2,
               mb: 0,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
               fontSize: 12,
+               "&:hover": { backgroundColor: "#00A787" },
             }}
             size='small'
             variant='contained'

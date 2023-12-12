@@ -1401,7 +1401,7 @@ Not all shops sell new products.
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:2 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 2 }}
           >
             <Link
               to="/"
@@ -1432,7 +1432,7 @@ Not all shops sell new products.
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1 ,mb:1}}
+            sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
           >
             <Link
               to="/"
@@ -1467,24 +1467,104 @@ Not all shops sell new products.
                 {newcombination === "true" ? (
                   <>
                     <Tabs value={tabIndex} onChange={handleTabChange}>
-                      <Tab sx={{ fontSize: "13px" }} label="Basic Settings" />
-                      <Tab sx={{ fontSize: "13px" }} label="Combination" />
-                      <Tab sx={{ fontSize: "13px" }} label="Quantities" />
-                      <Tab sx={{ fontSize: "13px" }} label="Shipping" />
-                      <Tab sx={{ fontSize: "13px" }} label="Pricing" />
-                      <Tab sx={{ fontSize: "13px" }} label="SEO" />
-                      <Tab sx={{ fontSize: "13px" }} label="Options" />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          color: "#00A787",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Basic Settings"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Combination"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Quantities"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Shipping"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Pricing"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="SEO"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Options"
+                      />
                     </Tabs>
                   </>
                 ) : (
                   <>
                     <Tabs value={tabIndex} onChange={handleTabChange}>
-                      <Tab sx={{ fontSize: "13px" }} label="Basic Settings" />
-                      <Tab sx={{ fontSize: "13px" }} label="Quantities" />
-                      <Tab sx={{ fontSize: "13px" }} label="Shipping" />
-                      <Tab sx={{ fontSize: "13px" }} label="Pricing" />
-                      <Tab sx={{ fontSize: "13px" }} label="SEO" />
-                      <Tab sx={{ fontSize: "13px" }} label="Options" />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          color: "#00A787",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Basic Settings"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Quantities"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Shipping"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Pricing"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="SEO"
+                      />
+                      <Tab
+                        sx={{
+                          fontSize: "13px",
+                          "&:focus": { color: "#00A787" },
+                        }}
+                        label="Options"
+                      />
                     </Tabs>
                   </>
                 )}
@@ -1503,7 +1583,7 @@ Not all shops sell new products.
                     >
                       <Grid container spacing={3}>
                         <Grid item xs={8}>
-                          <Box sx={{mr:-5}}>
+                          <Box sx={{ mr: -5 }}>
                             <Box>
                               <Typography
                                 sx={{
@@ -1619,6 +1699,7 @@ Not all shops sell new products.
                                               }
                                               control={
                                                 <Checkbox
+                                                  style={{ color: "#00A787" }}
                                                   checked={checked}
                                                   onChange={handleChangeChekce}
                                                   inputProps={{
@@ -1634,7 +1715,10 @@ Not all shops sell new products.
                                               // mr: 3,
                                               // mt: 5,
                                               borderRadius: "50px",
-                                              backgroundColor: "#0099CC",
+                                              backgroundColor: "#00A787",
+                                              "&:hover": {
+                                                backgroundColor: "#00A787",
+                                              },
                                               fontSize: 10,
                                             }}
                                             variant="contained"
@@ -1886,9 +1970,10 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
                                     color: "#fff",
                                     fontSize: "12px",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                   }}
                                   variant="contained"
                                   startIcon={<AddCircleIcon />}
@@ -2040,7 +2125,6 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -2192,7 +2276,10 @@ Not all shops sell new products.
                                         mr: 3,
                                         mt: 1,
                                         borderRadius: "70px",
-                                        backgroundColor: "#0099CC",
+                                        backgroundColor: "#00A787",
+                                        "&:hover": {
+                                          backgroundColor: "#00A787",
+                                        },
                                         color: "#fff",
                                         fontSize: "12px",
                                       }}
@@ -2246,7 +2333,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value="Simple Product"
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
                                           Simple Product
@@ -2263,7 +2355,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value={true}
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       type="radio"
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
@@ -2491,7 +2588,10 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               size="small"
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               name="file"
                                               defaultChecked={true}
                                               // checked={checkedtreeupdate}
@@ -2510,7 +2610,10 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               size="small"
                                               name="file"
                                             />
@@ -2546,7 +2649,10 @@ Not all shops sell new products.
                                                     <Checkbox
                                                       name="file"
                                                       defaultChecked={true}
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       size="small"
                                                     />
                                                   }
@@ -2564,7 +2670,10 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       size="small"
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       name="file"
                                                     />
                                                   }
@@ -2604,7 +2713,11 @@ Not all shops sell new products.
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               name="file"
                                                               size="small"
                                                               defaultChecked={
@@ -2628,7 +2741,11 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               size="small "
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               name="file"
                                                               // onChange={handleChange}
                                                             />
@@ -2738,7 +2855,8 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     fontSize: "12px",
                                     ml: -15,
@@ -2758,7 +2876,8 @@ Not all shops sell new products.
                                     mr: 1,
                                     mt: 5,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     ml: "15rem",
                                   }}
@@ -2833,7 +2952,12 @@ Not all shops sell new products.
                           </FormControl> */}
                           <Button
                             variant="contained"
-                            sx={{ mt: 3, mr: 20 }}
+                            sx={{
+                              mt: 3,
+                              mr: 20,
+                              backgroundColor: "#00A787",
+                              "&:hover": { backgroundColor: "#00A787" },
+                            }}
                             type="submit"
                           >
                             Generate
@@ -2858,7 +2982,12 @@ Not all shops sell new products.
                           />
                           <Button
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{
+                              mt: 3,
+                              mb: 2,
+                              backgroundColor: "#00A787",
+                              "&:hover": { backgroundColor: "#00A787" },
+                            }}
                             onClick={(event) => HandlecombSave(event)}
                             type="Click"
                           >
@@ -2915,6 +3044,7 @@ Not all shops sell new products.
                           >
                             <Typography sx={{ mt: "20px", width: "100%" }}>
                               <Checkbox
+                                style={{ color: "#00A787" }}
                                 value="newcheck"
                                 {...register("newcheck", { required: true })}
                                 error={errors.newcheck}
@@ -2931,6 +3061,7 @@ Not all shops sell new products.
                               }}
                             >
                               <Checkbox
+                                style={{ color: "#00A787" }}
                                 value="newcheck"
                                 {...register("newcheck", { required: true })}
                                 error={errors.newcheck}
@@ -3000,6 +3131,7 @@ Not all shops sell new products.
                               }}
                             >
                               <Checkbox
+                                style={{ color: "#00A787" }}
                                 value="newcheck"
                                 {...register("newcheck", { required: true })}
                                 error={errors.newcheck}
@@ -3240,6 +3372,7 @@ Not all shops sell new products.
                                               }
                                               control={
                                                 <Checkbox
+                                                  style={{ color: "#00A787" }}
                                                   checked={Checkededit}
                                                   onChange={handleCheckedit}
                                                   inputProps={{
@@ -3255,7 +3388,10 @@ Not all shops sell new products.
                                               // mr: 3,
                                               // mt: 5,
                                               borderRadius: "50px",
-                                              backgroundColor: "#0099CC",
+                                              backgroundColor: "#00A787",
+                                              "&:hover": {
+                                                backgroundColor: "#00A787",
+                                              },
                                               fontSize: 10,
                                             }}
                                             variant="contained"
@@ -3537,7 +3673,8 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     fontSize: "12px",
                                   }}
@@ -3691,7 +3828,8 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -3843,7 +3981,10 @@ Not all shops sell new products.
                                         mr: 3,
                                         mt: 1,
                                         borderRadius: "70px",
-                                        backgroundColor: "#0099CC",
+                                        backgroundColor: "#00A787",
+                                        "&:hover": {
+                                          backgroundColor: "#00A787",
+                                        },
                                         color: "#fff",
                                         fontSize: "12px",
                                       }}
@@ -3897,7 +4038,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value="Simple Product"
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
                                           Simple Product
@@ -3914,7 +4060,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value={true}
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       type="radio"
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
@@ -4142,7 +4293,10 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               size="small"
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               name="file"
                                               defaultChecked={true}
                                               // checked={checkedtreeupdate}
@@ -4161,7 +4315,10 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               size="small"
                                               name="file"
                                             />
@@ -4197,8 +4354,10 @@ Not all shops sell new products.
                                                     <Checkbox
                                                       name="file"
                                                       defaultChecked={true}
-                                                      sx={{ mt: -1 }}
-                                                      size="small"
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                     />
                                                   }
                                                   label={
@@ -4215,7 +4374,10 @@ Not all shops sell new products.
                                                   control={
                                                     <Checkbox
                                                       size="small"
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       name="file"
                                                     />
                                                   }
@@ -4255,7 +4417,11 @@ Not all shops sell new products.
                                                         <FormControlLabel
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               name="file"
                                                               size="small"
                                                               defaultChecked={
@@ -4279,7 +4445,11 @@ Not all shops sell new products.
                                                           control={
                                                             <Checkbox
                                                               size="small "
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               name="file"
                                                               // onChange={handleChange}
                                                             />
@@ -4389,7 +4559,8 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     fontSize: "12px",
                                     ml: -15,
@@ -4409,7 +4580,8 @@ Not all shops sell new products.
                                     mr: 1,
                                     mt: 5,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     ml: "15rem",
                                   }}
@@ -4589,6 +4761,7 @@ Not all shops sell new products.
                                               }
                                               control={
                                                 <Checkbox
+                                                  style={{ color: "#00A787" }}
                                                   size="small"
                                                   checked={checked}
                                                   onChange={handleChangeChekce}
@@ -4605,7 +4778,10 @@ Not all shops sell new products.
                                               // mr: 3,
                                               // mt: 5,
                                               borderRadius: "50px",
-                                              backgroundColor: "#0099CC",
+                                              backgroundColor: "#00A787",
+                                              "&:hover": {
+                                                backgroundColor: "#00A787",
+                                              },
                                               fontSize: 10,
                                             }}
                                             variant="contained"
@@ -4777,7 +4953,8 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -4910,7 +5087,8 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -5010,7 +5188,10 @@ Not all shops sell new products.
                                         mr: 3,
                                         mt: 1,
                                         borderRadius: "70px",
-                                        backgroundColor: "#0099CC",
+                                        backgroundColor: "#00A787",
+                                        "&:hover": {
+                                          backgroundColor: "#00A787",
+                                        },
                                         color: "#fff",
                                         fontSize: "12px",
                                       }}
@@ -5063,7 +5244,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value="Simple Product"
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
                                           Simple Product
@@ -5082,7 +5268,10 @@ Not all shops sell new products.
                                     <FormControlLabel
                                       value={true}
                                       control={
-                                        <Radio sx={{ ml: -1 }} size="small" />
+                                        <Radio
+                                          style={{ mt: -1, color: "#00A787" }}
+                                          size="small"
+                                        />
                                       }
                                       // label='Product with combinations'
                                       label={
@@ -5312,7 +5501,10 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               size="small"
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               name="file"
                                               checked={checkedtree}
                                             />
@@ -5330,7 +5522,10 @@ Not all shops sell new products.
                                             <Checkbox
                                               size="small"
                                               name="file"
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                             />
                                           }
                                           label={
@@ -5361,7 +5556,10 @@ Not all shops sell new products.
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       size="small"
                                                       name="file"
                                                       checked={checkedtree}
@@ -5381,7 +5579,10 @@ Not all shops sell new products.
                                                   sx={{ fontSize: "12px" }}
                                                   control={
                                                     <Checkbox
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       size="small"
                                                       name="file"
                                                     />
@@ -5425,7 +5626,11 @@ Not all shops sell new products.
                                                           }}
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               size="small"
                                                               name="file"
                                                               checked={
@@ -5452,7 +5657,11 @@ Not all shops sell new products.
                                                           }}
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               size="small"
                                                               name="file"
                                                               // onChange={handleChange}
@@ -5546,7 +5755,8 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     fontSize: "12px",
                                     ml: -15,
@@ -5565,7 +5775,8 @@ Not all shops sell new products.
                                     mr: 1,
                                     mt: 5,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     ml: "15rem",
                                   }}
@@ -5674,7 +5885,12 @@ Not all shops sell new products.
                                 />
                                 <Button
                                   variant="contained"
-                                  sx={{ mt: 3, mr: 20 }}
+                                  sx={{
+                                    mt: 3,
+                                    mr: 20,
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
+                                  }}
                                   type="submit"
                                 >
                                   Generate
@@ -5715,7 +5931,12 @@ Not all shops sell new products.
                                 />
                                 <Button
                                   variant="contained"
-                                  sx={{ mt: 3, mr: 20 }}
+                                  sx={{
+                                    mt: 3,
+                                    mr: 20,
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
+                                  }}
                                   type="submit"
                                 >
                                   Generate
@@ -5861,6 +6082,7 @@ Not all shops sell new products.
                                               }
                                               control={
                                                 <Checkbox
+                                                  style={{ color: "#00A787" }}
                                                   size="small"
                                                   checked={checked}
                                                   onChange={handleChangeChekce}
@@ -5877,7 +6099,10 @@ Not all shops sell new products.
                                               // mr: 3,
                                               // mt: 5,
                                               borderRadius: "50px",
-                                              backgroundColor: "#0099CC",
+                                              backgroundColor: "#00A787",
+                                              "&:hover": {
+                                                backgroundColor: "#00A787",
+                                              },
                                               fontSize: 10,
                                             }}
                                             variant="contained"
@@ -6048,7 +6273,8 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -6184,7 +6410,8 @@ Not all shops sell new products.
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#0099CC",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
                                 }}
@@ -6284,7 +6511,10 @@ Not all shops sell new products.
                                         mr: 3,
                                         mt: 1,
                                         borderRadius: "70px",
-                                        backgroundColor: "#0099CC",
+                                        backgroundColor: "#00A787",
+                                        "&:hover": {
+                                          backgroundColor: "#00A787",
+                                        },
                                         color: "#fff",
                                         fontSize: "12px",
                                       }}
@@ -6337,7 +6567,12 @@ Not all shops sell new products.
                                   >
                                     <FormControlLabel
                                       value="Simple Product"
-                                      control={<Radio size="small" />}
+                                      control={
+                                        <Radio
+                                          size="small"
+                                          style={{ color: "#00A787" }}
+                                        />
+                                      }
                                       label={
                                         <Typography sx={{ fontSize: 14 }}>
                                           Simple Product
@@ -6356,7 +6591,10 @@ Not all shops sell new products.
                                     <FormControlLabel
                                       value={true}
                                       control={
-                                        <Radio sx={{ ml: -1 }} size="small" />
+                                        <Radio
+                                          style={{ mt: -1, color: "#00A787" }}
+                                          size="small"
+                                        />
                                       }
                                       // label='Product with combinations'
                                       label={
@@ -6586,7 +6824,10 @@ Not all shops sell new products.
                                           control={
                                             <Checkbox
                                               size="small"
-                                              sx={{ mt: -1 }}
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               name="file"
                                               checked={checkedtree}
                                             />
@@ -6602,9 +6843,12 @@ Not all shops sell new products.
                                         <FormControlLabel
                                           control={
                                             <Checkbox
+                                              style={{
+                                                mt: -1,
+                                                color: "#00A787",
+                                              }}
                                               size="small"
                                               name="file"
-                                              sx={{ mt: -1 }}
                                             />
                                           }
                                           label={
@@ -6635,7 +6879,10 @@ Not all shops sell new products.
                                                 <FormControlLabel
                                                   control={
                                                     <Checkbox
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       size="small"
                                                       name="file"
                                                       checked={checkedtree}
@@ -6655,7 +6902,10 @@ Not all shops sell new products.
                                                   sx={{ fontSize: "12px" }}
                                                   control={
                                                     <Checkbox
-                                                      sx={{ mt: -1 }}
+                                                      style={{
+                                                        mt: -1,
+                                                        color: "#00A787",
+                                                      }}
                                                       size="small"
                                                       name="file"
                                                     />
@@ -6699,7 +6949,11 @@ Not all shops sell new products.
                                                           }}
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               size="small"
                                                               name="file"
                                                               checked={
@@ -6726,7 +6980,11 @@ Not all shops sell new products.
                                                           }}
                                                           control={
                                                             <Checkbox
-                                                              sx={{ mt: -1 }}
+                                                              style={{
+                                                                mt: -1,
+                                                                color:
+                                                                  "#00A787",
+                                                              }}
                                                               size="small"
                                                               name="file"
                                                               // onChange={handleChange}
@@ -6820,7 +7078,8 @@ Not all shops sell new products.
                                     mr: 3,
                                     mt: 1,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     fontSize: "12px",
                                     ml: -15,
@@ -6839,7 +7098,8 @@ Not all shops sell new products.
                                     mr: 1,
                                     mt: 5,
                                     borderRadius: "70px",
-                                    backgroundColor: "#0099CC",
+                                    backgroundColor: "#00A787",
+                                    "&:hover": { backgroundColor: "#00A787" },
                                     color: "#fff",
                                     ml: "15rem",
                                   }}

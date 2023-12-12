@@ -231,7 +231,6 @@ function App() {
     setAnchorEl(null);
   };
 
-
   const notificationall = useSelector((state) => state.notificationall);
   const { notificationlist } = notificationall;
   const [open, setOpen] = useState(false);
@@ -254,7 +253,7 @@ function App() {
 
   if (content.brand.image) {
     brand = (
-      <img src={content.brand.image} alt='' width={content.brand.width} />
+      <img src={content.brand.image} alt="" width={content.brand.width} />
     );
   } else {
     // eslint-disable-next-line no-unused-vars
@@ -263,13 +262,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='grid-container'>
+      <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
             position="fixed"
             style={{
               zIndex: 999,
-              background: "#006997",
+              background: "#00A787",
             }}
           >
             <Toolbar>
@@ -281,7 +280,7 @@ function App() {
                       to="/"
                     >
                       <Stack direction="row">
-                        <Avatar
+                        {/* <Avatar
                           sx={{
                             animation: "spin 5s linear infinite",
                             "@keyframes spin": {
@@ -295,7 +294,7 @@ function App() {
                           }}
                           alt="NitLogo"
                           src="/image/Fav.jpg"
-                        />
+                        /> */}
                         <Typography
                           className={classes.sideBarButtons}
                           variant="h4"
@@ -306,7 +305,13 @@ function App() {
                             "&:hover": { color: "#ff7519" },
                           }}
                         >
-                          <div className="firstchild"> Lala</div>
+                          <div className="firstchild">
+                            <img
+                              src="/image/Fav.jpg"
+                              alt="NitLogo"
+                              style={{ height: 50, width: 180 }}
+                            />{" "}
+                          </div>
                         </Typography>
                       </Stack>
                     </Link>
@@ -427,8 +432,7 @@ function App() {
                               </Box>
                             </div>
                           ) : (
-                            <>
-                            </>
+                            <></>
                             // <Tooltip title="signIn" arrow>
                             //   <IconButton
                             //     sx={{ p: 0, pt: 1, "&:hover": { color: "#ff7519" } }}
@@ -449,41 +453,41 @@ function App() {
                             // </Tooltip>
                           )}
                         </Box>
-                        {
-                          userInfo ? (
-                            <>
-                              <Box sx={{ display: { xs: "flex" } }}>
-                                <IconButton
-                                  x={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                                  aria-label="show 4 new mails"
-                                  color="inherit"
-                                  onClick={handleToggleSidebar}
+                        {userInfo ? (
+                          <>
+                            <Box sx={{ display: { xs: "flex" } }}>
+                              <IconButton
+                                x={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                aria-label="show 4 new mails"
+                                color="inherit"
+                                onClick={handleToggleSidebar}
+                              >
+                                <Badge
+                                  badgeContent={notificationlist?.length}
+                                  color="warning"
                                 >
-                                  <Badge
-                                    badgeContent={notificationlist?.length}
-                                    color="warning"
+                                  <Avatar
+                                    sx={{
+                                      border: "2px solid #fff",
+                                      bgcolor: "inherit",
+                                      "&:hover": { color: "#ff7519" },
+                                    }}
                                   >
-                                    <Avatar
-                                      sx={{
-                                        border: "2px solid #fff",
-                                        bgcolor: "inherit",
-                                        "&:hover": { color: "#ff7519" },
-                                      }}
-                                    >
-                                      <Tooltip title="Notification" arrow>
-                                        <NotificationsIcon />
-                                      </Tooltip>
-                                    </Avatar>
-                                    <NotificationSidebar
-                                      open={open}
-                                      onClose={handleToggleSidebar}
-                                    />
-                                  </Badge>
-                                </IconButton>
-                              </Box>
-                            </>
-                          ) : ("")
-                        }
+                                    <Tooltip title="Notification" arrow>
+                                      <NotificationsIcon />
+                                    </Tooltip>
+                                  </Avatar>
+                                  <NotificationSidebar
+                                    open={open}
+                                    onClose={handleToggleSidebar}
+                                  />
+                                </Badge>
+                              </IconButton>
+                            </Box>
+                          </>
+                        ) : (
+                          ""
+                        )}
                         <Box sx={{ display: { xs: "flex" } }}>
                           {userInfo && (
                             <Tooltip title="Log Out" arrow>
@@ -521,33 +525,66 @@ function App() {
           <Box sx={{ display: "flex" }}>
             {userInfo && <SideBar />}
             <Box
-              component='main'
+              component="main"
               sx={{ p: 3, flexGrow: 1, minHeight: "100vh" }}
             >
               <Toolbar />
               {/* <Typography> */}
               <Routes>
                 {/* ********************************************************************************* */}
-                <Route path='/categorychildtwo/:id' element={<CategoryChildTwoScreen />}></Route>
-                <Route path='/categorychildthree/:id' element={<CategoryChildThreeScreen />}></Route>
-                <Route path='/categorychildfour/:id' element={<CategoryChildFourScreen />}></Route>
-                <Route path='/categorychildfive/:id' element={<CategoryChildFiveScreen />}></Route>
-                <Route path='/categorychildsix/:id' element={<CategoryChildSixScreen />}></Route>
-                <Route path='/categorychildseven/:id' element={<CategoryChildSevenScreen />}></Route>
-                <Route path='/categorychildeight/:id' element={<CategoryChildEightScreen />}></Route>
-                <Route path='/categorychildnine/:id' element={<CategoryChildNineScreen />}></Route>
-                <Route path='/categorychildten/:id' element={<CategoryChildTenScreen />}></Route>
-                <Route path='/testFrom/:id' element={<CategoryMasterFormEditScreen />}></Route>
-
-                <Route path='/testingscreen' element={<TestingScreen />}></Route>
-                {/*******************************Order********************************/}
-                <Route path='/orderstatus' element={<OrderStatus />}></Route>
                 <Route
-                  path='/orderstatuslist/:id'
+                  path="/categorychildtwo/:id"
+                  element={<CategoryChildTwoScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildthree/:id"
+                  element={<CategoryChildThreeScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildfour/:id"
+                  element={<CategoryChildFourScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildfive/:id"
+                  element={<CategoryChildFiveScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildsix/:id"
+                  element={<CategoryChildSixScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildseven/:id"
+                  element={<CategoryChildSevenScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildeight/:id"
+                  element={<CategoryChildEightScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildnine/:id"
+                  element={<CategoryChildNineScreen />}
+                ></Route>
+                <Route
+                  path="/categorychildten/:id"
+                  element={<CategoryChildTenScreen />}
+                ></Route>
+                <Route
+                  path="/testFrom/:id"
+                  element={<CategoryMasterFormEditScreen />}
+                ></Route>
+
+                <Route
+                  path="/testingscreen"
+                  element={<TestingScreen />}
+                ></Route>
+                {/*******************************Order********************************/}
+                <Route path="/orderstatus" element={<OrderStatus />}></Route>
+                <Route
+                  path="/orderstatuslist/:id"
                   element={<OrderStatusState />}
                 ></Route>
                 <Route
-                  path='/orderstatuslist'
+                  path="/orderstatuslist"
                   element={<OrderStatusState />}
                 ></Route>
                 <Route
@@ -555,257 +592,257 @@ function App() {
                   element={<Stockmaintance />}
                 ></Route>
                 {/*******************************Payment Gateway************************/}
-                <Route path='/gateway' element={<Gatewaygrid />}></Route>
-                <Route path='/payment' element={<PaymentScreen />}></Route>
-                <Route path='/payment/:id' element={<PaymentScreen />}></Route>
+                <Route path="/gateway" element={<Gatewaygrid />}></Route>
+                <Route path="/payment" element={<PaymentScreen />}></Route>
+                <Route path="/payment/:id" element={<PaymentScreen />}></Route>
                 {/* **********************Locations********************************** */}
                 <Route
-                  path='/locatgrid'
+                  path="/locatgrid"
                   element={<LocationGridScreen />}
                 ></Route>
-                <Route path='/zone' element={<ZoneScreen />}></Route>
-                <Route path='/zone/:id' element={<ZoneScreen />}></Route>
-                <Route path='/country' element={<CountryScreen />}></Route>
+                <Route path="/zone" element={<ZoneScreen />}></Route>
+                <Route path="/zone/:id" element={<ZoneScreen />}></Route>
+                <Route path="/country" element={<CountryScreen />}></Route>
                 <Route
-                  path='/countrygrid'
+                  path="/countrygrid"
                   element={<CountryGridScreen />}
                 ></Route>
-                <Route path='/country/:id' element={<CountryScreen />}></Route>
-                <Route path='/stategrid' element={<StateGridScreen />}></Route>
-                <Route path='/state' element={<StateSreen />}></Route>
-                <Route path='/state/:id' element={<StateSreen />}></Route>
-                <Route path='/city/:id' element={<CityScreen />}></Route>
-                <Route path='/city' element={<CityScreen />}></Route>
-                <Route path='/citygrid' element={<CityGridScreen />}></Route>
+                <Route path="/country/:id" element={<CountryScreen />}></Route>
+                <Route path="/stategrid" element={<StateGridScreen />}></Route>
+                <Route path="/state" element={<StateSreen />}></Route>
+                <Route path="/state/:id" element={<StateSreen />}></Route>
+                <Route path="/city/:id" element={<CityScreen />}></Route>
+                <Route path="/city" element={<CityScreen />}></Route>
+                <Route path="/citygrid" element={<CityGridScreen />}></Route>
 
                 {/* **********************shipping********************************** */}
                 <Route
-                  path='/logistic/:id'
+                  path="/logistic/:id"
                   element={<GeneralSettingScreen />}
                 ></Route>
                 <Route
-                  path='/logistic'
+                  path="/logistic"
                   element={<GeneralSettingScreen />}
                 ></Route>
-                <Route path='/summary' element={<SummaryScreen />}></Route>
-                <Route path='/summary/:id' element={<SummaryScreen />}></Route>
+                <Route path="/summary" element={<SummaryScreen />}></Route>
+                <Route path="/summary/:id" element={<SummaryScreen />}></Route>
                 <Route
-                  path='/costAndShip'
+                  path="/costAndShip"
                   element={<ShippingCostAndLoc />}
                 ></Route>
                 <Route
-                  path='/costAndShip/:id'
+                  path="/costAndShip/:id"
                   element={<ShippingCostAndLoc />}
                 ></Route>
                 <Route
-                  path='/sizeweightgroup'
+                  path="/sizeweightgroup"
                   element={<SizeWeightAndGroupAccess />}
                 ></Route>
                 <Route
-                  path='/sizeweightgroup/:id'
+                  path="/sizeweightgroup/:id"
                   element={<SizeWeightAndGroupAccess />}
                 ></Route>
-                <Route path='/logicGrid' element={<LogicGridScreen />}></Route>
+                <Route path="/logicGrid" element={<LogicGridScreen />}></Route>
 
                 {/* **************************************************************************************** */}
                 <Route
-                  path='/attributes'
+                  path="/attributes"
                   element={<AttributesScreen />}
                 ></Route>
 
                 <Route
-                  path='/attributesForm'
+                  path="/attributesForm"
                   element={<AttributeFormScreen />}
                 ></Route>
                 <Route
-                  path='/attributesForm/:id'
+                  path="/attributesForm/:id"
                   element={<AttributeFormScreen />}
                 ></Route>
                 <Route
-                  path='/attributvalue'
+                  path="/attributvalue"
                   element={<AttributeValueScreen />}
                 ></Route>
                 <Route
-                  path='/attributvalue/:id'
+                  path="/attributvalue/:id"
                   element={<AttributeValueScreen />}
                 ></Route>
                 <Route
-                  path='/specificEdit/:id'
+                  path="/specificEdit/:id"
                   element={<SpecificScreen />}
                 ></Route>
-                <Route path='/feature' element={<FuatureFormScreen />}></Route>
+                <Route path="/feature" element={<FuatureFormScreen />}></Route>
                 <Route
-                  path='/feature/:id'
+                  path="/feature/:id"
                   element={<FuatureFormScreen />}
                 ></Route>
                 <Route
-                  path='/featurevalue'
+                  path="/featurevalue"
                   element={<FeaturevalueScreen />}
                 ></Route>
                 <Route
-                  path='/featurevalue/:id'
+                  path="/featurevalue/:id"
                   element={<FeaturevalueScreen />}
                 ></Route>
                 <Route
-                  path='/categorychild/:id'
+                  path="/categorychild/:id"
                   element={<CategoryMasterChildScreen />}
                 ></Route>
 
                 <Route
-                  path='/categorygrandchild/:id'
+                  path="/categorygrandchild/:id"
                   element={<CategoryMasterGrandChildScreen />}
                 ></Route>
-                <Route path='/brand' element={<BrandScreen />}></Route>
-                <Route path='/brandForm' element={<BrandFromScreen />}></Route>
+                <Route path="/brand" element={<BrandScreen />}></Route>
+                <Route path="/brandForm" element={<BrandFromScreen />}></Route>
                 <Route
-                  path='/brandaddress'
+                  path="/brandaddress"
                   element={<BrandAddressScreen />}
                 ></Route>
 
                 <Route
-                  path='/product'
+                  path="/product"
                   element={<ProductDetailsScreen />}
                 ></Route>
                 <Route
-                  path='/productadd'
+                  path="/productadd"
                   element={<CatProductScreen />}
                 ></Route>
                 <Route
-                  path='/productadd/:id'
+                  path="/productadd/:id"
                   element={<CatProductScreen />}
                 ></Route>
 
-                <Route path='/team' element={<EmployeeScreen />}></Route>
+                <Route path="/team" element={<EmployeeScreen />}></Route>
                 <Route
-                  path='/employee'
+                  path="/employee"
                   element={<EmployeeFormScreen />}
                 ></Route>
                 <Route
-                  path='/employeeprofile'
+                  path="/employeeprofile"
                   element={<EmployeeProfileScreen />}
                 ></Route>
-                <Route path='/custemer' element={<CustomerScreen />}></Route>
+                <Route path="/custemer" element={<CustomerScreen />}></Route>
                 <Route
-                  path='/custemerreg'
+                  path="/custemerreg"
                   element={<CustomerFormScreen />}
                 ></Route>
                 <Route
-                  path='/custemerreg/:id'
+                  path="/custemerreg/:id"
                   element={<CustomerFormScreen />}
                 ></Route>
-                <Route path='/addressreg' element={<AdressScreen />}></Route>
+                <Route path="/addressreg" element={<AdressScreen />}></Route>
                 <Route
-                  path='/addressreg/:id'
+                  path="/addressreg/:id"
                   element={<AdressScreen />}
                 ></Route>
                 <Route
-                  path='/address'
+                  path="/address"
                   element={<AddreeCustamerScreen />}
                 ></Route>
                 <Route
-                  path='/categoryFormmaster'
+                  path="/categoryFormmaster"
                   element={<CategoryMasterFormScreen />}
                 ></Route>
                 <Route
-                  path='/categorymasterform/:id'
+                  path="/categorymasterform/:id"
                   element={<CategoryMasterFormScreen />}
                 ></Route>
                 <Route
-                  path='/categorymaster'
+                  path="/categorymaster"
                   element={<CategoryMasterScreen />}
                 ></Route>
                 <Route
-                  path='/cusview/:id'
+                  path="/cusview/:id"
                   element={<CustomerViewScreen />}
                 ></Route>
                 {/* ********************************************************************************************* */}
 
                 <Route
-                  path='/productview/:id'
+                  path="/productview/:id"
                   element={<ProductViewScreen />}
                   exact
                 ></Route>
 
                 <Route
-                  path='/prodEnquiry'
+                  path="/prodEnquiry"
                   element={<ProductEnquiryScreen />}
                 ></Route>
 
                 <Route
-                  path='/categorysmaster'
+                  path="/categorysmaster"
                   element={<CatergorymasterScreens />}
                 ></Route>
-                <Route path='/Wishlist' element={<WishListScreen />}></Route>
+                <Route path="/Wishlist" element={<WishListScreen />}></Route>
 
-                <Route path='/categorys' element={<CategoryScreen />}></Route>
-                <Route path='/seller/:id' element={<SellerScreen />}></Route>
-                <Route path='/cart/:id' element={<CartScreen />}></Route>
+                <Route path="/categorys" element={<CategoryScreen />}></Route>
+                <Route path="/seller/:id" element={<SellerScreen />}></Route>
+                <Route path="/cart/:id" element={<CartScreen />}></Route>
                 <Route
-                  path='/comboEdit/:id'
+                  path="/comboEdit/:id"
                   element={<ComboEditScreen />}
                 ></Route>
-                <Route path='/carttshirt/:id' element={<CartScreen />}></Route>
+                <Route path="/carttshirt/:id" element={<CartScreen />}></Route>
                 <Route
-                  path='/search/name'
+                  path="/search/name"
                   element={<SearchScreen />}
                   exact
                 ></Route>
 
-                <Route path='/cart' element={<CartScreen />}></Route>
+                <Route path="/cart" element={<CartScreen />}></Route>
                 <Route
-                  path='/collectionlist'
+                  path="/collectionlist"
                   element={<CollectionScreen />}
                 ></Route>
                 <Route
-                  path='/collectionlist/women'
-                  element={<CollectionScreen categorytype='Women' />}
+                  path="/collectionlist/women"
+                  element={<CollectionScreen categorytype="Women" />}
                 ></Route>
                 <Route
-                  path='/collectionlist/kids'
-                  element={<CollectionScreen categorytype='Kids' />}
+                  path="/collectionlist/kids"
+                  element={<CollectionScreen categorytype="Kids" />}
                 ></Route>
-                <Route path='/' element={<SigninScreen />}></Route>
-                <Route path='/account' element={<AccountScreen />}></Route>
+                <Route path="/" element={<SigninScreen />}></Route>
+                <Route path="/account" element={<AccountScreen />}></Route>
                 <Route
-                  path='/accountcreation'
+                  path="/accountcreation"
                   element={<AccountCreation />}
                 ></Route>
-                <Route path='/adminin' element={<AdmininScreen />}></Route>
+                <Route path="/adminin" element={<AdmininScreen />}></Route>
                 <Route
-                  path='/shipping'
+                  path="/shipping"
                   element={<ShippingAddressScreen />}
                 ></Route>
                 <Route
-                  path='/paymente'
+                  path="/paymente"
                   element={<PaymentMethodScreen />}
                 ></Route>
                 <Route
-                  path='/placeorder'
+                  path="/placeorder"
                   element={<PlaceOrderScreen />}
                 ></Route>
-                <Route path='/order/:id' element={<OrderScreen />}></Route>
-                <Route path='/register' element={<RegisterScreen />}></Route>
-                <Route path='/otp' element={<OtpScreen />}></Route>
-                <Route path='/otpVerify' element={<OtpVerifyScreen />}></Route>
-                <Route path='/text' element={<TextEditScreen />}></Route>
+                <Route path="/order/:id" element={<OrderScreen />}></Route>
+                <Route path="/register" element={<RegisterScreen />}></Route>
+                <Route path="/otp" element={<OtpScreen />}></Route>
+                <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
+                <Route path="/text" element={<TextEditScreen />}></Route>
                 <Route
-                  path='/specificPrice/:id'
+                  path="/specificPrice/:id"
                   element={<SpecificViewScreen />}
                 ></Route>
 
                 {/* <Route path="/product" element={<PrestaProductScreen />}></Route> */}
 
                 <Route
-                  path='/regotpVerify'
+                  path="/regotpVerify"
                   element={<RegOtpVerifyScreen />}
                 ></Route>
                 <Route
-                  path='/search/name'
+                  path="/search/name"
                   element={<SearchScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/productlist/seller'
+                  path="/productlist/seller"
                   element={
                     <SellerRoute>
                       <ProductListScreen />
@@ -815,7 +852,7 @@ function App() {
                 ></Route>
 
                 <Route
-                  path='/OrderList/seller'
+                  path="/OrderList/seller"
                   element={
                     <SellerRoute>
                       <OrderListScreen />
@@ -824,7 +861,7 @@ function App() {
                   exact
                 ></Route>
                 <Route
-                  path='/profile'
+                  path="/profile"
                   element={
                     <PrivateRoute>
                       <ProfileScreen />
@@ -832,7 +869,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/productlist'
+                  path="/productlist"
                   element={
                     <AdminRoute>
                       <ProductListScreen />
@@ -842,7 +879,7 @@ function App() {
                 />
 
                 <Route
-                  path='/orderlist'
+                  path="/orderlist"
                   element={
                     <AdminRoute>
                       <OrderListScreen />
@@ -852,18 +889,18 @@ function App() {
                 />
 
                 <Route
-                  path='/search/name/:name'
+                  path="/search/name/:name"
                   element={<SearchScreen />}
                   exact
                 ></Route>
 
                 <Route
-                  path='/search/categorygroup/:categorygroup'
+                  path="/search/categorygroup/:categorygroup"
                   element={<SearchScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/search/categorytype/:categorytype'
+                  path="/search/categorytype/:categorytype"
                   element={<SearchScreen />}
                   exact
                 ></Route>
@@ -873,13 +910,13 @@ function App() {
               exact
             ></Route> */}
                 <Route
-                  path='/search/category:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber'
+                  path="/search/category:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
                   element={<SearchScreen />}
                   exact
                 ></Route>
 
                 <Route
-                  path='/productlist/seller'
+                  path="/productlist/seller"
                   element={
                     <SellerRoute>
                       <ProductListScreen />
@@ -887,7 +924,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/orderlist/seller'
+                  path="/orderlist/seller"
                   element={
                     <SellerRoute>
                       <OrderListScreen />
@@ -895,18 +932,18 @@ function App() {
                   }
                 />
                 <Route
-                  path='/products/new'
+                  path="/products/new"
                   element={<ProductEditScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/product/:id/edit'
+                  path="/product/:id/edit"
                   element={<ProductEditScreen />}
                   exact
                 ></Route>
 
                 <Route
-                  path='/user/:id/edit'
+                  path="/user/:id/edit"
                   element={
                     <AdminRoute>
                       <UserEditScreen />
@@ -914,7 +951,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/userlist'
+                  path="/userlist"
                   element={
                     <AdminRoute>
                       <UserListScreen />
@@ -922,7 +959,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/dashboard'
+                  path="/dashboard"
                   element={
                     <AdminRoute>
                       <DashboardScreen />
@@ -931,7 +968,7 @@ function App() {
                 />
 
                 <Route
-                  path='/productlist/pageNumber/:pageNumber'
+                  path="/productlist/pageNumber/:pageNumber"
                   element={
                     <AdminRoute>
                       <ProductListScreen />
@@ -948,22 +985,22 @@ function App() {
             /> */}
 
                 <Route
-                  path='/search/category/:category'
+                  path="/search/category/:category"
                   element={<SearchScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/search/category/:category/name/:name'
+                  path="/search/category/:category/name/:name"
                   element={<SearchScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber'
+                  path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
                   element={<SearchScreen />}
                   exact
                 ></Route>
                 <Route
-                  path='/map'
+                  path="/map"
                   element={
                     <PrivateRoute>
                       <MapScreen />
@@ -971,7 +1008,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/support'
+                  path="/support"
                   element={
                     <AdminRoute>
                       <SupportScreen />
@@ -980,7 +1017,7 @@ function App() {
                 />
 
                 <Route
-                  path='/application'
+                  path="/application"
                   element={<ApplicationScreen />}
                   exact
                 ></Route>
@@ -994,24 +1031,24 @@ function App() {
                 /> */}
 
                 <Route
-                  path='/product/:id'
+                  path="/product/:id"
                   element={<ProductScreen />}
                   exact
                 ></Route>
-                <Route path='/footer' element={<Footer />} exact></Route>
+                <Route path="/footer" element={<Footer />} exact></Route>
                 <Route
-                  path='/orderhistory'
+                  path="/orderhistory"
                   element={<OrderHistoryScreen />}
                 ></Route>
-                <Route path='/pricing' element={<ProdPricingScreen />}></Route>
-                <Route path='/taxes' element={<TaxesFormScreen />}></Route>
-                <Route path='/taxes/:id' element={<TaxesFormScreen />}></Route>
+                <Route path="/pricing" element={<ProdPricingScreen />}></Route>
+                <Route path="/taxes" element={<TaxesFormScreen />}></Route>
+                <Route path="/taxes/:id" element={<TaxesFormScreen />}></Route>
                 <Route
-                  path='/hometaxes'
+                  path="/hometaxes"
                   element={<TaxesMasterScreen />}
                 ></Route>
-                <Route path='/options' element={<OptionsScreen />}></Route>
-                <Route path='/home' element={<HomeScreen />} exact></Route>
+                <Route path="/options" element={<OptionsScreen />}></Route>
+                <Route path="/home" element={<HomeScreen />} exact></Route>
 
                 {/* <Route path="/" element={<SigninScreen />} exact></Route> */}
               </Routes>
