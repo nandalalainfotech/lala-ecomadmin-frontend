@@ -11,9 +11,20 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "../../node_modules/react-router-dom/dist/index";
-import { QuantityListDetails, QuantityfindOneaDetails, quantityDetail, updateQuantitydetail } from "../actions/ProductQuantitiesAction";
-import { catLastProductList, catProductViewList } from "../actions/catProductAction";
-import { PRODUCT_QUANTITIES_RESET, PRODUCT_QUANTITIES_UPDATE_RESET } from "../constants/productQuantitiesConstands";
+import {
+  QuantityListDetails,
+  QuantityfindOneaDetails,
+  quantityDetail,
+  updateQuantitydetail,
+} from "../actions/ProductQuantitiesAction";
+import {
+  catLastProductList,
+  catProductViewList,
+} from "../actions/catProductAction";
+import {
+  PRODUCT_QUANTITIES_RESET,
+  PRODUCT_QUANTITIES_UPDATE_RESET,
+} from "../constants/productQuantitiesConstands";
 
 //import { PRODUCT_QUANTITIES_RESET } from '../constants/productQuantitiesConstands';
 // DataGrid;
@@ -27,7 +38,6 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
  E.g.: if set to 3,
  customers will be able to purchase the product only if they take at least 3 in quantity.
 `;
-
 
   const params = useParams();
   const EditId = params.id;
@@ -51,11 +61,9 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   // const cataloglastProd = useSelector((state) => state.cataloglastProd);
   // const { lastcatProducts } = cataloglastProd;
 
-
   const [Quantity, setQuantity] = useState();
 
   const prodObj = catProducts?.find((item) => item?._id === EditId);
-
 
   // eslint-disable-next-line no-unused-vars
   const [productId, setproductId] = useState([prodObj?._id]);
@@ -63,12 +71,11 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   const QuantityFindOne = useSelector((state) => state.QuantityFindOne);
   const { quantityOnelist } = QuantityFindOne;
 
-
   let productdata;
   {
     catProducts?.map((state) => {
-      productdata = state?._id
-    })
+      productdata = state?._id;
+    });
   }
   // console.log("catProducts======>", catProducts)
 
@@ -116,25 +123,25 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
     // event.target.reset();
     // setEditQuantiry("");
     // setEditMinQuantiry("");
-  }
+  };
 
   useEffect(() => {
     if (QtySave) {
       dispatch({ type: PRODUCT_QUANTITIES_RESET });
     }
     if (updatequantity) {
-      dispatch({ type: PRODUCT_QUANTITIES_UPDATE_RESET })
+      dispatch({ type: PRODUCT_QUANTITIES_UPDATE_RESET });
     }
     dispatch(catProductViewList());
     dispatch(QuantityListDetails());
     dispatch(QuantityfindOneaDetails(EditId));
-    dispatch(catLastProductList())
+    dispatch(catLastProductList());
   }, [dispatch, QtySave, updatequantity]);
 
   useEffect(() => {
     setEditQuantiry(quantityOnelist?.Qty);
-    setEditMinQuantiry(quantityOnelist?.minQty)
-  }, [quantityOnelist])
+    setEditMinQuantiry(quantityOnelist?.minQty);
+  }, [quantityOnelist]);
 
   // useEffect(() => {
   //   if (lastcatProducts?.length > 0) {
@@ -146,183 +153,201 @@ The minimum quantity required to buy this product (set to 1 to disable this feat
   // const [checked, setchecked] = useState(false);
 
   return (
-    <>{quantityObj ? (<><Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Box onSubmit={handleSubmit(updateQtyDetails)} component='form'>
-          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-            Quantities
-          </Typography>
+    <>
+      {quantityObj ? (
+        <>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Box onSubmit={handleSubmit(updateQtyDetails)} component="form">
+                <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                  Quantities
+                </Typography>
 
-          <Grid item xs={6}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography sx={{ mt: "20px", fontSize: 14 }}>
-                Quantity
-              </Typography>
-
-              <Typography sx={{ mt: "20px", fontSize: 14, mr: 3 }}>
-                Minimum quantity for sale
-                <Tooltip title={sale}>
-                  <InfoIcon sx={{ fontSize: 12 }} />
-                </Tooltip>
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <Typography sx={{ mt: "10px" }}>
-                <TextField
-                  size='small'
-                  margin='normal'
-                  autoComplete='off'
-                  value={EditQuantiry}
-                  onChange={(e) => setEditQuantiry(e.target.value)}
-                />
-              </Typography>
-              <Typography sx={{ mt: "10px" }}>
-                <TextField
-                  size='small'
-                  margin='normal'
-                  autoComplete='off'
-                  value={EditMinQuantiry}
-                  onChange={(e) => setEditMinQuantiry(e.target.value)}
-                />
-                {errors.mqty && (
-                  <span className='formError'>
-                    Minimum quantity is required
-                  </span>
-                )}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "-60px",
-              }}
-            >
-              <Typography>
-                <Box sx={{ display: "flex" }}>
-                  <Button
-                    variant='contained'
-                    sx={{ mt: 1, mb: 2, ml: "50rem" }}
-                    type='submit'
+                <Grid item xs={6}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    Update
-                  </Button>
-                </Box>
-              </Typography>
-            </Box>
-          </Grid>
-        </Box>
-      </Grid>
-    </Grid></>) : (<>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box onSubmit={handleSubmit(saveQtyDetails)} component='form'>
-            <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-              Quantities
-            </Typography>
+                    <Typography sx={{ mt: "20px", fontSize: 14 }}>
+                      Quantity
+                    </Typography>
 
-            <Grid item xs={6}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography sx={{ mt: "20px", fontSize: 14 }}>
-                  Quantity
-                </Typography>
-
-                <Typography sx={{ mt: "20px", fontSize: 14, mr: 3 }}>
-                  Minimum quantity for sale
-                  <Tooltip title={sale}>
-                    <InfoIcon sx={{ fontSize: 12 }} />
-                  </Tooltip>
-                </Typography>
+                    <Typography sx={{ mt: "20px", fontSize: 14, mr: 3 }}>
+                      Minimum quantity for sale
+                      <Tooltip title={sale}>
+                        <InfoIcon sx={{ fontSize: 12 }} />
+                      </Tooltip>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography sx={{ mt: "10px" }}>
+                      <TextField
+                        size="small"
+                        margin="normal"
+                        autoComplete="off"
+                        value={EditQuantiry}
+                        onChange={(e) => setEditQuantiry(e.target.value)}
+                      />
+                    </Typography>
+                    <Typography sx={{ mt: "10px" }}>
+                      <TextField
+                        size="small"
+                        margin="normal"
+                        autoComplete="off"
+                        value={EditMinQuantiry}
+                        onChange={(e) => setEditMinQuantiry(e.target.value)}
+                      />
+                      {errors.mqty && (
+                        <span className="formError">
+                          Minimum quantity is required
+                        </span>
+                      )}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: "-60px",
+                    }}
+                  >
+                    <Typography>
+                      <Box sx={{ display: "flex" }}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            mt: 1,
+                            mb: 2,
+                            ml: "50rem",
+                            backgroundColor: "#00A787",
+                            "&:hover": { backgroundColor: "#00A787" },
+                          }}
+                          type="submit"
+                        >
+                          Update
+                        </Button>
+                      </Box>
+                    </Typography>
+                  </Box>
+                </Grid>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Typography sx={{ mt: "10px" }}>
-                  <TextField
-                    size='small'
-                    margin='normal'
-                    id='qty'
-                    name='qty'
-                    autoComplete='off'
-                    value={Quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  // {...register("qty", { required: true })}
-                  // error={errors.qty}
-                  />
-                  {/* {errors.qty && (
+          </Grid>
+        </>
+      ) : (
+        <>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Box onSubmit={handleSubmit(saveQtyDetails)} component="form">
+                <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                  Quantities
+                </Typography>
+
+                <Grid item xs={6}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography sx={{ mt: "20px", fontSize: 14 }}>
+                      Quantity
+                    </Typography>
+
+                    <Typography sx={{ mt: "20px", fontSize: 14, mr: 3 }}>
+                      Minimum quantity for sale
+                      <Tooltip title={sale}>
+                        <InfoIcon sx={{ fontSize: 12 }} />
+                      </Tooltip>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography sx={{ mt: "10px" }}>
+                      <TextField
+                        size="small"
+                        margin="normal"
+                        id="qty"
+                        name="qty"
+                        autoComplete="off"
+                        value={Quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                        // {...register("qty", { required: true })}
+                        // error={errors.qty}
+                      />
+                      {/* {errors.qty && (
                     <span className='formError'>qty is required</span>
                   )} */}
-                </Typography>
-                <Typography sx={{ mt: "10px" }}>
-                  <TextField
-                    size='small'
-                    margin='normal'
-                    id='categoryTittel'
-                    name='mqty'
-                    autoComplete='off'
-                    {...register("mqty", { required: true })}
-                    error={errors.mqty}
-                  />
-                  {errors.mqty && (
-                    <span className='formError'>
-                      Minimum quantity is required
-                    </span>
-                  )}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  mt: "-60px",
-                }}
-              >
-                <Typography>
-                  <Box sx={{ display: "flex" }}>
-                    <Button
-                      variant='contained'
-                      sx={{ mt: 1, mb: 2, ml: "50rem" }}
-                      type='submit'
-                    >
-                      Save
-                    </Button>
+                    </Typography>
+                    <Typography sx={{ mt: "10px" }}>
+                      <TextField
+                        size="small"
+                        margin="normal"
+                        id="categoryTittel"
+                        name="mqty"
+                        autoComplete="off"
+                        {...register("mqty", { required: true })}
+                        error={errors.mqty}
+                      />
+                      {errors.mqty && (
+                        <span className="formError">
+                          Minimum quantity is required
+                        </span>
+                      )}
+                    </Typography>
                   </Box>
-                </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: "-60px",
+                    }}
+                  >
+                    <Typography>
+                      <Box sx={{ display: "flex" }}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            mt: 1,
+                            mb: 2,
+                            ml: "50rem",
+                            backgroundColor: "#00A787",
+                            "&:hover": { backgroundColor: "#00A787" },
+                          }}
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Typography>
+                  </Box>
+                </Grid>
               </Box>
             </Grid>
-          </Box>
-        </Grid>
-      </Grid>
-    </>)}
-
+          </Grid>
+        </>
+      )}
     </>
   );
 }

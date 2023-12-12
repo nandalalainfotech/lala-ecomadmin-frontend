@@ -9,8 +9,15 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "../../node_modules/react-router-dom/dist/index";
-import { ShipListDetails, shippingDetail, updateShipdetail } from "../actions/ProductShippingAction";
-import { PRODUCT_SHIPPING_DETAILS_RESET, PRODUCT_SHIPPING_UPDATE_RESET } from "../constants/ProductSippingConstants";
+import {
+  ShipListDetails,
+  shippingDetail,
+  updateShipdetail,
+} from "../actions/ProductShippingAction";
+import {
+  PRODUCT_SHIPPING_DETAILS_RESET,
+  PRODUCT_SHIPPING_UPDATE_RESET,
+} from "../constants/ProductSippingConstants";
 DataGrid;
 
 // import Card from "@mui/material/Card";
@@ -36,7 +43,7 @@ export default function ProductShippingScreen() {
 
   const shippingObj = shippingdetail?.find((item) => item?.mprodId === EditId);
 
-  console.log('shippingObj-----------', shippingObj);
+  console.log("shippingObj-----------", shippingObj);
 
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
@@ -44,8 +51,8 @@ export default function ProductShippingScreen() {
   let productdata;
   {
     catProducts?.map((state) => {
-      productdata = state?._id
-    })
+      productdata = state?._id;
+    });
   }
 
   const [EditWidth, setEditWidth] = useState(shippingObj?.width);
@@ -180,145 +187,154 @@ export default function ProductShippingScreen() {
   //   }
   // };
   return (
-    <>   {shippingObj ? (<>
-      <Box onSubmit={handleSubmit(updateShppingDetails)} component='form'>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
-              Package Dimension
-            </Typography>
+    <>
+      {" "}
+      {shippingObj ? (
+        <>
+          <Box onSubmit={handleSubmit(updateShppingDetails)} component="form">
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                  Package Dimension
+                </Typography>
 
-            <Typography sx={{ mt: "10px", fontSize: 13 }}>
-              Charge additional shipping costs based on packet dimensions covered
-              here.
-            </Typography>
+                <Typography sx={{ mt: "10px", fontSize: 13 }}>
+                  Charge additional shipping costs based on packet dimensions
+                  covered here.
+                </Typography>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "30px",
-              }}
-            >
-              <Typography sx={{ width: "100%", ml: 5, fontSize: 13 }}>
-                Width
-              </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: "30px",
+                  }}
+                >
+                  <Typography sx={{ width: "100%", ml: 5, fontSize: 13 }}>
+                    Width
+                  </Typography>
 
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Height</Typography>
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Depth</Typography>
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Weight</Typography>
-            </Box>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Height
+                  </Typography>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Depth
+                  </Typography>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Weight
+                  </Typography>
+                </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "20px",
-              }}
-            >
-              <TextField
-                sx={{ width: "100%", m: "0 10px" }}
-                size='small'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15px 10px",
-                        border: "0.5px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "width",
-                }}
-                aria-describedby='outlined-weight-helper-text'
-                value={EditWidth}
-                onChange={(e) => setEditWidth(e.target.value)}
-              />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: "20px",
+                  }}
+                >
+                  <TextField
+                    sx={{ width: "100%", m: "0 10px" }}
+                    size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15px 10px",
+                            border: "0.5px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "width",
+                    }}
+                    aria-describedby="outlined-weight-helper-text"
+                    value={EditWidth}
+                    onChange={(e) => setEditWidth(e.target.value)}
+                  />
 
-              <TextField
-                size='small'
-                sx={{ width: "100%" }}
-                value={EditHeight}
-                onChange={(e) => setEditHeight(e.target.value)}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "height",
-                }}
-              />
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%" }}
+                    value={EditHeight}
+                    onChange={(e) => setEditHeight(e.target.value)}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "height",
+                    }}
+                  />
 
-              <TextField
-                size='small'
-                sx={{ width: "100%", m: "0 10px" }}
-                value={EditDepth}
-                onChange={(e) => setEditDepth(e.target.value)}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "depth",
-                }}
-              />
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%", m: "0 10px" }}
+                    value={EditDepth}
+                    onChange={(e) => setEditDepth(e.target.value)}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "depth",
+                    }}
+                  />
 
-              <TextField
-                size='small'
-                sx={{ width: "100%" }}
-                id='weight'
-                value={EditWeight}
-                onChange={(e) => setEditWeight(e.target.value)}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Kg
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "weight",
-                }}
-              />
-            </Box>
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%" }}
+                    id="weight"
+                    value={EditWeight}
+                    onChange={(e) => setEditWeight(e.target.value)}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Kg
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "weight",
+                    }}
+                  />
+                </Box>
 
-            {/* <Typography
+                {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -542,166 +558,180 @@ export default function ProductShippingScreen() {
                 })}
               />
             </FormGroup> */}
-            <Typography>
-              <Box sx={{ display: "flex" }}>
-                <Button
-                  variant='contained'
-                  sx={{ mt: 1, mb: 2, ml: "50rem" }}
-                  type='submit'
+                <Typography>
+                  <Box sx={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mt: 1,
+                        mb: 2,
+                        ml: "50rem",
+                        backgroundColor: "#00A787",
+                        "&:hover": { backgroundColor: "#00A787" },
+                      }}
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </Box>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Box onSubmit={handleSubmit(saveShppingDetails)} component="form">
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                  Package Dimension
+                </Typography>
+
+                <Typography sx={{ mt: "10px", fontSize: 13 }}>
+                  Charge additional shipping costs based on packet dimensions
+                  covered here.
+                </Typography>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: "30px",
+                  }}
                 >
-                  Update
-                </Button>
-              </Box>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    </>) : (<>
-      <Box onSubmit={handleSubmit(saveShppingDetails)} component='form'>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
-              Package Dimension
-            </Typography>
+                  <Typography sx={{ width: "100%", ml: 5, fontSize: 13 }}>
+                    Width
+                  </Typography>
 
-            <Typography sx={{ mt: "10px", fontSize: 13 }}>
-              Charge additional shipping costs based on packet dimensions covered
-              here.
-            </Typography>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Height
+                  </Typography>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Depth
+                  </Typography>
+                  <Typography sx={{ width: "100%", fontSize: 13 }}>
+                    Weight
+                  </Typography>
+                </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "30px",
-              }}
-            >
-              <Typography sx={{ width: "100%", ml: 5, fontSize: 13 }}>
-                Width
-              </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: "20px",
+                  }}
+                >
+                  <TextField
+                    sx={{ width: "100%", m: "0 10px" }}
+                    size="small"
+                    id="width"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15px 10px",
+                            border: "0.5px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "width",
+                    }}
+                    aria-describedby="outlined-weight-helper-text"
+                    {...register("width", {
+                      required: true,
+                    })}
+                  />
 
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Height</Typography>
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Depth</Typography>
-              <Typography sx={{ width: "100%", fontSize: 13 }}>Weight</Typography>
-            </Box>
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%" }}
+                    id="height"
+                    {...register("height", {
+                      required: true,
+                    })}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "height",
+                    }}
+                  />
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "20px",
-              }}
-            >
-              <TextField
-                sx={{ width: "100%", m: "0 10px" }}
-                size='small'
-                id='width'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15px 10px",
-                        border: "0.5px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "width",
-                }}
-                aria-describedby='outlined-weight-helper-text'
-                {...register("width", {
-                  required: true,
-                })}
-              />
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%", m: "0 10px" }}
+                    id="depth"
+                    {...register("depth", {
+                      required: true,
+                    })}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Cm
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "depth",
+                    }}
+                  />
 
-              <TextField
-                size='small'
-                sx={{ width: "100%" }}
-                id='height'
-                {...register("height", {
-                  required: true,
-                })}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "height",
-                }}
-              />
-
-              <TextField
-                size='small'
-                sx={{ width: "100%", m: "0 10px" }}
-                id='depth'
-                {...register("depth", {
-                  required: true,
-                })}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Cm
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "depth",
-                }}
-              />
-
-              <TextField
-                size='small'
-                sx={{ width: "100%" }}
-                id='weight'
-                {...register("weight", {
-                  required: true,
-                })}
-                aria-describedby='outlined-weight-helper-text'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position='end'
-                      sx={{
-                        mr: -1.7,
-                        padding: "15.5px 10px",
-                        border: "1px solid gray",
-                        backgroundColor: (theme) => theme.palette.divider,
-                      }}
-                    >
-                      Kg
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 13 },
-                  "aria-label": "weight",
-                }}
-              />
-            </Box>
-            <br />
-            {/* <Typography
+                  <TextField
+                    size="small"
+                    sx={{ width: "100%" }}
+                    id="weight"
+                    {...register("weight", {
+                      required: true,
+                    })}
+                    aria-describedby="outlined-weight-helper-text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          sx={{
+                            mr: -1.7,
+                            padding: "15.5px 10px",
+                            border: "1px solid gray",
+                            backgroundColor: (theme) => theme.palette.divider,
+                          }}
+                        >
+                          Kg
+                        </InputAdornment>
+                      ),
+                      style: { fontSize: 13 },
+                      "aria-label": "weight",
+                    }}
+                  />
+                </Box>
+                <br />
+                {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -927,21 +957,28 @@ export default function ProductShippingScreen() {
                 })}
               />
             </FormGroup> */}
-            <Typography>
-              <Box sx={{ display: "flex" }}>
-                <Button
-                  variant='contained'
-                  sx={{ mt: 1, mb: 2, ml: "50rem" }}
-                  type='submit'
-                >
-                  Save
-                </Button>
-              </Box>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    </>)}</>
-
+                <Typography>
+                  <Box sx={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mt: 1,
+                        mb: 2,
+                        ml: "50rem",
+                        backgroundColor: "#00A787",
+                        "&:hover": { backgroundColor: "#00A787" },
+                      }}
+                      type="submit"
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
+      )}
+    </>
   );
 }
