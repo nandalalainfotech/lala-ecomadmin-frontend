@@ -1,9 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Box } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,8 +10,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Typography } from "@mui/material";
 import { Divider } from "../../node_modules/@material-ui/core/index";
-import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { catProductList } from "../actions/catProductAction";
 import {
   deleteenquiry,
@@ -261,7 +261,7 @@ function ProductEnquiryScreen() {
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
-        sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 2 }}
+        sx={{ display: "flex", flexDerection: "row", mt: 0, mb: 2 }}
       >
         <Link
           to="/"

@@ -151,39 +151,37 @@ export default function PaymentScreen() {
       {EditId ? (
         <>
           {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 30px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Update Gateway
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/gateway"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Gateway</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Update Gateway</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
             <Box>
-              <Box>
-                <Typography variant="h6" sx={{ mt: -1 }}>
-                  Update Gateway
-                </Typography>
-                <Breadcrumbs
-                  separator={<NavigateNextIcon fontSize="small" />}
-                  aria-label="breadcrumb"
-                >
-                  <Link
-                    to="/"
-                    style={{
-                      color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                  </Link>
-                  <Link
-                    to="/gateway"
-                    style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                  >
-                    <Typography sx={{ fontSize: 13 }}>Gateway</Typography>
-                  </Link>
-                </Breadcrumbs>
-                <Divider />
-              </Box>{" "}
               <ThemeProvider theme={theme}>
                 <Container
                   component="main"
@@ -211,7 +209,14 @@ export default function PaymentScreen() {
                     }}
                   >
                     <Box>
-                      {" "}
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 25, mb: 2 }}
+                        >
+                          Update Gateway
+                        </Typography>
+                      </Box>
                       <Box sx={{ display: "flex", ml: 3 }}>
                         <Box>
                           <Typography sx={{ fontSize: 14, mt: 2 }}>
@@ -428,39 +433,37 @@ export default function PaymentScreen() {
       ) : (
         <>
           {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 30px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Add Gateway
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/gateway"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Gateway</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Add Gateway</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
             <Box>
-              <Box>
-                <Typography variant="h6" sx={{ mt: -1 }}>
-                  Add New Gateway
-                </Typography>
-                <Breadcrumbs
-                  separator={<NavigateNextIcon fontSize="small" />}
-                  aria-label="breadcrumb"
-                >
-                  <Link
-                    to="/"
-                    style={{
-                      color: "rgba(0, 0, 0, 0.6)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                  </Link>
-                  <Link
-                    to="/gateway"
-                    style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                  >
-                    <Typography sx={{ fontSize: 13 }}>Gateway</Typography>
-                  </Link>
-                </Breadcrumbs>
-                <Divider />
-              </Box>{" "}
               <ThemeProvider theme={theme}>
                 <Container
                   component="main"
@@ -488,7 +491,14 @@ export default function PaymentScreen() {
                     }}
                   >
                     <Box>
-                      {" "}
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center", ml: 25, mb: 2 }}
+                        >
+                          Add Gateway
+                        </Typography>
+                      </Box>
                       <Box sx={{ display: "flex", ml: 3 }}>
                         <Box>
                           <Typography sx={{ fontSize: 14, mt: 2 }}>

@@ -84,7 +84,7 @@ export default function ZoneScreen() {
       saveZone({
         zoneName: e.zonename,
         checked: Checked,
-      }),
+      })
     );
     window.alert("Details saved Successfully");
     navigate("/locatgrid");
@@ -97,7 +97,7 @@ export default function ZoneScreen() {
         id: EditId,
         zoneName: EditZoneName,
         checked: EditChecked,
-      }),
+      })
     );
     window.alert("Details Updated Successfully");
     navigate("/locatgrid");
@@ -116,149 +116,151 @@ export default function ZoneScreen() {
       {EditId ? (
         <>
           {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 30px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant="h6" sx={{ mt: -1 }}>
-                Update Zone
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Update Zone
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
               >
-                <Link
-                  to="/"
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to="/locatgrid"
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Zone</Typography>
-                </Link>
-              </Breadcrumbs>
-              <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
-                <Box>
-                  {" "}
-                  <ThemeProvider theme={theme}>
-                    <Container
-                      component="main"
-                      maxWidth="sm"
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/locatgrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> Zone</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Update Zone</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box sx={{ mt: 0, mb: 1 }}>
+              <Box>
+                {" "}
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{
+                      my: { xs: 3, md: 6, lg: 10 },
+                      p: { xs: 2, md: 1 },
+                    }}
+                  >
+                    <CssBaseline />
+                    <Box
+                      component="form"
+                      onSubmit={handleSubmit(UpdateZoneDetails)}
                       sx={{
-                        my: { xs: 3, md: 6, lg: 10 },
-                        p: { xs: 2, md: 1 },
+                        display: "flex",
+                        width: "100%",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        borderRadius: "0px",
+                        p: 5,
+                        border: "1px solid #888888",
                       }}
                     >
-                      <CssBaseline />
-                      <Box
-                        component="form"
-                        onSubmit={handleSubmit(UpdateZoneDetails)}
-                        sx={{
-                          display: "flex",
-                          width: "100%",
-                          flexDirection: "column",
-
-                          borderRadius: "0px",
-                          p: 5,
-                          border: "1px solid #888888",
-                          mt: -7,
-                          boxShadow: " 1px 1px 1px 1px #909090",
-                        }}
-                      >
-                        <Box sx={{ display: "flex" }}>
-                          <Typography sx={{ fontSize: 13, mt: 3 }}>
-                            <span style={{ color: "red" }}>*</span>Zone name:
-                          </Typography>
-                          <Box sx={{ ml: 5, width: "70%" }}>
-                            <TextField
-                              size="small"
-                              fullWidth
-                              margin="normal"
-                              id="zonename"
-                              name="zonename"
-                              autoComplete="off"
-                              onChange={(e) => setEditZoneName(e.target.value)}
-                              value={EditZoneName}
-                              inputProps={{ style: { fontSize: 13 } }}
-                            />
-                          </Box>
-                        </Box>
-                        <Box sx={{ display: "flex" }}>
-                          <Typography sx={{ fontSize: 13, mt: 3 }}>
-                            <span style={{ color: "red" }}>*</span>Active:
-                          </Typography>
-                          <Box sx={{ ml: 25, mt: 2 }}>
-                            <Switch
-                              className={classes.switch}
-                              onChange={(e) => setEditChecked(e.target.checked)}
-                              checked={EditChecked}
-                            // size="small"
-                            />
-                          </Box>
-                        </Box>
-                        <Box>
-                          <Button
-                            // fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2, ml: 25 }}
-                            type="submit"
-                          >
-                            Update
-                          </Button>
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ mt: -3, alignItems: "center" }}
+                        >
+                          Update Zone
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography sx={{ fontSize: 13, mt: 0, ml: -2, pr: 1 }}>
+                          <span style={{ color: "red" }}>*</span>Zone name:
+                        </Typography>
+                        <Box sx={{ ml: 0, width: "70%" }}>
+                          <TextField
+                            size="small"
+                            margin="normal"
+                            id="zonename"
+                            name="zonename"
+                            autoComplete="off"
+                            onChange={(e) => setEditZoneName(e.target.value)}
+                            value={EditZoneName}
+                            inputProps={{ style: { fontSize: 13 } }}
+                          />
                         </Box>
                       </Box>
-                    </Container>
-                  </ThemeProvider>
-                </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography sx={{ fontSize: 13, ml: -14 }}>
+                          <span style={{ color: "red" }}>*</span>Active:
+                        </Typography>
+                        <Box sx={{ ml: 0 }}>
+                          <Switch
+                            className={classes.switch}
+                            onChange={(e) => setEditChecked(e.target.checked)}
+                            checked={EditChecked}
+                            // size="small"
+                          />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button
+                          // fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2, alignItems: "center" }}
+                          type="submit"
+                        >
+                          Update
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
               </Box>
             </Box>
           </div>
         </>
       ) : (
         <>
-          {" "}
-          <div
-            style={{
-              boxShadow: "5px 0 30px rgba(1,41,112,0.08)",
-              padding: "10px",
-            }}
-          >
-            <Box>
-              <Typography variant="h6" sx={{ mt: -1 }}>
-                Add New
-              </Typography>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
+          <div>
+            <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+              Add Zone
+            </Typography>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
               >
-                <Link
-                  to="/"
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Home</Typography>
-                </Link>
-                <Link
-                  to="/locatgrid"
-                  style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
-                >
-                  <Typography sx={{ fontSize: 13 }}>Zone</Typography>
-                </Link>
-              </Breadcrumbs>
+                <Typography sx={{ fontSize: "14px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/locatgrid"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "12px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}> Zone</Typography>
+              </Link>
+              <Typography sx={{ fontSize: "14px" }}> Add Zone</Typography>
+            </Breadcrumbs>
+            <Divider sx={{ mt: 1 }} />
+            <Box>
               <Box sx={{ mt: 0, mb: 1 }}>
-                <Divider />
                 <Box>
                   {" "}
                   <ThemeProvider theme={theme}>
@@ -278,22 +280,29 @@ export default function ZoneScreen() {
                           display: "flex",
                           width: "100%",
                           flexDirection: "column",
-
+                          alignItems: "center",
                           borderRadius: "0px",
                           p: 5,
                           border: "1px solid #888888",
-                          mt: -7,
-                          boxShadow: " 1px 1px 1px 1px #909090",
                         }}
                       >
-                        <Box sx={{ display: "flex" }}>
-                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                        <Box>
+                          <Typography
+                            variant="h6"
+                            sx={{ mt: -3, alignItems: "center" }}
+                          >
+                            Add Zone
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography
+                            sx={{ fontSize: 13, mt: 0, ml: -2, pr: 1 }}
+                          >
                             <span style={{ color: "red" }}>*</span>Zone name:
                           </Typography>
-                          <Box sx={{ ml: 5, width: "70%" }}>
+                          <Box sx={{ ml: 0, width: "70%" }}>
                             <TextField
                               size="small"
-                              fullWidth
                               margin="normal"
                               id="zonename"
                               name="zonename"
@@ -309,17 +318,17 @@ export default function ZoneScreen() {
                             )}
                           </Box>
                         </Box>
-                        <Box sx={{ display: "flex" }}>
-                          <Typography sx={{ fontSize: 13, mt: 3 }}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography sx={{ fontSize: 13, ml: -14 }}>
                             <span style={{ color: "red" }}>*</span>Active:
                           </Typography>
-                          <Box sx={{ ml: 25, mt: 2 }}>
+                          <Box sx={{ ml: 0 }}>
                             <Switch
                               className={classes.switch}
                               checked={Checked}
                               // color="success"
                               onChange={switchHandler}
-                            // size="small"
+                              // size="small"
                             />
                           </Box>
                         </Box>
@@ -327,7 +336,7 @@ export default function ZoneScreen() {
                           <Button
                             // fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, ml: 25 }}
+                            sx={{ mt: 3, mb: 2, alignItems: "center" }}
                             type="submit"
                           >
                             Save
