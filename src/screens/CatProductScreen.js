@@ -1466,54 +1466,85 @@ Not all shops sell new products.
               <Box>
                 {newcombination === "true" ? (
                   <>
-                    <Tabs value={tabIndex} onChange={handleTabChange}>
+                    <Tabs
+                      value={tabIndex}
+                      onChange={handleTabChange}
+                      indicatorColor="#00A787"
+                    >
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          color: "#00A787",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 0 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 0
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Basic Settings"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 1 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 1
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Combination"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 2 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 2
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Quantities"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 3 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 3
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Shipping"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 4 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 4
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Pricing"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 5 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 5
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="SEO"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 6 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 6
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Options"
                       />
@@ -1521,47 +1552,74 @@ Not all shops sell new products.
                   </>
                 ) : (
                   <>
-                    <Tabs value={tabIndex} onChange={handleTabChange}>
+                    <Tabs
+                      value={tabIndex}
+                      onChange={handleTabChange}
+                      indicatorColor="#00A787"
+                    >
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          color: "#00A787",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 0 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 0
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Basic Settings"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 1 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 1
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Quantities"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 2 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 2
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Shipping"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 3 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 3
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Pricing"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 4 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 4
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="SEO"
                       />
                       <Tab
-                        sx={{
+                        style={{
                           fontSize: "13px",
-                          "&:focus": { color: "#00A787" },
+                          color: tabIndex === 5 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 5
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
                         }}
                         label="Options"
                       />
@@ -4611,26 +4669,164 @@ Not all shops sell new products.
             <Box sx={{ mt: "5px" }}>
               <Box>
                 {combination === "true" ? (
-                  <Tabs value={tabIndex} onChange={handleTabChange}>
-                    <Tab sx={{ fontSize: "13px" }} label="Basic Settings" />
-                    <Tab sx={{ fontSize: "13px" }} label="Combination" />
-                    <Tab sx={{ fontSize: "13px" }} label="Quantities" />
-                    <Tab sx={{ fontSize: "13px" }} label="Shipping" />
-                    <Tab sx={{ fontSize: "13px" }} label="Pricing" />
-                    <Tab sx={{ fontSize: "13px" }} label="SEO" />
-                    <Tab sx={{ fontSize: "13px" }} label="Options" />
+                  <Tabs
+                    value={tabIndex}
+                    onChange={handleTabChange}
+                    indicatorColor="#00A787"
+                  >
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 0 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 0
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Basic Settings"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 1 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 1
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Combination"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 2 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 2
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Quantities"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 3 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 3
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Shipping"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 4 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 4
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Pricing"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 5 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 5
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="SEO"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 6 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 6
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Options"
+                    />
                   </Tabs>
                 ) : (
                   <>
                     {" "}
-                    <Tabs value={tabIndex} onChange={handleTabChange}>
-                      <Tab sx={{ fontSize: "13px" }} label="Basic Settings" />
+                    <Tabs
+                      value={tabIndex}
+                      onChange={handleTabChange}
+                      indicatorColor="#00A787"
+                    >
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 0 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 0
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="Basic Settings"
+                      />
 
-                      <Tab sx={{ fontSize: "13px" }} label="Quantities" />
-                      <Tab sx={{ fontSize: "13px" }} label="Shipping" />
-                      <Tab sx={{ fontSize: "13px" }} label="Pricing" />
-                      <Tab sx={{ fontSize: "13px" }} label="SEO" />
-                      <Tab sx={{ fontSize: "13px" }} label="Options" />
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 1 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 1
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="Quantities"
+                      />
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 2 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 2
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="Shipping"
+                      />
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 3 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 3
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="Pricing"
+                      />
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 4 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 4
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="SEO"
+                      />
+                      <Tab
+                        style={{
+                          fontSize: "13px",
+                          color: tabIndex === 5 ? "#00A787" : "inherit",
+                          borderBottom:
+                            tabIndex === 5
+                              ? "2px solid #00A787"
+                              : "2px solid transparent",
+                        }}
+                        label="Options"
+                      />
                     </Tabs>
                   </>
                 )}
@@ -4761,9 +4957,12 @@ Not all shops sell new products.
                                               }
                                               control={
                                                 <Checkbox
-                                                  style={{ color: "#00A787" }}
+                                                  style={{
+                                                    color: checked
+                                                      ? "#00A787"
+                                                      : "inherit",
+                                                  }}
                                                   size="small"
-                                                  checked={checked}
                                                   onChange={handleChangeChekce}
                                                   inputProps={{
                                                     "aria-label": "controlled",

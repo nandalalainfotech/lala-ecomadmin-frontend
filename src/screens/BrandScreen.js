@@ -597,9 +597,9 @@ function BrandScreen() {
                 </Typography>
                 <Box sx={{ display: "flex", mt: 2 }}>
                   <Breadcrumbs
-                    sx={{ mt: -2,mb:1 }}
+                    sx={{ mt: -2, mb: 1 }}
                     separator={<NavigateNextIcon fontSize="small" />}
-                      aria-label="breadcrumb"                     
+                    aria-label="breadcrumb"
                   >
                     <Link
                       to="/"
@@ -619,7 +619,10 @@ function BrandScreen() {
                         mr: 3,
                         mt: -3,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                         fontSize: 12,
                       }}
                       variant="contained"
@@ -633,7 +636,10 @@ function BrandScreen() {
                         mr: 2,
                         mt: -3,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                         fontSize: 12,
                       }}
                       variant="contained"
@@ -655,7 +661,13 @@ function BrandScreen() {
 
             <Box sx={{ ml: "auto" }}>
               <Button
-                sx={{ mr: 2 }}
+                sx={{
+                  mr: 2,
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                }}
                 variant="contained"
                 startIcon={<AddCircleIcon />}
                 onClick={() => setSupplier(1)}
@@ -663,11 +675,32 @@ function BrandScreen() {
                 Add new supplier
               </Button>
 
-              <Button variant="outlined" sx={{ mr: 2 }}>
+              <Button
+                variant="outlined"
+                sx={{
+                  mr: 2,
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                  color: "#fff",
+                }}
+              >
                 Recommended Modules and Services
               </Button>
 
-              <Button variant="outlined">Help</Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                  color: "#fff",
+                }}
+              >
+                Help
+              </Button>
             </Box>
           </Box>
         )}
@@ -675,9 +708,30 @@ function BrandScreen() {
       <Divider sx={{ mt: 3 }} />
       <Box>
         <Box>
-          <Tabs value={brand} onChange={handleTabChange}>
-            <Tab sx={{ fontSize: 13, ml: -2 }} label="Brands" />
-            <Tab sx={{ fontSize: 13 }} label="Supplier" />
+          <Tabs
+            value={brand}
+            onChange={handleTabChange}
+            indicatorColor="#00A787"
+          >
+            <Tab
+              style={{
+                fontSize: "13px",
+                ml: -2,
+                color: brand === 0 ? "#00A787" : "inherit",
+                borderBottom:
+                  brand === 0 ? "2px solid #00A787" : "2px solid transparent",
+              }}
+              label="Brands"
+            />
+            <Tab
+              style={{
+                fontSize: "13px",
+                color: brand === 1 ? "#00A787" : "inherit",
+                borderBottom:
+                  brand === 1 ? "2px solid #00A787" : "2px solid transparent",
+              }}
+              label="Supplier"
+            />
           </Tabs>
         </Box>
         <Box>
@@ -784,9 +838,18 @@ function BrandScreen() {
                       />
 
                       <Button
-                        fullWidth
+                        // fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{
+                          mt: 3,
+                          mb: 2,
+                          width: "100px",
+                          ml: 25,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="submit"
                       >
                         Update
@@ -979,9 +1042,18 @@ function BrandScreen() {
                             />
 
                             <Button
-                              fullWidth
+                              // fullWidth
                               variant="contained"
-                              sx={{ mt: 3, mb: 2 }}
+                              sx={{
+                                mt: 3,
+                                mb: 2,
+                                width: "100px",
+                                ml: 25,
+                                backgroundColor: "#00A787",
+                                "&:hover": {
+                                  backgroundColor: "#00A787",
+                                },
+                              }}
                               type="submit"
                             >
                               Save
@@ -1000,7 +1072,10 @@ function BrandScreen() {
                                 mb: -1,
                                 ml: 0,
                                 borderRadius: "20px",
-                                backgroundColor: "#0099CC",
+                                backgroundColor: "#00A787",
+                                "&:hover": {
+                                  backgroundColor: "#00A787",
+                                },
                                 fontSize: 12,
                               }}
                               variant="contained"
@@ -1077,7 +1152,14 @@ function BrandScreen() {
                                 </DialogContentText>
                               </DialogContent>
                               <DialogActions>
-                                <Button autoFocus onClick={handleDisClose}>
+                                <Button
+                                  autoFocus
+                                  onClick={handleDisClose}
+                                  style={{
+                                    color: "#00A787",
+                                    "&:hover": { color: "#00A787" },
+                                  }}
+                                >
                                   Cancel
                                 </Button>
 
@@ -1086,6 +1168,10 @@ function BrandScreen() {
                                     <Button
                                       onClick={handleClosecheckdelet}
                                       autoFocus
+                                      style={{
+                                        color: "#00A787",
+                                        "&:hover": { color: "#00A787" },
+                                      }}
                                     >
                                       Delete
                                     </Button>
@@ -1095,6 +1181,10 @@ function BrandScreen() {
                                     <Button
                                       onClick={handleClosecheck}
                                       autoFocus
+                                      style={{
+                                        color: "#00A787",
+                                        "&:hover": { color: "#00A787" },
+                                      }}
                                     >
                                       Done
                                     </Button>

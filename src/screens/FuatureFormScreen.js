@@ -163,7 +163,10 @@ function FuatureFormScreen() {
                         mt: 3,
                         mb: 2,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="submit"
                     >
@@ -229,6 +232,7 @@ function FuatureFormScreen() {
                     borderRadius: "0px",
                     p: 5,
                     border: "1px solid #000000",
+                    mb: -10,
                   }}
                 >
                   <Typography variant="h5" sx={{ textAlign: "center" }}>
@@ -256,7 +260,10 @@ function FuatureFormScreen() {
                         mt: 3,
                         mb: 2,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="submit"
                       onClick={() => setBtnFeatureAnother(2)}
@@ -271,7 +278,10 @@ function FuatureFormScreen() {
                         mb: 2,
                         ml: 5,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="Click"
                       onClick={() => setBtnFeature(1)}
