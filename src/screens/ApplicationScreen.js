@@ -294,7 +294,14 @@ function ApplicationScreen() {
               <Button
                 size="small"
                 variant="contained"
-                sx={{ mt: 3, mb: 0 }}
+                sx={{
+                  mt: 3,
+                  mb: 0,
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                }}
                 type="submit"
               >
                 Upload

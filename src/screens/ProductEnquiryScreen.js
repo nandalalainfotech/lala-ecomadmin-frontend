@@ -354,14 +354,43 @@ function ProductEnquiryScreen() {
                       </div>
                     </div>
                   </section>
-                  <Button onClick={handleview}>View Deatils</Button>
+                  <Button
+                    sx={{
+                      color: "#00A787",
+                      "&:hover": {
+                        color: "#00A787",
+                      },
+                    }}
+                    onClick={handleview}
+                  >
+                    View Deatils
+                  </Button>
                 </Box>
               </DialogContent>
             </>
           ))}
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button
+            sx={{
+              color: "#00A787",
+              "&:hover": {
+                color: "#00A787",
+              },
+            }}
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+          <Button
+            sx={{
+              color: "#00A787",
+              "&:hover": {
+                color: "#00A787",
+              },
+            }}
+            onClick={handleClose}
+            autoFocus
+          >
             Ok
           </Button>
         </DialogActions>
@@ -492,14 +521,14 @@ function ProductEnquiryScreen() {
                             required
                           />
                           <Button
-                            color="primary"
-                            variant="outlined"
                             type="submit"
                             style={{
                               marginTop: "20px",
                               marginBottom: "20px",
                               float: "right",
                               marginRight: "20px",
+                              color: "#00A787",
+                              border: "1px solid #00A787",
                             }}
                           >
                             Sent

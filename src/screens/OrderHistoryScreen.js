@@ -347,7 +347,10 @@ export default function OrderHistoryScreen() {
             mt: 1,
             mb: -1,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
             fontSize: 12,
           }}
           onClick={handleClickdelete1}
@@ -372,10 +375,16 @@ export default function OrderHistoryScreen() {
               />
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={handleDeletrClose1}>
+              <Button autoFocus onClick={handleDeletrClose1}  style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}>
                 Cancel
               </Button>
-              <Button onClick={handleClosecheckdelet1} autoFocus>
+              <Button onClick={handleClosecheckdelet1} autoFocus  style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}>
                 Done
               </Button>
             </DialogActions>

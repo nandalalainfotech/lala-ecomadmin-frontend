@@ -212,9 +212,9 @@ export default function CityGridScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={classes.switch}
-                  color='#00CC00'
+                  color="#00CC00"
                   checked
                   onClick={(e) => handleChangeEnabled(e, params.row._id)}
                 />
@@ -226,7 +226,7 @@ export default function CityGridScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   onClick={(e) => handleChangeEnabled(e, params.row._id)}
                 />
               }
@@ -355,17 +355,20 @@ export default function CityGridScreen() {
   return (
     <div>
       <Box sx={{ display: "flex" }}>
-        <Typography variant='h6' sx={{ mt: -1 }}>
+        <Typography variant="h6" sx={{ mt: -1 }}>
           Cities
         </Typography>
         <Box sx={{ ml: "auto" }}>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               mr: 3,
               mt: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={onProdctChange}
@@ -380,13 +383,13 @@ export default function CityGridScreen() {
       </Box>
       <Box>
         <Box sx={{ mt: 2, display: "flex" }}>
-          <Breadcrumbs aria-label='breadcrumb flat'>
-            <div className='breadcrumb flat'>
-              <Link to='/locatgrid'>Zones</Link>
-              <Link to='/countrygrid'>Countries</Link>
+          <Breadcrumbs aria-label="breadcrumb flat">
+            <div className="breadcrumb flat">
+              <Link to="/locatgrid">Zones</Link>
+              <Link to="/countrygrid">Countries</Link>
 
-              <Link to='/stategrid'>States</Link>
-              <Link to='/citygrid' className='active'>
+              <Link to="/stategrid">States</Link>
+              <Link to="/citygrid" className="active">
                 Cities
               </Link>
             </div>
@@ -394,11 +397,15 @@ export default function CityGridScreen() {
           <Box>
             <Button
               // fullWidth
-              variant='contained'
+              variant="contained"
               sx={{
-                mb: 2, ml: 50,
+                mb: 2,
+                ml: 50,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               onClick={handleClickOpencheck}
@@ -410,15 +417,15 @@ export default function CityGridScreen() {
                 // fullScreen={fullScreen}
                 open={opencheck}
                 // onClose={handleDisClose}
-                aria-labelledby='responsive-dialog-title'
+                aria-labelledby="responsive-dialog-title"
               >
-                <DialogTitle id='responsive-dialog-title'>
+                <DialogTitle id="responsive-dialog-title">
                   {"Selected One"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     <FormControlLabel
-                      label='Enable'
+                      label="Enable"
                       control={
                         <Checkbox
                           checked={checkedcheck}
@@ -431,7 +438,7 @@ export default function CityGridScreen() {
                     />
 
                     <FormControlLabel
-                      label='Disable'
+                      label="Disable"
                       control={
                         <Checkbox
                           checked={dchecked}
@@ -443,7 +450,7 @@ export default function CityGridScreen() {
                       }
                     />
                     <FormControlLabel
-                      label='Delete'
+                      label="Delete"
                       control={
                         <Checkbox
                           checked={checkeddelete}
@@ -455,7 +462,7 @@ export default function CityGridScreen() {
                       }
                     />
                     <FormControlLabel
-                      label='Assign to a new Zone'
+                      label="Assign to a new Zone"
                       control={
                         <Checkbox
                           checked={checkzone}
@@ -472,8 +479,8 @@ export default function CityGridScreen() {
                         <Box sx={{ minWidth: 120 }}>
                           <FormControl fullWidth>
                             <Select
-                              labelId='demo-simple-select-label'
-                              id='demo-simple-select'
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
                               value={zone}
                               onChange={handleChange1}
                             >
@@ -500,13 +507,27 @@ export default function CityGridScreen() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button autoFocus onClick={handleDisClose}>
+                  <Button
+                    autoFocus
+                    onClick={handleDisClose}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Cancel
                   </Button>
 
                   {checkeddelete == true ? (
                     <>
-                      <Button onClick={handleClosecheckdelet} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Delete
                       </Button>
                     </>
@@ -516,8 +537,14 @@ export default function CityGridScreen() {
                         <>
                           {" "}
                           <Button
-                            sx={{ mt: 1 }}
-                            variant='contained'
+                            sx={{
+                              mt: 1,
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
+                            }}
+                            variant="contained"
                             autoFocus
                             onClick={handlechangezone}
                           >
@@ -527,7 +554,14 @@ export default function CityGridScreen() {
                       ) : (
                         <>
                           {" "}
-                          <Button onClick={handleClosecheck} autoFocus>
+                          <Button
+                            onClick={handleClosecheck}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Done
                           </Button>
                         </>
@@ -559,17 +593,17 @@ export default function CityGridScreen() {
                 fontSize: 12,
               },
               ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
+                {
+                  backgroundColor: "#808080",
+                  color: "#ffffff",
+                },
               ".css-h4y409-MuiList-root": {
                 display: "grid",
               },
               ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+                {
+                  backgroundColor: "#808080",
+                },
             }}
           >
             <DataGrid
@@ -581,7 +615,7 @@ export default function CityGridScreen() {
               columns={columns}
               rows={citydatum ? citydatum : ""}
               getRowId={(rows) => rows._id}
-              VerticalAlignment='Center'
+              VerticalAlignment="Center"
               rowHeight={40}
               headerHeight={35}
               loading={loading}

@@ -418,8 +418,22 @@ export default function PaymentScreen() {
                           )}
                         </Box>
                       </Box>
-                      <Box sx={{ ml: 70, mt: -5 }}>
-                        <Button type="submit" variant="contained">
+                      <Box
+                        sx={{
+                          ml: 70,
+                          mt: -5,
+                        }}
+                      >
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
+                        >
                           Update
                         </Button>
                       </Box>
@@ -673,8 +687,22 @@ export default function PaymentScreen() {
                           )}
                         </Box>
                       </Box>
-                      <Box sx={{ ml: 70, mt: -5 }}>
-                        <Button type="submit" variant="contained">
+                      <Box
+                        sx={{
+                          ml: 70,
+                          mt: -5,
+                        }}
+                      >
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
+                        >
                           Save
                         </Button>
                       </Box>

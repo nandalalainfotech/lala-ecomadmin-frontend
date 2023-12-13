@@ -169,6 +169,7 @@ export default function ZoneScreen() {
                         alignItems: "center",
                         borderRadius: "0px",
                         p: 5,
+                        mt: -5,
                         border: "1px solid #888888",
                       }}
                     >
@@ -214,7 +215,15 @@ export default function ZoneScreen() {
                         <Button
                           // fullWidth
                           variant="contained"
-                          sx={{ mt: 3, mb: 2, alignItems: "center" }}
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            alignItems: "center",
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           Update
@@ -283,6 +292,7 @@ export default function ZoneScreen() {
                           alignItems: "center",
                           borderRadius: "0px",
                           p: 5,
+                          mt: -5,
                           border: "1px solid #888888",
                         }}
                       >
@@ -336,7 +346,15 @@ export default function ZoneScreen() {
                           <Button
                             // fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, alignItems: "center" }}
+                            sx={{
+                              mt: 3,
+                              mb: 2,
+                              alignItems: "center",
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
+                            }}
                             type="submit"
                           >
                             Save

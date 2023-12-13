@@ -341,7 +341,10 @@ export default function TaxesMasterScreen() {
               mr: 3,
               mt: -2,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={submitHandler}
@@ -361,7 +364,10 @@ export default function TaxesMasterScreen() {
                 mt: 1,
                 mb: -1,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               variant="contained"
@@ -376,7 +382,10 @@ export default function TaxesMasterScreen() {
         mt: 2,
         mb: 0,
         borderRadius: "20px",
-        backgroundColor: "#0099CC",
+         backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
         fontSize: 12,
       }}
       variant='contained'
@@ -438,19 +447,40 @@ export default function TaxesMasterScreen() {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button autoFocus onClick={handleDisClose}>
+                <Button
+                  autoFocus
+                  onClick={handleDisClose}
+                  style={{
+                    color: "#00A787",
+                    "&:hover": { color: "#00A787" },
+                  }}
+                >
                   Cancel
                 </Button>
                 {checkeddelete == true ? (
                   <>
-                    <Button onClick={handleClosecheckdelet} autoFocus>
+                    <Button
+                      onClick={handleClosecheckdelet}
+                      autoFocus
+                      style={{
+                        color: "#00A787",
+                        "&:hover": { color: "#00A787" },
+                      }}
+                    >
                       Delete
                     </Button>
                   </>
                 ) : (
                   <>
                     {" "}
-                    <Button onClick={handleClosecheck} autoFocus>
+                    <Button
+                      onClick={handleClosecheck}
+                      autoFocus
+                      style={{
+                        color: "#00A787",
+                        "&:hover": { color: "#00A787" },
+                      }}
+                    >
                       Done
                     </Button>
                   </>

@@ -1,23 +1,23 @@
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { MenuItem } from '../../node_modules/@material-ui/core/index';
-import { ProfileListDetails, saveDetail } from '../actions/EmployeeAction';
-import { EMPLOYEE_DETAIL_RESET } from '../constants/EmployeeConstants';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { Link } from 'react-router-dom';
-import { Divider } from '../../node_modules/@material-ui/core/index';
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { MenuItem } from "../../node_modules/@material-ui/core/index";
+import { ProfileListDetails, saveDetail } from "../actions/EmployeeAction";
+import { EMPLOYEE_DETAIL_RESET } from "../constants/EmployeeConstants";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Link } from "react-router-dom";
+import { Divider } from "../../node_modules/@material-ui/core/index";
 
 function EmployeeFormScreen() {
   const {
@@ -34,8 +34,8 @@ function EmployeeFormScreen() {
   const EmployeeSave = useSelector((state) => state.EmployeeSave);
   const { success: EmployeesavSucces } = EmployeeSave;
 
-  const [EmployeActive, setEmployeActive] = useState('');
-  const [EmployeProfile, setEmployeProfile] = useState('');
+  const [EmployeActive, setEmployeActive] = useState("");
+  const [EmployeProfile, setEmployeProfile] = useState("");
   const [Btn, setBtn] = useState(false);
   const createEmployeeDetaile = (e) => {
     if (Btn === true) {
@@ -50,10 +50,10 @@ function EmployeeFormScreen() {
           active: EmployeActive,
         })
       );
-      window.confirm('Profile Saved Successfully!!');
+      window.confirm("Profile Saved Successfully!!");
       event.target.reset();
-      setEmployeProfile('');
-      setEmployeActive('');
+      setEmployeProfile("");
+      setEmployeActive("");
     } else {
       dispatch(
         saveDetail({
@@ -66,10 +66,10 @@ function EmployeeFormScreen() {
           active: EmployeActive,
         })
       );
-      window.confirm('Profile Saved Successfully!!');
+      window.confirm("Profile Saved Successfully!!");
       event.target.reset();
-      setEmployeProfile('');
-      setEmployeActive('');
+      setEmployeProfile("");
+      setEmployeActive("");
     }
   };
 
@@ -84,7 +84,7 @@ function EmployeeFormScreen() {
     <Box>
       <>
         <Typography variant="h5">Add Employee Details</Typography>
-        <Box sx={{ display: 'flex', mt: 2 }}>
+        <Box sx={{ display: "flex", mt: 2 }}>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
@@ -92,8 +92,8 @@ function EmployeeFormScreen() {
             <Link
               to="/"
               style={{
-                color: 'rgba(0, 0, 0, 0.6)',
-                fontSize: '15px',
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
               }}
             >
               <Typography>Home</Typography>
@@ -102,14 +102,14 @@ function EmployeeFormScreen() {
             <Link
               to="/team"
               style={{
-                color: 'rgba(0, 0, 0, 0.6)',
-                fontSize: '15px',
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
               }}
             >
               <Typography> Employee Details</Typography>
             </Link>
 
-            <Typography sx={{ fontSize: '15px' }}>
+            <Typography sx={{ fontSize: "15px" }}>
               Add Employee Details
             </Typography>
           </Breadcrumbs>
@@ -132,17 +132,17 @@ function EmployeeFormScreen() {
               onSubmit={handleSubmit1(createEmployeeDetaile)}
               component="form"
               sx={{
-                display: 'flex',
-                width: '100%',
-                flexDirection: 'column',
-                alignItems: 'center',
-                borderRadius: '0px',
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+                alignItems: "center",
+                borderRadius: "0px",
                 p: 5,
-                border: '1px solid #000000',
+                border: "1px solid #000000",
               }}
             >
-              <Typography variant="h5" sx={{ textAlign: 'center' }}>
-                {' '}
+              <Typography variant="h5" sx={{ textAlign: "center" }}>
+                {" "}
                 Create Employee Details
               </Typography>
               <TextField
@@ -153,7 +153,7 @@ function EmployeeFormScreen() {
                 label="First Name"
                 name="fname"
                 autoComplete="off"
-                {...register1('fname', { required: true })}
+                {...register1("fname", { required: true })}
                 error={errors1.eprofil}
               />
               {errors1.eprofil && (
@@ -168,7 +168,7 @@ function EmployeeFormScreen() {
                 label="Last Name"
                 name="lname"
                 autoComplete="off"
-                {...register1('lname', { required: true })}
+                {...register1("lname", { required: true })}
                 error={errors1.lname}
               />
               {errors1.eprofil && (
@@ -183,7 +183,7 @@ function EmployeeFormScreen() {
                 label="Email"
                 name="email"
                 autoComplete="off"
-                {...register1('email', { required: true })}
+                {...register1("email", { required: true })}
                 error={errors1.email}
               />
               {errors1.eprofil && (
@@ -199,7 +199,7 @@ function EmployeeFormScreen() {
                 name="password"
                 type="password"
                 autoComplete="off"
-                {...register1('password', { required: true })}
+                {...register1("password", { required: true })}
                 error={errors1.email}
               />
               {errors1.eprofil && (
@@ -214,7 +214,7 @@ function EmployeeFormScreen() {
                 label="Mobile Number"
                 name="mnumber"
                 autoComplete="off"
-                {...register1('mnumber', { required: true })}
+                {...register1("mnumber", { required: true })}
                 error={errors1.mnumber}
               />
               {errors1.eprofil && (
@@ -248,15 +248,18 @@ function EmployeeFormScreen() {
                   <MenuItem value={false}>No</MenuItem>
                 </Select>
               </FormControl>
-              <Box sx={{ display: 'flex' }}>
+              <Box sx={{ display: "flex" }}>
                 <Button
                   variant="contained"
                   sx={{
                     mt: 3,
                     mb: 2,
                     ml: 5,
-                    borderRadius: '20px',
-                    backgroundColor: '#0099CC',
+                    borderRadius: "20px",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
                   }}
                   type="Click"
                 >
@@ -268,8 +271,11 @@ function EmployeeFormScreen() {
                     mt: 3,
                     mb: 2,
                     ml: 5,
-                    borderRadius: '20px',
-                    backgroundColor: '#0099CC',
+                    borderRadius: "20px",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
                   }}
                   type="Click"
                   onClick={() => setBtn(true)}

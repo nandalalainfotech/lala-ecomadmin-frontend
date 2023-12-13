@@ -1367,7 +1367,10 @@ function AttributesScreen() {
                             mr: 3,
                             mt: -2,
                             borderRadius: "20px",
-                            backgroundColor: "#0099CC",
+                             backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                             fontSize: 12,
                           }}
                           onClick={Attchange}
@@ -1379,7 +1382,10 @@ function AttributesScreen() {
                             mr: 3,
                             mt: -2,
                             borderRadius: "20px",
-                            backgroundColor: "#0099CC",
+                             backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                             fontSize: 12,
                           }}
                           variant="contained"
@@ -1507,7 +1513,10 @@ function AttributesScreen() {
                       sx={{
                         mr: 3,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                           backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                       }}
                       variant="contained"
                       onClick={featurevalueChaneg}
@@ -1644,7 +1653,10 @@ function AttributesScreen() {
                     mr: 3,
                     mt: 5,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                       backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                     fontSize: 12,
                   }}
                   variant="contained"
@@ -1849,7 +1861,10 @@ function AttributesScreen() {
                     mb: 0,
 
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                     fontSize: 12,
                   }}
                   variant="contained"
@@ -2057,7 +2072,10 @@ function AttributesScreen() {
                       mt: 2,
                       mb: 0,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                     }}
                     variant="contained"
                     onClick={handleClickdelete4}
@@ -2259,7 +2277,10 @@ function AttributesScreen() {
                       mb: 0,
 
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                       fontSize: 12,
                     }}
                     variant='contained'

@@ -1091,7 +1091,10 @@ function BrandScreen() {
                                 mb: 0,
 
                                 borderRadius: "20px",
-                                backgroundColor: "#0099CC",
+                               backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                                 fontSize: 12,
                               }}
                               variant='contained'

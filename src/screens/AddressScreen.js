@@ -1,22 +1,20 @@
-import React, { useEffect } from 'react';
-import {  Link,  } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { listAddresses } from '../actions/addressActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { ADDRESS_DETAILS_RESET } from '../constants/addressConstants';
-import {useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listAddresses } from "../actions/addressActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { ADDRESS_DETAILS_RESET } from "../constants/addressConstants";
+import { useNavigate } from "react-router-dom";
 
 export default function AddressListScreen() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const addressesList = useSelector((state) => state.addressesList);
   const { loading, error, addressList } = addressesList;
 
-  console(addressList)
+  console(addressList);
   const userDelete = useSelector((state) => state.userDelete);
-  const {
-    success: successDelete,
-  } = userDelete;
+  const { success: successDelete } = userDelete;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,21 +23,19 @@ export default function AddressListScreen() {
       type: ADDRESS_DETAILS_RESET,
     });
   }, [dispatch, successDelete]);
-  const deleteHandler = () => {
-   
-  };
+  const deleteHandler = () => {};
 
   return (
     <div className="address">
       <h1 className="addressH1">Your Addresses</h1>
-      <Link to="/" >Add Address</Link>
+      <Link to="/">Add Address</Link>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-        <table className="table">
+          <table className="table">
             <tbody>
               {addressList.map((address) => (
                 <tr key={address._id}>
@@ -54,14 +50,24 @@ export default function AddressListScreen() {
                   <td>
                     <button
                       type="button"
+                      style={{
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
+                      }}
                       className="small"
-                      onClick={() =>
-                        navigate(`/address/${address._id}/edit`)
-                      }
+                      onClick={() => navigate(`/address/${address._id}/edit`)}
                     >
                       Edit
                     </button>
                     <button
+                      style={{
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
+                      }}
                       type="button"
                       className="small"
                       onClick={() => deleteHandler(address)}
@@ -73,7 +79,7 @@ export default function AddressListScreen() {
               ))}
             </tbody>
           </table>
-      </>
+        </>
       )}
     </div>
   );

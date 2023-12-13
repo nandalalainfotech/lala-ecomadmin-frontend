@@ -258,7 +258,15 @@ export const CountryScreen = () => {
                       <Box>
                         <Button
                           variant="contained"
-                          sx={{ mt: 1, ml: 35, mb: -5 }}
+                          sx={{
+                            mt: 1,
+                            ml: 35,
+                            mb: -5,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           Update
@@ -427,7 +435,15 @@ export const CountryScreen = () => {
                     <Box>
                       <Button
                         variant="contained"
-                        sx={{ mt: 1, ml: 35, mb: -5 }}
+                        sx={{
+                          mt: 1,
+                          ml: 35,
+                          mb: -5,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="submit"
                       >
                         Save

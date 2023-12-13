@@ -114,14 +114,14 @@ export default function StateGridScreen() {
         ActiveState({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         ActiveState({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -288,14 +288,14 @@ export default function StateGridScreen() {
         updateStateActivate({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
     } else {
       dispatch(
         updateStateActivate({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
     }
   };
@@ -307,7 +307,7 @@ export default function StateGridScreen() {
         AssignZoneActivate({
           checkboxId: selectionModel,
           checkedshow: zone,
-        }),
+        })
       );
     }
   };
@@ -348,7 +348,10 @@ export default function StateGridScreen() {
               mr: 3,
               mt: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={onProdctChange}
@@ -381,9 +384,13 @@ export default function StateGridScreen() {
               // fullWidth
               variant="contained"
               sx={{
-                mb: 2, ml: 50,
+                mb: 2,
+                ml: 50,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               onClick={handleClickOpencheck}
@@ -481,13 +488,27 @@ export default function StateGridScreen() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button autoFocus onClick={handleDisClose}>
+                  <Button
+                    autoFocus
+                    onClick={handleDisClose}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Cancel
                   </Button>
 
                   {checkeddelete == true ? (
                     <>
-                      <Button onClick={handleClosecheckdelet} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Delete
                       </Button>
                     </>
@@ -497,10 +518,13 @@ export default function StateGridScreen() {
                         <>
                           {" "}
                           <Button
-                            sx={{ mt: 1 }}
                             variant="contained"
                             autoFocus
                             onClick={handlechangezone}
+                            style={{
+                              backgroundColor: "#00A787",
+                              "&:hover": { backgroundColor: "#00A787" },
+                            }}
                           >
                             Apply
                           </Button>
@@ -508,7 +532,14 @@ export default function StateGridScreen() {
                       ) : (
                         <>
                           {" "}
-                          <Button onClick={handleClosecheck} autoFocus>
+                          <Button
+                            onClick={handleClosecheck}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Done
                           </Button>
                         </>
@@ -540,17 +571,17 @@ export default function StateGridScreen() {
                 fontSize: 12,
               },
               ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
+                {
+                  backgroundColor: "#808080",
+                  color: "#ffffff",
+                },
               ".css-h4y409-MuiList-root": {
                 display: "grid",
               },
               ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+                {
+                  backgroundColor: "#808080",
+                },
             }}
           >
             <DataGrid

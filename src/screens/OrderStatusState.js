@@ -49,45 +49,44 @@ export default function OrderStatusState() {
   }, [dispatch]);
   return (
     <div>
+      <Typography variant="h6" sx={{ mt: -1, mb: 1 }}>
+        Add Status
+      </Typography>
       <Breadcrumbs
-        separator={<NavigateNextIcon fontSize='small' />}
-        aria-label='breadcrumb'
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+        sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
       >
         <Link
-          to='/'
+          to="/"
           style={{
             color: "rgba(0, 0, 0, 0.6)",
-            fontSize: "13px",
+            fontSize: "12px",
           }}
         >
-          <Typography sx={{ fontSize: 13 }}>Home</Typography>
+          <Typography sx={{ fontSize: "14px" }}>Home</Typography>
         </Link>
         <Link
-          to='/orderstatus'
-          style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "13px" }}
+          to="/orderstatus"
+          style={{
+            color: "rgba(0, 0, 0, 0.6)",
+            fontSize: "12px",
+          }}
         >
-          <Typography sx={{ fontSize: 13 }}>Status</Typography>
+          <Typography sx={{ fontSize: "14px" }}> Status</Typography>
         </Link>
-
-        <>
-          <Typography sx={{ fontSize: 13 }}>Add Status</Typography>
-        </>
+        <Typography sx={{ fontSize: "14px" }}> Add Status</Typography>
       </Breadcrumbs>
-
-      <Divider
-        fullWidth
-        sx={{ backgroundColor: "#000000", mt: 3 }}
-        showlabels='true'
-      />
+      <Divider sx={{ mt: 1 }} />
       <Box
         sx={{ flexGrow: 1, mt: 3 }}
-        component='form'
+        component="form"
         onSubmit={handleSubmit(handlestatus)}
       >
         <Grid container spacing={2}>
           <Grid item xs={6} md={12}>
             <Item>
-              <Card variant='outlined' sx={{ padding: 5 }}>
+              <Card variant="outlined" sx={{ padding: 5 }}>
                 <Box sx={{ display: "flex" }}>
                   <Grid item md={2}>
                     <Item>
@@ -96,7 +95,9 @@ export default function OrderStatusState() {
                         <label
                           style={{
                             fontFamily: "sans-serif",
-                            color: "#0d84b7",
+                            color: "#00A787",
+                            fontWeight: "bold",
+                            ml: 1,
                           }}
                         >
                           Add Status:
@@ -108,9 +109,9 @@ export default function OrderStatusState() {
                     <Box sx={{ width: 500 }}>
                       <TextField
                         sx={{ width: 500 }}
-                        size='small'
+                        size="small"
                         // id='outlined-basic'
-                        variant='outlined'
+                        variant="outlined"
                         {...register("status", { required: true })}
                         inputProps={{ style: { fontSize: 13 } }}
                       />
@@ -118,7 +119,16 @@ export default function OrderStatusState() {
                   </Grid>
                   <Grid item md={2} sx={{ ml: 5 }}>
                     <Box>
-                      <Button variant='contained' type='submit'>
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        sx={{
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
+                      >
                         Create
                       </Button>
                     </Box>

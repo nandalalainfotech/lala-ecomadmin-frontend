@@ -92,7 +92,7 @@ export const SummaryScreen = () => {
         preId: undefineddata == true ? datatypes?._id : AttId,
         Checked: checked,
         Name: datatypes?.name,
-      }),
+      })
     );
     window.confirm("Details Saved Successfully!!");
     navigate("/logicGrid");
@@ -106,7 +106,7 @@ export const SummaryScreen = () => {
         preId: AttId,
         Checked: Editchecked,
         Name: sumName?.name,
-      }),
+      })
     );
     window.confirm("Details Updated Successfully!!");
     navigate("/logicGrid");
@@ -293,8 +293,12 @@ export const SummaryScreen = () => {
                     </Box>
                     <Box sx={{ mt: 4, ml: 60 }}>
                       <Button
-                        sx={{ ml: 20 }}
-                        variant="outlined"
+                        sx={{
+                          ml: 20,
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                          border: "1px solid #00A787",
+                        }}
                         size="medium"
                         type="submit"
                         onClick={onPreviousChange1}
@@ -303,8 +307,12 @@ export const SummaryScreen = () => {
                       </Button>
 
                       <Button
-                        sx={{ ml: 5 }}
-                        variant="outlined"
+                        sx={{
+                          ml: 5,
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                          border: "1px solid #00A787",
+                        }}
                         size="medium"
                         type="submit"
                       >
@@ -519,8 +527,12 @@ export const SummaryScreen = () => {
                           Next
                         </Button> */}
                           <Button
-                            sx={{ ml: 35 }}
-                            variant="outlined"
+                            sx={{
+                              ml: 35,
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                              border: "1px solid #00A787",
+                            }}
                             size="medium"
                             color="success"
                             type="submit"
@@ -747,8 +759,12 @@ export const SummaryScreen = () => {
                           Next
                         </Button> */}
                               <Button
-                                sx={{ ml: 35 }}
-                                variant="outlined"
+                                sx={{
+                                  ml: 35,
+                                  color: "#00A787",
+                                  "&:hover": { color: "#00A787" },
+                                  border: "1px solid #00A787",
+                                }}
                                 size="medium"
                                 color="success"
                                 type="submit"

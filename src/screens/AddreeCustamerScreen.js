@@ -370,7 +370,10 @@ function AddreeCustamerScreen() {
             sx={{
               mr: 3,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             variant="contained"
@@ -390,7 +393,10 @@ function AddreeCustamerScreen() {
             mt: 1,
             mb: -1,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
           size="small"
@@ -447,19 +453,40 @@ function AddreeCustamerScreen() {
             />
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handlevalueDisClose}>
+            <Button
+              autoFocus
+              onClick={handlevalueDisClose}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
             {checkeddelete == true ? (
               <>
                 {" "}
-                <Button onClick={handleClosecheckdelet} autoFocus>
+                <Button
+                  onClick={handleClosecheckdelet}
+                  autoFocus
+                  style={{
+                    color: "#00A787",
+                    "&:hover": { color: "#00A787" },
+                  }}
+                >
                   Delete
                 </Button>
               </>
             ) : (
               <>
-                <Button onClick={handlevlaueClosecheck} autoFocus>
+                <Button
+                  onClick={handlevlaueClosecheck}
+                  autoFocus
+                  style={{
+                    color: "#00A787",
+                    "&:hover": { color: "#00A787" },
+                  }}
+                >
                   Done
                 </Button>
               </>

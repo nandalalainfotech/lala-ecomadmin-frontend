@@ -542,7 +542,10 @@ export default function LogicGridScreen() {
               mr: 3,
               mt: -2,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={onProdctChange}
@@ -561,7 +564,10 @@ export default function LogicGridScreen() {
               mt: 1,
               mb: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             variant="contained"
@@ -625,7 +631,14 @@ export default function LogicGridScreen() {
               </DialogContent>
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={handleDisClose}>
+              <Button
+                autoFocus
+                onClick={handleDisClose}
+                style={{
+                  color: "#00A787",
+                  "&:hover": { color: "#00A787" },
+                }}
+              >
                 Cancel
               </Button>
               {checkeddelete == true ? (
@@ -633,6 +646,10 @@ export default function LogicGridScreen() {
                   <Button
                     onClick={() => {
                       handleClosecheckdelet();
+                    }}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
                     }}
                   >
                     Delete
@@ -643,6 +660,10 @@ export default function LogicGridScreen() {
                   <Button
                     onClick={() => {
                       handleClosecheck();
+                    }}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
                     }}
                   >
                     Done

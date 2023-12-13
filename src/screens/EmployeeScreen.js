@@ -13,7 +13,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import InputLabel from "@mui/material/InputLabel";
-import Menu from "@mui/material/Menu";
+// import Menu from "@mui/material/Menu";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
@@ -210,10 +210,10 @@ function EmployeeScreen() {
 
   //   Save Button Section********************
 
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const handleClosechcke = () => {
-    setAnchorEl2(null);
-  };
+  // const [anchorEl2, setAnchorEl2] = useState(null);
+  // const handleClosechcke = () => {
+  //   setAnchorEl2(null);
+  // };
 
   // **************************Update section*************************
   const [EditId, setEditId] = useState("");
@@ -808,7 +808,10 @@ function EmployeeScreen() {
                   mb: 0,
 
                   borderRadius: "20px",
-                  backgroundColor: "#0099CC",
+                  backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                 }}
                 variant='contained'
                 onClick={handleClickdelete}
@@ -1128,7 +1131,7 @@ function EmployeeScreen() {
 
         {tabIndex === 1 && (
           <>
-            <Button
+            {/* <Button
               sx={{
                 mr: 3,
                 mt: 1,
@@ -1143,8 +1146,8 @@ function EmployeeScreen() {
               onClick={(e) => setAnchorEl2(e.currentTarget)}
             >
               Bulk
-            </Button>
-            <Menu
+            </Button> */}
+            {/* <Menu
               id="simple-menu2"
               anchorEl={anchorEl2}
               keepMounted
@@ -1154,7 +1157,7 @@ function EmployeeScreen() {
             >
               <MenuItem onClick={handleClosechcke}>Select All</MenuItem>
               <MenuItem onClick={handleClosechcke}>De-Select</MenuItem>
-            </Menu>
+            </Menu> */}
             {EditemployeeProfileId ? (
               <Box>
                 <Box>
@@ -1179,8 +1182,8 @@ function EmployeeScreen() {
                           alignItems: "center",
                           borderRadius: "0px",
                           p: 5,
-                          mt:-7,
-                          mb:-10,
+                          mt: -7,
+                          mb: -10,
                           border: "1px solid #000000",
                         }}
                       >

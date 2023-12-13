@@ -262,7 +262,7 @@ function CategoryMasterGrandChildScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={classes.switch}
                   checked
                   onClick={(e) => handleChangegrandchild(e, params.row._id)}
@@ -275,7 +275,7 @@ function CategoryMasterGrandChildScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   onClick={(e) => handleChangegrandchild(e, params.row._id)}
                 />
               }
@@ -330,18 +330,18 @@ function CategoryMasterGrandChildScreen() {
         width: "100%",
       }}
     >
-      <Typography component='h1' variant='h6' sx={{ mt: -2, ml: 3 }}>
+      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 3 }}>
         {subCategoryName}
       </Typography>
       <Box sx={{ mt: 0 }}>
         {" "}
         <Breadcrumbs
           sx={{ ml: 3 }}
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
         >
           <Link
-            to='/'
+            to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "13px",
@@ -350,7 +350,7 @@ function CategoryMasterGrandChildScreen() {
             <Typography sx={{ fontSize: "13px" }}>Home</Typography>
           </Link>
           <Link
-            to='/categorymaster'
+            to="/categorymaster"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "13px",
@@ -380,10 +380,13 @@ function CategoryMasterGrandChildScreen() {
             mb: 0,
             ml: 2,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
-          variant='contained'
+          variant="contained"
           onClick={handleClickOpengrandChild}
         >
           Bulk
@@ -394,10 +397,13 @@ function CategoryMasterGrandChildScreen() {
             mt: 2,
             mb: 0,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
-          variant='contained'
+          variant="contained"
           onClick={handleClickdelete3}
         >
           Bulk Delete
@@ -408,15 +414,15 @@ function CategoryMasterGrandChildScreen() {
           fullScreen={fullScreen}
           open={grandchildopen}
           onClose={handleDisCloseChild}
-          aria-labelledby='responsive-dialog-title'
+          aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id='responsive-dialog-title'>
+          <DialogTitle id="responsive-dialog-title">
             {"Selected One"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <FormControlLabel
-                label='Show All'
+                label="Show All"
                 control={
                   <Checkbox
                     checked={grandchildchecked}
@@ -427,7 +433,7 @@ function CategoryMasterGrandChildScreen() {
               />
 
               <FormControlLabel
-                label='Hide All'
+                label="Hide All"
                 control={
                   <Checkbox
                     checked={dcheckedgrandchild}
@@ -439,10 +445,24 @@ function CategoryMasterGrandChildScreen() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleDisClosegrandChild}>
+            <Button
+              autoFocus
+              onClick={handleDisClosegrandChild}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleClosegrandChild} autoFocus>
+            <Button
+              onClick={handleClosegrandChild}
+              autoFocus
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Done
             </Button>
           </DialogActions>
@@ -454,7 +474,7 @@ function CategoryMasterGrandChildScreen() {
           <DialogTitle>Delete</DialogTitle>
           <DialogContent>
             <FormControlLabel
-              label='Delete All'
+              label="Delete All"
               control={
                 <Checkbox
                   checked={checkeddelete3}
@@ -467,10 +487,24 @@ function CategoryMasterGrandChildScreen() {
             />
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleDeletrClose3}>
+            <Button
+              autoFocus
+              onClick={handleDeletrClose3}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleClosecheckdelet3} autoFocus>
+            <Button
+              onClick={handleClosecheckdelet3}
+              autoFocus
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Done
             </Button>
           </DialogActions>
@@ -514,7 +548,7 @@ function CategoryMasterGrandChildScreen() {
           columns={grandChildcolumns}
           rows={grandChild ? grandChild : ""}
           getRowId={(rows) => rows._id}
-          VerticalAlignment='Center'
+          VerticalAlignment="Center"
           loading={loading}
           rowHeight={40}
           headerHeight={35}

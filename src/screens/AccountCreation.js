@@ -28,7 +28,7 @@ export default function AccountCreation() {
         p: 5,
       }}
     >
-      <Typography variant='h5'>
+      <Typography variant="h5">
         This Email is already being used for an Amazon account.Would you like to
         convert it to an Amazon Business account?
       </Typography>
@@ -43,14 +43,23 @@ export default function AccountCreation() {
         to an amazon business account:
       </Typography>
       <br></br>
-      <Typography variant='h5'>
+      <Typography variant="h5">
         {" "}
         Your orders and payment methods will carry over and can be seen by
         people you add to your account.
       </Typography>
       <br></br>
       <Box>
-        <Button variant='contained' onClick={() => navigate("/account")}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
+          }}
+          onClick={() => navigate("/account")}
+        >
           Start here
         </Button>
       </Box>

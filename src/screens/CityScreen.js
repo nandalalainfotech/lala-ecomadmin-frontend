@@ -506,7 +506,7 @@ export default function CityScreen() {
                                         <AddIcon
                                           sx={{
                                             color: "#fff",
-                                            backgroundColor: "green",
+                                            backgroundColor: "#00A787",
                                             borderRadius: "50%",
                                             fontSize: 25,
                                           }}
@@ -554,7 +554,15 @@ export default function CityScreen() {
                         <Button
                           // fullWidth
                           variant="contained"
-                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          sx={{
+                            mt: 1,
+                            ml: 35,
+                            mb: -2,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           update
@@ -899,7 +907,7 @@ export default function CityScreen() {
                                         <AddIcon
                                           sx={{
                                             color: "#fff",
-                                            backgroundColor: "green",
+                                            backgroundColor: "#00A787",
                                             borderRadius: "50%",
                                             fontSize: 25,
                                           }}
@@ -946,7 +954,15 @@ export default function CityScreen() {
                         <Button
                           // fullWidth
                           variant="contained"
-                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          sx={{
+                            mt: 1,
+                            ml: 35,
+                            mb: -2,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           Save

@@ -257,7 +257,7 @@ function CategoryMasterChildScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   className={classes.switch}
                   checked
                   onClick={(e) => handleChangechild(e, params.row._id)}
@@ -270,7 +270,7 @@ function CategoryMasterChildScreen() {
             <FormControlLabel
               control={
                 <Switch
-                  size='small'
+                  size="small"
                   onClick={(e) => handleChangechild(e, params.row._id)}
                 />
               }
@@ -369,18 +369,18 @@ function CategoryMasterChildScreen() {
         width: "100%",
       }}
     >
-      <Typography component='h1' variant='h6' sx={{ mt: -2, ml: 3 }}>
+      <Typography component="h1" variant="h6" sx={{ mt: -2, ml: 3 }}>
         {CategoryName}
       </Typography>
       <Box sx={{ mt: 0 }}>
         {" "}
         <Breadcrumbs
           sx={{ ml: 3 }}
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
         >
           <Link
-            to='/'
+            to="/"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "13px",
@@ -389,7 +389,7 @@ function CategoryMasterChildScreen() {
             <Typography sx={{ fontSize: "13px" }}>Home</Typography>
           </Link>
           <Link
-            to='/categorymaster'
+            to="/categorymaster"
             style={{
               color: "rgba(0, 0, 0, 0.6)",
               fontSize: "13px",
@@ -408,10 +408,13 @@ function CategoryMasterChildScreen() {
             mb: 0,
             ml: 2,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
-          variant='contained'
+          variant="contained"
           onClick={handleClickOpenChild}
         >
           Bulk
@@ -423,10 +426,13 @@ function CategoryMasterChildScreen() {
             mt: 2,
             mb: 0,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
-          variant='contained'
+          variant="contained"
           onClick={handleClickdelete1}
         >
           Bulk Delete
@@ -437,15 +443,15 @@ function CategoryMasterChildScreen() {
           fullScreen={fullScreen}
           open={childopen}
           onClose={handleDisCloseChild}
-          aria-labelledby='responsive-dialog-title'
+          aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id='responsive-dialog-title'>
+          <DialogTitle id="responsive-dialog-title">
             {"Selected One"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <FormControlLabel
-                label='Show All'
+                label="Show All"
                 control={
                   <Checkbox
                     checked={childchecked}
@@ -456,7 +462,7 @@ function CategoryMasterChildScreen() {
               />
 
               <FormControlLabel
-                label='Hide All'
+                label="Hide All"
                 control={
                   <Checkbox
                     checked={dcheckedchild}
@@ -468,10 +474,24 @@ function CategoryMasterChildScreen() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleDisCloseChild}>
+            <Button
+              autoFocus
+              onClick={handleDisCloseChild}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleCloseChild} autoFocus>
+            <Button
+              onClick={handleCloseChild}
+              autoFocus
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Done
             </Button>
           </DialogActions>
@@ -482,7 +502,7 @@ function CategoryMasterChildScreen() {
           <DialogTitle>Delete</DialogTitle>
           <DialogContent>
             <FormControlLabel
-              label='Delete All'
+              label="Delete All"
               control={
                 <Checkbox
                   checked={checkeddelete1}
@@ -495,10 +515,24 @@ function CategoryMasterChildScreen() {
             />
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleDeletrClose1}>
+            <Button
+              autoFocus
+              onClick={handleDeletrClose1}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleClosecheckdelet1} autoFocus>
+            <Button
+              onClick={handleClosecheckdelet1}
+              autoFocus
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Done
             </Button>
           </DialogActions>
@@ -542,7 +576,7 @@ function CategoryMasterChildScreen() {
           columns={Childcolumns}
           rows={ChildDatagrid ? ChildDatagrid : ""}
           getRowId={(rows) => rows._id}
-          VerticalAlignment='Center'
+          VerticalAlignment="Center"
           loading={loading}
           rowHeight={40}
           headerHeight={35}
