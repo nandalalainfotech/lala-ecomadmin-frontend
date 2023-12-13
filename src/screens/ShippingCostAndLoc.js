@@ -53,7 +53,6 @@ import IconButton from "@mui/material/IconButton";
 export default function ShippingLocationAndCosts() {
   const params = useParams();
   const AttId = params.id;
- 
 
   const shippinglist = useSelector((state) => state.shippinglist);
   const { success: shippingdetail } = shippinglist;
@@ -832,10 +831,14 @@ export default function ShippingLocationAndCosts() {
                         </FormGroup>
                       </Box>
                       <Button
-                        variant="outlined"
                         size="small"
                         onClick={handleappendupdate}
-                        sx={{ mt: 2 }}
+                        sx={{
+                          mt: 2,
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                          border: "1px solid #00A787",
+                        }}
                       >
                         Add new range
                       </Button>
@@ -844,7 +847,13 @@ export default function ShippingLocationAndCosts() {
                         variant="outlined"
                         size="small"
                         onClick={() => remove(testindex)}
-                        sx={{ mt: 2 }}
+                        sx={{
+                          mt: 2,
+                          ml: 2,
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                          border: "1px solid #00A787",
+                        }}
                       >
                         Remove range
                       </Button>
@@ -992,8 +1001,12 @@ export default function ShippingLocationAndCosts() {
                     <Box sx={{ mt: 4, ml: 60 }}>
                       <div>
                         <Button
-                          sx={{ ml: 10 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 10,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={onPreviousChange1}
@@ -1001,8 +1014,12 @@ export default function ShippingLocationAndCosts() {
                           Previous
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={() => setNext(2)}
@@ -1010,8 +1027,12 @@ export default function ShippingLocationAndCosts() {
                           Next
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={() => setFinish(1)}
@@ -1062,14 +1083,16 @@ export default function ShippingLocationAndCosts() {
                         <Breadcrumbs aria-label="breadcrumb flat">
                           <div className="breadcrumb flat">
                             <Link to="/logicGrid">Carriers</Link>
-                            <Link className="deactive">General Settings</Link>
+                            <Link to={`/logistic/${AttId}`}>
+                              General Settings
+                            </Link>
                             <Link to="/costAndShip" className="active">
                               Shipping locations and costs
                             </Link>
-                            <Link className="deactive">
+                            <Link to={`/sizeweightgroup/${AttId}`}>
                               Size,weight and group access
                             </Link>
-                            <Link className="deactive">Summary</Link>
+                            <Link to={`/summary/${AttId}`}>Summary</Link>
                           </div>
                         </Breadcrumbs>
                       </Box>
@@ -1513,19 +1536,28 @@ export default function ShippingLocationAndCosts() {
                             </FormGroup>
                           </Box>
                           <Button
-                            variant="outlined"
                             size="small"
                             onClick={handleappendupdate}
-                            sx={{ mt: 2 }}
+                            sx={{
+                              mt: 2,
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                              border: "1px solid #00A787",
+                            }}
                           >
                             Add new range
                           </Button>
 
                           <Button
-                            variant="outlined"
                             size="small"
                             onClick={() => remove(testindex)}
-                            sx={{ mt: 2 }}
+                            sx={{
+                              mt: 2,
+                              ml: 2,
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                              border: "1px solid #00A787",
+                            }}
                           >
                             Remove range
                           </Button>
@@ -1673,8 +1705,12 @@ export default function ShippingLocationAndCosts() {
                       <Box sx={{ mt: 4, ml: 60 }}>
                         <div>
                           <Button
-                            sx={{ ml: 25 }}
-                            variant="outlined"
+                            sx={{
+                              ml: 25,
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                              border: "1px solid #00A787",
+                            }}
                             size="medium"
                             type="submit"
                             onClick={() => setNext(2)}
@@ -1682,8 +1718,12 @@ export default function ShippingLocationAndCosts() {
                             Next
                           </Button>
                           <Button
-                            sx={{ ml: 2 }}
-                            variant="outlined"
+                            sx={{
+                              ml: 2,
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                              border: "1px solid #00A787",
+                            }}
                             size="medium"
                             type="submit"
                             color="success"

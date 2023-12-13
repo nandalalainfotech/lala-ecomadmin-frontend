@@ -58,69 +58,76 @@ export default function AccountScreen() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               border: "1px solid black",
             }}
-            direction='row'
+            direction="row"
           >
             <Box sx={{ borer: "1px solid black" }}>
               <Box
-                component='form'
+                component="form"
                 onSubmit={handleSubmit(submitHandler)}
                 sx={{ mt: 1, p: 2, m: 2 }}
               >
-                <Typography variant='h5' gutterBottom>
+                <Typography variant="h5" gutterBottom>
                   Let us create your free Amazon Business account
                 </Typography>
                 {loading && <LoadingBox></LoadingBox>}
-                {error && <MessageBox variant='danger'>{error}</MessageBox>}
+                {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <TextField
                   inputProps={{ style: { fontSize: 14 } }}
-                  size='small'
-                  margin='normal'
+                  size="small"
+                  margin="normal"
                   fullWidth
-                  id='email'
-                  label='Email'
-                  name='email'
-                  autoComplete='email'
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
                   autoFocus
                   {...register("email", { required: true })}
                   error={!!errors?.email}
                 />
                 {errors.email && (
-                  <span className='formError'>Email is required</span>
+                  <span className="formError">Email is required</span>
                 )}
 
                 <TextField
                   inputProps={{ style: { fontSize: 14 } }}
-                  size='small'
-                  margin='normal'
+                  size="small"
+                  margin="normal"
                   fullWidth
-                  id='password'
-                  label='Password'
-                  name='password'
-                  autoComplete='password'
+                  id="password"
+                  label="Password"
+                  name="password"
+                  autoComplete="password"
                   autoFocus
                   {...register("password", { required: true })}
                   error={!!errors?.password}
                 />
                 {errors.password && (
-                  <span className='formError'>Password is required</span>
+                  <span className="formError">Password is required</span>
                 )}
 
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
+                  }}
                 >
                   Get Started
                 </Button>
 
-                <Typography variant='h6' gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Make sure that you have information about your organisation to
                   help us verify your business account faster.
                 </Typography>
 
                 <Tooltip title={longText}>
-                  <Typography variant='h6' gutterBottom sx={{ color: "blue" }}>
+                  <Typography variant="h6" gutterBottom sx={{ color: "blue" }}>
                     Why is verification Needed?
                   </Typography>
                 </Tooltip>
@@ -136,16 +143,16 @@ export default function AccountScreen() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               border: "1px solid black",
             }}
-            direction='row'
+            direction="row"
           >
-            <Typography variant='h6' gutterBottom>
+            <Typography variant="h6" gutterBottom>
               Reshape buying for your organisation
             </Typography>
             <br></br>
             <Box style={{ display: "flex", p: 2, m: 2 }}>
               <img
-                src='https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/quantity-discounts-icon._CB612297378_.svg'
-                alt='GST Invoice &amp; Bulk Discounts'
+                src="https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/quantity-discounts-icon._CB612297378_.svg"
+                alt="GST Invoice &amp; Bulk Discounts"
                 style={{
                   maxWidth: "45px",
                   height: "45px",
@@ -165,8 +172,8 @@ export default function AccountScreen() {
             <br></br>
             <Box style={{ display: "flex" }}>
               <img
-                src='https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/analytics-icon._CB612297378_.svg'
-                alt='Business Analytics'
+                src="https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/analytics-icon._CB612297378_.svg"
+                alt="Business Analytics"
                 style={{
                   maxWidth: "45px",
                   height: "45px",
@@ -186,8 +193,8 @@ export default function AccountScreen() {
             <br></br>
             <Box style={{ display: "flex" }}>
               <img
-                src='https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/add-users-icon._CB612297378_.svg'
-                alt='Secure Your Account'
+                src="https://m.media-amazon.com/images/G/31/AmazonBusiness/Registration/desktop/add-users-icon._CB612297378_.svg"
+                alt="Secure Your Account"
                 style={{
                   maxWidth: "45px",
                   height: "45px",
@@ -216,13 +223,13 @@ export default function AccountScreen() {
                   marginRight: "auto",
                   borderRadius: 5,
                 }}
-                src='/image/ama5.jpg'
-                alt=''
+                src="/image/ama5.jpg"
+                alt=""
               ></img>
             </Box>
             <br></br>
             <Typography
-              variant='h6'
+              variant="h6"
               gutterBottom
               sx={{ textDecoration: "underline", textAlign: "center" }}
             >

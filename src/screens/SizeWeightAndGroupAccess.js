@@ -114,7 +114,7 @@ export default function SizeWeightAndGroupAccess() {
           height: height,
           depth: depth,
           weight: weight,
-        }),
+        })
       );
       window.confirm("Details Saved Successfully!!");
       navigate("/logicGrid");
@@ -130,7 +130,7 @@ export default function SizeWeightAndGroupAccess() {
           height: height,
           depth: depth,
           weight: weight,
-        }),
+        })
       );
       // window.confirm("Details Saved Successfully!!");
       // event.target.reset();
@@ -155,7 +155,7 @@ export default function SizeWeightAndGroupAccess() {
           height: Editheight,
           depth: Editdepth,
           weight: Editweight,
-        }),
+        })
       );
       window.confirm("Details Updated Successfully!!");
       navigate("/logicGrid");
@@ -172,7 +172,7 @@ export default function SizeWeightAndGroupAccess() {
           height: Editheight,
           depth: Editdepth,
           weight: Editweight,
-        }),
+        })
       );
 
       // event.target.reset();
@@ -323,8 +323,12 @@ export default function SizeWeightAndGroupAccess() {
                     <Box sx={{ mt: 4, ml: 60 }}>
                       <div>
                         <Button
-                          sx={{ ml: 10 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 10,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={onPreviousChange1}
@@ -342,8 +346,12 @@ export default function SizeWeightAndGroupAccess() {
                           Next
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={() => setFinish(1)}
@@ -441,7 +449,7 @@ export default function SizeWeightAndGroupAccess() {
                                   sx={{ ml: 5, mt: 1 }}
                                   size="small"
                                   onChange={(e) => setWidth(e.target.value)}
-                                // value={AttId == 1 ? width : datatypes?.width}
+                                  // value={AttId == 1 ? width : datatypes?.width}
                                 ></TextField>
                               </Box>
                             </Box>
@@ -454,9 +462,9 @@ export default function SizeWeightAndGroupAccess() {
                                   sx={{ ml: 4.5, mt: 1 }}
                                   size="small"
                                   onChange={(e) => setHeight(e.target.value)}
-                                // value={
-                                //   AttId == 1 ? height : datatypes?.height
-                                // }
+                                  // value={
+                                  //   AttId == 1 ? height : datatypes?.height
+                                  // }
                                 ></TextField>
                               </Box>
                             </Box>
@@ -469,7 +477,7 @@ export default function SizeWeightAndGroupAccess() {
                                   sx={{ ml: 5, mt: 1 }}
                                   size="small"
                                   onChange={(e) => setDepth(e.target.value)}
-                                // value={AttId == 1 ? depth : datatypes?.depth}
+                                  // value={AttId == 1 ? depth : datatypes?.depth}
                                 ></TextField>
                               </Box>
                             </Box>
@@ -482,9 +490,9 @@ export default function SizeWeightAndGroupAccess() {
                                   sx={{ ml: 5, mt: 1 }}
                                   size="small"
                                   onChange={(e) => setWeight(e.target.value)}
-                                // value={
-                                //   AttId == 1 ? weight : datatypes?.weight
-                                // }
+                                  // value={
+                                  //   AttId == 1 ? weight : datatypes?.weight
+                                  // }
                                 ></TextField>
                               </Box>
                             </Box>
@@ -502,8 +510,12 @@ export default function SizeWeightAndGroupAccess() {
                           Previous
                         </Button> */}
                             <Button
-                              sx={{ ml: 25 }}
-                              variant="outlined"
+                              sx={{
+                                ml: 25,
+                                color: "#00A787",
+                                "&:hover": { color: "#00A787" },
+                                border: "1px solid #00A787",
+                              }}
                               size="medium"
                               // onClick={onNextChange}
                               type="submit"
@@ -512,9 +524,12 @@ export default function SizeWeightAndGroupAccess() {
                               Next
                             </Button>
                             <Button
-                              sx={{ ml: 2 }}
-                              variant="outlined"
-                              color="success"
+                              sx={{
+                                ml: 2,
+                                color: "#00A787",
+                                "&:hover": { color: "#00A787" },
+                                border: "1px solid #00A787",
+                              }}
                               size="medium"
                               type="submit"
                               onClick={() => setFinish(1)}
@@ -620,9 +635,9 @@ export default function SizeWeightAndGroupAccess() {
                                       sx={{ ml: 5, mt: 1 }}
                                       size="small"
                                       onChange={(e) => setWidth(e.target.value)}
-                                    // value={
-                                    //   AttId == 1 ? width : datatypes?.width
-                                    // }
+                                      // value={
+                                      //   AttId == 1 ? width : datatypes?.width
+                                      // }
                                     ></TextField>
                                   </Box>
                                 </Box>
@@ -639,9 +654,9 @@ export default function SizeWeightAndGroupAccess() {
                                       onChange={(e) =>
                                         setHeight(e.target.value)
                                       }
-                                    // value={
-                                    //   AttId == 1 ? height : datatypes?.height
-                                    // }
+                                      // value={
+                                      //   AttId == 1 ? height : datatypes?.height
+                                      // }
                                     ></TextField>
                                   </Box>
                                 </Box>
@@ -656,9 +671,9 @@ export default function SizeWeightAndGroupAccess() {
                                       sx={{ ml: 5, mt: 1 }}
                                       size="small"
                                       onChange={(e) => setDepth(e.target.value)}
-                                    // value={
-                                    //   AttId == 1 ? depth : datatypes?.depth
-                                    // }
+                                      // value={
+                                      //   AttId == 1 ? depth : datatypes?.depth
+                                      // }
                                     ></TextField>
                                   </Box>
                                 </Box>
@@ -675,9 +690,9 @@ export default function SizeWeightAndGroupAccess() {
                                       onChange={(e) =>
                                         setWeight(e.target.value)
                                       }
-                                    // value={
-                                    //   AttId == 1 ? weight : datatypes?.weight
-                                    // }
+                                      // value={
+                                      //   AttId == 1 ? weight : datatypes?.weight
+                                      // }
                                     ></TextField>
                                   </Box>
                                 </Box>
@@ -695,8 +710,12 @@ export default function SizeWeightAndGroupAccess() {
                         Previous
                       </Button> */}
                                 <Button
-                                  sx={{ ml: 25 }}
-                                  variant="outlined"
+                                  sx={{
+                                    ml: 25,
+                                    color: "#00A787",
+                                    "&:hover": { color: "#00A787" },
+                                    border: "1px solid #00A787",
+                                  }}
                                   size="medium"
                                   // onClick={onNextChange}
                                   type="submit"
@@ -705,9 +724,12 @@ export default function SizeWeightAndGroupAccess() {
                                   Next
                                 </Button>
                                 <Button
-                                  sx={{ ml: 2 }}
-                                  variant="outlined"
-                                  color="success"
+                                  sx={{
+                                    ml: 2,
+                                    color: "#00A787",
+                                    "&:hover": { color: "#00A787" },
+                                    border: "1px solid #00A787",
+                                  }}
                                   size="medium"
                                   type="submit"
                                   onClick={() => setFinish(1)}

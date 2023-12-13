@@ -502,7 +502,7 @@ function ProductDetailsScreen() {
               mb: -1,
               borderRadius: "20px",
               fontSize: 12,
-              backgroundColor: "#00A787",             
+              backgroundColor: "#00A787",
               "&:hover": { backgroundColor: "#00A787" },
             }}
             size="small"
@@ -574,28 +574,40 @@ function ProductDetailsScreen() {
               />
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={handlevalueDisClose}   style={{
-                      color: "#00A787",
-                      "&:hover": { color: "#00A787" },
-                    }}>
+              <Button
+                autoFocus
+                onClick={handlevalueDisClose}
+                style={{
+                  color: "#00A787",
+                  "&:hover": { color: "#00A787" },
+                }}
+              >
                 Cancel
               </Button>
               {checkeddelete == true ? (
                 <>
                   {" "}
-                  <Button onClick={handleClosecheckdelet} autoFocus   style={{
+                  <Button
+                    onClick={handleClosecheckdelet}
+                    autoFocus
+                    style={{
                       color: "#00A787",
                       "&:hover": { color: "#00A787" },
-                    }}>
+                    }}
+                  >
                     Delete
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button onClick={handlevlaueClosecheck} autoFocus   style={{
+                  <Button
+                    onClick={handlevlaueClosecheck}
+                    autoFocus
+                    style={{
                       color: "#00A787",
                       "&:hover": { color: "#00A787" },
-                    }}>
+                    }}
+                  >
                     Done
                   </Button>
                 </>

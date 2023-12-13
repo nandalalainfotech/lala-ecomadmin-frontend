@@ -176,483 +176,510 @@ function CustomerFormScreen() {
 
   return (
     <>
-      <Typography variant="h6" sx={{ mt: -2 }}>
-        Create Customer
-      </Typography>
-      <Box sx={{ display: "flex" }}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link
-            to="/"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Home</Typography>
-          </Link>
-          <Link
-            to="/custemer"
-            style={{
-              color: "rgba(0, 0, 0, 0.6)",
-              fontSize: "13px",
-            }}
-          >
-            <Typography sx={{ fontSize: "13px" }}>Customer</Typography>
-          </Link>
+      {EditId ? (
+        <Box>
+          <Typography variant="h6" sx={{ mt: -2 }}>
+            Update Customer
+          </Typography>
+          <Box sx={{ display: "flex" }}>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "13px",
+                }}
+              >
+                <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/custemer"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "13px",
+                }}
+              >
+                <Typography sx={{ fontSize: "13px" }}>Customer</Typography>
+              </Link>
 
-          <Typography sx={{ fontSize: "13px" }}>Create Customer</Typography>
-        </Breadcrumbs>
-      </Box>
-
-      <Divider sx={{ mt: 3 }} />
-
-      <>
-        {EditId ? (
-          <Box>
-            <Box>
-              <ThemeProvider theme={theme}>
-                <Container
-                  component="main"
-                  maxWidth="sm"
-                  sx={{
-                    my: { xs: 3, md: 6, lg: 10 },
-                    p: { xs: 2, md: 1 },
-                  }}
-                >
-                  <CssBaseline />
-
-                  <Box
-                    onSubmit={handleSubmit1(Updatehandle)}
-                    component="form"
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderRadius: "0px",
-                      p: 5,
-                      border: "1px solid #000000",
-                    }}
-                  >
-                    <Typography variant="h5" sx={{ textAlign: "center" }}>
-                      {" "}
-                      Update Customer Details
-                    </Typography>
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="First Name"
-                      label="First Name"
-                      name="fname"
-                      autoComplete="off"
-                      value={Editfirstname}
-                      onChange={(e) => setEditfirstname(e.target.value)}
-                      // InputProps={{
-                      //   readOnly: true,
-                      // }}
-                    />
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Last Name"
-                      label="Last Name"
-                      name="lname"
-                      autoComplete="off"
-                      value={Editlastname}
-                      onChange={(e) => setEditlastname(e.target.value)}
-                    />
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Email"
-                      label="Email"
-                      name="email"
-                      autoComplete="off"
-                      value={Editemail}
-                      onChange={(e) => setEditemail(e.target.value)}
-                    />
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="password"
-                      label="Password"
-                      name="password"
-                      autoComplete="off"
-                      value={Editpassword}
-                      onChange={(e) => setEditpassword(e.target.value)}
-                    />
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Number"
-                      label="Confirm password"
-                      name="mnumber"
-                      autoComplete="off"
-                      value={EditmobileNumber}
-                      onChange={(e) => setEditmobileNumber(e.target.value)}
-                    />
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="dob"
-                      type="date"
-                      autoComplete="off"
-                      value={EditdateOfBirth}
-                      onChange={(e) => setEditdateOfBirth(e.target.value)}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">
-                        Date of Birth is required
-                      </span>
-                    )}
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend">Enabled</FormLabel>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={EditvalidCustomer}
-                            //value={EditvalidCustomer}
-                            onChange={(e) =>
-                              setEditvalidCustomer(e.target.checked)
-                            }
-                            color="primary"
-                          />
-                        }
-                        labelPlacement="top"
-                      />
-                    </FormControl>
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend">Partner offers</FormLabel>
-                      <FormControlLabel
-                        // value="top"
-                        control={
-                          <Switch
-                            checked={EditshowOffers}
-                            //value={EditshowOffers}
-                            // onChange={(e) => setchecked(e.target.checked)}
-                            onChange={(e) =>
-                              setEditshowOffers(e.target.checked)
-                            }
-                            color="primary"
-                          />
-                        }
-                        labelPlacement="top"
-                      />
-                    </FormControl>
-                    <FormControl fullWidth sx={{ mt: 1 }}>
-                      <InputLabel>Active</InputLabel>
-                      <Select
-                        id="standard-simple-select"
-                        value={EditcusGroup}
-                        label="Attributes Type"
-                        onChange={(e) => setEditcusGroup(e.target.value)}
-                      >
-                        <MenuItem value={"Visitor"}>Visitor</MenuItem>
-                        <MenuItem value={"Guest"}>Guest</MenuItem>
-                        <MenuItem value={"Customer"}>Customer</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <Box sx={{ display: "flex" }}>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          mt: 3,
-                          mb: 2,
-                          ml: 5,
-                          borderRadius: "20px",
-                          backgroundColor: "#0099CC",
-                        }}
-                        type="submit"
-                      >
-                        Update
-                      </Button>
-                    </Box>
-                  </Box>
-                </Container>
-              </ThemeProvider>
-            </Box>
+              <Typography sx={{ fontSize: "13px" }}>Update Customer</Typography>
+            </Breadcrumbs>
           </Box>
-        ) : (
+
+          <Divider sx={{ mt: 3 }} />
           <Box>
-            <Box>
-              <ThemeProvider theme={theme}>
-                <Container
-                  component="main"
-                  maxWidth="sm"
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
+                sx={{
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
+                }}
+              >
+                <CssBaseline />
+
+                <Box
+                  onSubmit={handleSubmit1(Updatehandle)}
+                  component="form"
                   sx={{
-                    my: { xs: 3, md: 6, lg: 10 },
-                    p: { xs: 2, md: 1 },
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
                   }}
                 >
-                  <CssBaseline />
+                  <Typography variant="h5" sx={{ textAlign: "center", pb: 5 }}>
+                    {" "}
+                    Update Customer Details
+                  </Typography>
 
-                  <Box
-                    onSubmit={handleSubmit1(createCustemerDetailes)}
-                    component="form"
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderRadius: "0px",
-                      p: 5,
-                      border: "1px solid #000000",
-                      mt: -10,
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      sx={{ textAlign: "center", mt: -5, fontSize: 16 }}
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="First Name"
+                    label="First Name"
+                    name="fname"
+                    autoComplete="off"
+                    value={Editfirstname}
+                    onChange={(e) => setEditfirstname(e.target.value)}
+                    // InputProps={{
+                    //   readOnly: true,
+                    // }}
+                  />
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Last Name"
+                    label="Last Name"
+                    name="lname"
+                    autoComplete="off"
+                    value={Editlastname}
+                    onChange={(e) => setEditlastname(e.target.value)}
+                  />
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Email"
+                    label="Email"
+                    name="email"
+                    autoComplete="off"
+                    value={Editemail}
+                    onChange={(e) => setEditemail(e.target.value)}
+                  />
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="password"
+                    label="Password"
+                    name="password"
+                    autoComplete="off"
+                    value={Editpassword}
+                    onChange={(e) => setEditpassword(e.target.value)}
+                  />
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Number"
+                    label="Confirm password"
+                    name="mnumber"
+                    autoComplete="off"
+                    value={EditmobileNumber}
+                    onChange={(e) => setEditmobileNumber(e.target.value)}
+                  />
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="dob"
+                    type="date"
+                    autoComplete="off"
+                    value={EditdateOfBirth}
+                    onChange={(e) => setEditdateOfBirth(e.target.value)}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">Date of Birth is required</span>
+                  )}
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Enabled</FormLabel>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={EditvalidCustomer}
+                          //value={EditvalidCustomer}
+                          onChange={(e) =>
+                            setEditvalidCustomer(e.target.checked)
+                          }
+                          color="primary"
+                        />
+                      }
+                      labelPlacement="top"
+                    />
+                  </FormControl>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Partner offers</FormLabel>
+                    <FormControlLabel
+                      // value="top"
+                      control={
+                        <Switch
+                          checked={EditshowOffers}
+                          //value={EditshowOffers}
+                          // onChange={(e) => setchecked(e.target.checked)}
+                          onChange={(e) => setEditshowOffers(e.target.checked)}
+                          color="primary"
+                        />
+                      }
+                      labelPlacement="top"
+                    />
+                  </FormControl>
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel>Active</InputLabel>
+                    <Select
+                      id="standard-simple-select"
+                      value={EditcusGroup}
+                      label="Attributes Type"
+                      onChange={(e) => setEditcusGroup(e.target.value)}
                     >
-                      {" "}
-                      Create Customer Details
-                    </Typography>
-                    {/* <FormControl>
-                    
-                    <Box sx={{ display: 'flex' }}>
-                      <FormControlLabel
-                        control={<Checkbox name="Mr." />}
-                        label="Mr."
-                      />
-                      <FormControlLabel
-                        control={<Checkbox name="Mrs." />}
-                        label="Mrs."
-                      />
-                      <FormControlLabel
-                        control={<Checkbox name="Miss." />}
-                        label="Miss."
-                      />
-                    </Box>
-                  </FormControl> */}
-                    {/* <FormControl>
-                      <RadioGroup
-                        sx={{ color: "success" }}
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={combination}
-                        onChange={handleChangeradio}
-                      >
-                        <Box sx={{ display: "flex" }}>
-                          <FormControlLabel
-                            value="Mr"
-                            control={<Radio name="Mr" size="small" />}
-                            label="Mr"
-                          />
-                          <FormControlLabel
-                            value="Mrs"
-                            control={<Radio name="Mrs" size="small" />}
-                            label="Mrs"
-                          />
-                          <FormControlLabel
-                            value="Miss"
-                            control={<Radio name="Miss" size="small" />}
-                            label="Miss"
-                          />
-                        </Box>
-                      </RadioGroup>
-                    </FormControl> */}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="First Name"
-                      label={
-                        <Typography sx={{ fontSize: 13 }}>
-                          First Name
-                        </Typography>
-                      }
-                      name="fname"
-                      autoComplete="off"
-                      sx={{ mt: 1 }}
-                      {...register1("fname", { required: true })}
-                      error={errors1.eprofil}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">First Name is required</span>
-                    )}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Last Name"
-                      label={
-                        <Typography sx={{ fontSize: 13 }}>Last Name</Typography>
-                      }
-                      name="lname"
-                      autoComplete="off"
-                      {...register1("lname", { required: true })}
-                      error={errors1.lname}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">Last Name is required</span>
-                    )}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Email"
-                      label={
-                        <Typography sx={{ fontSize: 13 }}>Email</Typography>
-                      }
-                      name="email"
-                      autoComplete="off"
-                      {...register1("email", { required: true })}
-                      error={errors1.email}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">Email is required</span>
-                    )}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="Password"
-                      label={
-                        <Typography sx={{ fontSize: 13 }}>Password</Typography>
-                      }
-                      name="password"
-                      autoComplete="off"
-                      maxLength="10"
-                      minLength="4"
-                      {...register1("password", { required: true })}
-                      error={errors1.password}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">password is required</span>
-                    )}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="cPassword"
-                      label={
-                        <Typography sx={{ fontSize: 13 }}>
-                          {" "}
-                          Confirm Password
-                        </Typography>
-                      }
-                      name="cpassword"
-                      autoComplete="off"
-                      maxLength="10"
-                      minLength="4"
-                      {...register1("cpassword", { required: true })}
-                      error={errors1.cpassword}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">password is required</span>
-                    )}
-
-                    <TextField
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      id="dob"
-                      type="date"
-                      autoComplete="off"
-                      {...register1("dob", { required: true })}
-                      error={errors1.dob}
-                    />
-                    {errors1.eprofil && (
-                      <span className="formError">
-                        Date of Birth is required
-                      </span>
-                    )}
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend" sx={{ fontSize: 13 }}>
-                        Enabled
-                      </FormLabel>
-                      <FormControlLabel
-                        // value="true"
-                        control={
-                          <Switch
-                            checked={checked}
-                            onChange={enableValidCustomer}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        labelPlacement="top"
-                      />
-                    </FormControl>
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend" sx={{ fontSize: 13 }}>
-                        Partner offers
-                      </FormLabel>
-                      <FormControlLabel
-                        // value="top"
-                        control={
-                          <Switch
-                            checked={check}
-                            onChange={enablePartnerOffers}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        labelPlacement="top"
-                      />
-                    </FormControl>
-
-                    <FormControl fullWidth sx={{ mt: 1 }}>
-                      <InputLabel sx={{ fontSize: 13 }}>
-                        Group access
-                      </InputLabel>
-                      <Select
-                        id="standard-simple-select"
-                        //   value={EmployeActive}
-                        label="Attributes Type"
-                        onChange={(e) => setCustomerActive(e.target.value)}
-                        size="small"
-                      >
-                        <MenuItem sx={{ fontSize: 13 }} value={"Visitor"}>
-                          Visitor
-                        </MenuItem>
-                        <MenuItem sx={{ fontSize: 13 }} value={"Guest"}>
-                          Guest
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ fontSize: 13 }}
-                          value={"Customer"}
-                          default
-                        >
-                          Customer
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                    <Box sx={{ display: "flex" }}>
-                      <Button
-                        variant="contained"
-                        sx={{ mt: 1, mb: 0, ml: 5 }}
-                        type="submit"
-                        size="small"
-                      >
-                        Save
-                      </Button>
-                    </Box>
+                      <MenuItem value={"Visitor"}>Visitor</MenuItem>
+                      <MenuItem value={"Guest"}>Guest</MenuItem>
+                      <MenuItem value={"Customer"}>Customer</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Box sx={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mt: 3,
+                        mb: 2,
+                        ml: 5,
+                        borderRadius: "20px",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
+                      }}
+                      type="submit"
+                    >
+                      Update
+                    </Button>
                   </Box>
-                </Container>
-              </ThemeProvider>
-            </Box>
+                </Box>
+              </Container>
+            </ThemeProvider>
           </Box>
-        )}
-      </>
+        </Box>
+      ) : (
+        <>
+          <Typography variant="h6" sx={{ mt: -2 }}>
+            Create Customer
+          </Typography>
+          <Box sx={{ display: "flex" }}>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+            >
+              <Link
+                to="/"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "13px",
+                }}
+              >
+                <Typography sx={{ fontSize: "13px" }}>Home</Typography>
+              </Link>
+              <Link
+                to="/custemer"
+                style={{
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontSize: "13px",
+                }}
+              >
+                <Typography sx={{ fontSize: "13px" }}>Customer</Typography>
+              </Link>
+
+              <Typography sx={{ fontSize: "13px" }}>Create Customer</Typography>
+            </Breadcrumbs>
+          </Box>
+          <Divider sx={{ mt: 3 }} />
+          <Box>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                maxWidth="sm"
+                sx={{
+                  my: { xs: 3, md: 6, lg: 10 },
+                  p: { xs: 2, md: 1 },
+                }}
+              >
+                <CssBaseline />
+
+                <Box
+                  onSubmit={handleSubmit1(createCustemerDetailes)}
+                  component="form"
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "0px",
+                    p: 5,
+                    border: "1px solid #000000",
+                    mt: -5,
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ textAlign: "center", mt: -5, fontSize: 16, p: 5 }}
+                  >
+                    {" "}
+                    Create Customer Details
+                  </Typography>
+                  {/* <FormControl>
+      
+      <Box sx={{ display: 'flex' }}>
+        <FormControlLabel
+          control={<Checkbox name="Mr." />}
+          label="Mr."
+        />
+        <FormControlLabel
+          control={<Checkbox name="Mrs." />}
+          label="Mrs."
+        />
+        <FormControlLabel
+          control={<Checkbox name="Miss." />}
+          label="Miss."
+        />
+      </Box>
+    </FormControl> */}
+                  {/* <FormControl>
+        <RadioGroup
+          sx={{ color: "success" }}
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={combination}
+          onChange={handleChangeradio}
+        >
+          <Box sx={{ display: "flex" }}>
+            <FormControlLabel
+              value="Mr"
+              control={<Radio name="Mr" size="small" />}
+              label="Mr"
+            />
+            <FormControlLabel
+              value="Mrs"
+              control={<Radio name="Mrs" size="small" />}
+              label="Mrs"
+            />
+            <FormControlLabel
+              value="Miss"
+              control={<Radio name="Miss" size="small" />}
+              label="Miss"
+            />
+          </Box>
+        </RadioGroup>
+      </FormControl> */}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="First Name"
+                    label={
+                      <Typography sx={{ fontSize: 13 }}>First Name</Typography>
+                    }
+                    name="fname"
+                    autoComplete="off"
+                    sx={{ mt: 1 }}
+                    {...register1("fname", { required: true })}
+                    error={errors1.eprofil}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">First Name is required</span>
+                  )}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Last Name"
+                    label={
+                      <Typography sx={{ fontSize: 13 }}>Last Name</Typography>
+                    }
+                    name="lname"
+                    autoComplete="off"
+                    {...register1("lname", { required: true })}
+                    error={errors1.lname}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">Last Name is required</span>
+                  )}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Email"
+                    label={<Typography sx={{ fontSize: 13 }}>Email</Typography>}
+                    name="email"
+                    autoComplete="off"
+                    {...register1("email", { required: true })}
+                    error={errors1.email}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">Email is required</span>
+                  )}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="Password"
+                    label={
+                      <Typography sx={{ fontSize: 13 }}>Password</Typography>
+                    }
+                    name="password"
+                    autoComplete="off"
+                    maxLength="10"
+                    minLength="4"
+                    {...register1("password", { required: true })}
+                    error={errors1.password}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">password is required</span>
+                  )}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="cPassword"
+                    label={
+                      <Typography sx={{ fontSize: 13 }}>
+                        {" "}
+                        Confirm Password
+                      </Typography>
+                    }
+                    name="cpassword"
+                    autoComplete="off"
+                    maxLength="10"
+                    minLength="4"
+                    {...register1("cpassword", { required: true })}
+                    error={errors1.cpassword}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">password is required</span>
+                  )}
+
+                  <TextField
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    id="dob"
+                    type="date"
+                    autoComplete="off"
+                    {...register1("dob", { required: true })}
+                    error={errors1.dob}
+                  />
+                  {errors1.eprofil && (
+                    <span className="formError">Date of Birth is required</span>
+                  )}
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend" sx={{ fontSize: 13 }}>
+                      Enabled
+                    </FormLabel>
+                    <FormControlLabel
+                      // value="true"
+                      control={
+                        <Switch
+                          checked={checked}
+                          onChange={enableValidCustomer}
+                          color="primary"
+                          size="small"
+                        />
+                      }
+                      labelPlacement="top"
+                    />
+                  </FormControl>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend" sx={{ fontSize: 13 }}>
+                      Partner offers
+                    </FormLabel>
+                    <FormControlLabel
+                      // value="top"
+                      control={
+                        <Switch
+                          checked={check}
+                          onChange={enablePartnerOffers}
+                          color="primary"
+                          size="small"
+                        />
+                      }
+                      labelPlacement="top"
+                    />
+                  </FormControl>
+
+                  <FormControl fullWidth sx={{ mt: 1 }}>
+                    <InputLabel sx={{ fontSize: 13 }}>Group access</InputLabel>
+                    <Select
+                      id="standard-simple-select"
+                      //   value={EmployeActive}
+                      label="Attributes Type"
+                      onChange={(e) => setCustomerActive(e.target.value)}
+                      size="small"
+                    >
+                      <MenuItem sx={{ fontSize: 13 }} value={"Visitor"}>
+                        Visitor
+                      </MenuItem>
+                      <MenuItem sx={{ fontSize: 13 }} value={"Guest"}>
+                        Guest
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ fontSize: 13 }}
+                        value={"Customer"}
+                        default
+                      >
+                        Customer
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Box sx={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mt: 1,
+                        mb: 0,
+                        ml: 5,
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
+                      }}
+                      type="submit"
+                      size="small"
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Box>
+              </Container>
+            </ThemeProvider>
+          </Box>
+        </>
+      )}
     </>
   );
 }

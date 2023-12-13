@@ -14,122 +14,127 @@ import { Link } from "react-router-dom";
 import { Divider } from "../../node_modules/@material-ui/core/index";
 
 function EmployeeProfileScreen() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm();
-      const theme = createTheme();
-      const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const theme = createTheme();
+  const dispatch = useDispatch();
 
-      
+  const createProfile = (e) => {
+    dispatch(
+      saveProfile({
+        EmpProfile: e.eprofil,
+      })
+    );
+    window.confirm("Profile Saved Successfully!!");
+    event.target.reset();
+  };
 
-    const createProfile = (e) => {
-        dispatch(
-          saveProfile({
-            EmpProfile: e.eprofil,
-          })
-        );
-        window.confirm("Profile Saved Successfully!!");
-        event.target.reset();
-      };
-    
   return (
     <Box>
-       <>
-            <Typography variant="h5">Add Employee Profile</Typography>
-            <Box sx={{ display: "flex", mt: 2 }}>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-              >
-                <Link
-                  to="/"
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "15px",
-                  }}
-                >
-                  <Typography>Home</Typography>
-                </Link>
-                <Link
-                  to="/team"
-                  style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    fontSize: "15px",
-                  }}
-                >
-                  <Typography>Employee Profile</Typography>
-                </Link>
-                <Typography sx={{ fontSize: "15px" }}>
-                 Add Employee Profile
-                </Typography>
-              </Breadcrumbs>
-              
-            </Box>
-          </>
-          <Divider sx={{ mt: 3 }} />
-    <Box>
-      <ThemeProvider theme={theme}>
-        <Container
-          component="main"
-          maxWidth="sm"
-          sx={{
-            my: { xs: 3, md: 6, lg: 10 },
-            p: { xs: 2, md: 1 },
-          }}
-        >
-          <CssBaseline />
-
-          <Box
-            onSubmit={handleSubmit(createProfile)}
-            component="form"
+      <>
+        <Typography variant="h5">Add Employee Profile</Typography>
+        <Box sx={{ display: "flex", mt: 2 }}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Link
+              to="/"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
+              }}
+            >
+              <Typography>Home</Typography>
+            </Link>
+            <Link
+              to="/team"
+              style={{
+                color: "rgba(0, 0, 0, 0.6)",
+                fontSize: "15px",
+              }}
+            >
+              <Typography>Employee Profile</Typography>
+            </Link>
+            <Typography sx={{ fontSize: "15px" }}>
+              Add Employee Profile
+            </Typography>
+          </Breadcrumbs>
+        </Box>
+      </>
+      <Divider sx={{ mt: 3 }} />
+      <Box>
+        <ThemeProvider theme={theme}>
+          <Container
+            component="main"
+            maxWidth="sm"
             sx={{
-              display: "flex",
-              width: "100%",
-              flexDirection: "column",
-              alignItems: "center",
-              borderRadius: "0px",
-              p: 5,
-              border: "1px solid #000000",
+              my: { xs: 3, md: 6, lg: 10 },
+              p: { xs: 2, md: 1 },
             }}
           >
-            <Typography variant="h5" sx={{ textAlign: "center" }}>
-              {" "}
-              Create Profile
-            </Typography>
-            <TextField
-              size="small"
-              margin="normal"
-              fullWidth
-              id="profile"
-              label="Profile"
-              name="profile"
-              autoComplete="off"
-              {...register("eprofil", { required: true })}
-              error={errors.eprofil}
-            />
-            {errors.eprofil && (
-              <span className="formError">
-                profile is required
-              </span>
-            )}
-            <Box sx={{ display: "flex" }}>
-              <Button
-                variant="contained"
-                sx={{ mt: 3, mb: 2, ml: 5, borderRadius: "20px",
-                backgroundColor: "#0099CC", }}
-                type="submit"
-              >
-                Save
-              </Button>
+            <CssBaseline />
+
+            <Box
+              onSubmit={handleSubmit(createProfile)}
+              component="form"
+              sx={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+                alignItems: "center",
+                borderRadius: "0px",
+                p: 5,
+                mt: -5,
+                mb: -10,
+                border: "1px solid #000000",
+              }}
+            >
+              <Typography variant="h5" sx={{ textAlign: "center" }}>
+                {" "}
+                Create Profile
+              </Typography>
+              <TextField
+                size="small"
+                margin="normal"
+                fullWidth
+                id="profile"
+                label="Profile"
+                name="profile"
+                autoComplete="off"
+                {...register("eprofil", { required: true })}
+                error={errors.eprofil}
+              />
+              {errors.eprofil && (
+                <span className="formError">profile is required</span>
+              )}
+              <Box sx={{ display: "flex" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    ml: 5,
+                    borderRadius: "20px",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
+                  }}
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </Container>
-      </ThemeProvider>
+          </Container>
+        </ThemeProvider>
+      </Box>
     </Box>
-  </Box>
-  )
+  );
 }
 
-export default EmployeeProfileScreen
+export default EmployeeProfileScreen;

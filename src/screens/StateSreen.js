@@ -226,7 +226,7 @@ export default function StateSreen() {
                         </Box>
                       </Box>
                       <Box sx={{ display: "flex", ml: 12 }}>
-                        <Typography sx={{ fontSize: 13, mt: 2}}>
+                        <Typography sx={{ fontSize: 13, mt: 2 }}>
                           <span style={{ color: "red" }}>*</span>Country:
                         </Typography>
                         <Box sx={{ minWidth: 320, ml: 2.5, mt: 1 }}>
@@ -313,7 +313,15 @@ export default function StateSreen() {
                         <Button
                           // fullWidth
                           variant="contained"
-                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          sx={{
+                            mt: 1,
+                            ml: 35,
+                            mb: -2,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           update
@@ -513,7 +521,15 @@ export default function StateSreen() {
                         <Button
                           // fullWidth
                           variant="contained"
-                          sx={{ mt: 1, ml: 35, mb: -2 }}
+                          sx={{
+                            mt: 1,
+                            ml: 35,
+                            mb: -2,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           Save

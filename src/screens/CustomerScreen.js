@@ -354,7 +354,10 @@ function CustomerScreen() {
               sx={{
                 mr: 3,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                   backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
               }}
               type="Click"
               onClick={AddcustomerReg}
@@ -365,7 +368,10 @@ function CustomerScreen() {
           {/* <Button
             variant="contained"
             sx={{ ml: "auto", float: "right", mr: 3,mt:-3, borderRadius: "20px",
-            backgroundColor: "#0099CC", }}
+              backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },}}
             type="Click"
             onClick={AddcustomerReg}
           >
@@ -402,7 +408,10 @@ function CustomerScreen() {
               mr: 3,
               mt: -2,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={AddcustomerReg}
@@ -420,7 +429,10 @@ function CustomerScreen() {
             mt: 1,
             mb: -1,
             borderRadius: "20px",
-            backgroundColor: "#0099CC",
+            backgroundColor: "#00A787",
+            "&:hover": {
+              backgroundColor: "#00A787",
+            },
             fontSize: 12,
           }}
           variant="contained"
@@ -435,7 +447,10 @@ function CustomerScreen() {
               mt: 2,
               mb: 0,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+                 backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
               fontSize: 12,
             }}
             variant='contained'
@@ -497,19 +512,40 @@ function CustomerScreen() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleDisClose}>
+            <Button
+              autoFocus
+              onClick={handleDisClose}
+              style={{
+                color: "#00A787",
+                "&:hover": { color: "#00A787" },
+              }}
+            >
               Cancel
             </Button>
             {checkeddelete == true ? (
               <>
-                <Button onClick={handleClosecheckdelet} autoFocus>
+                <Button
+                  onClick={handleClosecheckdelet}
+                  autoFocus
+                  style={{
+                    color: "#00A787",
+                    "&:hover": { color: "#00A787" },
+                  }}
+                >
                   Delete
                 </Button>
               </>
             ) : (
               <>
                 {" "}
-                <Button onClick={handleClosecheck} autoFocus>
+                <Button
+                  onClick={handleClosecheck}
+                  autoFocus
+                  style={{
+                    color: "#00A787",
+                    "&:hover": { color: "#00A787" },
+                  }}
+                >
                   Done
                 </Button>
               </>

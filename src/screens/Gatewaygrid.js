@@ -326,7 +326,10 @@ export default function GatewayGrid() {
               mr: 3,
               mt: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={onProdctChange}
@@ -349,7 +352,10 @@ export default function GatewayGrid() {
                 ml: 3,
                 mt: 1,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               onClick={handleClickOpencheck}
@@ -408,20 +414,41 @@ export default function GatewayGrid() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button autoFocus onClick={handleDisClose}>
+                  <Button
+                    autoFocus
+                    onClick={handleDisClose}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Cancel
                   </Button>
 
                   {checkeddelete == true ? (
                     <>
-                      <Button onClick={handleClosecheckdelet} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Delete
                       </Button>
                     </>
                   ) : (
                     <>
                       {" "}
-                      <Button onClick={handleClosecheck} autoFocus>
+                      <Button
+                        onClick={handleClosecheck}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Done
                       </Button>
                     </>
@@ -449,17 +476,17 @@ export default function GatewayGrid() {
                 fontSize: 12,
               },
               ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
+                {
+                  backgroundColor: "#808080",
+                  color: "#ffffff",
+                },
               ".css-h4y409-MuiList-root": {
                 display: "grid",
               },
               ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#808080",
-              },
+                {
+                  backgroundColor: "#808080",
+                },
             }}
           >
             <DataGrid

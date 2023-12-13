@@ -95,14 +95,14 @@ export default function LocationGridScreen() {
         ActiveZone({
           id: params,
           active: e.target.checked,
-        }),
+        })
       );
     } else {
       dispatch(
         ActiveZone({
           id: params,
           deactive: e.target.checked,
-        }),
+        })
       );
     }
   };
@@ -232,14 +232,14 @@ export default function LocationGridScreen() {
         updateZoneActivate({
           checkboxId: selectionModel,
           checkedshow: checkedcheck,
-        }),
+        })
       );
     } else {
       dispatch(
         updateZoneActivate({
           checkboxId: selectionModel,
           checkedhide: dsablechecked,
-        }),
+        })
       );
     }
   };
@@ -278,7 +278,10 @@ export default function LocationGridScreen() {
               mr: 3,
               mt: -1,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             onClick={onProdctChange}
@@ -310,9 +313,13 @@ export default function LocationGridScreen() {
             <Button
               // fullWidth
               sx={{
-                mb: 2, ml: 50,
+                mb: 2,
+                ml: 50,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               variant="contained"
@@ -372,20 +379,41 @@ export default function LocationGridScreen() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button autoFocus onClick={handleDisClose}>
+                  <Button
+                    autoFocus
+                    onClick={handleDisClose}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Cancel
                   </Button>
 
                   {checkeddelete == true ? (
                     <>
-                      <Button onClick={handleClosecheckdelet} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Delete
                       </Button>
                     </>
                   ) : (
                     <>
                       {" "}
-                      <Button onClick={handleClosecheck} autoFocus>
+                      <Button
+                        onClick={handleClosecheck}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Done
                       </Button>
                     </>
@@ -414,17 +442,17 @@ export default function LocationGridScreen() {
               fontSize: 12,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-              color: "#ffffff",
-            },
+              {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
             ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#808080",
-            },
+              {
+                backgroundColor: "#808080",
+              },
           }}
         >
           <DataGrid

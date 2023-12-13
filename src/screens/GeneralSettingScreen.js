@@ -51,9 +51,8 @@ export const GeneralSettingScreen = () => {
   const shiploccostallList = useSelector((state) => state.shiploccostallList);
   const { shippinglistdata } = shiploccostallList;
   const freeshipdata = shippinglistdata?.find((x) => x.preId === AttId)
-  ? shippinglistdata?.find((x) => x.preId === AttId)
-  : undefined;
-
+    ? shippinglistdata?.find((x) => x.preId === AttId)
+    : undefined;
 
   console.log("freeshipdata---------->>>", freeshipdata);
   let sample;
@@ -82,7 +81,6 @@ export const GeneralSettingScreen = () => {
   } = useForm();
 
   const SavegeneralDetails = async (e) => {
-    
     if (Finish === 1) {
       const fd = new FormData();
       // fd.append("image", selectedFilenew);
@@ -95,7 +93,7 @@ export const GeneralSettingScreen = () => {
           name: Carrier,
           imageFile: selectedFilenew,
           track: url,
-        }),
+        })
       );
       window.confirm("Details Saved Successfully!!");
       event.target.reset();
@@ -109,7 +107,7 @@ export const GeneralSettingScreen = () => {
           name: Carrier,
           imageFile: selectedFilenew,
           track: url,
-        }),
+        })
       );
 
       navigate(`/costAndShip/${1}`);
@@ -337,15 +335,28 @@ export const GeneralSettingScreen = () => {
                       </Box>
                       <Box sx={{ mt: 4, ml: 60 }}>
                         <Button
-                          sx={{ ml: 10 }}
+                          sx={{
+                            ml: 10,
+                            color: "#00A787",
+                            "&:hover": {
+                              color: "#00A787",
+                            },
+                            border: "1px solid #00A787",
+                          }}
                           variant="outlined"
                           size="medium"
                         >
                           Previous
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": {
+                              color: "#00A787",
+                            },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={() => setNext(2)}
@@ -353,8 +364,14 @@ export const GeneralSettingScreen = () => {
                           Next
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": {
+                              color: "#00A787",
+                            },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           color="success"
                           type="submit"
@@ -537,8 +554,12 @@ export const GeneralSettingScreen = () => {
                           Previous
                         </Button> */}
                         <Button
-                          sx={{ ml: 25 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 25,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
                           type="submit"
                           onClick={() => setNext(2)}
@@ -546,10 +567,13 @@ export const GeneralSettingScreen = () => {
                           Next
                         </Button>
                         <Button
-                          sx={{ ml: 2 }}
-                          variant="outlined"
+                          sx={{
+                            ml: 2,
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                            border: "1px solid #00A787",
+                          }}
                           size="medium"
-                          color="success"
                           type="submit"
                           onClick={() => setFinish(1)}
                         >

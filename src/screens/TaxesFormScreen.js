@@ -167,13 +167,14 @@ export default function TaxesFormScreen() {
                         flexDirection: "column",
                         alignItems: "center",
                         p: 5,
-                        border: "1px solid #888888",   
+                        mb: -5,
+                        border: "1px solid #888888",
                       }}
                     >
                       <Box>
                         <Typography
                           variant="h6"
-                          sx={{ mt: -3,alignItems: "center" }}
+                          sx={{ mt: -3, alignItems: "center" }}
                         >
                           Update Taxes
                         </Typography>
@@ -211,7 +212,15 @@ export default function TaxesFormScreen() {
                       <Box sx={{ display: "flex" }}>
                         <Button
                           variant="contained"
-                          sx={{ mt: 3, mb: 2, ml: 1 }}
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            ml: 1,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           update
@@ -272,7 +281,7 @@ export default function TaxesFormScreen() {
                         flexDirection: "column",
                         alignItems: "center",
                         p: 5,
-                        border: "1px solid #888888",                      
+                        border: "1px solid #888888",
                       }}
                     >
                       <Box>
@@ -328,7 +337,15 @@ export default function TaxesFormScreen() {
                       <Box sx={{ display: "flex" }}>
                         <Button
                           variant="contained"
-                          sx={{ mt: 3, mb: 2, ml: 1 }}
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            ml: 1,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                           size="small"
                         >

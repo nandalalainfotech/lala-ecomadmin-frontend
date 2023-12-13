@@ -131,7 +131,7 @@ body {
 .flat a.active,
 .flat a:hover:after,
 .flat a.active:after {
-  background: #006997;
+  background: #00A787;
   color: #fff;
 }
 .deactive {

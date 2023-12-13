@@ -343,7 +343,15 @@ function AdressScreen() {
                     <Box sx={{ display: "flex" }}>
                       <Button
                         variant="contained"
-                        sx={{ mt: 3, mb: 2, ml: 5 }}
+                        sx={{
+                          mt: 3,
+                          mb: 2,
+                          ml: 5,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="submit"
                       >
                         Update
@@ -625,7 +633,15 @@ function AdressScreen() {
                     <Box sx={{ display: "flex" }}>
                       <Button
                         variant="contained"
-                        sx={{ mt: 3, mb: 2, ml: 5 }}
+                        sx={{
+                          mt: 3,
+                          mb: 2,
+                          ml: 5,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="submit"
                       >
                         Save

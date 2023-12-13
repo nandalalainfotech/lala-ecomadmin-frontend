@@ -78,7 +78,10 @@ export default function OrderStatus() {
                 mr: 3,
                 mt: -1,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
                 fontSize: 12,
               }}
               onClick={onProdctChange}
