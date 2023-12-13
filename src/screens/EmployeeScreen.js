@@ -586,7 +586,7 @@ function EmployeeScreen() {
               <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
-                sx={{ display: "flex", flexDerection: "row",mb:1}}
+                sx={{ display: "flex", flexDerection: "row", mb: 1 }}
               >
                 <Link
                   to="/"
@@ -610,7 +610,10 @@ function EmployeeScreen() {
                     mr: 3,
                     mt: -2,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
                     fontSize: 12,
                   }}
                   onClick={AddEmployeeChange}
@@ -632,7 +635,7 @@ function EmployeeScreen() {
               <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
-                sx={{ display: "flex", flexDerection: "row",mb:1}}
+                sx={{ display: "flex", flexDerection: "row", mb: 1 }}
               >
                 <Link
                   to="/"
@@ -656,7 +659,10 @@ function EmployeeScreen() {
                     mr: 3,
                     mt: -2,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
                     fontSize: 12,
                   }}
                   onClick={AddprofileChange}
@@ -700,7 +706,7 @@ function EmployeeScreen() {
               <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
-                sx={{ display: "flex", flexDerection: "row",mb:1}}
+                sx={{ display: "flex", flexDerection: "row", mb: 1 }}
               >
                 <Link
                   to="/"
@@ -724,7 +730,10 @@ function EmployeeScreen() {
                     mr: 3,
                     mt: -2,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                   backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                     fontSize: 12,
                   }}
                   onClick={AddprofileChange}
@@ -738,10 +747,38 @@ function EmployeeScreen() {
         )}
       </>
       <Box>
-        <Tabs value={tabIndex} onChange={handleTabChange}>
-          <Tab sx={{ fontSize: 13, ml: -2 }} label="Employees" />
-          <Tab sx={{ fontSize: 13 }} label="Profiles" />
-          <Tab sx={{ fontSize: 13 }} label="Permission" />
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="#00A787"
+        >
+          <Tab
+            style={{
+              fontSize: "13px",
+              color: tabIndex === 0 ? "#00A787" : "inherit",
+              borderBottom:
+                tabIndex === 0 ? "2px solid #00A787" : "2px solid transparent",
+            }}
+            label="Employees"
+          />
+          <Tab
+            style={{
+              fontSize: "13px",
+              color: tabIndex === 1 ? "#00A787" : "inherit",
+              borderBottom:
+                tabIndex === 1 ? "2px solid #00A787" : "2px solid transparent",
+            }}
+            label="Profiles"
+          />
+          <Tab
+            style={{
+              fontSize: "13px",
+              color: tabIndex === 2 ? "#00A787" : "inherit",
+              borderBottom:
+                tabIndex === 3 ? "2px solid #00A787" : "2px solid transparent",
+            }}
+            label="Permission"
+          />
         </Tabs>
 
         {tabIndex === 0 && (
@@ -753,7 +790,10 @@ function EmployeeScreen() {
                   mt: 1,
                   mb: -1,
                   borderRadius: "20px",
-                  backgroundColor: "#0099CC",
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
                 }}
                 variant="contained"
                 onClick={handleClickOpen}
@@ -819,20 +859,41 @@ function EmployeeScreen() {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button autoFocus onClick={handleDisClose}>
+                  <Button
+                    autoFocus
+                    onClick={handleDisClose}
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Cancel
                   </Button>
 
                   {checkeddelete === true ? (
                     <>
                       {" "}
-                      <Button onClick={handleClosecheckdelet} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Delete
                       </Button>
                     </>
                   ) : (
                     <>
-                      <Button onClick={handleClosecheck} autoFocus>
+                      <Button
+                        onClick={handleClosecheck}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Done
                       </Button>
                     </>
@@ -994,7 +1055,10 @@ function EmployeeScreen() {
                               mb: 2,
                               ml: 5,
                               borderRadius: "20px",
-                              backgroundColor: "#0099CC",
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
                             }}
                             type="submit"
                           >
@@ -1070,7 +1134,10 @@ function EmployeeScreen() {
                 mt: 1,
                 mb: -1,
                 borderRadius: "20px",
-                backgroundColor: "#0099CC",
+                backgroundColor: "#00A787",
+                "&:hover": {
+                  backgroundColor: "#00A787",
+                },
               }}
               variant="contained"
               onClick={(e) => setAnchorEl2(e.currentTarget)}
@@ -1112,6 +1179,8 @@ function EmployeeScreen() {
                           alignItems: "center",
                           borderRadius: "0px",
                           p: 5,
+                          mt:-7,
+                          mb:-10,
                           border: "1px solid #000000",
                         }}
                       >
@@ -1141,7 +1210,10 @@ function EmployeeScreen() {
                               mb: 2,
                               ml: 5,
                               borderRadius: "20px",
-                              backgroundColor: "#0099CC",
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
                             }}
                             type="submit"
                           >
@@ -1216,7 +1288,10 @@ function EmployeeScreen() {
                   mb: 0,
                   ml: 1.5,
                   borderRadius: "20px",
-                  backgroundColor: "#0099CC",
+                  backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
                 }}
                 variant="contained"
                 onClick={(e) => setAnchorEl2(e.currentTarget)}
@@ -1282,7 +1357,10 @@ function EmployeeScreen() {
                   mb: 2,
                   ml: 0,
                   borderRadius: "20px",
-                  backgroundColor: "#0099CC",
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
                 }}
                 type="submit"
               >
