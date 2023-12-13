@@ -1304,7 +1304,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
+                  sx={{ display: "flex", flexDerection: "row", mb: 1 }}
                 >
                   <Link
                     onClick={refreshPage}
@@ -1331,22 +1331,6 @@ function AttributesScreen() {
                     {viewitem.attributename}
                   </Typography>
                 </Breadcrumbs>
-
-                <Box sx={{ ml: "auto" }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mr: 3,
-                      mt: -2,
-                      borderRadius: "20px",
-                      backgroundColor: "#0099CC",
-                      fontSize: 12,
-                    }}
-                    onClick={AttvlaueChange}
-                  >
-                    Add New value
-                  </Button>
-                </Box>
               </Box>
             </>
           ) : (
@@ -1414,7 +1398,7 @@ function AttributesScreen() {
                     <Breadcrumbs
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
-                      sx={{ display: "flex", flexDerection: "row",mb:1 }}
+                      sx={{ display: "flex", flexDerection: "row", mb: 1 }}
                     >
                       <Link
                         to="/"
@@ -1437,7 +1421,10 @@ function AttributesScreen() {
                           mr: 3,
                           mt: -2,
                           borderRadius: "20px",
-                          backgroundColor: "#0099CC",
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
                           fontSize: 12,
                         }}
                         onClick={Attchange}
@@ -1449,7 +1436,10 @@ function AttributesScreen() {
                           mr: 3,
                           mt: -2,
                           borderRadius: "20px",
-                          backgroundColor: "#0099CC",
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
                           fontSize: 12,
                         }}
                         variant="contained"
@@ -1486,7 +1476,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
+                  sx={{ display: "flex", flexDerection: "row", mb: 1 }}
                 >
                   <Link
                     onClick={refreshPage}
@@ -1511,22 +1501,6 @@ function AttributesScreen() {
                     {feautureview.row.featurename}
                   </Typography>
                 </Breadcrumbs>
-
-                <Box sx={{ ml: "auto" }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mr: 3,
-                      mt: -2,
-                      borderRadius: "20px",
-                      backgroundColor: "#0099CC",
-                      fontSize: 12,
-                    }}
-                    onClick={featurevalueChaneg}
-                  >
-                    Add New value
-                  </Button>
-                </Box>
               </Box>
               {/* <Box sx={{ ml: "auto" }}>
                     <Button
@@ -1552,7 +1526,7 @@ function AttributesScreen() {
                 <Breadcrumbs
                   separator={<NavigateNextIcon fontSize="small" />}
                   aria-label="breadcrumb"
-                  sx={{ display: "flex", flexDerection: "row",mb:1 }}
+                  sx={{ display: "flex", flexDerection: "row", mb: 1 }}
                 >
                   <Link
                     to="/"
@@ -1573,7 +1547,10 @@ function AttributesScreen() {
                       mr: 3,
                       mt: -2,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                       fontSize: 12,
                     }}
                     onClick={FeaturesChange}
@@ -1585,7 +1562,10 @@ function AttributesScreen() {
                       mr: 3,
                       mt: -2,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                       fontSize: 12,
                     }}
                     variant="contained"
@@ -1603,8 +1583,6 @@ function AttributesScreen() {
       <Box>
         <Tabs
           value={tabIndex}
-          textColor="secondary"
-          indicatorColor="secondary"
           TabIndicatorProps={{
             sx: {
               marginTop: "2px",
@@ -1612,9 +1590,28 @@ function AttributesScreen() {
           }}
           // centered
           onChange={handleTabChange}
+          indicatorColor="#00A787"
         >
-          <Tab sx={{ fontSize: "12px", ml: -2 }} label="Attributes " />
-          <Tab sx={{ fontSize: "12px"}} label="Features  " />
+          <Tab
+            style={{
+              fontSize: "12px",
+              ml: -2,
+              color: tabIndex === 0 ? "#00A787" : "inherit",
+              borderBottom:
+                tabIndex === 0 ? "2px solid #00A787" : "2px solid transparent",
+            }}
+            label="Attributes "
+          />
+          <Tab
+            style={{
+              fontSize: "12px",
+
+              color: tabIndex === 1 ? "#00A787" : "inherit",
+              borderBottom:
+                tabIndex === 1 ? "2px solid #00A787" : "2px solid transparent",
+            }}
+            label="Features  "
+          />
         </Tabs>
       </Box>
 
@@ -1630,7 +1627,10 @@ function AttributesScreen() {
                     mb: -1,
                     ml: 0,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
                     fontSize: 12,
                   }}
                   variant="contained"
@@ -1704,18 +1704,39 @@ function AttributesScreen() {
                     </Button>
                   </DialogActions> */}
                   <DialogActions>
-                    <Button autoFocus onClick={handlevalueDisClose}>
+                    <Button
+                      autoFocus
+                      onClick={handlevalueDisClose}
+                      style={{
+                        color: "#00A787",
+                        "&:hover": { color: "#00A787" },
+                      }}
+                    >
                       Cancel
                     </Button>
                     {checkeddelete1 === true ? (
                       <>
-                        <Button onClick={handleClosecheckdelet1} autoFocus>
+                        <Button
+                          onClick={handleClosecheckdelet1}
+                          autoFocus
+                          style={{
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                          }}
+                        >
                           Delete
                         </Button>
                       </>
                     ) : (
                       <>
-                        <Button onClick={handlevlaueClosecheck} autoFocus>
+                        <Button
+                          onClick={handlevlaueClosecheck}
+                          autoFocus
+                          style={{
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                          }}
+                        >
                           Done
                         </Button>
                       </>
@@ -1811,7 +1832,8 @@ function AttributesScreen() {
                     mb: -1,
                     ml: 0,
                     borderRadius: "20px",
-                    backgroundColor: "#0099CC",
+                    backgroundColor: "#00A787",
+                    "&:hover": { backgroundColor: "#00A787" },
                     fontSize: 12,
                   }}
                   variant="contained"
@@ -1879,20 +1901,41 @@ function AttributesScreen() {
                     />
                   </DialogContent>
                   <DialogActions>
-                    <Button autoFocus onClick={handleDisClose}>
+                    <Button
+                      autoFocus
+                      onClick={handleDisClose}
+                      style={{
+                        color: "#00A787",
+                        "&:hover": { color: "#00A787" },
+                      }}
+                    >
                       Cancel
                     </Button>
                     {checkeddelete === true ? (
                       <>
                         {" "}
-                        <Button onClick={handleClosecheckdelet} autoFocus>
+                        <Button
+                          onClick={handleClosecheckdelet}
+                          autoFocus
+                          style={{
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                          }}
+                        >
                           Delete
                         </Button>
                       </>
                     ) : (
                       <>
                         {" "}
-                        <Button onClick={handleClosecheck} autoFocus>
+                        <Button
+                          onClick={handleClosecheck}
+                          autoFocus
+                          style={{
+                            color: "#00A787",
+                            "&:hover": { color: "#00A787" },
+                          }}
+                        >
                           Done
                         </Button>
                       </>
@@ -1998,7 +2041,10 @@ function AttributesScreen() {
                       mb: -1,
                       ml: 0,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                     }}
                     variant="contained"
                     onClick={handleClickFvlaueOpen}
@@ -2071,17 +2117,37 @@ function AttributesScreen() {
                     </DialogActions> */}
                     <DialogActions>
                       <Button autoFocus onClick={handleFvlaueDisClose}>
+                        {" "}
+                        style=
+                        {{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
                         Cancel
                       </Button>
                       {checkeddelete4 === true ? (
                         <>
-                          <Button onClick={handleClosecheckdelet4} autoFocus>
+                          <Button
+                            onClick={handleClosecheckdelet4}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Delete
                           </Button>
                         </>
                       ) : (
                         <>
-                          <Button onClick={handleFvlaueClosecheck} autoFocus>
+                          <Button
+                            onClick={handleFvlaueClosecheck}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Done
                           </Button>
                         </>
@@ -2175,7 +2241,10 @@ function AttributesScreen() {
                       mb: -1,
                       ml: 0,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                       fontSize: 12,
                     }}
                     variant="contained"
@@ -2242,18 +2311,39 @@ function AttributesScreen() {
                       />
                     </DialogContent>
                     <DialogActions>
-                      <Button autoFocus onClick={handleFDisClose}>
+                      <Button
+                        autoFocus
+                        onClick={handleFDisClose}
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Cancel
                       </Button>
                       {checkeddelete3 === true ? (
                         <>
-                          <Button onClick={handleClosecheckdelet3} autoFocus>
+                          <Button
+                            onClick={handleClosecheckdelet3}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Delete
                           </Button>
                         </>
                       ) : (
                         <>
-                          <Button onClick={handleFClosecheck} autoFocus>
+                          <Button
+                            onClick={handleFClosecheck}
+                            autoFocus
+                            style={{
+                              color: "#00A787",
+                              "&:hover": { color: "#00A787" },
+                            }}
+                          >
                             Done
                           </Button>
                         </>
@@ -2280,10 +2370,24 @@ function AttributesScreen() {
                       />
                     </DialogContent>
                     <DialogActions>
-                      <Button autoFocus onClick={handleDeletrClose3}>
+                      <Button
+                        autoFocus
+                        onClick={handleDeletrClose3}
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Cancel
                       </Button>
-                      <Button onClick={handleClosecheckdelet3} autoFocus>
+                      <Button
+                        onClick={handleClosecheckdelet3}
+                        autoFocus
+                        style={{
+                          color: "#00A787",
+                          "&:hover": { color: "#00A787" },
+                        }}
+                      >
                         Done
                       </Button>
                     </DialogActions>

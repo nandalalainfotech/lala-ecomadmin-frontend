@@ -162,9 +162,7 @@ function CategoryMasterFormEditScreen() {
         childName == "Child1"
       ) {
         ChildrenArray.push(categorymasterallList[i].children[j]);
-        ExpandArray.push(
-          categorymasterallList[i]._id,
-        );
+        ExpandArray.push(categorymasterallList[i]._id);
         NewArry.push({
           ["Cname"]: "child-1",
           ["childIndex"]: j,
@@ -197,7 +195,7 @@ function CategoryMasterFormEditScreen() {
         ) {
           if (
             categorymasterallList[i].children[j].children[k].children[a]._id ===
-            parentId &&
+              parentId &&
             childName == "Child3"
           ) {
             ChildrenArray.push(
@@ -236,7 +234,7 @@ function CategoryMasterFormEditScreen() {
                 categorymasterallList[i]._id,
                 categorymasterallList[i].children[j]._id,
                 categorymasterallList[i].children[j].children[k]._id,
-                categorymasterallList[i].children[j].children[k].children[a]._id,
+                categorymasterallList[i].children[j].children[k].children[a]._id
               );
               NewArry.push({
                 ["Cname"]: "child-4",
@@ -267,8 +265,10 @@ function CategoryMasterFormEditScreen() {
                   categorymasterallList[i]._id,
                   categorymasterallList[i].children[j]._id,
                   categorymasterallList[i].children[j].children[k]._id,
-                  categorymasterallList[i].children[j].children[k].children[a]._id,
-                  categorymasterallList[i].children[j].children[k].children[a].children[b]._id,
+                  categorymasterallList[i].children[j].children[k].children[a]
+                    ._id,
+                  categorymasterallList[i].children[j].children[k].children[a]
+                    .children[b]._id
                 );
                 NewArry.push({
                   ["Cname"]: "child-5",
@@ -300,9 +300,12 @@ function CategoryMasterFormEditScreen() {
                     categorymasterallList[i]._id,
                     categorymasterallList[i].children[j]._id,
                     categorymasterallList[i].children[j].children[k]._id,
-                    categorymasterallList[i].children[j].children[k].children[a]._id,
-                    categorymasterallList[i].children[j].children[k].children[a].children[b]._id,
-                    categorymasterallList[i].children[j].children[k].children[a].children[b].children[c]._id,
+                    categorymasterallList[i].children[j].children[k].children[a]
+                      ._id,
+                    categorymasterallList[i].children[j].children[k].children[a]
+                      .children[b]._id,
+                    categorymasterallList[i].children[j].children[k].children[a]
+                      .children[b].children[c]._id
                   );
                   NewArry.push({
                     ["Cname"]: "child-6",
@@ -336,10 +339,18 @@ function CategoryMasterFormEditScreen() {
                       categorymasterallList[i]._id,
                       categorymasterallList[i].children[j]._id,
                       categorymasterallList[i].children[j].children[k]._id,
-                      categorymasterallList[i].children[j].children[k].children[a]._id,
-                      categorymasterallList[i].children[j].children[k].children[a].children[b]._id,
-                      categorymasterallList[i].children[j].children[k].children[a].children[b].children[c]._id,
-                      categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d]._id,
+                      categorymasterallList[i].children[j].children[k].children[
+                        a
+                      ]._id,
+                      categorymasterallList[i].children[j].children[k].children[
+                        a
+                      ].children[b]._id,
+                      categorymasterallList[i].children[j].children[k].children[
+                        a
+                      ].children[b].children[c]._id,
+                      categorymasterallList[i].children[j].children[k].children[
+                        a
+                      ].children[b].children[c].children[d]._id
                     );
                     NewArry.push({
                       ["Cname"]: "child-7",
@@ -376,11 +387,17 @@ function CategoryMasterFormEditScreen() {
                         categorymasterallList[i]._id,
                         categorymasterallList[i].children[j]._id,
                         categorymasterallList[i].children[j].children[k]._id,
-                        categorymasterallList[i].children[j].children[k].children[a]._id,
-                        categorymasterallList[i].children[j].children[k].children[a].children[b]._id,
-                        categorymasterallList[i].children[j].children[k].children[a].children[b].children[c]._id,
-                        categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d]._id,
-                        categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d].children[e]._id,
+                        categorymasterallList[i].children[j].children[k]
+                          .children[a]._id,
+                        categorymasterallList[i].children[j].children[k]
+                          .children[a].children[b]._id,
+                        categorymasterallList[i].children[j].children[k]
+                          .children[a].children[b].children[c]._id,
+                        categorymasterallList[i].children[j].children[k]
+                          .children[a].children[b].children[c].children[d]._id,
+                        categorymasterallList[i].children[j].children[k]
+                          .children[a].children[b].children[c].children[d]
+                          .children[e]._id
                       );
                       NewArry.push({
                         ["Cname"]: "child-8",
@@ -408,7 +425,7 @@ function CategoryMasterFormEditScreen() {
                         categorymasterallList[i].children[j].children[k]
                           .children[a]?.children[b]?.children[c]?.children[d]
                           ?.children[e]?.children[x]?.children[H]?._id ===
-                        parentId &&
+                          parentId &&
                         childName == "Child9"
                       ) {
                         ChildrenArray.push(
@@ -420,12 +437,21 @@ function CategoryMasterFormEditScreen() {
                           categorymasterallList[i]._id,
                           categorymasterallList[i].children[j]._id,
                           categorymasterallList[i].children[j].children[k]._id,
-                          categorymasterallList[i].children[j].children[k].children[a]._id,
-                          categorymasterallList[i].children[j].children[k].children[a].children[b]._id,
-                          categorymasterallList[i].children[j].children[k].children[a].children[b].children[c]._id,
-                          categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d]._id,
-                          categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d].children[e]._id,
-                          categorymasterallList[i].children[j].children[k].children[a].children[b].children[c].children[d].children[e].children[x]._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a]._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a].children[b]._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a].children[b].children[c]._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a].children[b].children[c].children[d]
+                            ._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a].children[b].children[c].children[d]
+                            .children[e]._id,
+                          categorymasterallList[i].children[j].children[k]
+                            .children[a].children[b].children[c].children[d]
+                            .children[e].children[x]._id
                         );
                         NewArry.push({
                           ["Cname"]: "child-9",
@@ -653,7 +679,14 @@ function CategoryMasterFormEditScreen() {
                 // fullWidth
                 size="small"
                 variant="contained"
-                sx={{ mt: 3, mb: -2 }}
+                sx={{
+                  mt: 3,
+                  mb: -2,
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                }}
                 type="submit"
               >
                 Update
@@ -664,8 +697,6 @@ function CategoryMasterFormEditScreen() {
       </Box>
     </Box>
   );
-
-
 }
 
-export default CategoryMasterFormEditScreen
+export default CategoryMasterFormEditScreen;

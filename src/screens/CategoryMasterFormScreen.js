@@ -749,7 +749,14 @@ export default function CategoryMasterFormScreen() {
                           // fullWidth
                           size="small"
                           variant="contained"
-                          sx={{ mt: 3, mb: -2 }}
+                          sx={{
+                            mt: 3,
+                            mb: -2,
+                            backgroundColor: "#00A787",
+                            "&:hover": {
+                              backgroundColor: "#00A787",
+                            },
+                          }}
                           type="submit"
                         >
                           Update
@@ -960,7 +967,14 @@ export default function CategoryMasterFormScreen() {
                       <Button
                         size="small"
                         variant="contained"
-                        sx={{ mt: 3, mb: -2 }}
+                        sx={{
+                          mt: 3,
+                          mb: -2,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="Click"
                         onClick={() => setCreated(2)}
                       >
@@ -969,7 +983,15 @@ export default function CategoryMasterFormScreen() {
                       <Button
                         size="small"
                         variant="contained"
-                        sx={{ mt: 3, mb: -2, ml: 5 }}
+                        sx={{
+                          mt: 3,
+                          mb: -2,
+                          ml: 5,
+                          backgroundColor: "#00A787",
+                          "&:hover": {
+                            backgroundColor: "#00A787",
+                          },
+                        }}
                         type="Click"
                         onClick={() => setCreatedAnother(1)}
                       >

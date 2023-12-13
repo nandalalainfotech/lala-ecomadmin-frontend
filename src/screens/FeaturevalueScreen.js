@@ -203,7 +203,10 @@ function FeaturevalueScreen() {
                       mt: 3,
                       mb: 2,
                       borderRadius: "20px",
-                      backgroundColor: "#0099CC",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                     }}
                     type="submit"
                   >
@@ -269,6 +272,7 @@ function FeaturevalueScreen() {
                     alignItems: "center",
                     borderRadius: "0px",
                     p: 5,
+                    mb: -5,
                     border: "1px solid #000000",
                   }}
                 >
@@ -311,10 +315,12 @@ function FeaturevalueScreen() {
                       variant="contained"
                       sx={{
                         mr: 3,
-
                         ml: 5,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="Click"
                       onClick={() => setBtnFeatureVlaueAnother(2)}
@@ -329,7 +335,10 @@ function FeaturevalueScreen() {
 
                         ml: 5,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="Click"
                       onClick={() => setBtnFeatureVlaue(1)}

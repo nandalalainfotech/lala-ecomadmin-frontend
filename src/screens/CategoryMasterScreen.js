@@ -395,7 +395,8 @@ export default function CategoryMasterScreen() {
               mr: 3,
               mt: -2,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": { backgroundColor: "#00A787" },
               fontSize: 12,
             }}
             onClick={submitHandler}
@@ -420,7 +421,10 @@ export default function CategoryMasterScreen() {
               mt: 2,
               mb: 0,
               borderRadius: "20px",
-              backgroundColor: "#0099CC",
+              backgroundColor: "#00A787",
+              "&:hover": {
+                backgroundColor: "#00A787",
+              },
               fontSize: 12,
             }}
             variant="contained"
@@ -477,18 +481,39 @@ export default function CategoryMasterScreen() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={handleDisClose}>
+              <Button
+                autoFocus
+                onClick={handleDisClose}
+                style={{
+                  color: "#00A787",
+                  "&:hover": { color: "#00A787" },
+                }}
+              >
                 Cancel
               </Button>
               {checkeddelete === true ? (
                 <>
-                  <Button onClick={handleClosecheckdelet} autoFocus>
+                  <Button
+                    onClick={handleClosecheckdelet}
+                    autoFocus
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Delete
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button onClick={handleClose} autoFocus>
+                  <Button
+                    onClick={handleClose}
+                    autoFocus
+                    style={{
+                      color: "#00A787",
+                      "&:hover": { color: "#00A787" },
+                    }}
+                  >
                     Done
                   </Button>
                 </>

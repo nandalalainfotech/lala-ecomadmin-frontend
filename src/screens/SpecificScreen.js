@@ -35,13 +35,13 @@ function SpecificScreen() {
 
   const speciPriceList = useSelector((state) => state.speciPriceList);
   const { pricelist } = speciPriceList;
-  console.log('pricelist', pricelist);
+  console.log("pricelist", pricelist);
 
   const params = useParams();
   const EditId = params.id;
 
-  const specificObj = pricelist?.find((item) => item.mprodId === EditId)
-  console.log('specificObj', specificObj);
+  const specificObj = pricelist?.find((item) => item.mprodId === EditId);
+  console.log("specificObj", specificObj);
 
   const catalogProdView = useSelector((state) => state.catalogProdView);
   const { catProducts } = catalogProdView;
@@ -49,10 +49,9 @@ function SpecificScreen() {
   let productdata;
   {
     catProducts?.map((state) => {
-      productdata = state?._id
-    })
+      productdata = state?._id;
+    });
   }
-
 
   // const [combination, setcombination] = useState("");
   const [subtype, setSubtype] = useState([]);
@@ -113,7 +112,6 @@ function SpecificScreen() {
     handleSubmit: handleSubmit1,
     formState: { errors },
   } = useForm();
-
 
   // const specificPriceEdit = products?.find((x) => x._id === EditId);
   const [Editcombination, setEditcombination] = useState(
@@ -307,7 +305,12 @@ function SpecificScreen() {
               </FormControl>
               <Stack spacing={2} direction="row" sx={{ height: 50 }}>
                 <Button
-                  sx={{ height: 50, ml: 5 }}
+                  sx={{
+                    height: 50,
+                    ml: 5,
+                    backgroundColor: "#00A787",
+                    "&:hover": { backgroundColor: "#00A787" },
+                  }}
                   variant="contained"
                   size="medium"
                   type="submit"
@@ -517,7 +520,12 @@ function SpecificScreen() {
             </FormControl>
             <Stack spacing={2} direction="row">
               <Button
-                sx={{ height: 50, ml: 5 }}
+                sx={{
+                  height: 50,
+                  ml: 5,
+                  backgroundColor: "#00A787",
+                  "&:hover": { backgroundColor: "#00A787" },
+                }}
                 variant="contained"
                 size="medium"
                 type="submit"

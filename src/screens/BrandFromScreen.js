@@ -78,7 +78,7 @@ function BrandFromScreen() {
         editor: editor,
         ckeditor: ckeditor,
         checked: checked,
-      }),
+      })
     );
     window.confirm("Brand Details Added SuccessFully!!");
     navigate("/brand");
@@ -98,7 +98,7 @@ function BrandFromScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{mb:1}}
+            sx={{ mb: 1 }}
           >
             <Link
               to="/"
@@ -208,7 +208,7 @@ function BrandFromScreen() {
 
               <Typography sx={{ fontSize: 13 }}>Enabled</Typography>
               <Switch
-                color="primary"
+                color="#00A787"
                 checked={checked}
                 value="checked"
                 onChange={(e) => setchecked(e.target.checked)}
@@ -216,9 +216,18 @@ function BrandFromScreen() {
               />
 
               <Button
-                fullWidth
+                // fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  width: "100px",
+                  ml: 25,
+                  backgroundColor: "#00A787",
+                  "&:hover": {
+                    backgroundColor: "#00A787",
+                  },
+                }}
                 type="submit"
               >
                 Save

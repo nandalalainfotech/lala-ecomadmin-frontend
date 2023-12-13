@@ -200,6 +200,7 @@ function AttributeFormScreen() {
                   p: 5,
                   border: "1px solid #000000",
                   mt: -7,
+                  mb: -10,
                 }}
               >
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
@@ -237,7 +238,14 @@ function AttributeFormScreen() {
                 <Button
                   // fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#00A787",
+                    "&:hover": {
+                      backgroundColor: "#00A787",
+                    },
+                  }}
                   type="submit"
                 >
                   Update
@@ -316,7 +324,15 @@ function AttributeFormScreen() {
                 <Box sx={{ display: "flex" }}>
                   <Button
                     variant="contained"
-                    sx={{ mt: 3, mb: 2, ml: 4 }}
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      ml: 4,
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
+                    }}
                     type="submit"
                     onClick={() => setbtnAnoter(2)}
                   >
@@ -325,7 +341,15 @@ function AttributeFormScreen() {
 
                   <Button
                     variant="contained"
-                    sx={{ mt: 3, mb: 2, ml: 4 }}
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      ml: 4,
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
+                    }}
                     type="submit"
                     onClick={() => setBtn(1)}
                   >

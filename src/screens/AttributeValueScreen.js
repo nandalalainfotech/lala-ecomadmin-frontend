@@ -147,7 +147,7 @@ function AttributeValueScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
           >
             <Link
               to="/"
@@ -197,6 +197,7 @@ function AttributeValueScreen() {
                     p: 5,
                     border: "1px solid #000000",
                     mt: -7,
+                    mb: -10,
                   }}
                 >
                   <Typography variant="h5" sx={{ textAlign: "center" }}>
@@ -279,7 +280,17 @@ function AttributeValueScreen() {
       <></>
     )} */}
                   <Box sx={{ mb: -1 }}>
-                    <Button variant="contained" sx={{ mt: 3 }} type="submit">
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mt: 3,
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
+                      }}
+                      type="submit"
+                    >
                       Update
                     </Button>
                   </Box>
@@ -296,7 +307,7 @@ function AttributeValueScreen() {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
-            sx={{ display: "flex", flexDerection: "row", mt: 1,mb:1 }}
+            sx={{ display: "flex", flexDerection: "row", mt: 1, mb: 1 }}
           >
             <Link
               to="/"
@@ -346,6 +357,7 @@ function AttributeValueScreen() {
                     p: 5,
                     border: "1px solid #000000",
                     mt: -7,
+                    mb:-10
                   }}
                 >
                   <Typography variant="h6" sx={{ textAlign: "center", mt: -3 }}>
@@ -438,7 +450,10 @@ function AttributeValueScreen() {
                         mb: 0,
                         mr: 2,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="Click"
                       onClick={() => setBtnattValueAnother(2)}
@@ -453,7 +468,10 @@ function AttributeValueScreen() {
                         mb: 0,
                         mr: 2,
                         borderRadius: "20px",
-                        backgroundColor: "#0099CC",
+                        backgroundColor: "#00A787",
+                        "&:hover": {
+                          backgroundColor: "#00A787",
+                        },
                       }}
                       type="Click"
                       onClick={() => setBtnattValue(1)}
