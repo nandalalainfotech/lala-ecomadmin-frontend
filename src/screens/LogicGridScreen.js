@@ -551,7 +551,7 @@ export default function LogicGridScreen() {
             onClick={onProdctChange}
           >
             <AddCircleOutlineIcon sx={{ fontSize: 18 }} />
-            Add New Product
+            Add New Carrier
           </Button>
         </Box>
       </Box>
