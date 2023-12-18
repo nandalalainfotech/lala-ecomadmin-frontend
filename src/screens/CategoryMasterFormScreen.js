@@ -56,7 +56,6 @@ export default function CategoryMasterFormScreen() {
   const categorychildObj = ChildcategoryList?.find(
     (item) => item._id === categoryMasterId
   );
-  console.log("categorychildObj===================>>", categorychildObj);
 
   ///*******************************Parent Section********************************** */
   const categoryObj = categorymasterallList?.find(
@@ -128,20 +127,21 @@ export default function CategoryMasterFormScreen() {
   );
 
   ///*******************************Parent Section Start********************************** */
-  // eslint-disable-next-line no-unused-vars
+
   const [name, setName] = useState(categoryObj?.name);
-  // eslint-disable-next-line no-unused-vars
+
   const [checked, setchecked] = useState(categoryObj?.checked);
-  // eslint-disable-next-line no-unused-vars
+
   const [parent, setParent] = useState(categoryObj?.parent);
-  // eslint-disable-next-line no-unused-vars
+
   const [description, setDescription] = useState(categoryObj?.description);
-  // eslint-disable-next-line no-unused-vars
+
   const [coverimg, setcoverimg] = useState(categoryObj?.coverimg);
-  // eslint-disable-next-line no-unused-vars
+
   const [CreatedAnother, setCreatedAnother] = useState("");
-  const [, setCreated] = useState("");
-  // eslint-disable-next-line no-unused-vars
+
+  const [Created, setCreated] = useState("");
+
   // const [menuThumbnail, setmenuThumbnail] = useState('');
   // const [image, setimage] = useState('');
 
@@ -257,8 +257,6 @@ export default function CategoryMasterFormScreen() {
             categorymasterallList[i].children[j].children[k].children[a]
               ?._id === parent
           ) {
-            console.log("k------------>>", k);
-            console.log("a------------>>", a);
             NewArry.push({
               ["parenttest"]:
                 categorymasterallList[i].children[j].children[k].children[a]
@@ -409,61 +407,64 @@ export default function CategoryMasterFormScreen() {
     }
   }
   const createHandler = (e) => {
-    if (CreatedAnother === 1) {
-      dispatch(
-        createCategoryMaster({
-          name: e.name,
-          checked: check,
-          parent: e.parent ? e.parent : parent,
-          description: e.description,
-          coverimg: selectedFilenew,
-          parentId: NewArry.length > 0 ? NewArry[0].parenttest : null,
-          childname: NewArry.length > 0 ? NewArry[0].parenttestname : null,
-          childIndex: NewArry.length > 0 ? NewArry[0].childIndex : null,
-          child1: NewArry.length > 0 ? NewArry[0].child1 : null,
-          child2: NewArry.length > 0 ? NewArry[0].child2 : null,
-          child3: NewArry.length > 0 ? NewArry[0].child3 : null,
-          child4: NewArry.length > 0 ? NewArry[0].child4 : null,
-          child5: NewArry.length > 0 ? NewArry[0].child5 : null,
-          child6: NewArry.length > 0 ? NewArry[0].child6 : null,
-          child7: NewArry.length > 0 ? NewArry[0].child7 : null,
-
-          // catThumbnail: e.catThumbnail,
-          // menuThumbnail: e.menuThumbnail
-        })
-      );
-      window.confirm("New Category Added Successfully!!");
-      navigate("/categorymaster");
-      event.target.reset();
+    if (e.name == "" && e.description == "") {
+      window.confirm("Input Values Needed!!");
     } else {
-      dispatch(
-        createCategoryMaster({
-          name: e.name,
-          checked: check,
-          parent: e.parent ? e.parent : parent,
-          description: e.description,
-          coverimg: selectedFilenew,
-          parentId: NewArry.length > 0 ? NewArry[0].parenttest : null,
-          childname: NewArry.length > 0 ? NewArry[0].parenttestname : null,
-          childIndex: NewArry.length > 0 ? NewArry[0].childIndex : null,
-          child1: NewArry.length > 0 ? NewArry[0].child1 : null,
-          child2: NewArry.length > 0 ? NewArry[0].child2 : null,
-          child3: NewArry.length > 0 ? NewArry[0].child3 : null,
-          child4: NewArry.length > 0 ? NewArry[0].child4 : null,
-          child5: NewArry.length > 0 ? NewArry[0].child5 : null,
-          child6: NewArry.length > 0 ? NewArry[0].child6 : null,
-          child7: NewArry.length > 0 ? NewArry[0].child7 : null,
+      if (CreatedAnother === 1) {
+        dispatch(
+          createCategoryMaster({
+            name: e.name,
+            checked: check,
+            parent: e.parent ? e.parent : parent,
+            description: e.description,
+            coverimg: selectedFilenew,
+            parentId: NewArry.length > 0 ? NewArry[0].parenttest : null,
+            childname: NewArry.length > 0 ? NewArry[0].parenttestname : null,
+            childIndex: NewArry.length > 0 ? NewArry[0].childIndex : null,
+            child1: NewArry.length > 0 ? NewArry[0].child1 : null,
+            child2: NewArry.length > 0 ? NewArry[0].child2 : null,
+            child3: NewArry.length > 0 ? NewArry[0].child3 : null,
+            child4: NewArry.length > 0 ? NewArry[0].child4 : null,
+            child5: NewArry.length > 0 ? NewArry[0].child5 : null,
+            child6: NewArry.length > 0 ? NewArry[0].child6 : null,
+            child7: NewArry.length > 0 ? NewArry[0].child7 : null,
 
-          // parenttest: parenttest,
-          // parenttestname: parenttestname,
-          // catThumbnail: e.catThumbnail,
-          // menuThumbnail: e.menuThumbnail
-        })
-      );
-      window.confirm("New Category Added Successfully!!");
+            // catThumbnail: e.catThumbnail,
+            // menuThumbnail: e.menuThumbnail
+          })
+        );
+        window.confirm("New Category Added Successfully!!");
+        navigate("/categorymaster");
+        event.target.reset();
+      } else {
+        dispatch(
+          createCategoryMaster({
+            name: e.name,
+            checked: check,
+            parent: e.parent ? e.parent : parent,
+            description: e.description,
+            coverimg: selectedFilenew,
+            parentId: NewArry.length > 0 ? NewArry[0].parenttest : null,
+            childname: NewArry.length > 0 ? NewArry[0].parenttestname : null,
+            childIndex: NewArry.length > 0 ? NewArry[0].childIndex : null,
+            child1: NewArry.length > 0 ? NewArry[0].child1 : null,
+            child2: NewArry.length > 0 ? NewArry[0].child2 : null,
+            child3: NewArry.length > 0 ? NewArry[0].child3 : null,
+            child4: NewArry.length > 0 ? NewArry[0].child4 : null,
+            child5: NewArry.length > 0 ? NewArry[0].child5 : null,
+            child6: NewArry.length > 0 ? NewArry[0].child6 : null,
+            child7: NewArry.length > 0 ? NewArry[0].child7 : null,
 
-      event.target.reset();
-      navigate("/categoryFormmaster");
+            // parenttest: parenttest,
+            // parenttestname: parenttestname,
+            // catThumbnail: e.catThumbnail,
+            // menuThumbnail: e.menuThumbnail
+          })
+        );
+        window.confirm("New Category Added Successfully!!");
+        navigate("/categorymaster");
+        event.target.reset();
+      }
     }
   };
 

@@ -145,11 +145,11 @@ export default function ComboEditScreen() {
         <>
           <Box>
             <Breadcrumbs
-              separator={<NavigateNextIcon fontSize='small' />}
-              aria-label='breadcrumb'
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
             >
               <Link
-                to='/'
+                to="/"
                 style={{
                   color: "rgba(0, 0, 0, 0.6)",
                   fontSize: "15px",
@@ -158,7 +158,7 @@ export default function ComboEditScreen() {
                 <Typography>Home</Typography>
               </Link>
               <Link
-                to='/product'
+                to="/product"
                 style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
               >
                 <Typography>Combination</Typography>
@@ -168,10 +168,10 @@ export default function ComboEditScreen() {
             <Divider
               fullWidth
               sx={{ backgroundColor: "#000000", mt: 3 }}
-              showlabels='true'
+              showlabels="true"
             />
             <Box>
-              <Box onSubmit={handleSubmit(saveCombination)} component='form'>
+              <Box onSubmit={handleSubmit(saveCombination)} component="form">
                 <Typography
                   sx={{
                     mt: "20px",
@@ -188,8 +188,8 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%" }}
                     fullWidth
-                    id='quantity'
-                    margin='normal'
+                    id="quantity"
+                    margin="normal"
                     value={Editquentity}
                     onChange={(e) => setEditquentity(e.target.value)}
                   />
@@ -212,12 +212,12 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%", ml: 1 }}
                     inputProps={{ style: { fontSize: 14 } }}
-                    size='small'
-                    margin='normal'
+                    size="small"
+                    margin="normal"
                     fullWidth
-                    id='costPrice'
-                    name='costPrice'
-                    autoComplete='costPrice'
+                    id="costPrice"
+                    name="costPrice"
+                    autoComplete="costPrice"
                     autoFocus
                     value={EditCost}
                     onChange={(e) => setEditCost(e.target.value)}
@@ -226,12 +226,12 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%", ml: 2 }}
                     inputProps={{ style: { fontSize: 14 } }}
-                    size='small'
-                    margin='normal'
+                    size="small"
+                    margin="normal"
                     fullWidth
-                    id='taxin'
-                    name='taxin'
-                    autoComplete='taxin'
+                    id="taxin"
+                    name="taxin"
+                    autoComplete="taxin"
                     autoFocus
                     value={taxinclude}
                   />
@@ -254,14 +254,14 @@ export default function ComboEditScreen() {
                           height: { xs: 90, sm: 150 },
                           justifycontent: "space-between",
                         }}
-                        component='img'
+                        component="img"
                         // height="200"
                         image={`/api/uploads/showsubimglatest/${subimglatest.filename}`}
                         alt={"subimglatest.filename"}
                       />
                       <Checkbox
                         checked={checked === index}
-                        color='primary'
+                        color="primary"
                         onChange={() => {
                           onchangeCheck1(subimglatest.filename, index);
                         }}
@@ -278,8 +278,8 @@ export default function ComboEditScreen() {
                       boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2);",
                       ml: 50,
                     }}
-                    type='submit'
-                    variant='contained'
+                    type="submit"
+                    variant="contained"
                   >
                     Update
                   </Button>
@@ -293,11 +293,11 @@ export default function ComboEditScreen() {
           <Box>
             <Box>
               <Breadcrumbs
-                separator={<NavigateNextIcon fontSize='small' />}
-                aria-label='breadcrumb'
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
               >
                 <Link
-                  to='/'
+                  to="/"
                   style={{
                     color: "rgba(0, 0, 0, 0.6)",
                     fontSize: "15px",
@@ -306,7 +306,7 @@ export default function ComboEditScreen() {
                   <Typography>Home</Typography>
                 </Link>
                 <Link
-                  to='/productadd'
+                  to="/productadd"
                   style={{ color: "rgba(0, 0, 0, 0.6)", fontSize: "15px" }}
                 >
                   <Typography>Combination</Typography>
@@ -316,9 +316,9 @@ export default function ComboEditScreen() {
               <Divider
                 fullWidth
                 sx={{ backgroundColor: "#000000", mt: 3 }}
-                showlabels='true'
+                showlabels="true"
               />
-              <Box onSubmit={handleSubmit(saveCombination)} component='form'>
+              <Box onSubmit={handleSubmit(saveCombination)} component="form">
                 <Typography
                   sx={{
                     mt: "20px",
@@ -335,8 +335,8 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%" }}
                     fullWidth
-                    id='quantity'
-                    margin='normal'
+                    id="quantity"
+                    margin="normal"
                     value={Savequentity}
                     onChange={(e) => setSavequentity(e.target.value)}
                   />
@@ -361,12 +361,12 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%", ml: 1 }}
                     inputProps={{ style: { fontSize: 14 } }}
-                    size='small'
-                    margin='normal'
+                    size="small"
+                    margin="normal"
                     fullWidth
-                    id='costPrice'
-                    name='costPrice'
-                    autoComplete='costPrice'
+                    id="costPrice"
+                    name="costPrice"
+                    autoComplete="costPrice"
                     autoFocus
                     {...register("costPrice", { required: true })}
                     error={errors?.costPrice}
@@ -375,12 +375,12 @@ export default function ComboEditScreen() {
                   <TextField
                     sx={{ width: "50%", ml: "2rem" }}
                     inputProps={{ style: { fontSize: 14 } }}
-                    size='small'
-                    margin='normal'
+                    size="small"
+                    margin="normal"
                     fullWidth
-                    id='taxin'
-                    name='taxin'
-                    autoComplete='taxin'
+                    id="taxin"
+                    name="taxin"
+                    autoComplete="taxin"
                     autoFocus
                     value={taxinclude}
                     // onChange={(e) => settaxin(e.target.value)}
@@ -389,7 +389,7 @@ export default function ComboEditScreen() {
                     error={errors?.taxin}
                   />
                   {errors.taxin && (
-                    <span className='formError'>
+                    <span className="formError">
                       Impact On Price is required
                     </span>
                   )}
@@ -424,14 +424,14 @@ export default function ComboEditScreen() {
                           height: { xs: 90, sm: 150 },
                           justifycontent: "space-between",
                         }}
-                        component='img'
+                        component="img"
                         // height="200"
                         image={`/api/uploads/showsubimglatest/${subimglatest.filename}`}
                         alt={"subimglatest.filename"}
                       />
                       <Checkbox
                         checked={checked === index}
-                        color='primary'
+                        color="primary"
                         onChange={() => {
                           onchangeCheck1(subimglatest.filename, index);
                         }}
@@ -445,11 +445,14 @@ export default function ComboEditScreen() {
                   <Button
                     sx={{
                       mt: "60px",
-                      boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2);",
+                      backgroundColor: "#00A787",
+                      "&:hover": {
+                        backgroundColor: "#00A787",
+                      },
                       ml: 50,
                     }}
-                    type='submit'
-                    variant='contained'
+                    type="submit"
+                    variant="contained"
                   >
                     Save
                   </Button>

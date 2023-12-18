@@ -56,9 +56,9 @@ export const CountryScreen = () => {
 
   const [EditCountry, setEditCountry] = useState(CountryEdit?.Country);
   const [EditCode, setEditCode] = useState(CountryEdit?.Code);
-  const [Editzone, setEditzone] = useState("");
+  const [Editzone, setEditzone] = useState(CountryEdit?.zone);
   const [Editchecked, setEditchecked] = useState(CountryEdit?.checked);
-
+ 
   const handleChangeChekced = (event) => {
     setEditchecked(event.target.checked);
   };
@@ -232,15 +232,19 @@ export const CountryScreen = () => {
                           labelId="demo-simple-select-label"
                           size="small"
                         >
-                          {zonedatum?.map((item) => (
-                            <MenuItem
-                              key={item?._id}
-                              value={item?.zoneName}
-                              style={{ fontSize: 13, ml: 1 }}
-                            >
-                              {item?.zoneName}
-                            </MenuItem>
-                          ))}
+                          {zonedatum
+                            ?.filter((item) => {
+                              return item.checked === true;
+                            })
+                            .map((item) => (
+                              <MenuItem
+                                key={item?._id}
+                                value={item?.zoneName}
+                                style={{ fontSize: 13, ml: 1 }}
+                              >
+                                {item?.zoneName}
+                              </MenuItem>
+                            ))}
                         </Select>
                       </Box>
                       <Box sx={{ display: "flex" }}>

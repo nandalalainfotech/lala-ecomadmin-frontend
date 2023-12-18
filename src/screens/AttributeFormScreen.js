@@ -65,9 +65,9 @@ function AttributeFormScreen() {
         })
       );
       window.confirm("Attribute Saved Successfully!!");
-      navigate("/attributes");
       event.target.reset();
       setAttributestype("");
+      navigate("/attributes");
       //   setAttribute(0);
       setBtn(0);
       setbtnAnoter(0);
@@ -219,8 +219,8 @@ function AttributeFormScreen() {
                   onChange={(e) => setAttriNameupdate(e.target.value)}
                 />
 
-                <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Attributes Type</InputLabel>
+                <FormControl fullWidth sx={{ mt: 0 }}>
+                  <InputLabel sx={{mt:-1}}>Attributes Type</InputLabel>
                   <Select
                     id="standard-simple-select"
                     value={attributupdte}
@@ -306,7 +306,7 @@ function AttributeFormScreen() {
                 )}
 
                 <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel>Attributes Type</InputLabel>
+                  <InputLabel sx={{mt:-1}}>Attributes Type</InputLabel>
                   <Select
                     size="small"
                     id="standard-simple-select"
