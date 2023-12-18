@@ -42,6 +42,7 @@ import {
   CombinationChildList,
   CombinationListValue,
   catProductList,
+  deleteChildImages,
   saveCatologProduct,
   saveCombination,
   updateCatProduct,
@@ -78,6 +79,7 @@ import {
   CAT_PRODUCT_UPDATE_RESET,
   COMBINATION_SAVE_RESET,
   COMBINATION_UPDATE_RESET,
+  IMAGE_DELETE_RESET,
 } from "../constants/catBrandConstant";
 
 import { useNavigate } from "react-router-dom";
@@ -170,6 +172,9 @@ function CatProductScreen() {
   const ComboUpdate = useSelector((state) => state.ComboUpdate);
   const { success: deleteCombo } = ComboUpdate;
 
+  const comboDelete = useSelector((state) => state.ComboDelete);
+  const { success: deleteImages } = comboDelete;
+
   const cominationstockupdate = useSelector(
     (state) => state.cominationstockupdate
   );
@@ -230,7 +235,8 @@ function CatProductScreen() {
 
   const qunObj = quantity?.find((item) => item?.mprodId === ProdId);
   const [quantityId, setquantityId] = useState([qunObj?._id]);
-
+  const Removecatproduct = useSelector((state) => state.Removecatproduct);
+  const { success: RemovecatproductSuccess } = Removecatproduct;
   const PriceList = useSelector((state) => state.PriceList);
   const { pricingdetail } = PriceList;
 
@@ -568,10 +574,10 @@ function CatProductScreen() {
   const HandlecombSave = (event) => {
     stockCount();
     let stockData = [];
-    for (let i = 0; i < finalValue.length; i++) {
+    for (let i = 0; i < finalValue?.length; i++) {
       let obj = {
-        id: finalValue[i].id.id,
-        val: finalValue[i].val,
+        id: finalValue[i]?.id?.id,
+        val: finalValue[i]?.val,
       };
       stockData.push(obj);
     }
@@ -712,17 +718,24 @@ function CatProductScreen() {
   // *********************************************
   const [images, setImage] = useState();
   const [subimg, setSubImage] = useState();
+  console.log("subimg===>", subimg);
   const [Delete, setDelete] = useState("");
 
   useEffect(() => {
     if (successcom) {
       dispatch({ type: COMBINATION_SAVE_RESET });
+      dispatch(catProductList());
     }
-    if (deleteCombo) {
-      dispatch({ type: COMBO_DELETE_RESET });
+    if (RemovecatproductSuccess) {
+      dispatch({ type: IMAGE_DELETE_RESET });
     }
     if (updateprod) {
       dispatch({ type: CAT_PRODUCT_UPDATE_RESET });
+      dispatch(catProductList());
+    }
+    if (deleteImages) {
+      dispatch({ type: COMBO_DELETE_RESET });
+      dispatch(catProductList());
     }
     dispatch(catProductList());
     dispatch(FeaturesMasterListDetails());
@@ -767,14 +780,18 @@ function CatProductScreen() {
       fetchBusines();
       fetchBusinesses();
     }
-  }, [updateprod, successcom, deleteCombo]);
+  }, [deleteImages,updateprod, successcom, deleteCombo, RemovecatproductSuccess]);
 
   useEffect(() => {
     if (updatecomina) {
       dispatch({ type: COMBINATION_UPDATE_RESET });
+      dispatch(CombinationChildList());
     }
-    dispatch(CombinationChildList());
-  }, [updatecomina]);
+    if (deleteCombo) {
+      dispatch(CombinationChildList());
+    }
+    
+  }, [updatecomina, deleteCombo]);
 
   var file = new File([subimg], "name");
 
@@ -839,7 +856,8 @@ Not all shops sell new products.
   };
 
   const ImagHandleSelect = (e, index) => {
-    setImageSelectblob(e.target.src);
+    console.log("e?.target?.src====>", e?.target?.src);
+    setImageSelectblob(e?.target?.src);
     setImageSelect(index);
     setImageDelete(0);
     setChecked(false);
@@ -885,6 +903,7 @@ Not all shops sell new products.
 
   // ********************************************************
   const [selectedImages, setSelectedImages] = useState([]);
+  console.log("selectedImages====>", selectedImages);
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
@@ -905,6 +924,7 @@ Not all shops sell new products.
     }
   };
   function deleteHandler(image) {
+    console.log("image--------->>Naresh", image);
     setSelectedImages(selectedImages?.filter((e) => e !== image));
     URL.revokeObjectURL(image);
   }
@@ -1099,10 +1119,7 @@ Not all shops sell new products.
     // const formData = new FormData();
     // formData.append("image", item);
     try {
-      const { data } = await Axios.delete(`/api/uploads/deleteok/${ProdId}`, {
-        data: item,
-      });
-      // console.log("data-------->>", data);
+      dispatch(deleteChildImages(ProdId,item));
     } catch (err) {
       // console.log(err);
     }
@@ -1458,3217 +1475,12 @@ Not all shops sell new products.
       )}
 
       <Divider sx={{ mt: 1 }} />
-
       <>
-        <>
-          {prodctObj ? (
+        {prodctObj ? (
+          <Box>
             <Box>
-              <Box>
-                {newcombination === "true" ? (
-                  <>
-                    <Tabs
-                      value={tabIndex}
-                      onChange={handleTabChange}
-                      indicatorColor="#00A787"
-                    >
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 0 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 0
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Basic Settings"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 1 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 1
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Combination"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 2 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 2
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Quantities"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 3 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 3
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Shipping"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 4 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 4
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Pricing"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 5 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 5
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="SEO"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 6 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 6
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Options"
-                      />
-                    </Tabs>
-                  </>
-                ) : (
-                  <>
-                    <Tabs
-                      value={tabIndex}
-                      onChange={handleTabChange}
-                      indicatorColor="#00A787"
-                    >
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 0 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 0
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Basic Settings"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 1 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 1
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Quantities"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 2 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 2
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Shipping"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 3 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 3
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Pricing"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 4 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 4
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="SEO"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 5 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 5
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Options"
-                      />
-                    </Tabs>
-                  </>
-                )}
-                {/* <Tab label='Quantities' />
-                  <Tab label='Shipping' />
-                  <Tab label='Pricing' />
-                  <Tab label='SEO' />
-                  <Tab label='Options' /> */}
-              </Box>
               {newcombination === "true" ? (
-                <Box sx={{ padding: 2 }}>
-                  {tabIndex === 0 && (
-                    <Box
-                      component="form"
-                      onSubmit={handleSubmit(updateHandler)}
-                    >
-                      <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                          <Box sx={{ mr: -5 }}>
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  mt: -1,
-                                }}
-                              >
-                                Enter Your Product Name
-                              </Typography>
-
-                              <TextField
-                                size="small"
-                                sx={{
-                                  width: "75%",
-                                  mt: 1,
-                                  height: "0.5rem",
-                                  fontSize: 12,
-                                }}
-                                id="margin-normal"
-                                margin="normal"
-                                value={newProdname}
-                                onChange={(e) => setNewProdname(e.target.value)}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              />
-                            </Box>
-
-                            <Box
-                              sx={{
-                                border: "2px solid gray",
-                                width: "75%",
-                                // height: "250px",
-                                mt: "50px",
-                                overflow: "scroll",
-                              }}
-                            >
-                              <Grid container spacing={2}>
-                                <Grid item xs>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      width: "100%",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      margin: "0px 10%",
-                                      borderRadius: "5px",
-                                    }}
-                                  >
-                                    <Typography
-                                      variant="h6"
-                                      sx={{ fontSize: 12, ml: -10 }}
-                                    >
-                                      Add Images up to 10
-                                    </Typography>
-                                    <TextField
-                                      size="small"
-                                      sx={{
-                                        margin: "0px 0px",
-                                        border: "none",
-                                      }}
-                                      inputProps={{
-                                        style: { fontSize: 12 },
-                                        multiple: true,
-                                        accept: "image/*",
-                                      }}
-                                      fullWidth
-                                      type="file"
-                                      name="uploadedImages"
-                                      multiple
-                                      onChange={onSelectFile}
-                                    />
-                                    <br />
-                                  </Box>
-                                </Grid>
-                                <Grid item xs>
-                                  {ImageDelete === "Delete" ? (
-                                    <></>
-                                  ) : (
-                                    <>
-                                      {ImageSelectblob === ImageSelectblob && (
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            width: "100%",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            margin: "0px 10%",
-                                            borderRadius: "5px",
-                                          }}
-                                        >
-                                          <Box sx={{ display: "flex" }}>
-                                            <IconButton
-                                              onClick={() =>
-                                                deleteHandlerpage(ImageSelect)
-                                              }
-                                            >
-                                              <ClearIcon
-                                                sx={{
-                                                  backgroundColor: "#999999",
-                                                  color: "#fff",
-                                                }}
-                                              />
-                                            </IconButton>
-                                            <FormControlLabel
-                                              label={
-                                                <Typography
-                                                  sx={{ fontSize: 12, mr: 3 }}
-                                                >
-                                                  Select Image
-                                                </Typography>
-                                              }
-                                              control={
-                                                <Checkbox
-                                                  style={{ color: "#00A787" }}
-                                                  checked={checked}
-                                                  onChange={handleChangeChekce}
-                                                  inputProps={{
-                                                    "aria-label": "controlled",
-                                                  }}
-                                                />
-                                              }
-                                            />
-                                          </Box>
-
-                                          <Button
-                                            sx={{
-                                              // mr: 3,
-                                              // mt: 5,
-                                              borderRadius: "50px",
-                                              backgroundColor: "#00A787",
-                                              "&:hover": {
-                                                backgroundColor: "#00A787",
-                                              },
-                                              fontSize: 10,
-                                            }}
-                                            variant="contained"
-                                            size="small"
-                                            onClick={handleChangeSaveImage}
-                                          >
-                                            Select cover Image
-                                          </Button>
-                                        </Box>
-                                      )}
-                                    </>
-                                  )}
-                                </Grid>
-                              </Grid>
-                              <List>
-                                {/* <input type="file" multiple /> */}
-                                {selectedImages?.length > 0 &&
-                                  selectedImages?.length > 10 && (
-                                    <p className="error">
-                                      You upload more than 10 images! <br />
-                                      <span>
-                                        please delete{" "}
-                                        <b> {selectedImages?.length - 10} </b>{" "}
-                                        of them{" "}
-                                      </span>
-                                    </p>
-                                  )}
-                                <Box
-                                  sx={{
-                                    width: "auto",
-                                    listStyle: "none",
-                                    display: "flex",
-                                    flexFlow: "wrap row",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    m: 2,
-                                  }}
-                                >
-                                  <ListItem>
-                                    {selectedImages?.map((image, index) => {
-                                      return (
-                                        <Box
-                                          key={image}
-                                          className="image"
-                                          width="75%"
-                                        >
-                                          <CardMedia
-                                            sx={{
-                                              padding: 0,
-                                              margin: 1,
-                                              border:
-                                                image === ImageSelectblob
-                                                  ? "2px solid #66CCFF"
-                                                  : "2px solid #999999",
-                                              height: 80,
-                                              width: 80,
-                                            }}
-                                            className="media"
-                                            component="img"
-                                            height="50"
-                                            image={image}
-                                            alt={name}
-                                            id={index}
-                                            onClick={(e) =>
-                                              ImagHandleSelect(e, index)
-                                            }
-                                          />
-                                          {image === CoverImages ? (
-                                            <CardContent
-                                              sx={{
-                                                // margin: 1,
-                                                mt: -2,
-                                                backgroundColor: "#999999",
-                                              }}
-                                            >
-                                              <Typography
-                                                variant="body2"
-                                                color="#fff"
-                                                sx={{
-                                                  fontSize: 12,
-                                                  height: 10,
-                                                  width: 50,
-                                                  padding: 0,
-                                                  Zindex: -1,
-                                                }}
-                                              >
-                                                Cover Image
-                                              </Typography>
-                                            </CardContent>
-                                          ) : (
-                                            <></>
-                                          )}
-                                          <Button
-                                            onClick={() => deleteHandler(image)}
-                                          >
-                                            Remove
-                                            {/* <ClearIcon
-                                       sx={{ backgroundColor: "red" }}
-                                     /> */}
-                                          </Button>
-                                        </Box>
-                                      );
-                                    })}
-                                  </ListItem>
-                                </Box>
-                              </List>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifycontent: "space-between",
-                                  // mt: ,
-                                }}
-                              >
-                                <CardMedia
-                                  component="img"
-                                  height="85"
-                                  sx={{
-                                    border: "1px solid black",
-                                    width: "10%",
-                                    m: 1,
-                                  }}
-                                  image={images}
-                                />
-                                {subimg?.map((subimgnew, index) => (
-                                  <Box key={index}>
-                                    <CardMedia
-                                      component="img"
-                                      height="85"
-                                      width="85"
-                                      sx={{
-                                        border: "1px solid black",
-                                        width: "50%",
-                                        m: 1,
-                                      }}
-                                      image={`/api/uploads/prodctnew/${subimgnew.filename}`}
-                                    />
-                                  </Box>
-                                ))}
-                              </Box>
-                            </Box>
-                            {/* <Box
-                           sx={{
-                             padding: 0,
-                             margin: 0,
-                             width: "auto",
-                             listStyle: "none",
-                             display: "flex",
-                             flexFlow: "wrap row",
-                             flexDirection: "row",
-                             alignItems: "center",
-                             border: "2px solid gray",
-                           }}
-                         >
-                           <TextField
-                                 sx={{ margin: "10px 0px", border: "none" }}
-                                 inputProps={{
-                                   style: { fontSize: 14 },
-                                   multiple: true,
-                                   accept: "image/*",
-                                 }}
-                                 fullWidth
-                                 type="file"
-                                 name="uploadedImages"
-                                 multiple
-                                 // onChange={onSelectFile}
-                               />
-                           <CardMedia
-                             component="img"
-                             height="125"
-                             sx={{
-                               border: "1px solid black",
-                               width: "25%",
-                               m: 4,
-                             }}
-                             image={images}
-                           />
-                           {subimg?.map((subimgnew, index) => (
-                             <Box key={index}>
-                               <CardMedia
-                                 component="img"
-                                 height="125"
-                                 width="125"
-                                 sx={{
-                                   border: "1px solid black",
-                                   width: "45%",
-                                   m: 4,
-                                 }}
-                                 image={`/api/uploads/prodctnew/${subimgnew.filename}`}
-                               />
-                             </Box>
-                           ))}
-                         </Box> */}
-                            <Typography
-                              sx={{
-                                mt: "5px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Summary
-                            </Typography>
-
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                data={newsummary}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setNewsummary({ data });
-                                }}
-                              />
-                            </Box>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Description
-                            </Typography>
-
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                data={newdescription}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setNewdescription({ data });
-                                }}
-                              />
-                            </Box>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Features
-                            </Typography>
-
-                            <>
-                              <Typography>
-                                <Button
-                                  sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    color: "#fff",
-                                    fontSize: "12px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                  }}
-                                  variant="contained"
-                                  startIcon={<AddCircleIcon />}
-                                  onClick={addField}
-                                >
-                                  Add a feature
-                                </Button>
-                              </Typography>
-                              {/* *********************UPDATE SCREEN****************** */}
-                              <>
-                                {field ? (
-                                  <>
-                                    {field?.map(({ id }, index) => {
-                                      // { console.log("field======>", field) }
-                                      return (
-                                        <Box key={id} sx={{ p: 2, m: 2 }}>
-                                          <Box
-                                            sx={{
-                                              display: "flex",
-                                              mt: "20px",
-                                              justifyContent: "space-between",
-                                            }}
-                                          >
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              Feature
-                                            </Typography>
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              Predefined value
-                                            </Typography>
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              OR Customized value
-                                            </Typography>
-                                          </Box>
-                                          <Box
-                                            sx={{
-                                              display: "flex",
-                                              mt: "20px",
-                                              justifyContent: "space-between",
-                                            }}
-                                          >
-                                            <FormControl sx={{ width: "30%" }}>
-                                              <Select
-                                                native
-                                                size="small"
-                                                name={index}
-                                                key={id}
-                                                // value={id}
-                                                value={
-                                                  newfeature[index]?.id
-                                                    ? newfeature[index]?.id
-                                                    : id
-                                                }
-                                                // ref={register()}
-                                                onChange={(e) =>
-                                                  HandleChangeedit(e, index)
-                                                }
-                                              >
-                                                {Featuresdetails?.map(
-                                                  (item) => (
-                                                    // console.log("item,", item)
-                                                    <option
-                                                      key={item._id}
-                                                      value={item._id}
-                                                    >
-                                                      {item?.featurename}
-                                                    </option>
-                                                  )
-                                                )}
-                                              </Select>
-                                            </FormControl>
-
-                                            <FormControl sx={{ width: "30%" }}>
-                                              <Select
-                                                size="small"
-                                                native
-                                                name={index}
-                                                key={id}
-                                                // value={id}
-                                                value={
-                                                  newfeaturestypevalue[index]
-                                                    ?.id
-                                                    ? newfeaturestypevalue[
-                                                        index
-                                                      ]?.id
-                                                    : id
-                                                }
-                                                // ref={register()}
-                                                onChange={(e) =>
-                                                  handleFeatureValueedit(
-                                                    e,
-                                                    index
-                                                  )
-                                                }
-                                              >
-                                                {Featuresvaluedetails?.filter(
-                                                  (Feature) => {
-                                                    return (
-                                                      Feature.featuretype ===
-                                                      newfeature[index]?.id
-                                                    );
-                                                  }
-                                                )?.map((Feature) => (
-                                                  <option
-                                                    key={Feature._id}
-                                                    value={Feature._id}
-                                                  >
-                                                    {Feature.featurevalue}
-                                                  </option>
-                                                ))}
-                                              </Select>
-                                            </FormControl>
-                                            <TextField
-                                              InputProps={{
-                                                style: { fontSize: 13 },
-                                              }}
-                                              name={`items[${index}].name`}
-                                              ref={register()}
-                                              id="outlined-size-small"
-                                              size="small"
-                                            />
-                                            <IconButton
-                                              type="button"
-                                              onClick={() => removeField(index)}
-                                            >
-                                              <ClearIcon
-                                                sx={{ color: "red" }}
-                                              />
-                                            </IconButton>
-                                          </Box>
-                                        </Box>
-                                      );
-                                    })}
-                                  </>
-                                ) : (
-                                  <> </>
-                                )}
-                              </>
-                            </>
-
-                            <Typography>
-                              <Button
-                                sx={{
-                                  mr: 3,
-                                  mt: 1,
-                                  borderRadius: "70px",
-                                  color: "#fff",
-                                  fontSize: "12px",
-                                }}
-                                variant="outlined"
-                                startIcon={<AddCircleIcon />}
-                                onClick={() => setBrand(1)}
-                              >
-                                Add a brand
-                              </Button>
-                            </Typography>
-
-                            <>
-                              {prodctObj?.brand ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "14px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          size="small"
-                                          value={newbrandId}
-                                          onChange={(e) =>
-                                            setNewbrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                              {brand === 1 ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "14px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          size="small"
-                                          value={newbrandId}
-                                          onChange={(e) =>
-                                            setNewbrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Related Product
-                            </Typography>
-
-                            <>
-                              {relatProd === 1 ? (
-                                <Typography sx={{ m: 2 }}>
-                                  <TextField
-                                    size="small"
-                                    sx={{ width: "60%" }}
-                                    id="standard-bare"
-                                    variant="outlined"
-                                    {...register("search", { required: true })}
-                                    error={errors.search}
-                                    InputProps={{
-                                      endAdornment: (
-                                        <IconButton>
-                                          <SearchOutlined />
-                                        </IconButton>
-                                      ),
-                                    }}
-                                  />
-                                </Typography>
-                              ) : (
-                                <>
-                                  <Typography>
-                                    <Button
-                                      sx={{
-                                        mr: 3,
-                                        mt: 1,
-                                        borderRadius: "70px",
-                                        backgroundColor: "#00A787",
-                                        "&:hover": {
-                                          backgroundColor: "#00A787",
-                                        },
-                                        color: "#fff",
-                                        fontSize: "12px",
-                                      }}
-                                      variant="contained"
-                                      startIcon={<AddCircleIcon />}
-                                      onClick={() => setRelatProduct(1)}
-                                    >
-                                      Add a related product
-                                    </Button>
-                                  </Typography>
-                                </>
-                              )}
-                            </>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Typography
-                            sx={{
-                              mt: "-10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Combinations
-                            <Tooltip title={Combinations}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Box>
-                            {" "}
-                            <FormControl>
-                              <RadioGroup
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                name="radio-buttons-group"
-                                onChange={handleNewcombination}
-                                value={newcombination}
-                              >
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    ml: "-7.5rem",
-                                    width: "200%",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      width: "300%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value="Simple Product"
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Simple Product
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      // mr: "110px",
-                                      width: "600%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value={true}
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      type="radio"
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Product with combinations
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-                                </Box>
-                              </RadioGroup>
-                            </FormControl>
-                          </Box>
-
-                          <Box sx={{ display: "flex" }}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              Reference
-                              <Tooltip title={reference}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                            <Typography
-                              sx={{
-                                ml: "10rem",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-
-                                mt: "10px",
-                              }}
-                            >
-                              Quantity
-                              <Tooltip>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                          </Box>
-                          <Box sx={{ display: "flex" }}>
-                            {" "}
-                            <Grid item xs={8}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    width="50%"
-                                    sx={{
-                                      mt: "18px",
-                                      fontSize: "14px",
-                                      fontWeight: "bold",
-                                      ml: -15,
-                                    }}
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={newreference}
-                                    onChange={(e) =>
-                                      setNewreference(e.target.value)
-                                    }
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>{" "}
-                            <Grid item xs={12}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    width="50%"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={newQuantity}
-                                    onChange={(e) =>
-                                      setNewQuantity(e.target.value)
-                                    }
-                                    inputProps={{ readOnly: true }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          </Box>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Price
-                            <Tooltip title={price}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Grid item xs={12}>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                mt: "10px",
-                                ml: -15,
-                              }}
-                            >
-                              <TextField
-                                size="small"
-                                label="Tax excluded"
-                                id="outlined-start-adornment"
-                                value={EditProdexclusive}
-                                onChange={handleEditProdexclusive}
-                                sx={{ m: 1 }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                              <FormControl
-                                sx={{ width: "100%", mt: 0.7 }}
-                                size="small"
-                              >
-                                <InputLabel id="demo-simple-select-label">
-                                  Tax Rule
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-simple-select-label"
-                                  size="small"
-                                  label="Tax Rule"
-                                  value={EditTaxprice}
-                                  onChange={Edittaxesrule}
-                                  inputProps={{ readOnly: true }}
-                                >
-                                  {taxes?.map((item, index) => (
-                                    <MenuItem
-                                      key={index}
-                                      value={item._id}
-                                      onClick={() =>
-                                        setEditpercentage(item._id)
-                                      }
-                                    >
-                                      {item.Name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                              <TextField
-                                size="small"
-                                label="Tax included"
-                                value={EditProdinclusive}
-                                onChange={(e) =>
-                                  setEditProdinclusive(e.target.value)
-                                }
-                                id="outlined-start-adornment"
-                                sx={{ m: 1 }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                  fontSize: 12,
-                                }}
-                              />{" "}
-                            </Box>
-                          </Grid>
-                          <Grid item xs={8}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              categories
-                              <Tooltip title={categories}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-
-                            <TreeView
-                              aria-label="rich object"
-                              defaultCollapseIcon={<ExpandMoreIcon />}
-                              defaultExpanded={["root"]}
-                              defaultExpandIcon={<ChevronRightIcon />}
-                              onNodeSelect={handleSelectedItemsupdate}
-                              sx={{
-                                border: "1px solid black",
-                                p: 1,
-
-                                ".MuiTreeItem-root": {
-                                  ".Mui-focused:not(.Mui-selected)":
-                                    classes.focused,
-                                  ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
-                                    classes.selected,
-                                },
-                              }}
-                            >
-                              {/* {categorymasterallList?.map((item) =>
-                                renderTree(item), */}
-                              {/* Update Method */}
-                              {categorymasterallList?.map((item) => (
-                                <>
-                                  <TreeItem
-                                    key={item._id}
-                                    nodeId={item._id}
-                                    label={
-                                      newParentCategory === item._id ? (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              size="small"
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              name="file"
-                                              defaultChecked={true}
-                                              // checked={checkedtreeupdate}
-                                              // checked={true}
-                                              // onChange={handleChangecheckbox}
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      ) : (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              size="small"
-                                              name="file"
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      )
-                                    }
-                                  >
-                                    {item.children
-                                      ?.filter((childItem) => {
-                                        return childItem.parent === item._id;
-                                      })
-                                      ?.map((childItem) => (
-                                        <>
-                                          <TreeItem
-                                            key={item._id}
-                                            nodeId={
-                                              `${item._id}` +
-                                              "-" +
-                                              `${childItem._id}`
-                                            }
-                                            label={
-                                              newchildCategory ===
-                                              childItem._id ? (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      name="file"
-                                                      defaultChecked={true}
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      size="small"
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              ) : (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      size="small"
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      name="file"
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              )
-                                            }
-                                          >
-                                            {childItem.children
-                                              ?.filter((grandItem) => {
-                                                return (
-                                                  grandItem.parent ===
-                                                  childItem._id
-                                                );
-                                              })
-                                              ?.map((grandItem) => (
-                                                <>
-                                                  <TreeItem
-                                                    key={item._id}
-                                                    nodeId={
-                                                      `${item._id}` +
-                                                      "-" +
-                                                      `${childItem._id}` +
-                                                      "-" +
-                                                      `${grandItem._id}`
-                                                    }
-                                                    label={
-                                                      grandchildCategory ===
-                                                      grandItem._id ? (
-                                                        <FormControlLabel
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              name="file"
-                                                              size="small"
-                                                              defaultChecked={
-                                                                true
-                                                              }
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      ) : (
-                                                        <FormControlLabel
-                                                          control={
-                                                            <Checkbox
-                                                              size="small "
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              name="file"
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      )
-                                                    }
-                                                  ></TreeItem>
-                                                </>
-                                              ))}
-                                          </TreeItem>
-                                        </>
-                                      ))}
-                                  </TreeItem>
-                                </>
-                              ))}
-                            </TreeView>
-                          </Grid>
-                          <Typography sx={{ mt: 2 }}>
-                            <TextField
-                              sx={{ fontSize: 12, ml: "-7.5rem" }}
-                              size="small"
-                              width="75%"
-                              id="standard-bare"
-                              variant="outlined"
-                              defaultValue="Search Categories"
-                              InputProps={{
-                                endAdornment: (
-                                  <IconButton>
-                                    <SearchOutlined />
-                                  </IconButton>
-                                ),
-                              }}
-                            />
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Create a new category
-                            <Tooltip title={newcategories}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          {category === 1 ? (
-                            <>
-                              <Box sx={{ m: 2, p: 1 }}>
-                                <Typography>New Category name</Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                    id="outlined-size-small"
-                                    defaultValue="Category name"
-                                    size="small"
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  Parent of the category
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                    id="outlined-size-small"
-                                    defaultValue="Home"
-                                    size="small"
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <Button variant="contained">Cancel</Button>
-                                  <Button
-                                    variant="contained"
-                                    sx={{ ml: "50px" }}
-                                  >
-                                    Create
-                                  </Button>
-                                </Typography>
-                              </Box>
-                            </>
-                          ) : (
-                            <>
-                              <Typography>
-                                <Button
-                                  sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    fontSize: "12px",
-                                    ml: -15,
-                                  }}
-                                  variant="outlined"
-                                  startIcon={<AddCircleIcon />}
-                                  onClick={() => setCategory(1)}
-                                >
-                                  Create a Category
-                                </Button>
-                              </Typography>
-
-                              <Typography>
-                                <Button
-                                  type="submit"
-                                  sx={{
-                                    mr: 1,
-                                    mt: 5,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    ml: "15rem",
-                                  }}
-                                  variant="contained"
-                                >
-                                  Update
-                                </Button>
-                              </Typography>
-                            </>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )}
-
-                  {tabIndex === 1 && (
-                    <Grid container>
-                      <Grid item xs>
-                        <Box
-                          component="form"
-                          onSubmit={handleSubmit1(CreateCombination)}
-                        >
-                          <Autocomplete
-                            size="small"
-                            multiple={true}
-                            id="free-solo-demo"
-                            options={attributeValuedetails}
-                            getOptionLabel={(option) =>
-                              `${option.attributename} : ${option.value} `
-                            }
-                            // value={subtype}
-                            // onChange={(event, newValue) => {
-                            //   {
-                            //     newValue?.map((item) => {
-                            //       // console.log("itemmmmmmm", item)
-                            //       setSubtype([
-                            //         ...subtype,
-                            //         {
-                            //           ["id"]: item?._id,
-                            //           ["atributevalue"]: item?.value,
-                            //           ["atributename"]: item?.attributename,
-                            //           ["color"]: item?.color,
-                            //         },
-                            //       ]);
-                            //     });
-                            //   }
-                            // }}
-                            // onChange={(e) => setSubtype(e.target.value)}
-                            filterOptions={filterOptions}
-                            renderInput={(params) => (
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                {...params}
-                                label="Combination"
-                                margin="normal"
-                                variant="outlined"
-                              />
-                            )}
-                          />
-                          {/* <FormControl sx={{ width: "100%" }}>
-                            <Select
-                              sx={{ height: 55 }}
-                            >
-                              <MenuItem value={"Weight All"}>Weight: All</MenuItem>
-                              <MenuItem value={"Red"}>Weight: 50-75KG</MenuItem>
-                              <MenuItem value={"White"}>Weightr:75-100KG</MenuItem>
-                              <MenuItem value={"Blue"}>Weight:100-125KG</MenuItem>
-                            </Select>
-                          </FormControl> */}
-                          <Button
-                            variant="contained"
-                            sx={{
-                              mt: 3,
-                              mr: 20,
-                              backgroundColor: "#00A787",
-                              "&:hover": { backgroundColor: "#00A787" },
-                            }}
-                            type="submit"
-                          >
-                            Generate
-                          </Button>
-                        </Box>
-
-                        <Box style={{ height: 560, width: "100%" }}>
-                          <DataGrid
-                            sx={{
-                              boxShadow: 10,
-                              borderRadius: 0,
-                              m: 2,
-                            }}
-                            columns={combinationcolumns}
-                            rows={assemList ? assemList : ""}
-                            getRowId={(rows) => rows.id}
-                            VerticalAlignment="Center"
-                            rowHeight={64}
-                            pageSize={10}
-                            rowsPerPageOptions={[10]}
-                            // checkboxSelection
-                          />
-                          <Button
-                            variant="contained"
-                            sx={{
-                              mt: 3,
-                              mb: 2,
-                              backgroundColor: "#00A787",
-                              "&:hover": { backgroundColor: "#00A787" },
-                            }}
-                            onClick={(event) => HandlecombSave(event)}
-                            type="Click"
-                          >
-                            {assemList ? "Update" : "Save"}
-                          </Button>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  )}
-                  {/* {tabIndex === 2 && "Quantity add"} */}
-
-                  {tabIndex === 2 && <ProductQuantitiesSreen />}
-                  {tabIndex === 3 && <ProductShippingScreen />}
-                  {tabIndex === 4 && (
-                    <ProdPricingScreen products={prodctObj}></ProdPricingScreen>
-                  )}
-                  {tabIndex === 5 && <SeoScreen />}
-                  {tabIndex === 6 && (
-                    <Box>
-                      <Grid container>
-                        <Grid item xs={12}>
-                          <Typography
-                            sx={{ fontSize: "20px", fontWeight: "bold" }}
-                          >
-                            Visibility
-                          </Typography>
-
-                          <Typography sx={{ mt: "20px" }}>
-                            Where do you want your product to appear?
-                          </Typography>
-
-                          <Typography sx={{ width: "40%", mt: "20px" }}>
-                            <TextField
-                              InputProps={{
-                                style: { fontSize: 13 },
-                              }}
-                              size="small"
-                              // select
-                              fullWidth
-                              id="margin-normal"
-                              margin="normal"
-                            >
-                              <MenuItem>Everywhere</MenuItem>
-                            </TextField>
-                          </Typography>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "100%",
-                            }}
-                          >
-                            <Typography sx={{ mt: "20px", width: "100%" }}>
-                              <Checkbox
-                                style={{ color: "#00A787" }}
-                                value="newcheck"
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Available for order
-                            </Typography>
-
-                            <Typography
-                              sx={{
-                                mt: "20px",
-                                wordWrap: "break-word",
-                                width: "100%",
-                                fontSize: "15px",
-                              }}
-                            >
-                              <Checkbox
-                                style={{ color: "#00A787" }}
-                                value="newcheck"
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Web only (not sold in your retail store)
-                            </Typography>
-                          </Box>
-
-                          <Typography sx={{ mt: "30px" }}>
-                            <Typography>Tags</Typography>
-                            <TextField
-                              InputProps={{
-                                style: { fontSize: 13 },
-                              }}
-                              size="small"
-                              sx={{ width: "70%" }}
-                              // select
-                              fullWidth
-                              id="margin-normal"
-                              margin="normal"
-                            ></TextField>
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: "20px",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Condition & References
-                          </Typography>
-
-                          <Typography sx={{ mt: "10px" }}>
-                            Condition
-                            <Tooltip title={condition}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "100%",
-                            }}
-                          >
-                            <Typography sx={{ mt: "10px", width: "100%" }}>
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                fullWidth
-                                id="margin-normal"
-                                margin="normal"
-                              ></TextField>
-                            </Typography>
-
-                            <Typography
-                              sx={{
-                                mt: "20px",
-                                wordWrap: "break-word",
-                                width: "100%",
-                                fontSize: "15px",
-                              }}
-                            >
-                              <Checkbox
-                                style={{ color: "#00A787" }}
-                                value="newcheck"
-                                {...register("newcheck", { required: true })}
-                                error={errors.newcheck}
-                              />{" "}
-                              Display condition on product page
-                            </Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                              mt: "30px",
-                            }}
-                          >
-                            <Typography>ISBN</Typography>
-
-                            <Typography>EAN-13 or JAN barcode</Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                            }}
-                          >
-                            <Typography>
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                fullWidth
-                                id="margin-normal"
-                                margin="normal"
-                              ></TextField>
-                            </Typography>
-
-                            <Typography>
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                fullWidth
-                                id="margin-normal"
-                                margin="normal"
-                              ></TextField>
-                            </Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                              mt: "30px",
-                            }}
-                          >
-                            <Typography>UPC barcode</Typography>
-
-                            <Typography>MPN</Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              width: "80%",
-                            }}
-                          >
-                            <Typography>
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                fullWidth
-                                id="margin-normal"
-                                margin="normal"
-                              ></TextField>
-                            </Typography>
-
-                            <Typography>
-                              <TextField
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                size="small"
-                                fullWidth
-                                id="margin-normal"
-                                margin="normal"
-                              ></TextField>
-                            </Typography>
-                          </Box>
-
-                          <Typography>
-                            <Button
-                              type="submit"
-                              sx={{ mt: "20px" }}
-                              variant="contained"
-                            >
-                              Save
-                            </Button>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )}
-                </Box>
-              ) : (
-                <Box sx={{ padding: 2 }}>
-                  {tabIndex === 0 && (
-                    <Box
-                      component="form"
-                      onSubmit={handleSubmit(updateHandler)}
-                    >
-                      <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                          <Box>
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  mt: -1,
-                                }}
-                              >
-                                Enter Your Product Name
-                              </Typography>
-
-                              <TextField
-                                size="small"
-                                sx={{
-                                  width: "75%",
-                                  mt: 1,
-                                  height: "0.5rem",
-                                  fontSize: 12,
-                                }}
-                                id="margin-normal"
-                                margin="normal"
-                                value={newProdname}
-                                onChange={(e) => setNewProdname(e.target.value)}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              />
-                            </Box>
-
-                            <Box
-                              sx={{
-                                border: "2px solid gray",
-                                width: "75%",
-                                // height: "250px",
-                                mt: "50px",
-                                overflow: "scroll",
-                              }}
-                            >
-                              <Grid container spacing={2}>
-                                <Grid item xs>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      width: "100%",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      margin: "0px 10%",
-                                      borderRadius: "5px",
-                                    }}
-                                  >
-                                    <Typography
-                                      variant="h6"
-                                      sx={{ fontSize: 12, ml: -10 }}
-                                    >
-                                      Add Images up to 10
-                                    </Typography>
-                                    <TextField
-                                      size="small"
-                                      sx={{
-                                        margin: "0px 0px",
-                                        border: "none",
-                                      }}
-                                      inputProps={{
-                                        style: { fontSize: 12 },
-                                        multiple: true,
-                                        accept: "image/*",
-                                      }}
-                                      fullWidth
-                                      type="file"
-                                      name="uploadedImages"
-                                      multiple
-                                      onChange={onSelectFile}
-                                    />
-                                    <br />
-                                  </Box>
-                                </Grid>
-                                <Grid item xs>
-                                  {ImageDelete === "Delete" ? (
-                                    <></>
-                                  ) : (
-                                    <>
-                                      {ImageSelectblob === ImageSelectblob && (
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            width: "100%",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            margin: "0px 10%",
-                                            borderRadius: "5px",
-                                          }}
-                                        >
-                                          <Box sx={{ display: "flex" }}>
-                                            <IconButton
-                                              onClick={() =>
-                                                deleteHandlerpage(ImageSelect)
-                                              }
-                                            >
-                                              <ClearIcon
-                                                sx={{
-                                                  backgroundColor: "#999999",
-                                                  color: "#fff",
-                                                }}
-                                              />
-                                            </IconButton>
-                                            <FormControlLabel
-                                              label={
-                                                <Typography
-                                                  sx={{ fontSize: 12, mr: 3 }}
-                                                >
-                                                  Select Image
-                                                </Typography>
-                                              }
-                                              control={
-                                                <Checkbox
-                                                  style={{ color: "#00A787" }}
-                                                  checked={Checkededit}
-                                                  onChange={handleCheckedit}
-                                                  inputProps={{
-                                                    "aria-label": "controlled",
-                                                  }}
-                                                />
-                                              }
-                                            />
-                                          </Box>
-
-                                          <Button
-                                            sx={{
-                                              // mr: 3,
-                                              // mt: 5,
-                                              borderRadius: "50px",
-                                              backgroundColor: "#00A787",
-                                              "&:hover": {
-                                                backgroundColor: "#00A787",
-                                              },
-                                              fontSize: 10,
-                                            }}
-                                            variant="contained"
-                                            size="small"
-                                            onClick={handleChangeEditImage}
-                                          >
-                                            Select cover Image
-                                          </Button>
-                                        </Box>
-                                      )}
-                                    </>
-                                  )}
-                                </Grid>
-                              </Grid>
-                              <List>
-                                {/* <input type="file" multiple /> */}
-                                {selectedImages?.length > 0 &&
-                                  selectedImages?.length > 10 && (
-                                    <p className="error">
-                                      You upload more than 10 images! <br />
-                                      <span>
-                                        please delete{" "}
-                                        <b> {selectedImages?.length - 10} </b>{" "}
-                                        of them{" "}
-                                      </span>
-                                    </p>
-                                  )}
-                                <Box
-                                  sx={{
-                                    width: "auto",
-                                    listStyle: "none",
-                                    display: "flex",
-                                    flexFlow: "wrap row",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    m: 2,
-                                  }}
-                                >
-                                  <ListItem>
-                                    <>
-                                      <Box className="image" width="75%">
-                                        <CardMedia
-                                          component="img"
-                                          height="85"
-                                          sx={{
-                                            padding: 0,
-                                            margin: 1,
-                                            border: images
-                                              ? "2px solid #66CCFF"
-                                              : "2px solid #999999",
-                                            height: 80,
-                                            width: 80,
-                                          }}
-                                          image={`/api/uploads/cover/${images}`}
-                                          onClick={(e) =>
-                                            ImagHandleImage(images)
-                                          }
-                                        />
-
-                                        {images && !testImage ? (
-                                          <CardContent
-                                            sx={{
-                                              padding: 2.5,
-                                              width: "25%",
-                                              ml: 1,
-                                            }}
-                                          >
-                                            <Typography
-                                              variant="body2"
-                                              color="#6699FF"
-                                              sx={{
-                                                fontSize: 12,
-
-                                                width: 50,
-                                                padding: 0,
-                                                Zindex: -1,
-                                              }}
-                                            >
-                                              Cover Image
-                                            </Typography>
-                                          </CardContent>
-                                        ) : (
-                                          <>
-                                            <Button
-                                              onClick={() =>
-                                                deleteHandler(testImage)
-                                              }
-                                            >
-                                              Remove
-                                            </Button>
-                                          </>
-                                        )}
-                                      </Box>
-                                    </>
-
-                                    {subimg?.map((subimgnew, index) => {
-                                      return (
-                                        <Box
-                                          key={subimgnew}
-                                          className="image"
-                                          width="75%"
-                                        >
-                                          <CardMedia
-                                            sx={{
-                                              padding: 0,
-                                              margin: 1,
-                                              border:
-                                                testImage === subimgnew.filename
-                                                  ? "2px solid #66CCFF"
-                                                  : "2px solid #999999",
-                                              height: 80,
-                                              width: 80,
-                                            }}
-                                            className="media"
-                                            component="img"
-                                            height="50"
-                                            image={`/api/uploads/prodctnew/${subimgnew.filename}`}
-                                            alt={name}
-                                            id={index}
-                                            onClick={(e) =>
-                                              ImagHandleSelecttest(
-                                                subimgnew.filename,
-                                                index
-                                              )
-                                            }
-                                          />
-                                          {testImage === subimgnew.filename ? (
-                                            <CardContent
-                                              sx={{
-                                                // margin: 1,
-                                                mt: -1,
-                                                // backgroundColor: "#999999",
-                                                padding: 2.5,
-                                                width: "25%",
-                                                ml: 1,
-                                              }}
-                                            >
-                                              <Typography
-                                                variant="body2"
-                                                color="#6699FF"
-                                                sx={{
-                                                  fontSize: 12,
-                                                  height: 10,
-                                                  width: 50,
-                                                  padding: 0,
-                                                  Zindex: -1,
-                                                }}
-                                              >
-                                                Cover Image
-                                              </Typography>
-                                            </CardContent>
-                                          ) : (
-                                            <Button
-                                              onClick={() =>
-                                                deleteHandlertest(index)
-                                              }
-                                            >
-                                              Remove
-                                              {/* <ClearIcon
-                                       sx={{ backgroundColor: "red" }}
-                                     /> */}
-                                            </Button>
-                                          )}
-                                        </Box>
-                                      );
-                                    })}
-                                  </ListItem>
-                                </Box>
-                              </List>
-                            </Box>
-                            {/* <Box
-                           sx={{
-                             padding: 0,
-                             margin: 0,
-                             width: "auto",
-                             listStyle: "none",
-                             display: "flex",
-                             flexFlow: "wrap row",
-                             flexDirection: "row",
-                             alignItems: "center",
-                             border: "2px solid gray",
-                           }}
-                         >
-                           <TextField
-                                 sx={{ margin: "10px 0px", border: "none" }}
-                                 inputProps={{
-                                   style: { fontSize: 14 },
-                                   multiple: true,
-                                   accept: "image/*",
-                                 }}
-                                 fullWidth
-                                 type="file"
-                                 name="uploadedImages"
-                                 multiple
-                                 // onChange={onSelectFile}
-                               />
-                           <CardMedia
-                             component="img"
-                             height="125"
-                             sx={{
-                               border: "1px solid black",
-                               width: "25%",
-                               m: 4,
-                             }}
-                             image={images}
-                           />
-                           {subimg?.map((subimgnew, index) => (
-                             <Box key={index}>
-                               <CardMedia
-                                 component="img"
-                                 height="125"
-                                 width="125"
-                                 sx={{
-                                   border: "1px solid black",
-                                   width: "45%",
-                                   m: 4,
-                                 }}
-                                 image={`/api/uploads/prodctnew/${subimgnew.filename}`}
-                               />
-                             </Box>
-                           ))}
-                         </Box> */}
-                            <Typography
-                              sx={{
-                                mt: "5px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Summary
-                            </Typography>
-
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                data={newsummary}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setNewsummary({ data });
-                                }}
-                              />
-                            </Box>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Description
-                            </Typography>
-
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                data={newdescription}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setNewdescription({ data });
-                                }}
-                              />
-                            </Box>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Features
-                            </Typography>
-
-                            <>
-                              <Typography>
-                                <Button
-                                  sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    fontSize: "12px",
-                                  }}
-                                  variant="contained"
-                                  startIcon={<AddCircleIcon />}
-                                  onClick={addField}
-                                >
-                                  Add a feature
-                                </Button>
-                              </Typography>
-                              {/* *********************UPDATE SCREEN****************** */}
-                              <>
-                                {field ? (
-                                  <>
-                                    {field?.map(({ id }, index) => {
-                                      // { console.log("field======>", field) }
-                                      return (
-                                        <Box key={id} sx={{ p: 2, m: 2 }}>
-                                          <Box
-                                            sx={{
-                                              display: "flex",
-                                              mt: "20px",
-                                              justifyContent: "space-between",
-                                            }}
-                                          >
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              Feature
-                                            </Typography>
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              Predefined value
-                                            </Typography>
-                                            <Typography
-                                              sx={{ fontSize: "12px" }}
-                                            >
-                                              OR Customized value
-                                            </Typography>
-                                          </Box>
-                                          <Box
-                                            sx={{
-                                              display: "flex",
-                                              mt: "20px",
-                                              justifyContent: "space-between",
-                                            }}
-                                          >
-                                            <FormControl sx={{ width: "30%" }}>
-                                              <Select
-                                                native
-                                                size="small"
-                                                name={index}
-                                                key={id}
-                                                // value={id}
-                                                value={
-                                                  newfeature[index]?.id
-                                                    ? newfeature[index]?.id
-                                                    : id
-                                                }
-                                                // ref={register()}
-                                                onChange={(e) =>
-                                                  HandleChangeedit(e, index)
-                                                }
-                                              >
-                                                {Featuresdetails?.map(
-                                                  (item) => (
-                                                    // console.log("item,", item)
-                                                    <option
-                                                      key={item._id}
-                                                      value={item._id}
-                                                    >
-                                                      {item?.featurename}
-                                                    </option>
-                                                  )
-                                                )}
-                                              </Select>
-                                            </FormControl>
-
-                                            <FormControl sx={{ width: "30%" }}>
-                                              <Select
-                                                size="small"
-                                                native
-                                                name={index}
-                                                key={id}
-                                                // value={id}
-                                                value={
-                                                  newfeaturestypevalue[index]
-                                                    ?.id
-                                                    ? newfeaturestypevalue[
-                                                        index
-                                                      ]?.id
-                                                    : id
-                                                }
-                                                // ref={register()}
-                                                onChange={(e) =>
-                                                  handleFeatureValueedit(
-                                                    e,
-                                                    index
-                                                  )
-                                                }
-                                              >
-                                                {Featuresvaluedetails?.filter(
-                                                  (Feature) => {
-                                                    return (
-                                                      Feature.featuretype ===
-                                                      newfeature[index]?.id
-                                                    );
-                                                  }
-                                                )?.map((Feature) => (
-                                                  <option
-                                                    key={Feature._id}
-                                                    value={Feature._id}
-                                                  >
-                                                    {Feature.featurevalue}
-                                                  </option>
-                                                ))}
-                                              </Select>
-                                            </FormControl>
-                                            <TextField
-                                              InputProps={{
-                                                style: { fontSize: 13 },
-                                              }}
-                                              name={`items[${index}].name`}
-                                              ref={register()}
-                                              id="outlined-size-small"
-                                              size="small"
-                                            />
-                                            <IconButton
-                                              type="button"
-                                              onClick={() => removeField(index)}
-                                            >
-                                              <ClearIcon
-                                                sx={{ color: "red" }}
-                                              />
-                                            </IconButton>
-                                          </Box>
-                                        </Box>
-                                      );
-                                    })}
-                                  </>
-                                ) : (
-                                  <> </>
-                                )}
-                              </>
-                            </>
-
-                            <Typography>
-                              <Button
-                                sx={{
-                                  mr: 3,
-                                  mt: 1,
-                                  borderRadius: "70px",
-                                  backgroundColor: "#00A787",
-                                  "&:hover": { backgroundColor: "#00A787" },
-                                  color: "#fff",
-                                  fontSize: "12px",
-                                }}
-                                variant="outlined"
-                                startIcon={<AddCircleIcon />}
-                                // onClick={() => addFieldvalue(1)}
-                                onClick={() => setBrand(1)}
-                              >
-                                Add a brand
-                              </Button>
-                            </Typography>
-                            <>
-                              {prodctObj?.brand ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "14px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          size="small"
-                                          value={newbrandId}
-                                          onChange={(e) =>
-                                            setNewbrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                              {brand === 1 ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "14px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          size="small"
-                                          value={newbrandId}
-                                          onChange={(e) =>
-                                            setNewbrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Related Product
-                            </Typography>
-
-                            <>
-                              {relatProd === 1 ? (
-                                <Typography sx={{ m: 2 }}>
-                                  <TextField
-                                    size="small"
-                                    sx={{ width: "60%" }}
-                                    id="standard-bare"
-                                    variant="outlined"
-                                    {...register("search", { required: true })}
-                                    error={errors.search}
-                                    InputProps={{
-                                      endAdornment: (
-                                        <IconButton>
-                                          <SearchOutlined />
-                                        </IconButton>
-                                      ),
-                                    }}
-                                  />
-                                </Typography>
-                              ) : (
-                                <>
-                                  <Typography>
-                                    <Button
-                                      sx={{
-                                        mr: 3,
-                                        mt: 1,
-                                        borderRadius: "70px",
-                                        backgroundColor: "#00A787",
-                                        "&:hover": {
-                                          backgroundColor: "#00A787",
-                                        },
-                                        color: "#fff",
-                                        fontSize: "12px",
-                                      }}
-                                      variant="contained"
-                                      startIcon={<AddCircleIcon />}
-                                      onClick={() => setRelatProduct(1)}
-                                    >
-                                      Add a related product
-                                    </Button>
-                                  </Typography>
-                                </>
-                              )}
-                            </>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Typography
-                            sx={{
-                              mt: "-10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Combinations
-                            <Tooltip title={Combinations}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Box>
-                            {" "}
-                            <FormControl>
-                              <RadioGroup
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                name="radio-buttons-group"
-                                onChange={handleNewcombination}
-                                value={newcombination}
-                              >
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    ml: "-7.5rem",
-                                    width: "200%",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      width: "300%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value="Simple Product"
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Simple Product
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      // mr: "110px",
-                                      width: "600%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value={true}
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      type="radio"
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Product with combinations
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-                                </Box>
-                              </RadioGroup>
-                            </FormControl>
-                          </Box>
-
-                          <Box sx={{ display: "flex" }}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              Reference
-                              <Tooltip title={reference}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                            <Typography
-                              sx={{
-                                ml: "10rem",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-
-                                mt: "10px",
-                              }}
-                            >
-                              Quantity
-                              <Tooltip>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                          </Box>
-                          <Box sx={{ display: "flex" }}>
-                            {" "}
-                            <Grid item xs={8}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    width="50%"
-                                    sx={{
-                                      mt: "18px",
-                                      fontSize: "14px",
-                                      fontWeight: "bold",
-                                      ml: -15,
-                                    }}
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={newreference}
-                                    onChange={(e) =>
-                                      setNewreference(e.target.value)
-                                    }
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>{" "}
-                            <Grid item xs={12}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    width="50%"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={newQuantity}
-                                    onChange={(e) =>
-                                      setNewQuantity(e.target.value)
-                                    }
-                                    inputProps={{ readOnly: true }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          </Box>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Price
-                            <Tooltip title={price}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Grid item xs={12}>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                mt: "10px",
-                                ml: -15,
-                              }}
-                            >
-                              <TextField
-                                size="small"
-                                label="Tax excluded"
-                                id="outlined-start-adornment"
-                                value={EditProdexclusive}
-                                onChange={handleEditProdexclusive}
-                                sx={{ m: 1 }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                              <FormControl
-                                sx={{ width: "100%", mt: 0.7 }}
-                                size="small"
-                              >
-                                <InputLabel id="demo-simple-select-label">
-                                  Tax Rule
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-simple-select-label"
-                                  size="small"
-                                  label="Tax Rule"
-                                  value={EditTaxprice}
-                                  onChange={Edittaxesrule}
-                                  inputProps={{ readOnly: true }}
-                                >
-                                  {taxes?.map((item, index) => (
-                                    <MenuItem
-                                      key={index}
-                                      value={item._id}
-                                      onClick={() =>
-                                        setEditpercentage(item._id)
-                                      }
-                                    >
-                                      {item.Name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                              <TextField
-                                size="small"
-                                label="Tax included"
-                                value={EditProdinclusive}
-                                onChange={(e) =>
-                                  setEditProdinclusive(e.target.value)
-                                }
-                                id="outlined-start-adornment"
-                                sx={{ m: 1 }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                  fontSize: 12,
-                                }}
-                              />{" "}
-                            </Box>
-                          </Grid>
-                          <Grid item xs={8}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              categories
-                              <Tooltip title={categories}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-
-                            <TreeView
-                              aria-label="rich object"
-                              defaultCollapseIcon={<ExpandMoreIcon />}
-                              defaultExpanded={["root"]}
-                              defaultExpandIcon={<ChevronRightIcon />}
-                              onNodeSelect={handleSelectedItemsupdate}
-                              sx={{
-                                border: "1px solid black",
-                                p: 1,
-
-                                ".MuiTreeItem-root": {
-                                  ".Mui-focused:not(.Mui-selected)":
-                                    classes.focused,
-                                  ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
-                                    classes.selected,
-                                },
-                              }}
-                            >
-                              {/* {categorymasterallList?.map((item) =>
-                                renderTree(item), */}
-                              {/* Update Method */}
-                              {categorymasterallList?.map((item) => (
-                                <>
-                                  <TreeItem
-                                    key={item._id}
-                                    nodeId={item._id}
-                                    label={
-                                      newParentCategory === item._id ? (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              size="small"
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              name="file"
-                                              defaultChecked={true}
-                                              // checked={checkedtreeupdate}
-                                              // checked={true}
-                                              // onChange={handleChangecheckbox}
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      ) : (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              size="small"
-                                              name="file"
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      )
-                                    }
-                                  >
-                                    {item.children
-                                      ?.filter((childItem) => {
-                                        return childItem.parent === item._id;
-                                      })
-                                      ?.map((childItem) => (
-                                        <>
-                                          <TreeItem
-                                            key={item._id}
-                                            nodeId={
-                                              `${item._id}` +
-                                              "-" +
-                                              `${childItem._id}`
-                                            }
-                                            label={
-                                              newchildCategory ===
-                                              childItem._id ? (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      name="file"
-                                                      defaultChecked={true}
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              ) : (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      size="small"
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      name="file"
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              )
-                                            }
-                                          >
-                                            {childItem.children
-                                              ?.filter((grandItem) => {
-                                                return (
-                                                  grandItem.parent ===
-                                                  childItem._id
-                                                );
-                                              })
-                                              ?.map((grandItem) => (
-                                                <>
-                                                  <TreeItem
-                                                    key={item._id}
-                                                    nodeId={
-                                                      `${item._id}` +
-                                                      "-" +
-                                                      `${childItem._id}` +
-                                                      "-" +
-                                                      `${grandItem._id}`
-                                                    }
-                                                    label={
-                                                      grandchildCategory ===
-                                                      grandItem._id ? (
-                                                        <FormControlLabel
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              name="file"
-                                                              size="small"
-                                                              defaultChecked={
-                                                                true
-                                                              }
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      ) : (
-                                                        <FormControlLabel
-                                                          control={
-                                                            <Checkbox
-                                                              size="small "
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              name="file"
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      )
-                                                    }
-                                                  ></TreeItem>
-                                                </>
-                                              ))}
-                                          </TreeItem>
-                                        </>
-                                      ))}
-                                  </TreeItem>
-                                </>
-                              ))}
-                            </TreeView>
-                          </Grid>
-                          <Typography sx={{ mt: 2 }}>
-                            <TextField
-                              sx={{ fontSize: 12, ml: "-7.5rem" }}
-                              size="small"
-                              width="75%"
-                              id="standard-bare"
-                              variant="outlined"
-                              defaultValue="Search Categories"
-                              InputProps={{
-                                endAdornment: (
-                                  <IconButton>
-                                    <SearchOutlined />
-                                  </IconButton>
-                                ),
-                              }}
-                            />
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Create a new category
-                            <Tooltip title={newcategories}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          {category === 1 ? (
-                            <>
-                              <Box sx={{ m: 2, p: 1 }}>
-                                <Typography>New Category name</Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                    id="outlined-size-small"
-                                    defaultValue="Category name"
-                                    size="small"
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  Parent of the category
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                    id="outlined-size-small"
-                                    defaultValue="Home"
-                                    size="small"
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <Button variant="contained">Cancel</Button>
-                                  <Button
-                                    variant="contained"
-                                    sx={{ ml: "50px" }}
-                                  >
-                                    Create
-                                  </Button>
-                                </Typography>
-                              </Box>
-                            </>
-                          ) : (
-                            <>
-                              <Typography>
-                                <Button
-                                  sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    fontSize: "12px",
-                                    ml: -15,
-                                  }}
-                                  variant="outlined"
-                                  startIcon={<AddCircleIcon />}
-                                  onClick={() => setCategory(1)}
-                                >
-                                  Create a Category
-                                </Button>
-                              </Typography>
-
-                              <Typography>
-                                <Button
-                                  type="submit"
-                                  sx={{
-                                    mr: 1,
-                                    mt: 5,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    ml: "15rem",
-                                  }}
-                                  variant="contained"
-                                >
-                                  Update
-                                </Button>
-                              </Typography>
-                            </>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )}
-
-                  {tabIndex === 1 && <ProductQuantitiesSreen />}
-                  {tabIndex === 2 && <ProductShippingScreen />}
-                  {tabIndex === 3 && (
-                    <ProdPricingScreen products={prodctObj}></ProdPricingScreen>
-                  )}
-                  {tabIndex === 4 && <SeoScreen />}
-                  {tabIndex === 5 && <OptionsScreen />}
-                </Box>
-              )}
-            </Box>
-          ) : (
-            <Box sx={{ mt: "5px" }}>
-              <Box>
-                {combination === "true" ? (
+                <>
                   <Tabs
                     value={tabIndex}
                     onChange={handleTabChange}
@@ -4752,427 +1564,532 @@ Not all shops sell new products.
                       label="Options"
                     />
                   </Tabs>
-                ) : (
-                  <>
-                    {" "}
-                    <Tabs
-                      value={tabIndex}
-                      onChange={handleTabChange}
-                      indicatorColor="#00A787"
-                    >
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 0 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 0
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Basic Settings"
-                      />
-
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 1 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 1
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Quantities"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 2 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 2
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Shipping"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 3 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 3
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Pricing"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 4 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 4
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="SEO"
-                      />
-                      <Tab
-                        style={{
-                          fontSize: "13px",
-                          color: tabIndex === 5 ? "#00A787" : "inherit",
-                          borderBottom:
-                            tabIndex === 5
-                              ? "2px solid #00A787"
-                              : "2px solid transparent",
-                        }}
-                        label="Options"
-                      />
-                    </Tabs>
-                  </>
-                )}
-              </Box>
-              {combination === "true" ? (
-                <Box sx={{ padding: 2 }}>
-                  {tabIndex === 0 && (
-                    <Box
-                      component="form"
-                      onSubmit={handleSubmit(submitHandler)}
-                    >
-                      <Grid container spacing={2}>
-                        <Grid item xs={8}>
+                </>
+              ) : (
+                <>
+                  <Tabs
+                    value={tabIndex}
+                    onChange={handleTabChange}
+                    indicatorColor="#00A787"
+                  >
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 0 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 0
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Basic Settings"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 1 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 1
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Quantities"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 2 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 2
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Shipping"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 3 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 3
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Pricing"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 4 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 4
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="SEO"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 5 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 5
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Options"
+                    />
+                  </Tabs>
+                </>
+              )}
+              {/* <Tab label='Quantities' />
+                  <Tab label='Shipping' />
+                  <Tab label='Pricing' />
+                  <Tab label='SEO' />
+                  <Tab label='Options' /> */}
+            </Box>
+            {newcombination === "true" ? (
+              <Box sx={{ padding: 2 }}>
+                {tabIndex === 0 && (
+                  <Box component="form" onSubmit={handleSubmit(updateHandler)}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={8}>
+                        <Box sx={{ mr: -5 }}>
                           <Box>
-                            <Box sx={{ width: "100%" }}>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  mt: -1,
-                                }}
-                              >
-                                Enter Your Product Name
-                              </Typography>
-
-                              <TextField
-                                size="small"
-                                sx={{
-                                  width: "75%",
-                                  mt: 1,
-                                  height: "0.5rem",
-                                }}
-                                id="margin-normal"
-                                margin="normal"
-                                {...register("prodname", { required: true })}
-                                error={errors.prodname}
-                                // onChange={handleChange.bind(this)}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              />
-                            </Box>
-                            <Box
+                            <Typography
                               sx={{
-                                border: "2px solid gray",
-                                width: "75%",
-                                // height: "250px",
-                                mt: "50px",
-                                overflow: "scroll",
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                mt: -1,
                               }}
                             >
-                              <Grid container spacing={2}>
-                                <Grid item xs>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      width: "100%",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      margin: "0px 10%",
-                                      borderRadius: "5px",
-                                    }}
-                                  >
-                                    <Typography
-                                      variant="h6"
-                                      sx={{ fontSize: 12 }}
-                                    >
-                                      {" "}
-                                      Add Images up to 10
-                                    </Typography>
-                                    <TextField
-                                      size="small"
-                                      sx={{
-                                        margin: "0px 0px",
-                                        border: "none",
-                                      }}
-                                      inputProps={{
-                                        style: { fontSize: 12 },
-                                        multiple: true,
-                                        accept: "image/*",
-                                      }}
-                                      fullWidth
-                                      type="file"
-                                      name="uploadedImages"
-                                      multiple
-                                      onChange={onSelectFile}
-                                    />
-                                    <br />
-                                  </Box>
-                                </Grid>
-                                <Grid item xs>
-                                  {ImageDelete === "Delete" ? (
-                                    <></>
-                                  ) : (
-                                    <>
-                                      {ImageSelectblob === ImageSelectblob && (
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            width: "100%",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            margin: "0px 10%",
-                                            borderRadius: "5px",
-                                          }}
-                                        >
-                                          <Box sx={{ display: "flex" }}>
-                                            <IconButton
-                                              onClick={() =>
-                                                deleteHandlerpage(ImageSelect)
-                                              }
-                                            >
-                                              <ClearIcon
-                                                sx={{
-                                                  backgroundColor: "#999999",
-                                                  color: "#fff",
-                                                }}
-                                              />
-                                            </IconButton>
-                                            <FormControlLabel
-                                              sx={{ fontSize: 12 }}
-                                              label={
-                                                <Typography
-                                                  sx={{ fontSize: 12, mr: 3 }}
-                                                >
-                                                  Select Image
-                                                </Typography>
-                                              }
-                                              control={
-                                                <Checkbox
-                                                  style={{
-                                                    color: checked
-                                                      ? "#00A787"
-                                                      : "inherit",
-                                                  }}
-                                                  size="small"
-                                                  onChange={handleChangeChekce}
-                                                  inputProps={{
-                                                    "aria-label": "controlled",
-                                                  }}
-                                                />
-                                              }
-                                            />
-                                          </Box>
+                              Enter Your Product Name
+                            </Typography>
 
-                                          <Button
-                                            sx={{
-                                              // mr: 3,
-                                              // mt: 5,
-                                              borderRadius: "50px",
-                                              backgroundColor: "#00A787",
-                                              "&:hover": {
-                                                backgroundColor: "#00A787",
-                                              },
-                                              fontSize: 10,
-                                            }}
-                                            variant="contained"
-                                            size="small"
-                                            onClick={handleChangeSaveImage}
-                                          >
-                                            Select cover Image
-                                          </Button>
-                                        </Box>
-                                      )}
-                                    </>
-                                  )}
-                                </Grid>
-                              </Grid>
-                              <List>
-                                {/* <input type="file" multiple /> */}
-                                {selectedImages?.length > 0 &&
-                                  selectedImages?.length > 10 && (
-                                    <p className="error">
-                                      You upload more than 10 images! <br />
-                                      <span>
-                                        please delete{" "}
-                                        <b> {selectedImages?.length - 10} </b>{" "}
-                                        of them{" "}
-                                      </span>
-                                    </p>
-                                  )}
+                            <TextField
+                              size="small"
+                              sx={{
+                                width: "75%",
+                                mt: 1,
+                                height: "0.5rem",
+                                fontSize: 12,
+                              }}
+                              id="margin-normal"
+                              margin="normal"
+                              value={newProdname}
+                              onChange={(e) => setNewProdname(e.target.value)}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                            />
+                          </Box>
+
+                          <Box
+                            sx={{
+                              border: "2px solid gray",
+                              width: "75%",
+                              height: "250px",
+                              mt: "50px",
+                              overflow: "scroll",
+                            }}
+                          >
+                            <Grid container spacing={2}>
+                              <Grid item xs>
                                 <Box
                                   sx={{
-                                    width: "auto",
-                                    listStyle: "none",
                                     display: "flex",
-                                    flexFlow: "wrap row",
-                                    flexDirection: "row",
+                                    width: "100%",
+                                    flexDirection: "column",
                                     alignItems: "center",
-                                    m: 2,
+                                    margin: "0px 10%",
+                                    borderRadius: "5px",
                                   }}
                                 >
-                                  <ListItem>
-                                    {selectedImages?.map((image, index) => {
-                                      return (
-                                        <Box
-                                          key={image}
-                                          className="image"
-                                          width="75%"
-                                        >
-                                          <CardMedia
-                                            sx={{
-                                              padding: 0,
-                                              margin: 1,
-                                              border:
-                                                image === ImageSelectblob
-                                                  ? "2px solid #66CCFF"
-                                                  : "2px solid #999999",
-                                              height: 80,
-                                              width: 80,
-                                            }}
-                                            className="media"
-                                            component="img"
-                                            height="50"
-                                            image={image}
-                                            alt={name}
-                                            id={index}
-                                            onClick={(e) =>
-                                              ImagHandleSelect(e, index)
+                                  <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: 12, ml: -10 }}
+                                  >
+                                    Add Images up to 10
+                                  </Typography>
+                                  <TextField
+                                    size="small"
+                                    sx={{
+                                      margin: "0px 0px",
+                                      border: "none",
+                                    }}
+                                    inputProps={{
+                                      style: { fontSize: 12 },
+                                      multiple: true,
+                                      accept: "image/*",
+                                    }}
+                                    fullWidth
+                                    type="file"
+                                    name="uploadedImages"
+                                    multiple
+                                    onChange={onSelectFile}
+                                  />
+                                  <br />
+                                </Box>
+                              </Grid>
+                              <Grid item xs>
+                                {ImageDelete === "Delete" ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {ImageSelectblob === ImageSelectblob && (
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          width: "100%",
+                                          flexDirection: "column",
+                                          alignItems: "center",
+                                          margin: "0px 10%",
+                                          borderRadius: "5px",
+                                        }}
+                                      >
+                                        <Box sx={{ display: "flex" }}>
+                                          <IconButton
+                                            onClick={() =>
+                                              deleteHandlerpage(ImageSelect)
+                                            }
+                                          >
+                                            <ClearIcon
+                                              sx={{
+                                                backgroundColor: "#999999",
+                                                color: "#fff",
+                                              }}
+                                            />
+                                          </IconButton>
+                                          <FormControlLabel
+                                            label={
+                                              <Typography
+                                                sx={{ fontSize: 12, mr: 3 }}
+                                              >
+                                                Select Image
+                                              </Typography>
+                                            }
+                                            control={
+                                              <Checkbox
+                                                style={{ color: "#00A787" }}
+                                                checked={checked}
+                                                onChange={handleChangeChekce}
+                                                inputProps={{
+                                                  "aria-label": "controlled",
+                                                }}
+                                              />
                                             }
                                           />
-                                          {image === CoverImages ? (
-                                            <CardContent
+                                        </Box>
+
+                                        <Button
+                                          sx={{
+                                            // mr: 3,
+                                            // mt: 5,
+                                            borderRadius: "50px",
+                                            backgroundColor: "#00A787",
+                                            "&:hover": {
+                                              backgroundColor: "#00A787",
+                                            },
+                                            fontSize: 10,
+                                          }}
+                                          variant="contained"
+                                          size="small"
+                                          onClick={handleChangeSaveImage}
+                                        >
+                                          Select cover Image
+                                        </Button>
+                                      </Box>
+                                    )}
+                                  </>
+                                )}
+                              </Grid>
+                            </Grid>
+                            <List>
+                              {/* <input type="file" multiple /> */}
+                              {selectedImages?.length > 0 &&
+                                selectedImages?.length > 10 && (
+                                  <p className="error">
+                                    You upload more than 10 images! <br />
+                                    <span>
+                                      please delete{" "}
+                                      <b> {selectedImages?.length - 10} </b> of
+                                      them{" "}
+                                    </span>
+                                  </p>
+                                )}
+                              <Box
+                                sx={{
+                                  width: "auto",
+                                  listStyle: "none",
+                                  display: "flex",
+                                  flexFlow: "wrap row",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  m: 2,
+                                }}
+                              >
+                                <ListItem>
+                                  {selectedImages?.map((image, index) => {
+                                    return (
+                                      <Box
+                                        key={image}
+                                        className="image"
+                                        width="75%"
+                                      >
+                                        {image === CoverImages ? (
+                                          <CardContent
+                                            sx={{
+                                              mt: -4,
+                                              width: "100%",
+                                              ml: 1,
+                                            }}
+                                          >
+                                            <Typography
+                                              variant="body2"
+                                              color="#fff"
                                               sx={{
-                                                // margin: 1,
+                                                fontSize: 10,
+                                                height: 10,
+                                                width: 70,
+                                                padding: 0,
+                                                Zindex: -1,
                                                 mt: -1,
-                                                // backgroundColor: "#999999",
-                                                padding: 2.5,
-                                                width: "63%",
-                                                ml: 1,
-                                                paddingRight: 2,
+                                                ml: -2,
+                                                color: "black",
+                                                fontWeight: "bold",
                                               }}
                                             >
-                                              <Typography
-                                                variant="body2"
-                                                color="#fff"
-                                                sx={{
-                                                  fontSize: 10,
-                                                  height: 10,
-                                                  width: 30,
-                                                  padding: 0,
-                                                  Zindex: -1,
-                                                  mt: -2,
-                                                  color: "black",
-                                                  fontWeight: "bold",
-                                                }}
-                                              >
-                                                Cover Image
-                                              </Typography>
-                                            </CardContent>
-                                          ) : (
-                                            <></>
-                                          )}
-                                          <Button
-                                            onClick={() => deleteHandler(image)}
-                                          >
-                                            Remove
-                                            {/* <ClearIcon
-                                        sx={{ backgroundColor: "red" }}
-                                      /> */}
-                                          </Button>
-                                        </Box>
-                                      );
-                                    })}
-                                  </ListItem>
+                                              Cover Image
+                                            </Typography>
+                                          </CardContent>
+                                        ) : (
+                                          <></>
+                                        )}
+
+                                        <CardMedia
+                                          sx={{
+                                            padding: 0,
+                                            margin: 0,
+                                            border:
+                                              image === ImageSelectblob
+                                                ? "2px solid #66CCFF"
+                                                : "2px solid #999999",
+                                            height: 80,
+                                            width: 80,
+                                          }}
+                                          className="media"
+                                          component="img"
+                                          height="50"
+                                          image={image}
+                                          alt={name}
+                                          id={index}
+                                          onClick={(e) =>
+                                            ImagHandleSelect(e, index)
+                                          }
+                                        />
+
+                                        <Button
+                                          sx={{ color: "#00A787" }}
+                                          onClick={() => deleteHandler(image)}
+                                        >
+                                          Remove
+                                          {/* <ClearIcon
+                                       sx={{ backgroundColor: "red" }}
+                                     /> */}
+                                        </Button>
+                                      </Box>
+                                    );
+                                  })}
+                                </ListItem>
+                              </Box>
+                            </List>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifycontent: "space-between",
+                                // mt: ,
+                              }}
+                            >
+                              <Box>
+                                {/* <CardMedia
+                                  component="img"
+                                  sx={{
+                                    border: "1px solid black",
+                                    width: "70px",
+                                    height: "70px",
+                                    mt: -5,
+                                    ml: 2,
+                                    mr: 2,
+                                  }}
+                                  image={images}
+                                /> */}
+
+                                {/* <Button
+                                  sx={{
+                                    ml: 4,
+                                    color: "#00A787",
+                                  }}
+                                  onClick={() => deleteHandler(images)}
+                                >
+                                  Remove                                 
+                                </Button> */}
+                              </Box>
+                              {subimg?.map((subimgnew, index) => (
+                                <Box key={index}>
+                                  <CardMedia
+                                    component="img"
+                                    sx={{
+                                      border: "1px solid black",
+                                      width: "70px",
+                                      height: "70px",
+                                      mt: -5,
+                                      ml: 5,
+                                    }}
+                                    image={`/api/uploads/prodctnew/${subimgnew.filename}`}
+                                  />{" "}
+                                  <Button
+                                    sx={{ ml: 5, color: "#00A787" }}
+                                    onClick={() => deleteHandler(subimgnew)}
+                                  >
+                                    Remove
+                                    {/* <ClearIcon
+                                       sx={{ backgroundColor: "red" }}
+                                     /> */}
+                                  </Button>
                                 </Box>
-                              </List>
+                              ))}
                             </Box>
+                          </Box>
+                          {/* <Box
+                           sx={{
+                             padding: 0,
+                             margin: 0,
+                             width: "auto",
+                             listStyle: "none",
+                             display: "flex",
+                             flexFlow: "wrap row",
+                             flexDirection: "row",
+                             alignItems: "center",
+                             border: "2px solid gray",
+                           }}
+                         >
+                           <TextField
+                                 sx={{ margin: "10px 0px", border: "none" }}
+                                 inputProps={{
+                                   style: { fontSize: 14 },
+                                   multiple: true,
+                                   accept: "image/*",
+                                 }}
+                                 fullWidth
+                                 type="file"
+                                 name="uploadedImages"
+                                 multiple
+                                 // onChange={onSelectFile}
+                               />
+                           <CardMedia
+                             component="img"
+                             height="125"
+                             sx={{
+                               border: "1px solid black",
+                               width: "25%",
+                               m: 4,
+                             }}
+                             image={images}
+                           />
+                           {subimg?.map((subimgnew, index) => (
+                             <Box key={index}>
+                               <CardMedia
+                                 component="img"
+                                 height="125"
+                                 width="125"
+                                 sx={{
+                                   border: "1px solid black",
+                                   width: "45%",
+                                   m: 4,
+                                 }}
+                                 image={`/api/uploads/prodctnew/${subimgnew.filename}`}
+                               />
+                             </Box>
+                           ))}
+                         </Box> */}
+                          <Typography
+                            sx={{
+                              mt: "5px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Summary
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "5px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              data={newsummary}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setNewsummary({ data });
                               }}
-                            >
-                              Summary
-                            </Typography>
+                            />
+                          </Box>
 
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setSummary({ data });
-                                }}
-                              />
-                            </Box>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Description
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              data={newdescription}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setNewdescription({ data });
                               }}
-                            >
-                              Description
-                            </Typography>
+                            />
+                          </Box>
 
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setDescription({ data });
-                                }}
-                              />
-                            </Box>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Features
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Features
-                            </Typography>
-
+                          <>
                             <Typography>
                               <Button
                                 sx={{
                                   mr: 3,
                                   mt: 1,
                                   borderRadius: "70px",
-                                  backgroundColor: "#00A787",
-                                  "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
                                 }}
                                 variant="contained"
-                                small
-                                onClick={handleappend}
+                                startIcon={<AddCircleIcon />}
+                                onClick={addField}
                               >
                                 Add a feature
                               </Button>
                             </Typography>
+                            {/* *********************UPDATE SCREEN****************** */}
                             <>
-                              {fields ? (
+                              {field ? (
                                 <>
-                                  {fields?.map(({ id }, index) => {
+                                  {field?.map(({ id }, index) => {
+                                    // { console.log("field======>", field) }
                                     return (
-                                      <Box
-                                        key={id}
-                                        sx={{ p: 2, m: 2, width: "75%" }}
-                                      >
+                                      <Box key={id} sx={{ p: 2, m: 2 }}>
                                         <Box
                                           sx={{
                                             display: "flex",
@@ -5195,56 +2112,60 @@ Not all shops sell new products.
                                             display: "flex",
                                             mt: "20px",
                                             justifyContent: "space-between",
-                                            fontSize: 12,
                                           }}
                                         >
                                           <FormControl sx={{ width: "30%" }}>
                                             <Select
                                               native
                                               size="small"
-                                              // Featuresvaluedetails
                                               name={index}
-                                              id={index}
-                                              // defaultValue={featurestype}
-                                              ref={register()}
+                                              key={id}
+                                              // value={id}
+                                              value={
+                                                newfeature[index]?.id
+                                                  ? newfeature[index]?.id
+                                                  : id
+                                              }
+                                              // ref={register()}
                                               onChange={(e) =>
-                                                HandleChange(e, index)
+                                                HandleChangeedit(e, index)
                                               }
                                             >
-                                              <option value="">
-                                                Select your Future
-                                              </option>
-                                              {Featuresdetails?.map(
-                                                (Feature) => (
-                                                  <option
-                                                    key={Feature._id}
-                                                    value={Feature._id}
-                                                  >
-                                                    {Feature.featurename}
-                                                  </option>
-                                                )
-                                              )}
+                                              {Featuresdetails?.map((item) => (
+                                                // console.log("item,", item)
+                                                <option
+                                                  key={item._id}
+                                                  value={item._id}
+                                                >
+                                                  {item?.featurename}
+                                                </option>
+                                              ))}
                                             </Select>
                                           </FormControl>
+
                                           <FormControl sx={{ width: "30%" }}>
                                             <Select
                                               size="small"
                                               native
-                                              // defaultValue={featurestypevalue}
                                               name={index}
-                                              id={index}
-                                              ref={register()}
-                                              onChange={(e) =>
-                                                handleFeatureValue(e, index)
+                                              key={id}
+                                              // value={id}
+                                              value={
+                                                newfeaturestypevalue[index]?.id
+                                                  ? newfeaturestypevalue[index]
+                                                      ?.id
+                                                  : id
                                               }
-                                              // onClick={() => removeName(index)}
+                                              // ref={register()}
+                                              onChange={(e) =>
+                                                handleFeatureValueedit(e, index)
+                                              }
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
                                                   return (
-                                                    // Feature.featuretype=== featurestype[newadd]?.id && index===featurestype[newadd]?.index
                                                     Feature.featuretype ===
-                                                    featurestype[index]?.id
+                                                    newfeature[index]?.id
                                                   );
                                                 }
                                               )?.map((Feature) => (
@@ -5257,8 +2178,10 @@ Not all shops sell new products.
                                               ))}
                                             </Select>
                                           </FormControl>
-
                                           <TextField
+                                            InputProps={{
+                                              style: { fontSize: 13 },
+                                            }}
                                             name={`items[${index}].name`}
                                             ref={register()}
                                             id="outlined-size-small"
@@ -5266,7 +2189,7 @@ Not all shops sell new products.
                                           />
                                           <IconButton
                                             type="button"
-                                            onClick={() => remove(index)}
+                                            onClick={() => removeField(index)}
                                           >
                                             <ClearIcon sx={{ color: "red" }} />
                                           </IconButton>
@@ -5276,10 +2199,730 @@ Not all shops sell new products.
                                   })}
                                 </>
                               ) : (
-                                <></>
+                                <> </>
                               )}
                             </>
+                          </>
 
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="outlined"
+                              startIcon={<AddCircleIcon />}
+                              onClick={() => setBrand(1)}
+                            >
+                              Add a brand
+                            </Button>
+                          </Typography>
+
+                          <>
+                            {prodctObj?.brand ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        size="small"
+                                        value={newbrandId}
+                                        onChange={(e) =>
+                                          setNewbrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {brand === 1 ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        size="small"
+                                        value={newbrandId}
+                                        onChange={(e) =>
+                                          setNewbrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Related Product
+                          </Typography>
+
+                          <>
+                            {relatProd === 1 ? (
+                              <Typography sx={{ m: 2 }}>
+                                <TextField
+                                  size="small"
+                                  sx={{ width: "60%" }}
+                                  id="standard-bare"
+                                  variant="outlined"
+                                  {...register("search", { required: true })}
+                                  error={errors.search}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <IconButton>
+                                        <SearchOutlined />
+                                      </IconButton>
+                                    ),
+                                  }}
+                                />
+                              </Typography>
+                            ) : (
+                              <>
+                                <Typography>
+                                  <Button
+                                    sx={{
+                                      mr: 3,
+                                      mt: 1,
+                                      borderRadius: "70px",
+                                      backgroundColor: "#00A787",
+                                      "&:hover": {
+                                        backgroundColor: "#00A787",
+                                      },
+                                      color: "#fff",
+                                      fontSize: "12px",
+                                    }}
+                                    variant="contained"
+                                    startIcon={<AddCircleIcon />}
+                                    onClick={() => setRelatProduct(1)}
+                                  >
+                                    Add a related product
+                                  </Button>
+                                </Typography>
+                              </>
+                            )}
+                          </>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          sx={{
+                            mt: "-10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Combinations
+                          <Tooltip title={Combinations}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Box>
+                          {" "}
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="radio-buttons-group"
+                              onChange={handleNewcombination}
+                              value={newcombination}
+                            >
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  ml: "-7.5rem",
+                                  width: "200%",
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    width: "300%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value="Simple Product"
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Simple Product
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    // mr: "110px",
+                                    width: "600%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value={true}
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    type="radio"
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Product with combinations
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                              </Box>
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            Reference
+                            <Tooltip title={reference}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ml: "10rem",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+
+                              mt: "10px",
+                            }}
+                          >
+                            Quantity
+                            <Tooltip>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex" }}>
+                          {" "}
+                          <Grid item xs={8}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  width="50%"
+                                  sx={{
+                                    mt: "18px",
+                                    fontSize: "14px",
+                                    fontWeight: "bold",
+                                    ml: -15,
+                                  }}
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={newreference}
+                                  onChange={(e) =>
+                                    setNewreference(e.target.value)
+                                  }
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>{" "}
+                          <Grid item xs={12}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  width="50%"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={newQuantity}
+                                  onChange={(e) =>
+                                    setNewQuantity(e.target.value)
+                                  }
+                                  inputProps={{ readOnly: true }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Price
+                          <Tooltip title={price}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Grid item xs={12}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              mt: "10px",
+                              ml: -15,
+                            }}
+                          >
+                            <TextField
+                              size="small"
+                              label="Tax excluded"
+                              id="outlined-start-adornment"
+                              value={EditProdexclusive}
+                              onChange={handleEditProdexclusive}
+                              sx={{ m: 1 }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                            <FormControl
+                              sx={{ width: "100%", mt: 0.7 }}
+                              size="small"
+                            >
+                              <InputLabel id="demo-simple-select-label">
+                                Tax Rule
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-label"
+                                size="small"
+                                label="Tax Rule"
+                                value={EditTaxprice}
+                                onChange={Edittaxesrule}
+                                inputProps={{ readOnly: true }}
+                              >
+                                {taxes?.map((item, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    value={item._id}
+                                    onClick={() => setEditpercentage(item._id)}
+                                  >
+                                    {item.Name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <TextField
+                              size="small"
+                              label="Tax included"
+                              value={EditProdinclusive}
+                              onChange={(e) =>
+                                setEditProdinclusive(e.target.value)
+                              }
+                              id="outlined-start-adornment"
+                              sx={{ m: 1 }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                                fontSize: 12,
+                              }}
+                            />{" "}
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            categories
+                            <Tooltip title={categories}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+
+                          <TreeView
+                            aria-label="rich object"
+                            defaultCollapseIcon={<ExpandMoreIcon />}
+                            defaultExpanded={["root"]}
+                            defaultExpandIcon={<ChevronRightIcon />}
+                            onNodeSelect={handleSelectedItemsupdate}
+                            sx={{
+                              border: "1px solid black",
+                              p: 1,
+
+                              ".MuiTreeItem-root": {
+                                ".Mui-focused:not(.Mui-selected)":
+                                  classes.focused,
+                                ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                  classes.selected,
+                              },
+                            }}
+                          >
+                            {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                            {/* Update Method */}
+                            {categorymasterallList?.map((item) => (
+                              <>
+                                <TreeItem
+                                  key={item._id}
+                                  nodeId={item._id}
+                                  label={
+                                    newParentCategory === item._id ? (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            size="small"
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            name="file"
+                                            defaultChecked={true}
+                                            // checked={checkedtreeupdate}
+                                            // checked={true}
+                                            // onChange={handleChangecheckbox}
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    ) : (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            size="small"
+                                            name="file"
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    )
+                                  }
+                                >
+                                  {item.children
+                                    ?.filter((childItem) => {
+                                      return childItem.parent === item._id;
+                                    })
+                                    ?.map((childItem) => (
+                                      <>
+                                        <TreeItem
+                                          key={item._id}
+                                          nodeId={
+                                            `${item._id}` +
+                                            "-" +
+                                            `${childItem._id}`
+                                          }
+                                          label={
+                                            newchildCategory ===
+                                            childItem._id ? (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    name="file"
+                                                    defaultChecked={true}
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    size="small"
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            ) : (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    size="small"
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    name="file"
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            )
+                                          }
+                                        >
+                                          {childItem.children
+                                            ?.filter((grandItem) => {
+                                              return (
+                                                grandItem.parent ===
+                                                childItem._id
+                                              );
+                                            })
+                                            ?.map((grandItem) => (
+                                              <>
+                                                <TreeItem
+                                                  key={item._id}
+                                                  nodeId={
+                                                    `${item._id}` +
+                                                    "-" +
+                                                    `${childItem._id}` +
+                                                    "-" +
+                                                    `${grandItem._id}`
+                                                  }
+                                                  label={
+                                                    grandchildCategory ===
+                                                    grandItem._id ? (
+                                                      <FormControlLabel
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            name="file"
+                                                            size="small"
+                                                            defaultChecked={
+                                                              true
+                                                            }
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    ) : (
+                                                      <FormControlLabel
+                                                        control={
+                                                          <Checkbox
+                                                            size="small "
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            name="file"
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    )
+                                                  }
+                                                ></TreeItem>
+                                              </>
+                                            ))}
+                                        </TreeItem>
+                                      </>
+                                    ))}
+                                </TreeItem>
+                              </>
+                            ))}
+                          </TreeView>
+                        </Grid>
+                        <Typography sx={{ mt: 2 }}>
+                          <TextField
+                            sx={{ fontSize: 12, ml: "-7.5rem" }}
+                            size="small"
+                            width="75%"
+                            id="standard-bare"
+                            variant="outlined"
+                            defaultValue="Search Categories"
+                            InputProps={{
+                              endAdornment: (
+                                <IconButton>
+                                  <SearchOutlined />
+                                </IconButton>
+                              ),
+                            }}
+                          />
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Create a new category
+                          <Tooltip title={newcategories}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        {category === 1 ? (
+                          <>
+                            <Box sx={{ m: 2, p: 1 }}>
+                              <Typography>New Category name</Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                  id="outlined-size-small"
+                                  defaultValue="Category name"
+                                  size="small"
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                Parent of the category
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                  id="outlined-size-small"
+                                  defaultValue="Home"
+                                  size="small"
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <Button variant="contained">Cancel</Button>
+                                <Button variant="contained" sx={{ ml: "50px" }}>
+                                  Create
+                                </Button>
+                              </Typography>
+                            </Box>
+                          </>
+                        ) : (
+                          <>
                             <Typography>
                               <Button
                                 sx={{
@@ -5290,1182 +2933,896 @@ Not all shops sell new products.
                                   "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
+                                  ml: -15,
                                 }}
-                                variant="contained"
-                                onClick={() => setBrand(1)}
+                                variant="outlined"
+                                startIcon={<AddCircleIcon />}
+                                onClick={() => setCategory(1)}
                               >
-                                Add a brand
+                                Create a Category
                               </Button>
                             </Typography>
 
-                            <>
-                              {brand === 1 ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "20px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          value={brandId}
-                                          onChange={(e) =>
-                                            setBrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Related Product
-                            </Typography>
-
-                            <>
-                              {relatProd === 1 ? (
-                                <Typography sx={{ m: 2 }}>
-                                  <TextField
-                                    size="small"
-                                    sx={{ width: "60%" }}
-                                    id="standard-bare"
-                                    variant="outlined"
-                                    {...register("search", { required: true })}
-                                    error={errors.search}
-                                    InputProps={{
-                                      endAdornment: (
-                                        <IconButton>
-                                          <SearchOutlined />
-                                        </IconButton>
-                                      ),
-                                    }}
-                                  />
-                                </Typography>
-                              ) : (
-                                <>
-                                  <Typography>
-                                    <Button
-                                      sx={{
-                                        mr: 3,
-                                        mt: 1,
-                                        borderRadius: "70px",
-                                        backgroundColor: "#00A787",
-                                        "&:hover": {
-                                          backgroundColor: "#00A787",
-                                        },
-                                        color: "#fff",
-                                        fontSize: "12px",
-                                      }}
-                                      variant="contained"
-                                      onClick={() => setRelatProduct(1)}
-                                    >
-                                      Add a related product
-                                    </Button>
-                                  </Typography>
-                                </>
-                              )}
-                            </>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Typography
-                            sx={{
-                              mt: "-10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Combinations
-                            <Tooltip title={Combinations}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-
-                          <Box>
-                            <FormControl>
-                              <RadioGroup
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={combination}
-                                onChange={handleChangecombination}
-                              >
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    ml: "-7.5rem",
-                                    width: "200%",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      width: "300%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value="Simple Product"
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Simple Product
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      // mr: "110px",
-                                      width: "600%",
-                                    }}
-                                  >
-                                    <FormControlLabel
-                                      value={true}
-                                      control={
-                                        <Radio
-                                          style={{ mt: -1, color: "#00A787" }}
-                                          size="small"
-                                        />
-                                      }
-                                      // label='Product with combinations'
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Product with combinations
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-                                </Box>
-                              </RadioGroup>
-                            </FormControl>
-                          </Box>
-                          <Box sx={{ display: "flex" }}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              Reference
-                              <Tooltip title={reference}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                            <Typography
-                              sx={{
-                                ml: "10rem",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-
-                                mt: "10px",
-                              }}
-                            >
-                              Quantity
-                              <Tooltip>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                          </Box>
-
-                          <Box sx={{ display: "flex" }}>
-                            <Grid item xs={4}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    sx={{
-                                      mt: "10px",
-                                      fontSize: "12px",
-                                      fontWeight: "bold",
-                                      ml: -15,
-                                    }}
-                                    width="20%"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={referenced}
-                                    onChange={handlereference}
-                                    // {...register("reference", {
-                                    //   required: true,
-                                    // })}
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    sx={{ m: 1 }}
-                                    size="small"
-                                    width="50%"
-                                    // label="0"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    {...register("quantity", {
-                                      // required: true,
-                                    })}
-                                    inputProps={{ readOnly: true }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          </Box>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Price
-                            <Tooltip title={price}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Grid item xs={12}>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                mt: "10px",
-                                ml: -15,
-                              }}
-                            >
-                              <TextField
-                                size="small"
-                                label="Tax excluded"
-                                id="outlined-start-adornment"
-                                value={Prodexclusive}
-                                onChange={handleProdexclusive}
-                                // {...register("taxexcluded", { required: true })}
-                                sx={{ m: 1, width: "100%" }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                              <FormControl
-                                sx={{ width: "100%", mt: 0.7 }}
-                                size="small"
-                              >
-                                <InputLabel id="demo-select-small-label">
-                                  Tax Rule
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-select-small-label"
-                                  size="small"
-                                  label="Tax Rule"
-                                  value={Taxprice}
-                                  onChange={taxesrule}
-                                  inputProps={{ readOnly: true }}
-                                >
-                                  {taxes?.map((item, index) => (
-                                    <MenuItem
-                                      key={index}
-                                      value={item._id}
-                                      onClick={() => setpercentage(item._id)}
-                                    >
-                                      {item.Name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                              <TextField
-                                size="small"
-                                label="Tax included"
-                                // {...register("taxincluded", { required: true })}
-                                value={Prodinclusive}
-                                onChange={(e) =>
-                                  setProdinclusive(e.target.value)
-                                }
-                                id="outlined-start-adornment"
-                                sx={{ m: 1, width: "100%" }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                            </Box>
-                          </Grid>
-
-                          <Grid item xs={8}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              categories
-                              <Tooltip title={categories}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-
-                            <TreeView
-                              aria-label="rich object"
-                              defaultCollapseIcon={<ExpandMoreIcon />}
-                              defaultExpanded={["root"]}
-                              defaultExpandIcon={<ChevronRightIcon />}
-                              // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItems}
-                              sx={{
-                                border: "1px solid black",
-                                p: 1,
-
-                                ".MuiTreeItem-root": {
-                                  ".Mui-focused:not(.Mui-selected)":
-                                    classes.focused,
-                                  ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
-                                    classes.selected,
-                                },
-                              }}
-                            >
-                              {/* {categorymasterallList?.map((item) =>
-                                renderTree(item), */}
-                              {categorymasterallList?.map((item) => (
-                                <>
-                                  <TreeItem
-                                    key={item._id}
-                                    nodeId={item._id}
-                                    label={
-                                      parentId === item._id ? (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              size="small"
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              name="file"
-                                              checked={checkedtree}
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      ) : (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              size="small"
-                                              name="file"
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      )
-                                    }
-                                  >
-                                    {item.children
-                                      ?.filter((childItem) => {
-                                        return childItem.parent === item._id;
-                                      })
-                                      ?.map((childItem) => (
-                                        <>
-                                          <TreeItem
-                                            key={item._id}
-                                            nodeId={
-                                              `${item._id}` +
-                                              "-" +
-                                              `${childItem._id}`
-                                            }
-                                            label={
-                                              childId === childItem._id ? (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      size="small"
-                                                      name="file"
-                                                      checked={checkedtree}
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              ) : (
-                                                <FormControlLabel
-                                                  sx={{ fontSize: "12px" }}
-                                                  control={
-                                                    <Checkbox
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      size="small"
-                                                      name="file"
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              )
-                                            }
-                                          >
-                                            {childItem.children
-                                              ?.filter((grandItem) => {
-                                                return (
-                                                  grandItem.parent ===
-                                                  childItem._id
-                                                );
-                                              })
-                                              ?.map((grandItem) => (
-                                                <>
-                                                  <TreeItem
-                                                    key={item._id}
-                                                    nodeId={
-                                                      `${item._id}` +
-                                                      "-" +
-                                                      `${childItem._id}` +
-                                                      "-" +
-                                                      `${grandItem._id}`
-                                                    }
-                                                    label={
-                                                      grandchildId ===
-                                                      grandItem._id ? (
-                                                        <FormControlLabel
-                                                          sx={{
-                                                            fontSize: "12px",
-                                                          }}
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              size="small"
-                                                              name="file"
-                                                              checked={
-                                                                checkedtree
-                                                              }
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      ) : (
-                                                        <FormControlLabel
-                                                          sx={{
-                                                            fontSize: "12px",
-                                                          }}
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              size="small"
-                                                              name="file"
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      )
-                                                    }
-                                                  ></TreeItem>
-                                                </>
-                                              ))}
-                                          </TreeItem>
-                                        </>
-                                      ))}
-                                  </TreeItem>
-                                </>
-                              ))}
-                            </TreeView>
-                          </Grid>
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Create a new category
-                            <Tooltip title={newcategories}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-
-                          {category === 1 ? (
-                            <>
-                              <Box sx={{ m: 2, p: 1 }}>
-                                <Typography>New Category name</Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    id="outlined-size-small"
-                                    defaultValue="Category name"
-                                    size="small"
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  Parent of the category
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    id="outlined-size-small"
-                                    defaultValue="Home"
-                                    size="small"
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "10px" }}>
-                                  <Button variant="contained">Cancel</Button>
-                                  <Button
-                                    variant="contained"
-                                    sx={{ ml: "50px" }}
-                                  >
-                                    Create
-                                  </Button>
-                                </Typography>
-                              </Box>
-                            </>
-                          ) : (
-                            <>
-                              <Typography>
-                                <Button
-                                  sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    fontSize: "12px",
-                                    ml: -15,
-                                  }}
-                                  variant="contained"
-                                  onClick={() => setCategory(1)}
-                                >
-                                  Create a Category
-                                </Button>
-                              </Typography>
-
-                              <Typography>
-                                <Button
-                                  type="submit"
-                                  sx={{
-                                    mr: 1,
-                                    mt: 5,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    ml: "15rem",
-                                  }}
-                                  variant="contained"
-                                >
-                                  Save
-                                </Button>
-                              </Typography>
-                            </>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )}
-                  {/* *****************************Save Screen********************************************* */}
-
-                  {tabIndex === 1 && (
-                    <Grid container>
-                      <Grid item xs>
-                        {gridComopen === 1 ? (
-                          <Box style={{ height: 560, width: "100%" }}>
-                            <DataGrid
-                              sx={{
-                                boxShadow: 10,
-                                borderRadius: 0,
-                                m: 2,
-                              }}
-                              columns={combinationcolumns}
-                              rows={ComList ? ComList : ""}
-                              getRowId={(rows) => rows.id}
-                              VerticalAlignment="Center"
-                              rowHeight={64}
-                              pageSize={10}
-                              rowsPerPageOptions={[10]}
-                              // checkboxSelection
-                            />
-                            <Box>
-                              <Dialog
-                                // fullWidth={fullWidth}
-                                // maxWidth={maxWidth}
-                                open={Comopen}
-                                onClick={handleComClose}
+                            <Typography>
+                              <Button
+                                type="submit"
                                 sx={{
-                                  width: 700,
-                                  hight: 700,
+                                  mr: 1,
+                                  mt: 5,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  ml: "15rem",
                                 }}
+                                variant="contained"
                               >
-                                <Box>
-                                  <CardMedia
-                                    sx={{
-                                      cursor: "pointer",
-                                      justifycontent: "space-between",
-                                    }}
-                                    component="img"
-                                    // height="200"
-                                    image={ComnewImg}
-                                    // alt={"subimgnew.filename"}
-                                    // onMouseOver={handleChangeimage}
-                                  />
-                                </Box>
-                              </Dialog>
-                            </Box>
-                            <Button
-                              variant="contained"
-                              sx={{ mt: 3, mb: 2 }}
-                              onClick={(event) => HandlecombSave(event)}
-                              type="Click"
-                            >
-                              Save
-                            </Button>
-                          </Box>
-                        ) : (
-                          <>
-                            {subtype?.length > 0 ? (
-                              <Box
-                                sx={{ width: "100%" }}
-                                component="form"
-                                onSubmit={handleSubmit1(CreateCombination)}
-                              >
-                                <Autocomplete
-                                  size="small"
-                                  multiple={true}
-                                  id="free-solo-demo"
-                                  options={attributeValuedetails}
-                                  value={defaultOption}
-                                  autoSelect={true}
-                                  getOptionLabel={(option) =>
-                                    `${option.attributename} : ${option.value} `
-                                  }
-                                  onChange={(event, value) =>
-                                    combinationhandleChange(event, value)
-                                  }
-                                  filterOptions={filterOptions}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      InputProps={{
-                                        style: { fontSize: 13 },
-                                      }}
-                                      size="small"
-                                      {...params}
-                                      label="Combination"
-                                      margin="normal"
-                                      variant="outlined"
-                                    />
-                                  )}
-                                />
-                                <Button
-                                  variant="contained"
-                                  sx={{
-                                    mt: 3,
-                                    mr: 20,
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                  }}
-                                  type="submit"
-                                >
-                                  Generate
-                                </Button>
-                              </Box>
-                            ) : (
-                              <Box
-                                sx={{ width: "100%" }}
-                                component="form"
-                                onSubmit={handleSubmit1(CreateCombination)}
-                              >
-                                <Autocomplete
-                                  size="small"
-                                  multiple={true}
-                                  id="free-solo-demo"
-                                  options={attributeValuedetails}
-                                  value={defaultOption}
-                                  autoSelect={true}
-                                  getOptionLabel={(option) =>
-                                    `${option.attributename} : ${option.value} `
-                                  }
-                                  onChange={(event, value) =>
-                                    combinationhandleChange(event, value)
-                                  }
-                                  filterOptions={filterOptions}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      InputProps={{
-                                        style: { fontSize: 13 },
-                                      }}
-                                      size="small"
-                                      {...params}
-                                      label="Combination"
-                                      margin="normal"
-                                      variant="outlined"
-                                    />
-                                  )}
-                                />
-                                <Button
-                                  variant="contained"
-                                  sx={{
-                                    mt: 3,
-                                    mr: 20,
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                  }}
-                                  type="submit"
-                                >
-                                  Generate
-                                </Button>
-                              </Box>
-                            )}
+                                Update
+                              </Button>
+                            </Typography>
                           </>
                         )}
                       </Grid>
                     </Grid>
-                  )}
+                  </Box>
+                )}
 
-                  {/* ************************************************************************* */}
-                  {tabIndex === 2 && <ProductQuantitiesSreen />}
-                  {tabIndex === 3 && <ProductShippingScreen />}
-                  {tabIndex === 4 && <ProdPricingScreen />}
-                  {tabIndex === 5 && <SeoScreen />}
-                  {tabIndex === 6 && <OptionsScreen />}
-                </Box>
-              ) : (
-                <Box sx={{ padding: 2 }}>
-                  {tabIndex === 0 && (
-                    <Box
-                      component="form"
-                      onSubmit={handleSubmit(submitHandler)}
-                    >
-                      <Grid container spacing={2}>
-                        <Grid item xs={8}>
+                {tabIndex === 1 && (
+                  <Grid container>
+                    <Grid item xs>
+                      <Box
+                        component="form"
+                        onSubmit={handleSubmit1(CreateCombination)}
+                      >
+                        <Autocomplete
+                          size="small"
+                          multiple={true}
+                          id="free-solo-demo"
+                          options={attributeValuedetails}
+                          value={defaultOption}
+                          autoSelect={true}
+                          getOptionLabel={(option) =>
+                            `${option.attributename} : ${option.value} `
+                          }
+                          onChange={(event, value) =>
+                            combinationhandleChange(event, value)
+                          }
+                          filterOptions={filterOptions}
+                          renderInput={(params) => (
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              size="small"
+                              {...params}
+                              label="Combination"
+                              margin="normal"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                        <Button
+                          variant="contained"
+                          sx={{
+                            mt: 3,
+                            mr: 20,
+                            backgroundColor: "#00A787",
+                            "&:hover": { backgroundColor: "#00A787" },
+                          }}
+                          type="submit"
+                        >
+                          Generate
+                        </Button>
+                      </Box>
+
+                      <Box style={{ height: 560, width: "100%" }}>
+                        <DataGrid
+                          sx={{
+                            boxShadow: 10,
+                            borderRadius: 0,
+                            m: 2,
+                          }}
+                          columns={combinationcolumns}
+                          rows={assemList ? assemList : ""}
+                          getRowId={(rows) => rows.id}
+                          VerticalAlignment="Center"
+                          rowHeight={64}
+                          pageSize={10}
+                          rowsPerPageOptions={[10]}
+                          // checkboxSelection
+                        />
+                        <Button
+                          variant="contained"
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            backgroundColor: "#00A787",
+                            "&:hover": { backgroundColor: "#00A787" },
+                          }}
+                          onClick={(event) => HandlecombSave(event)}
+                          type="Click"
+                        >
+                          {assemList ? "Update" : "Save"}
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                )}
+                {/* {tabIndex === 2 && "Quantity add"} */}
+
+                {tabIndex === 2 && <ProductQuantitiesSreen />}
+                {tabIndex === 3 && <ProductShippingScreen />}
+                {tabIndex === 4 && (
+                  <ProdPricingScreen products={prodctObj}></ProdPricingScreen>
+                )}
+                {tabIndex === 5 && <SeoScreen />}
+                {tabIndex === 6 && (
+                  <Box>
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <Typography
+                          sx={{ fontSize: "20px", fontWeight: "bold" }}
+                        >
+                          Visibility
+                        </Typography>
+
+                        <Typography sx={{ mt: "20px" }}>
+                          Where do you want your product to appear?
+                        </Typography>
+
+                        <Typography sx={{ width: "40%", mt: "20px" }}>
+                          <TextField
+                            InputProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            size="small"
+                            // select
+                            fullWidth
+                            id="margin-normal"
+                            margin="normal"
+                          >
+                            <MenuItem>Everywhere</MenuItem>
+                          </TextField>
+                        </Typography>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "100%",
+                          }}
+                        >
+                          <Typography sx={{ mt: "20px", width: "100%" }}>
+                            <Checkbox
+                              style={{ color: "#00A787" }}
+                              value="newcheck"
+                              {...register("newcheck", { required: true })}
+                              error={errors.newcheck}
+                            />{" "}
+                            Available for order
+                          </Typography>
+
+                          <Typography
+                            sx={{
+                              mt: "20px",
+                              wordWrap: "break-word",
+                              width: "100%",
+                              fontSize: "15px",
+                            }}
+                          >
+                            <Checkbox
+                              style={{ color: "#00A787" }}
+                              value="newcheck"
+                              {...register("newcheck", { required: true })}
+                              error={errors.newcheck}
+                            />{" "}
+                            Web only (not sold in your retail store)
+                          </Typography>
+                        </Box>
+
+                        <Typography sx={{ mt: "30px" }}>
+                          <Typography>Tags</Typography>
+                          <TextField
+                            InputProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            size="small"
+                            sx={{ width: "70%" }}
+                            // select
+                            fullWidth
+                            id="margin-normal"
+                            margin="normal"
+                          ></TextField>
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            mt: "20px",
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Condition & References
+                        </Typography>
+
+                        <Typography sx={{ mt: "10px" }}>
+                          Condition
+                          <Tooltip title={condition}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "100%",
+                          }}
+                        >
+                          <Typography sx={{ mt: "10px", width: "100%" }}>
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              size="small"
+                              fullWidth
+                              id="margin-normal"
+                              margin="normal"
+                            ></TextField>
+                          </Typography>
+
+                          <Typography
+                            sx={{
+                              mt: "20px",
+                              wordWrap: "break-word",
+                              width: "100%",
+                              fontSize: "15px",
+                            }}
+                          >
+                            <Checkbox
+                              style={{ color: "#00A787" }}
+                              value="newcheck"
+                              {...register("newcheck", { required: true })}
+                              error={errors.newcheck}
+                            />{" "}
+                            Display condition on product page
+                          </Typography>
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "80%",
+                            mt: "30px",
+                          }}
+                        >
+                          <Typography>ISBN</Typography>
+
+                          <Typography>EAN-13 or JAN barcode</Typography>
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "80%",
+                          }}
+                        >
+                          <Typography>
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              fullWidth
+                              id="margin-normal"
+                              margin="normal"
+                            ></TextField>
+                          </Typography>
+
+                          <Typography>
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              size="small"
+                              fullWidth
+                              id="margin-normal"
+                              margin="normal"
+                            ></TextField>
+                          </Typography>
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "80%",
+                            mt: "30px",
+                          }}
+                        >
+                          <Typography>UPC barcode</Typography>
+
+                          <Typography>MPN</Typography>
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "80%",
+                          }}
+                        >
+                          <Typography>
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              size="small"
+                              fullWidth
+                              id="margin-normal"
+                              margin="normal"
+                            ></TextField>
+                          </Typography>
+
+                          <Typography>
+                            <TextField
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              size="small"
+                              fullWidth
+                              id="margin-normal"
+                              margin="normal"
+                            ></TextField>
+                          </Typography>
+                        </Box>
+
+                        <Typography>
+                          <Button
+                            type="submit"
+                            sx={{
+                              mt: "20px",
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
+                            }}
+                            variant="contained"
+                          >
+                            Save
+                          </Button>
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )}
+              </Box>
+            ) : (
+              <Box sx={{ padding: 2 }}>
+                {tabIndex === 0 && (
+                  <Box component="form" onSubmit={handleSubmit(updateHandler)}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={8}>
+                        <Box>
                           <Box>
-                            <Box sx={{ width: "100%" }}>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  mt: -1,
-                                }}
-                              >
-                                Enter Your Product Name
-                              </Typography>
-
-                              <TextField
-                                size="small"
-                                sx={{
-                                  width: "75%",
-                                  mt: 1,
-                                  height: "0.5rem",
-                                }}
-                                id="margin-normal"
-                                margin="normal"
-                                {...register("prodname", { required: true })}
-                                error={errors.prodname}
-                                // onChange={handleChange.bind(this)}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                              />
-                            </Box>
-                            <Box
+                            <Typography
                               sx={{
-                                border: "2px solid gray",
-                                width: "75%",
-                                // height: "250px",
-                                mt: "50px",
-                                overflow: "scroll",
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                mt: -1,
                               }}
                             >
-                              <Grid container spacing={2}>
-                                <Grid item xs>
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      width: "100%",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      margin: "0px 10%",
-                                      borderRadius: "5px",
-                                    }}
-                                  >
-                                    <Typography
-                                      variant="h6"
-                                      sx={{ fontSize: 12 }}
-                                    >
-                                      {" "}
-                                      Add Images up to 10
-                                    </Typography>
-                                    <TextField
-                                      size="small"
-                                      sx={{
-                                        margin: "0px 0px",
-                                        border: "none",
-                                      }}
-                                      inputProps={{
-                                        style: { fontSize: 12 },
-                                        multiple: true,
-                                        accept: "image/*",
-                                      }}
-                                      fullWidth
-                                      type="file"
-                                      name="uploadedImages"
-                                      multiple
-                                      onChange={onSelectFile}
-                                    />
-                                    <br />
-                                  </Box>
-                                </Grid>
-                                <Grid item xs>
-                                  {ImageDelete === "Delete" ? (
-                                    <></>
-                                  ) : (
-                                    <>
-                                      {ImageSelectblob === ImageSelectblob && (
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            width: "100%",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            margin: "0px 10%",
-                                            borderRadius: "5px",
-                                          }}
-                                        >
-                                          <Box sx={{ display: "flex" }}>
-                                            <IconButton
-                                              onClick={() =>
-                                                deleteHandlerpage(ImageSelect)
-                                              }
-                                            >
-                                              <ClearIcon
-                                                sx={{
-                                                  backgroundColor: "#999999",
-                                                  color: "#fff",
-                                                }}
-                                              />
-                                            </IconButton>
-                                            <FormControlLabel
-                                              sx={{ fontSize: 12 }}
-                                              label={
-                                                <Typography
-                                                  sx={{ fontSize: 12, mr: 3 }}
-                                                >
-                                                  Select Image
-                                                </Typography>
-                                              }
-                                              control={
-                                                <Checkbox
-                                                  style={{ color: "#00A787" }}
-                                                  size="small"
-                                                  checked={checked}
-                                                  onChange={handleChangeChekce}
-                                                  inputProps={{
-                                                    "aria-label": "controlled",
-                                                  }}
-                                                />
-                                              }
-                                            />
-                                          </Box>
+                              Enter Your Product Name
+                            </Typography>
 
-                                          <Button
-                                            sx={{
-                                              // mr: 3,
-                                              // mt: 5,
-                                              borderRadius: "50px",
-                                              backgroundColor: "#00A787",
-                                              "&:hover": {
-                                                backgroundColor: "#00A787",
-                                              },
-                                              fontSize: 10,
-                                            }}
-                                            variant="contained"
-                                            size="small"
-                                            onClick={handleChangeSaveImage}
-                                          >
-                                            Select cover Image
-                                          </Button>
-                                        </Box>
-                                      )}
-                                    </>
-                                  )}
-                                </Grid>
-                              </Grid>
-                              <List>
-                                {/* <input type="file" multiple /> */}
-                                {selectedImages?.length > 0 &&
-                                  selectedImages?.length > 10 && (
-                                    <p className="error">
-                                      You upload more than 10 images! <br />
-                                      <span>
-                                        please delete{" "}
-                                        <b> {selectedImages?.length - 10} </b>{" "}
-                                        of them{" "}
-                                      </span>
-                                    </p>
-                                  )}
+                            <TextField
+                              size="small"
+                              sx={{
+                                width: "75%",
+                                mt: 1,
+                                height: "0.5rem",
+                                fontSize: 12,
+                              }}
+                              id="margin-normal"
+                              margin="normal"
+                              value={newProdname}
+                              onChange={(e) => setNewProdname(e.target.value)}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                            />
+                          </Box>
+
+                          <Box
+                            sx={{
+                              border: "2px solid gray",
+                              width: "75%",
+                              // height: "250px",
+                              mt: "50px",
+                              overflow: "scroll",
+                            }}
+                          >
+                            <Grid container spacing={2}>
+                              <Grid item xs>
                                 <Box
                                   sx={{
-                                    width: "auto",
-                                    listStyle: "none",
                                     display: "flex",
-                                    flexFlow: "wrap row",
-                                    flexDirection: "row",
+                                    width: "100%",
+                                    flexDirection: "column",
                                     alignItems: "center",
-                                    m: 2,
+                                    margin: "0px 10%",
+                                    borderRadius: "5px",
                                   }}
                                 >
-                                  <ListItem>
-                                    {selectedImages?.map((image, index) => {
-                                      return (
-                                        <Box
-                                          key={image}
-                                          className="image"
-                                          width="75%"
-                                        >
-                                          <CardMedia
-                                            sx={{
-                                              padding: 0,
-                                              margin: 1,
-                                              border:
-                                                image === ImageSelectblob
-                                                  ? "2px solid #66CCFF"
-                                                  : "2px solid #999999",
-                                              height: 80,
-                                              width: 80,
-                                            }}
-                                            className="media"
-                                            component="img"
-                                            height="50"
-                                            image={image}
-                                            alt={name}
-                                            id={index}
-                                            onClick={(e) =>
-                                              ImagHandleSelect(e, index)
+                                  <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: 12, ml: -10 }}
+                                  >
+                                    Add Images up to 10
+                                  </Typography>
+                                  <TextField
+                                    size="small"
+                                    sx={{
+                                      margin: "0px 0px",
+                                      border: "none",
+                                    }}
+                                    inputProps={{
+                                      style: { fontSize: 12 },
+                                      multiple: true,
+                                      accept: "image/*",
+                                    }}
+                                    fullWidth
+                                    type="file"
+                                    name="uploadedImages"
+                                    multiple
+                                    onChange={onSelectFile}
+                                  />
+                                  <br />
+                                </Box>
+                              </Grid>
+                              <Grid item xs>
+                                {ImageDelete === "Delete" ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {ImageSelectblob === ImageSelectblob && (
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          width: "100%",
+                                          flexDirection: "column",
+                                          alignItems: "center",
+                                          margin: "0px 10%",
+                                          borderRadius: "5px",
+                                        }}
+                                      >
+                                        <Box sx={{ display: "flex" }}>
+                                          <IconButton
+                                            onClick={() =>
+                                              deleteHandlerpage(ImageSelect)
+                                            }
+                                          >
+                                            <ClearIcon
+                                              sx={{
+                                                backgroundColor: "#999999",
+                                                color: "#fff",
+                                              }}
+                                            />
+                                          </IconButton>
+                                          <FormControlLabel
+                                            label={
+                                              <Typography
+                                                sx={{ fontSize: 12, mr: 3 }}
+                                              >
+                                                Select Image
+                                              </Typography>
+                                            }
+                                            control={
+                                              <Checkbox
+                                                style={{ color: "#00A787" }}
+                                                checked={Checkededit}
+                                                onChange={handleCheckedit}
+                                                inputProps={{
+                                                  "aria-label": "controlled",
+                                                }}
+                                              />
                                             }
                                           />
-                                          {image === CoverImages ? (
-                                            <CardContent
+                                        </Box>
+
+                                        <Button
+                                          sx={{
+                                            // mr: 3,
+                                            // mt: 5,
+                                            borderRadius: "50px",
+                                            backgroundColor: "#00A787",
+                                            "&:hover": {
+                                              backgroundColor: "#00A787",
+                                            },
+                                            fontSize: 10,
+                                          }}
+                                          variant="contained"
+                                          size="small"
+                                          onClick={handleChangeEditImage}
+                                        >
+                                          Select cover Image
+                                        </Button>
+                                      </Box>
+                                    )}
+                                  </>
+                                )}
+                              </Grid>
+                            </Grid>
+                            <List>
+                              {/* <input type="file" multiple /> */}
+                              {selectedImages?.length > 0 &&
+                                selectedImages?.length > 10 && (
+                                  <p className="error">
+                                    You upload more than 10 images! <br />
+                                    <span>
+                                      please delete{" "}
+                                      <b> {selectedImages?.length - 10} </b> of
+                                      them{" "}
+                                    </span>
+                                  </p>
+                                )}
+                              <Box
+                                sx={{
+                                  width: "auto",
+                                  listStyle: "none",
+                                  display: "flex",
+                                  flexFlow: "wrap row",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  m: 2,
+                                }}
+                              >
+                                <ListItem>
+                                  <>
+                                    <Box className="image" width="75%">
+                                      {images && !testImage ? (
+                                        <CardContent
+                                          sx={{
+                                            mt: -4,
+                                            width: "100%",
+                                            ml: 1,
+                                          }}
+                                        >
+                                          <Typography
+                                            variant="body2"
+                                            color="#fff"
+                                            sx={{
+                                              fontSize: 10,
+                                              height: 10,
+                                              width: 70,
+                                              padding: 0,
+                                              Zindex: -1,
+                                              mt: -1,
+                                              ml: -2,
+                                              color: "black",
+                                              fontWeight: "bold",
+                                            }}
+                                          >
+                                            Cover Image
+                                          </Typography>
+                                        </CardContent>
+                                      ) : (
+                                        <></>
+                                      )}
+                                      <CardMedia
+                                        component="img"
+                                        height="85"
+                                        sx={{
+                                          padding: 0,
+                                          margin: 1,
+                                          border: images
+                                            ? "2px solid #66CCFF"
+                                            : "2px solid #999999",
+                                          height: 80,
+                                          width: 80,
+                                        }}
+                                        image={`/api/uploads/cover/${images}`}
+                                        onClick={(e) => ImagHandleImage(images)}
+                                      />
+
+                                      <Button
+                                        sx={{ color: "#00A787" }}
+                                        onClick={() => deleteHandler(testImage)}
+                                      >
+                                        Remove 
+                                      </Button>
+                                    </Box>
+                                  </>
+
+                                  {subimg?.map((subimgnew, index) => {
+                                    return (
+                                      <Box
+                                        key={subimgnew}
+                                        className="image"
+                                        width="75%"
+                                      >
+                                        {" "}
+                                        {testImage === subimgnew.filename ? (
+                                          <CardContent
+                                            sx={{
+                                              mt: -4,
+                                              width: "100%",
+                                              ml: 1,
+                                            }}
+                                          >
+                                            <Typography
+                                              variant="body2"
+                                              color="#fff"
                                               sx={{
-                                                // margin: 1,
+                                                fontSize: 10,
+                                                height: 10,
+                                                width: 70,
+                                                padding: 0,
+                                                Zindex: -1,
                                                 mt: -1,
-                                                // backgroundColor: "#999999",
-                                                padding: 2.5,
-                                                width: "25%",
-                                                ml: 1,
+                                                ml: -2,
+                                                color: "black",
+                                                fontWeight: "bold",
                                               }}
                                             >
-                                              <Typography
-                                                variant="body2"
-                                                color="#fff"
-                                                sx={{
-                                                  fontSize: 10,
-                                                  height: 10,
-                                                  width: 30,
-                                                  padding: 0,
-                                                  Zindex: -1,
-                                                  mt: -2,
-                                                  color: "black",
-                                                  fontWeight: "bold",
-                                                }}
-                                              >
-                                                Cover Image
-                                              </Typography>
-                                            </CardContent>
-                                          ) : (
-                                            <></>
-                                          )}
-                                          <Button
-                                            onClick={() => deleteHandler(image)}
+                                              Cover Image
+                                            </Typography>
+                                          </CardContent>
+                                        ) : (
+                                          <></>
+                                        )}
+                                        <CardMedia
+                                          sx={{
+                                            padding: 0,
+                                            margin: 1,
+                                            border:
+                                              testImage === subimgnew.filename
+                                                ? "2px solid #66CCFF"
+                                                : "2px solid #999999",
+                                            height: 80,
+                                            width: 80,
+                                          }}
+                                          className="media"
+                                          component="img"
+                                          height="50"
+                                          image={`/api/uploads/prodctnew/${subimgnew.filename}`}
+                                          alt={name}
+                                          id={index}
+                                          onClick={(e) =>
+                                            ImagHandleSelecttest(
+                                              subimgnew.filename,
+                                              index
+                                            )
+                                          }
+                                        />
+                                        <Button
+                                          sx={{ color: "#00A787" }}
+                                          onClick={() =>
+                                            deleteHandlertest(index)
+                                          }
+                                        >
+                                          Remove
+                                          {/* <ClearIcon 
+                                       sx={{ backgroundColor: "red" }}
+                                     /> */}
+                                        </Button>
+                                      </Box>
+                                    );
+                                  })}
+                                </ListItem>
+                              </Box>
+                              </List>
+                              <List>
+                              {/* <input type="file" multiple /> */}
+                              {selectedImages?.length > 0 &&
+                                selectedImages?.length > 10 && (
+                                  <p className="error">
+                                    You upload more than 10 images! <br />
+                                    <span>
+                                      please delete{" "}
+                                      <b> {selectedImages?.length - 10} </b> of
+                                      them{" "}
+                                    </span>
+                                  </p>
+                                )}
+                              <Box
+                                sx={{
+                                  width: "auto",
+                                  listStyle: "none",
+                                  display: "flex",
+                                  flexFlow: "wrap row",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  m: 2,
+                                }}
+                              >
+                                <ListItem>
+                                  {selectedImages?.map((image, index) => {
+                                    return (
+                                      <Box
+                                        key={image}
+                                        className="image"
+                                        width="75%"
+                                      >
+                                        {image === CoverImages ? (
+                                          <CardContent
+                                            sx={{
+                                              mt: -4,
+                                              width: "100%",
+                                              ml: 1,
+                                            }}
                                           >
-                                            Remove
-                                            {/* <ClearIcon
+                                            <Typography
+                                              variant="body2"
+                                              color="#fff"
+                                              sx={{
+                                                fontSize: 10,
+                                                height: 10,
+                                                width: 65,
+                                                padding: 0,
+                                                Zindex: -1,
+                                                mt: -1,
+                                                ml: -2,
+                                                color: "black",
+                                                fontWeight: "bold",
+                                              }}
+                                            >
+                                              Cover Image
+                                            </Typography>
+                                          </CardContent>
+                                        ) : (
+                                          <></>
+                                        )}
+                                        <CardMedia
+                                          sx={{
+                                            padding: 0,
+                                            margin: 1,
+                                            border:
+                                              image === ImageSelectblob
+                                                ? "2px solid #66CCFF"
+                                                : "2px solid #999999",
+                                            height: 100,
+                                            width: 100,
+                                          }}
+                                          className="media"
+                                          component="img"
+                                          height="50"
+                                          image={image}
+                                          alt={name}
+                                          id={index}
+                                          onClick={(e) =>
+                                            ImagHandleSelect(e, index)
+                                          }
+                                        />
+
+                                        <Button
+                                          sx={{ color: "#00A787" }}
+                                          onClick={() => deleteHandler(image)}
+                                        >
+                                          Remove
+                                          {/* <ClearIcon
                                         sx={{ backgroundColor: "red" }}
                                       /> */}
-                                          </Button>
-                                        </Box>
-                                      );
-                                    })}
-                                  </ListItem>
-                                </Box>
-                              </List>
-                            </Box>
+                                        </Button>
+                                      </Box>
+                                    );
+                                  })}
+                                </ListItem>
+                              </Box>
+                            </List>
+                          </Box>
+                          {/* <Box
+                           sx={{
+                             padding: 0,
+                             margin: 0,
+                             width: "auto",
+                             listStyle: "none",
+                             display: "flex",
+                             flexFlow: "wrap row",
+                             flexDirection: "row",
+                             alignItems: "center",
+                             border: "2px solid gray",
+                           }}
+                         >
+                           <TextField
+                                 sx={{ margin: "10px 0px", border: "none" }}
+                                 inputProps={{
+                                   style: { fontSize: 14 },
+                                   multiple: true,
+                                   accept: "image/*",
+                                 }}
+                                 fullWidth
+                                 type="file"
+                                 name="uploadedImages"
+                                 multiple
+                                 // onChange={onSelectFile}
+                               />
+                           <CardMedia
+                             component="img"
+                             height="125"
+                             sx={{
+                               border: "1px solid black",
+                               width: "25%",
+                               m: 4,
+                             }}
+                             image={images}
+                           />
+                           {subimg?.map((subimgnew, index) => (
+                             <Box key={index}>
+                               <CardMedia
+                                 component="img"
+                                 height="125"
+                                 width="125"
+                                 sx={{
+                                   border: "1px solid black",
+                                   width: "45%",
+                                   m: 4,
+                                 }}
+                                 image={`/api/uploads/prodctnew/${subimgnew.filename}`}
+                               />
+                             </Box>
+                           ))}
+                         </Box> */}
+                          <Typography
+                            sx={{
+                              mt: "5px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Summary
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "5px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              data={newsummary}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setNewsummary({ data });
                               }}
-                            >
-                              Summary
-                            </Typography>
+                            />
+                          </Box>
 
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setSummary({ data });
-                                }}
-                              />
-                            </Box>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Description
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              data={newdescription}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setNewdescription({ data });
                               }}
-                            >
-                              Description
-                            </Typography>
+                            />
+                          </Box>
 
-                            <Box sx={{ mt: "10px", width: "75%" }}>
-                              <CKEditor
-                                editor={ClassicEditor}
-                                onChange={(event, editor) => {
-                                  const data = editor.getData();
-                                  setDescription({ data });
-                                }}
-                              />
-                            </Box>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Features
+                          </Typography>
 
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Features
-                            </Typography>
-
+                          <>
                             <Typography>
                               <Button
                                 sx={{
@@ -6478,24 +3835,20 @@ Not all shops sell new products.
                                   fontSize: "12px",
                                 }}
                                 variant="contained"
-                                small
-                                onClick={handleappend}
+                                startIcon={<AddCircleIcon />}
+                                onClick={addField}
                               >
                                 Add a feature
                               </Button>
                             </Typography>
+                            {/* *********************UPDATE SCREEN****************** */}
                             <>
-                              {/* ***********SAVE SCREEN************** */}
-                              {fields ? (
+                              {field ? (
                                 <>
-                                  {fields?.map(({ id }, index) => {
-                                    // { console.log("id=====>", id) }
-                                    // { console.log("index=====>", index) }
+                                  {field?.map(({ id }, index) => {
+                                    // { console.log("field======>", field) }
                                     return (
-                                      <Box
-                                        key={id}
-                                        sx={{ p: 2, m: 2, width: "75%" }}
-                                      >
+                                      <Box key={id} sx={{ p: 2, m: 2 }}>
                                         <Box
                                           sx={{
                                             display: "flex",
@@ -6518,56 +3871,60 @@ Not all shops sell new products.
                                             display: "flex",
                                             mt: "20px",
                                             justifyContent: "space-between",
-                                            fontSize: 12,
                                           }}
                                         >
                                           <FormControl sx={{ width: "30%" }}>
                                             <Select
                                               native
                                               size="small"
-                                              // Featuresvaluedetails
                                               name={index}
-                                              id={index}
-                                              // defaultValue={featurestype}
-                                              ref={register()}
+                                              key={id}
+                                              // value={id}
+                                              value={
+                                                newfeature[index]?.id
+                                                  ? newfeature[index]?.id
+                                                  : id
+                                              }
+                                              // ref={register()}
                                               onChange={(e) =>
-                                                HandleChange(e, index)
+                                                HandleChangeedit(e, index)
                                               }
                                             >
-                                              <option value="">
-                                                Select your Future
-                                              </option>
-                                              {Featuresdetails?.map(
-                                                (Feature) => (
-                                                  <option
-                                                    key={Feature._id}
-                                                    value={Feature._id}
-                                                  >
-                                                    {Feature.featurename}
-                                                  </option>
-                                                )
-                                              )}
+                                              {Featuresdetails?.map((item) => (
+                                                // console.log("item,", item)
+                                                <option
+                                                  key={item._id}
+                                                  value={item._id}
+                                                >
+                                                  {item?.featurename}
+                                                </option>
+                                              ))}
                                             </Select>
                                           </FormControl>
+
                                           <FormControl sx={{ width: "30%" }}>
                                             <Select
                                               size="small"
                                               native
-                                              // defaultValue={featurestypevalue}
                                               name={index}
-                                              id={index}
-                                              ref={register()}
-                                              onChange={(e) =>
-                                                handleFeatureValue(e, index)
+                                              key={id}
+                                              // value={id}
+                                              value={
+                                                newfeaturestypevalue[index]?.id
+                                                  ? newfeaturestypevalue[index]
+                                                      ?.id
+                                                  : id
                                               }
-                                              // onClick={() => removeName(index)}
+                                              // ref={register()}
+                                              onChange={(e) =>
+                                                handleFeatureValueedit(e, index)
+                                              }
                                             >
                                               {Featuresvaluedetails?.filter(
                                                 (Feature) => {
                                                   return (
-                                                    // Feature.featuretype=== featurestype[newadd]?.id && index===featurestype[newadd]?.index
                                                     Feature.featuretype ===
-                                                    featurestype[index]?.id
+                                                    newfeature[index]?.id
                                                   );
                                                 }
                                               )?.map((Feature) => (
@@ -6580,8 +3937,10 @@ Not all shops sell new products.
                                               ))}
                                             </Select>
                                           </FormControl>
-
                                           <TextField
+                                            InputProps={{
+                                              style: { fontSize: 13 },
+                                            }}
                                             name={`items[${index}].name`}
                                             ref={register()}
                                             id="outlined-size-small"
@@ -6589,7 +3948,7 @@ Not all shops sell new products.
                                           />
                                           <IconButton
                                             type="button"
-                                            onClick={() => remove(index)}
+                                            onClick={() => removeField(index)}
                                           >
                                             <ClearIcon sx={{ color: "red" }} />
                                           </IconButton>
@@ -6599,10 +3958,731 @@ Not all shops sell new products.
                                   })}
                                 </>
                               ) : (
-                                <></>
+                                <> </>
                               )}
                             </>
+                          </>
 
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                backgroundColor: "#00A787",
+                                "&:hover": { backgroundColor: "#00A787" },
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="outlined"
+                              startIcon={<AddCircleIcon />}
+                              // onClick={() => addFieldvalue(1)}
+                              onClick={() => setBrand(1)}
+                            >
+                              Add a brand
+                            </Button>
+                          </Typography>
+                          <>
+                            {prodctObj?.brand ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        size="small"
+                                        value={newbrandId}
+                                        onChange={(e) =>
+                                          setNewbrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {brand === 1 ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        size="small"
+                                        value={newbrandId}
+                                        onChange={(e) =>
+                                          setNewbrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Related Product
+                          </Typography>
+
+                          <>
+                            {relatProd === 1 ? (
+                              <Typography sx={{ m: 2 }}>
+                                <TextField
+                                  size="small"
+                                  sx={{ width: "60%" }}
+                                  id="standard-bare"
+                                  variant="outlined"
+                                  {...register("search", { required: true })}
+                                  error={errors.search}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <IconButton>
+                                        <SearchOutlined />
+                                      </IconButton>
+                                    ),
+                                  }}
+                                />
+                              </Typography>
+                            ) : (
+                              <>
+                                <Typography>
+                                  <Button
+                                    sx={{
+                                      mr: 3,
+                                      mt: 1,
+                                      borderRadius: "70px",
+                                      backgroundColor: "#00A787",
+                                      "&:hover": {
+                                        backgroundColor: "#00A787",
+                                      },
+                                      color: "#fff",
+                                      fontSize: "12px",
+                                    }}
+                                    variant="contained"
+                                    startIcon={<AddCircleIcon />}
+                                    onClick={() => setRelatProduct(1)}
+                                  >
+                                    Add a related product
+                                  </Button>
+                                </Typography>
+                              </>
+                            )}
+                          </>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          sx={{
+                            mt: "-10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Combinations
+                          <Tooltip title={Combinations}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Box>
+                          {" "}
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="radio-buttons-group"
+                              onChange={handleNewcombination}
+                              value={newcombination}
+                            >
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  ml: "-7.5rem",
+                                  width: "200%",
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    width: "300%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value="Simple Product"
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Simple Product
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    // mr: "110px",
+                                    width: "600%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value={true}
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    type="radio"
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Product with combinations
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                              </Box>
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            Reference
+                            <Tooltip title={reference}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ml: "10rem",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+
+                              mt: "10px",
+                            }}
+                          >
+                            Quantity
+                            <Tooltip>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex" }}>
+                          {" "}
+                          <Grid item xs={8}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  width="50%"
+                                  sx={{
+                                    mt: "18px",
+                                    fontSize: "14px",
+                                    fontWeight: "bold",
+                                    ml: -15,
+                                  }}
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={newreference}
+                                  onChange={(e) =>
+                                    setNewreference(e.target.value)
+                                  }
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>{" "}
+                          <Grid item xs={12}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  width="50%"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={newQuantity}
+                                  onChange={(e) =>
+                                    setNewQuantity(e.target.value)
+                                  }
+                                  inputProps={{ readOnly: true }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Price
+                          <Tooltip title={price}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Grid item xs={12}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              mt: "10px",
+                              ml: -15,
+                            }}
+                          >
+                            <TextField
+                              size="small"
+                              label="Tax excluded"
+                              id="outlined-start-adornment"
+                              value={EditProdexclusive}
+                              onChange={handleEditProdexclusive}
+                              sx={{ m: 1 }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                            <FormControl
+                              sx={{ width: "100%", mt: 0.7 }}
+                              size="small"
+                            >
+                              <InputLabel id="demo-simple-select-label">
+                                Tax Rule
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-label"
+                                size="small"
+                                label="Tax Rule"
+                                value={EditTaxprice}
+                                onChange={Edittaxesrule}
+                                inputProps={{ readOnly: true }}
+                              >
+                                {taxes?.map((item, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    value={item._id}
+                                    onClick={() => setEditpercentage(item._id)}
+                                  >
+                                    {item.Name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <TextField
+                              size="small"
+                              label="Tax included"
+                              value={EditProdinclusive}
+                              onChange={(e) =>
+                                setEditProdinclusive(e.target.value)
+                              }
+                              id="outlined-start-adornment"
+                              sx={{ m: 1 }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                                fontSize: 12,
+                              }}
+                            />{" "}
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            categories
+                            <Tooltip title={categories}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+
+                          <TreeView
+                            aria-label="rich object"
+                            defaultCollapseIcon={<ExpandMoreIcon />}
+                            defaultExpanded={["root"]}
+                            defaultExpandIcon={<ChevronRightIcon />}
+                            onNodeSelect={handleSelectedItemsupdate}
+                            sx={{
+                              border: "1px solid black",
+                              p: 1,
+
+                              ".MuiTreeItem-root": {
+                                ".Mui-focused:not(.Mui-selected)":
+                                  classes.focused,
+                                ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                  classes.selected,
+                              },
+                            }}
+                          >
+                            {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                            {/* Update Method */}
+                            {categorymasterallList?.map((item) => (
+                              <>
+                                <TreeItem
+                                  key={item._id}
+                                  nodeId={item._id}
+                                  label={
+                                    newParentCategory === item._id ? (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            size="small"
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            name="file"
+                                            defaultChecked={true}
+                                            // checked={checkedtreeupdate}
+                                            // checked={true}
+                                            // onChange={handleChangecheckbox}
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    ) : (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            size="small"
+                                            name="file"
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    )
+                                  }
+                                >
+                                  {item.children
+                                    ?.filter((childItem) => {
+                                      return childItem.parent === item._id;
+                                    })
+                                    ?.map((childItem) => (
+                                      <>
+                                        <TreeItem
+                                          key={item._id}
+                                          nodeId={
+                                            `${item._id}` +
+                                            "-" +
+                                            `${childItem._id}`
+                                          }
+                                          label={
+                                            newchildCategory ===
+                                            childItem._id ? (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    name="file"
+                                                    defaultChecked={true}
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            ) : (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    size="small"
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    name="file"
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            )
+                                          }
+                                        >
+                                          {childItem.children
+                                            ?.filter((grandItem) => {
+                                              return (
+                                                grandItem.parent ===
+                                                childItem._id
+                                              );
+                                            })
+                                            ?.map((grandItem) => (
+                                              <>
+                                                <TreeItem
+                                                  key={item._id}
+                                                  nodeId={
+                                                    `${item._id}` +
+                                                    "-" +
+                                                    `${childItem._id}` +
+                                                    "-" +
+                                                    `${grandItem._id}`
+                                                  }
+                                                  label={
+                                                    grandchildCategory ===
+                                                    grandItem._id ? (
+                                                      <FormControlLabel
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            name="file"
+                                                            size="small"
+                                                            defaultChecked={
+                                                              true
+                                                            }
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    ) : (
+                                                      <FormControlLabel
+                                                        control={
+                                                          <Checkbox
+                                                            size="small "
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            name="file"
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    )
+                                                  }
+                                                ></TreeItem>
+                                              </>
+                                            ))}
+                                        </TreeItem>
+                                      </>
+                                    ))}
+                                </TreeItem>
+                              </>
+                            ))}
+                          </TreeView>
+                        </Grid>
+                        <Typography sx={{ mt: 2 }}>
+                          <TextField
+                            sx={{ fontSize: 12, ml: "-7.5rem" }}
+                            size="small"
+                            width="75%"
+                            id="standard-bare"
+                            variant="outlined"
+                            defaultValue="Search Categories"
+                            InputProps={{
+                              endAdornment: (
+                                <IconButton>
+                                  <SearchOutlined />
+                                </IconButton>
+                              ),
+                            }}
+                          />
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Create a new category
+                          <Tooltip title={newcategories}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        {category === 1 ? (
+                          <>
+                            <Box sx={{ m: 2, p: 1 }}>
+                              <Typography>New Category name</Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                  id="outlined-size-small"
+                                  defaultValue="Category name"
+                                  size="small"
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                Parent of the category
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                  id="outlined-size-small"
+                                  defaultValue="Home"
+                                  size="small"
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <Button variant="contained">Cancel</Button>
+                                <Button variant="contained" sx={{ ml: "50px" }}>
+                                  Create
+                                </Button>
+                              </Typography>
+                            </Box>
+                          </>
+                        ) : (
+                          <>
                             <Typography>
                               <Button
                                 sx={{
@@ -6613,606 +4693,864 @@ Not all shops sell new products.
                                   "&:hover": { backgroundColor: "#00A787" },
                                   color: "#fff",
                                   fontSize: "12px",
+                                  ml: -15,
                                 }}
-                                variant="contained"
-                                onClick={() => setBrand(1)}
+                                variant="outlined"
+                                startIcon={<AddCircleIcon />}
+                                onClick={() => setCategory(1)}
                               >
-                                Add a brand
+                                Create a Category
                               </Button>
                             </Typography>
 
-                            <>
-                              {brand === 1 ? (
-                                <>
-                                  <Box sx={{ p: 1, m: 1 }}>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "10px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontSize: "20px",
-                                          fontWeight: "700",
-                                        }}
-                                      >
-                                        Brand
-                                      </Typography>
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        mt: "20px",
-                                        justifyContent: "space-between",
-                                      }}
-                                    >
-                                      <FormControl sx={{ width: "40%" }}>
-                                        <Select
-                                          value={brandId}
-                                          onChange={(e) =>
-                                            setBrandId(e.target.value)
-                                          }
-                                        >
-                                          {brandLists?.map((item, index) => (
-                                            <MenuItem
-                                              key={index}
-                                              value={item._id}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Select>
-                                      </FormControl>
-                                    </Box>
-                                  </Box>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </>
+                            <Typography>
+                              <Button
+                                type="submit"
+                                sx={{
+                                  mr: 1,
+                                  mt: 5,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  ml: "15rem",
+                                }}
+                                variant="contained"
+                              >
+                                Update
+                              </Button>
+                            </Typography>
+                          </>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )}
 
+                {tabIndex === 1 && <ProductQuantitiesSreen />}
+                {tabIndex === 2 && <ProductShippingScreen />}
+                {tabIndex === 3 && (
+                  <ProdPricingScreen products={prodctObj}></ProdPricingScreen>
+                )}
+                {tabIndex === 4 && <SeoScreen />}
+                {tabIndex === 5 && <OptionsScreen />}
+              </Box>
+            )}
+          </Box>
+        ) : (
+          <Box sx={{ mt: "5px" }}>
+            <Box>
+              {combination === "true" ? (
+                <Tabs
+                  value={tabIndex}
+                  onChange={handleTabChange}
+                  indicatorColor="#00A787"
+                >
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 0 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 0
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Basic Settings"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 1 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 1
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Combination"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 2 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 2
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Quantities"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 3 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 3
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Shipping"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 4 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 4
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Pricing"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 5 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 5
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="SEO"
+                  />
+                  <Tab
+                    style={{
+                      fontSize: "13px",
+                      color: tabIndex === 6 ? "#00A787" : "inherit",
+                      borderBottom:
+                        tabIndex === 6
+                          ? "2px solid #00A787"
+                          : "2px solid transparent",
+                    }}
+                    label="Options"
+                  />
+                </Tabs>
+              ) : (
+                <>
+                  {" "}
+                  <Tabs
+                    value={tabIndex}
+                    onChange={handleTabChange}
+                    indicatorColor="#00A787"
+                  >
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 0 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 0
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Basic Settings"
+                    />
+
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 1 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 1
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Quantities"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 2 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 2
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Shipping"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 3 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 3
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Pricing"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 4 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 4
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="SEO"
+                    />
+                    <Tab
+                      style={{
+                        fontSize: "13px",
+                        color: tabIndex === 5 ? "#00A787" : "inherit",
+                        borderBottom:
+                          tabIndex === 5
+                            ? "2px solid #00A787"
+                            : "2px solid transparent",
+                      }}
+                      label="Options"
+                    />
+                  </Tabs>
+                </>
+              )}
+            </Box>
+            {combination === "true" ? (
+              <Box sx={{ padding: 2 }}>
+                {tabIndex === 0 && (
+                  <Box component="form" onSubmit={handleSubmit(submitHandler)}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={8}>
+                        <Box>
+                          <Box sx={{ width: "100%" }}>
                             <Typography
                               sx={{
-                                mt: "10px",
                                 fontSize: "14px",
                                 fontWeight: "bold",
+                                mt: -1,
                               }}
                             >
-                              Related Product
+                              Enter Your Product Name
                             </Typography>
 
-                            <>
-                              {relatProd === 1 ? (
-                                <Typography sx={{ m: 2 }}>
-                                  <TextField
-                                    size="small"
-                                    sx={{ width: "60%" }}
-                                    id="standard-bare"
-                                    variant="outlined"
-                                    {...register("search", { required: true })}
-                                    error={errors.search}
-                                    InputProps={{
-                                      endAdornment: (
-                                        <IconButton>
-                                          <SearchOutlined />
-                                        </IconButton>
-                                      ),
-                                    }}
-                                  />
-                                </Typography>
-                              ) : (
-                                <>
-                                  <Typography>
-                                    <Button
-                                      sx={{
-                                        mr: 3,
-                                        mt: 1,
-                                        borderRadius: "70px",
-                                        backgroundColor: "#00A787",
-                                        "&:hover": {
-                                          backgroundColor: "#00A787",
-                                        },
-                                        color: "#fff",
-                                        fontSize: "12px",
-                                      }}
-                                      variant="contained"
-                                      onClick={() => setRelatProduct(1)}
-                                    >
-                                      Add a related product
-                                    </Button>
-                                  </Typography>
-                                </>
-                              )}
-                            </>
+                            <TextField
+                              size="small"
+                              sx={{
+                                width: "75%",
+                                mt: 1,
+                                height: "0.5rem",
+                              }}
+                              id="margin-normal"
+                              margin="normal"
+                              {...register("prodname", { required: true })}
+                              error={errors.prodname}
+                              // onChange={handleChange.bind(this)}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                            />
                           </Box>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Typography
+                          <Box
                             sx={{
-                              mt: "-10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
+                              border: "2px solid gray",
+                              width: "75%",
+                              // height: "250px",
+                              mt: "50px",
+                              overflow: "scroll",
                             }}
                           >
-                            Combinations
-                            <Tooltip title={Combinations}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-
-                          <Box>
-                            <FormControl>
-                              <RadioGroup
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={combination}
-                                onChange={handleChangecombination}
-                              >
+                            <Grid container spacing={2}>
+                              <Grid item xs>
                                 <Box
                                   sx={{
                                     display: "flex",
-                                    ml: "-7.5rem",
-                                    width: "200%",
+                                    width: "100%",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    margin: "0px 10%",
+                                    borderRadius: "5px",
                                   }}
                                 >
-                                  <Box
-                                    sx={{
-                                      fontsize: "12px",
-                                      width: "300%",
-                                    }}
+                                  <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: 12 }}
                                   >
-                                    <FormControlLabel
-                                      value="Simple Product"
-                                      control={
-                                        <Radio
-                                          size="small"
-                                          style={{ color: "#00A787" }}
-                                        />
-                                      }
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Simple Product
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
-
-                                  <Box
+                                    {" "}
+                                    Add Images up to 10
+                                  </Typography>
+                                  <TextField
+                                    size="small"
                                     sx={{
-                                      fontsize: "12px",
-                                      // mr: "110px",
-                                      width: "600%",
+                                      margin: "0px 0px",
+                                      border: "none",
                                     }}
-                                  >
-                                    <FormControlLabel
-                                      value={true}
-                                      control={
-                                        <Radio
-                                          style={{ mt: -1, color: "#00A787" }}
-                                          size="small"
-                                        />
-                                      }
-                                      // label='Product with combinations'
-                                      label={
-                                        <Typography sx={{ fontSize: 14 }}>
-                                          Product with combinations
-                                        </Typography>
-                                      }
-                                    />
-                                  </Box>
+                                    inputProps={{
+                                      style: { fontSize: 12 },
+                                      multiple: true,
+                                      accept: "image/*",
+                                    }}
+                                    fullWidth
+                                    type="file"
+                                    name="uploadedImages"
+                                    multiple
+                                    onChange={onSelectFile}
+                                  />
+                                  <br />
                                 </Box>
-                              </RadioGroup>
-                            </FormControl>
-                          </Box>
-                          <Box sx={{ display: "flex" }}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              Reference
-                              <Tooltip title={reference}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                            <Typography
-                              sx={{
-                                ml: "10rem",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-
-                                mt: "10px",
-                              }}
-                            >
-                              Quantity
-                              <Tooltip>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-                          </Box>
-
-                          <Box sx={{ display: "flex" }}>
-                            <Grid item xs={4}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    size="small"
-                                    sx={{
-                                      mt: "10px",
-                                      fontSize: "12px",
-                                      fontWeight: "bold",
-                                      ml: -15,
-                                    }}
-                                    width="20%"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    value={referenced}
-                                    onChange={handlereference}
-                                    // {...register("reference", {
-                                    //   required: true,
-                                    // })}
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <Box>
-                                <Typography>
-                                  <TextField
-                                    sx={{ m: 1 }}
-                                    size="small"
-                                    width="50%"
-                                    // label="0"
-                                    id="margin-normal"
-                                    margin="normal"
-                                    {...register("quantity", {
-                                      // required: true,
-                                    })}
-                                    inputProps={{ readOnly: true }}
-                                  />
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          </Box>
-
-                          <Typography
-                            sx={{
-                              mt: "10px",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              ml: -15,
-                            }}
-                          >
-                            Price
-                            <Tooltip title={price}>
-                              <InfoIcon sx={{ fontSize: 12 }} />
-                            </Tooltip>
-                          </Typography>
-                          <Grid item xs={12}>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                mt: "10px",
-                                ml: -15,
-                              }}
-                            >
-                              <TextField
-                                size="small"
-                                label="Tax excluded"
-                                id="outlined-start-adornment"
-                                value={Prodexclusive}
-                                onChange={handleProdexclusive}
-                                // {...register("taxexcluded", { required: true })}
-                                sx={{ m: 1, width: "100%" }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                              <FormControl
-                                sx={{ width: "100%", mt: 0.7 }}
-                                size="small"
-                              >
-                                <InputLabel id="demo-select-small-label">
-                                  Tax Rule
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-select-small-label"
-                                  size="small"
-                                  label="Tax Rule"
-                                  value={Taxprice}
-                                  onChange={taxesrule}
-                                  inputProps={{ readOnly: true }}
-                                >
-                                  {taxes?.map((item, index) => (
-                                    <MenuItem
-                                      key={index}
-                                      value={item._id}
-                                      onClick={() => setpercentage(item._id)}
-                                    >
-                                      {item.Name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                              <TextField
-                                size="small"
-                                label="Tax included"
-                                // {...register("taxincluded", { required: true })}
-                                value={Prodinclusive}
-                                onChange={(e) =>
-                                  setProdinclusive(e.target.value)
-                                }
-                                id="outlined-start-adornment"
-                                sx={{ m: 1, width: "100%" }}
-                                inputProps={{ readOnly: true }}
-                                InputProps={{
-                                  style: { fontSize: 13 },
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <CurrencyRupeeIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                              />
-                            </Box>
-                          </Grid>
-
-                          <Grid item xs={8}>
-                            <Typography
-                              sx={{
-                                mt: "10px",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                ml: -15,
-                              }}
-                            >
-                              categories
-                              <Tooltip title={categories}>
-                                <InfoIcon sx={{ fontSize: 12 }} />
-                              </Tooltip>
-                            </Typography>
-
-                            <TreeView
-                              aria-label="rich object"
-                              defaultCollapseIcon={<ExpandMoreIcon />}
-                              defaultExpanded={["root"]}
-                              defaultExpandIcon={<ChevronRightIcon />}
-                              // onChange={(nodeId) => setParent(nodeId)}
-                              onNodeSelect={handleSelectedItems}
-                              sx={{
-                                border: "1px solid black",
-                                p: 1,
-
-                                ".MuiTreeItem-root": {
-                                  ".Mui-focused:not(.Mui-selected)":
-                                    classes.focused,
-                                  ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
-                                    classes.selected,
-                                },
-                              }}
-                            >
-                              {/* {categorymasterallList?.map((item) =>
-                                renderTree(item), */}
-                              {categorymasterallList?.map((item) => (
-                                <>
-                                  <TreeItem
-                                    key={item._id}
-                                    nodeId={item._id}
-                                    label={
-                                      parentId === item._id ? (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              size="small"
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              name="file"
-                                              checked={checkedtree}
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      ) : (
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              style={{
-                                                mt: -1,
-                                                color: "#00A787",
-                                              }}
-                                              size="small"
-                                              name="file"
-                                            />
-                                          }
-                                          label={
-                                            <Typography sx={{ fontSize: 12 }}>
-                                              {item.name}
-                                            </Typography>
-                                          }
-                                          key={item._id}
-                                        />
-                                      )
-                                    }
-                                  >
-                                    {item.children
-                                      ?.filter((childItem) => {
-                                        return childItem.parent === item._id;
-                                      })
-                                      ?.map((childItem) => (
-                                        <>
-                                          <TreeItem
-                                            key={item._id}
-                                            nodeId={
-                                              `${item._id}` +
-                                              "-" +
-                                              `${childItem._id}`
-                                            }
-                                            label={
-                                              childId === childItem._id ? (
-                                                <FormControlLabel
-                                                  control={
-                                                    <Checkbox
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      size="small"
-                                                      name="file"
-                                                      checked={checkedtree}
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              ) : (
-                                                <FormControlLabel
-                                                  sx={{ fontSize: "12px" }}
-                                                  control={
-                                                    <Checkbox
-                                                      style={{
-                                                        mt: -1,
-                                                        color: "#00A787",
-                                                      }}
-                                                      size="small"
-                                                      name="file"
-                                                    />
-                                                  }
-                                                  label={
-                                                    <Typography
-                                                      sx={{ fontSize: 12 }}
-                                                    >
-                                                      {childItem.name}
-                                                    </Typography>
-                                                  }
-                                                  key={childItem._id}
-                                                />
-                                              )
+                              </Grid>
+                              <Grid item xs>
+                                {ImageDelete === "Delete" ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {ImageSelectblob === ImageSelectblob && (
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          width: "100%",
+                                          flexDirection: "column",
+                                          alignItems: "center",
+                                          margin: "0px 10%",
+                                          borderRadius: "5px",
+                                        }}
+                                      >
+                                        <Box sx={{ display: "flex" }}>
+                                          <IconButton
+                                            onClick={() =>
+                                              deleteHandlerpage(ImageSelect)
                                             }
                                           >
-                                            {childItem.children
-                                              ?.filter((grandItem) => {
+                                            <ClearIcon
+                                              sx={{
+                                                backgroundColor: "#999999",
+                                                color: "#fff",
+                                              }}
+                                            />
+                                          </IconButton>
+                                          <FormControlLabel
+                                            sx={{ fontSize: 12 }}
+                                            label={
+                                              <Typography
+                                                sx={{ fontSize: 12, mr: 3 }}
+                                              >
+                                                Select Image
+                                              </Typography>
+                                            }
+                                            control={
+                                              <Checkbox
+                                                style={{
+                                                  color: checked
+                                                    ? "#00A787"
+                                                    : "inherit",
+                                                }}
+                                                size="small"
+                                                onChange={handleChangeChekce}
+                                                inputProps={{
+                                                  "aria-label": "controlled",
+                                                }}
+                                              />
+                                            }
+                                          />
+                                        </Box>
+
+                                        <Button
+                                          sx={{
+                                            // mr: 3,
+                                            // mt: 5,
+                                            borderRadius: "50px",
+                                            backgroundColor: "#00A787",
+                                            "&:hover": {
+                                              backgroundColor: "#00A787",
+                                            },
+                                            fontSize: 10,
+                                          }}
+                                          variant="contained"
+                                          size="small"
+                                          onClick={handleChangeSaveImage}
+                                        >
+                                          Select cover Image
+                                        </Button>
+                                      </Box>
+                                    )}
+                                  </>
+                                )}
+                              </Grid>
+                            </Grid>
+                            <List>
+                              {/* <input type="file" multiple /> */}
+                              {selectedImages?.length > 0 &&
+                                selectedImages?.length > 10 && (
+                                  <p className="error">
+                                    You upload more than 10 images! <br />
+                                    <span>
+                                      please delete{" "}
+                                      <b> {selectedImages?.length - 10} </b> of
+                                      them{" "}
+                                    </span>
+                                  </p>
+                                )}
+                              <Box
+                                sx={{
+                                  width: "auto",
+                                  listStyle: "none",
+                                  display: "flex",
+                                  flexFlow: "wrap row",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  m: 2,
+                                }}
+                              >
+                                <ListItem>
+                                  {selectedImages?.map((image, index) => {
+                                    return (
+                                      <Box
+                                        key={image}
+                                        className="image"
+                                        width="75%"
+                                      >
+                                        {image === CoverImages ? (
+                                          <CardContent
+                                            sx={{
+                                              mt: -4,
+                                              width: "100%",
+                                              ml: 1,
+                                            }}
+                                          >
+                                            <Typography
+                                              variant="body2"
+                                              color="#fff"
+                                              sx={{
+                                                fontSize: 10,
+                                                height: 10,
+                                                width: 65,
+                                                padding: 0,
+                                                Zindex: -1,
+                                                mt: -1,
+                                                ml: -2,
+                                                color: "black",
+                                                fontWeight: "bold",
+                                              }}
+                                            >
+                                              Cover Image
+                                            </Typography>
+                                          </CardContent>
+                                        ) : (
+                                          <></>
+                                        )}
+                                        <CardMedia
+                                          sx={{
+                                            padding: 0,
+                                            margin: 1,
+                                            border:
+                                              image === ImageSelectblob
+                                                ? "2px solid #66CCFF"
+                                                : "2px solid #999999",
+                                            height: 100,
+                                            width: 100,
+                                          }}
+                                          className="media"
+                                          component="img"
+                                          height="50"
+                                          image={image}
+                                          alt={name}
+                                          id={index}
+                                          onClick={(e) =>
+                                            ImagHandleSelect(e, index)
+                                          }
+                                        />
+
+                                        <Button
+                                          sx={{ color: "#00A787" }}
+                                          onClick={() => deleteHandler(image)}
+                                        >
+                                          Remove
+                                          {/* <ClearIcon
+                                        sx={{ backgroundColor: "red" }}
+                                      /> */}
+                                        </Button>
+                                      </Box>
+                                    );
+                                  })}
+                                </ListItem>
+                              </Box>
+                            </List>
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "5px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Summary
+                          </Typography>
+
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setSummary({ data });
+                              }}
+                            />
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Description
+                          </Typography>
+
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setDescription({ data });
+                              }}
+                            />
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Features
+                          </Typography>
+
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                backgroundColor: "#00A787",
+                                "&:hover": { backgroundColor: "#00A787" },
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="contained"
+                              small
+                              onClick={handleappend}
+                            >
+                              Add a feature
+                            </Button>
+                          </Typography>
+                          <>
+                            {fields ? (
+                              <>
+                                {fields?.map(({ id }, index) => {
+                                  return (
+                                    <Box
+                                      key={id}
+                                      sx={{ p: 2, m: 2, width: "75%" }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          mt: "20px",
+                                          justifyContent: "space-between",
+                                        }}
+                                      >
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          Feature
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          Predefined value
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          OR Customized value
+                                        </Typography>
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          mt: "20px",
+                                          justifyContent: "space-between",
+                                          fontSize: 12,
+                                        }}
+                                      >
+                                        <FormControl sx={{ width: "30%" }}>
+                                          <Select
+                                            native
+                                            size="small"
+                                            // Featuresvaluedetails
+                                            name={index}
+                                            id={index}
+                                            // defaultValue={featurestype}
+                                            ref={register()}
+                                            onChange={(e) =>
+                                              HandleChange(e, index)
+                                            }
+                                          >
+                                            <option value="">
+                                              Select your Future
+                                            </option>
+                                            {Featuresdetails?.map((Feature) => (
+                                              <option
+                                                key={Feature._id}
+                                                value={Feature._id}
+                                              >
+                                                {Feature.featurename}
+                                              </option>
+                                            ))}
+                                          </Select>
+                                        </FormControl>
+                                        <FormControl sx={{ width: "30%" }}>
+                                          <Select
+                                            size="small"
+                                            native
+                                            // defaultValue={featurestypevalue}
+                                            name={index}
+                                            id={index}
+                                            ref={register()}
+                                            onChange={(e) =>
+                                              handleFeatureValue(e, index)
+                                            }
+                                            // onClick={() => removeName(index)}
+                                          >
+                                            {Featuresvaluedetails?.filter(
+                                              (Feature) => {
                                                 return (
-                                                  grandItem.parent ===
-                                                  childItem._id
+                                                  // Feature.featuretype=== featurestype[newadd]?.id && index===featurestype[newadd]?.index
+                                                  Feature.featuretype ===
+                                                  featurestype[index]?.id
                                                 );
-                                              })
-                                              ?.map((grandItem) => (
-                                                <>
-                                                  <TreeItem
-                                                    key={item._id}
-                                                    nodeId={
-                                                      `${item._id}` +
-                                                      "-" +
-                                                      `${childItem._id}` +
-                                                      "-" +
-                                                      `${grandItem._id}`
-                                                    }
-                                                    label={
-                                                      grandchildId ===
-                                                      grandItem._id ? (
-                                                        <FormControlLabel
-                                                          sx={{
-                                                            fontSize: "12px",
-                                                          }}
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              size="small"
-                                                              name="file"
-                                                              checked={
-                                                                checkedtree
-                                                              }
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      ) : (
-                                                        <FormControlLabel
-                                                          sx={{
-                                                            fontSize: "12px",
-                                                          }}
-                                                          control={
-                                                            <Checkbox
-                                                              style={{
-                                                                mt: -1,
-                                                                color:
-                                                                  "#00A787",
-                                                              }}
-                                                              size="small"
-                                                              name="file"
-                                                              // onChange={handleChange}
-                                                            />
-                                                          }
-                                                          label={
-                                                            <Typography
-                                                              sx={{
-                                                                fontSize: 12,
-                                                              }}
-                                                            >
-                                                              {grandItem.name}
-                                                            </Typography>
-                                                          }
-                                                          key={grandItem._id}
-                                                        />
-                                                      )
-                                                    }
-                                                  ></TreeItem>
-                                                </>
-                                              ))}
-                                          </TreeItem>
-                                        </>
-                                      ))}
-                                  </TreeItem>
-                                </>
-                              ))}
-                            </TreeView>
-                          </Grid>
+                                              }
+                                            )?.map((Feature) => (
+                                              <option
+                                                key={Feature._id}
+                                                value={Feature._id}
+                                              >
+                                                {Feature.featurevalue}
+                                              </option>
+                                            ))}
+                                          </Select>
+                                        </FormControl>
+
+                                        <TextField
+                                          name={`items[${index}].name`}
+                                          ref={register()}
+                                          id="outlined-size-small"
+                                          size="small"
+                                        />
+                                        <IconButton
+                                          type="button"
+                                          onClick={() => remove(index)}
+                                        >
+                                          <ClearIcon sx={{ color: "red" }} />
+                                        </IconButton>
+                                      </Box>
+                                    </Box>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                backgroundColor: "#00A787",
+                                "&:hover": { backgroundColor: "#00A787" },
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="contained"
+                              onClick={() => setBrand(1)}
+                            >
+                              Add a brand
+                            </Button>
+                          </Typography>
+
+                          <>
+                            {brand === 1 ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "20px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        value={brandId}
+                                        onChange={(e) =>
+                                          setBrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Related Product
+                          </Typography>
+
+                          <>
+                            {relatProd === 1 ? (
+                              <Typography sx={{ m: 2 }}>
+                                <TextField
+                                  size="small"
+                                  sx={{ width: "60%" }}
+                                  id="standard-bare"
+                                  variant="outlined"
+                                  {...register("search", { required: true })}
+                                  error={errors.search}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <IconButton>
+                                        <SearchOutlined />
+                                      </IconButton>
+                                    ),
+                                  }}
+                                />
+                              </Typography>
+                            ) : (
+                              <>
+                                <Typography>
+                                  <Button
+                                    sx={{
+                                      mr: 3,
+                                      mt: 1,
+                                      borderRadius: "70px",
+                                      backgroundColor: "#00A787",
+                                      "&:hover": {
+                                        backgroundColor: "#00A787",
+                                      },
+                                      color: "#fff",
+                                      fontSize: "12px",
+                                    }}
+                                    variant="contained"
+                                    onClick={() => setRelatProduct(1)}
+                                  >
+                                    Add a related product
+                                  </Button>
+                                </Typography>
+                              </>
+                            )}
+                          </>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          sx={{
+                            mt: "-10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Combinations
+                          <Tooltip title={Combinations}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+
+                        <Box>
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={combination}
+                              onChange={handleChangecombination}
+                            >
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  ml: "-7.5rem",
+                                  width: "200%",
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    width: "300%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value="Simple Product"
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Simple Product
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    // mr: "110px",
+                                    width: "600%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value={true}
+                                    control={
+                                      <Radio
+                                        style={{ mt: -1, color: "#00A787" }}
+                                        size="small"
+                                      />
+                                    }
+                                    // label='Product with combinations'
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Product with combinations
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                              </Box>
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+                        <Box sx={{ display: "flex" }}>
                           <Typography
                             sx={{
                               mt: "10px",
@@ -7221,111 +5559,1819 @@ Not all shops sell new products.
                               ml: -15,
                             }}
                           >
-                            Create a new category
-                            <Tooltip title={newcategories}>
+                            Reference
+                            <Tooltip title={reference}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ml: "10rem",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+
+                              mt: "10px",
+                            }}
+                          >
+                            Quantity
+                            <Tooltip>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                        </Box>
+
+                        <Box sx={{ display: "flex" }}>
+                          <Grid item xs={4}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  sx={{
+                                    mt: "10px",
+                                    fontSize: "12px",
+                                    fontWeight: "bold",
+                                    ml: -15,
+                                  }}
+                                  width="20%"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={referenced}
+                                  onChange={handlereference}
+                                  // {...register("reference", {
+                                  //   required: true,
+                                  // })}
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  sx={{ m: 1 }}
+                                  size="small"
+                                  width="50%"
+                                  // label="0"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  {...register("quantity", {
+                                    // required: true,
+                                  })}
+                                  inputProps={{ readOnly: true }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Price
+                          <Tooltip title={price}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Grid item xs={12}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              mt: "10px",
+                              ml: -15,
+                            }}
+                          >
+                            <TextField
+                              size="small"
+                              label="Tax excluded"
+                              id="outlined-start-adornment"
+                              value={Prodexclusive}
+                              onChange={handleProdexclusive}
+                              // {...register("taxexcluded", { required: true })}
+                              sx={{ m: 1, width: "100%" }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                            <FormControl
+                              sx={{ width: "100%", mt: 0.7 }}
+                              size="small"
+                            >
+                              <InputLabel id="demo-select-small-label">
+                                Tax Rule
+                              </InputLabel>
+                              <Select
+                                labelId="demo-select-small-label"
+                                size="small"
+                                label="Tax Rule"
+                                value={Taxprice}
+                                onChange={taxesrule}
+                                inputProps={{ readOnly: true }}
+                              >
+                                {taxes?.map((item, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    value={item._id}
+                                    onClick={() => setpercentage(item._id)}
+                                  >
+                                    {item.Name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <TextField
+                              size="small"
+                              label="Tax included"
+                              // {...register("taxincluded", { required: true })}
+                              value={Prodinclusive}
+                              onChange={(e) => setProdinclusive(e.target.value)}
+                              id="outlined-start-adornment"
+                              sx={{ m: 1, width: "100%" }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={8}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            categories
+                            <Tooltip title={categories}>
                               <InfoIcon sx={{ fontSize: 12 }} />
                             </Tooltip>
                           </Typography>
 
-                          {category === 1 ? (
-                            <>
-                              <Box sx={{ m: 2, p: 1 }}>
-                                <Typography>New Category name</Typography>
+                          <TreeView
+                            aria-label="rich object"
+                            defaultCollapseIcon={<ExpandMoreIcon />}
+                            defaultExpanded={["root"]}
+                            defaultExpandIcon={<ChevronRightIcon />}
+                            // onChange={(nodeId) => setParent(nodeId)}
+                            onNodeSelect={handleSelectedItems}
+                            sx={{
+                              border: "1px solid black",
+                              p: 1,
 
-                                <Typography sx={{ mt: "20px" }}>
+                              ".MuiTreeItem-root": {
+                                ".Mui-focused:not(.Mui-selected)":
+                                  classes.focused,
+                                ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                  classes.selected,
+                              },
+                            }}
+                          >
+                            {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                            {categorymasterallList?.map((item) => (
+                              <>
+                                <TreeItem
+                                  key={item._id}
+                                  nodeId={item._id}
+                                  label={
+                                    parentId === item._id ? (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            size="small"
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            name="file"
+                                            checked={checkedtree}
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    ) : (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            size="small"
+                                            name="file"
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    )
+                                  }
+                                >
+                                  {item.children
+                                    ?.filter((childItem) => {
+                                      return childItem.parent === item._id;
+                                    })
+                                    ?.map((childItem) => (
+                                      <>
+                                        <TreeItem
+                                          key={item._id}
+                                          nodeId={
+                                            `${item._id}` +
+                                            "-" +
+                                            `${childItem._id}`
+                                          }
+                                          label={
+                                            childId === childItem._id ? (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    size="small"
+                                                    name="file"
+                                                    checked={checkedtree}
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            ) : (
+                                              <FormControlLabel
+                                                sx={{ fontSize: "12px" }}
+                                                control={
+                                                  <Checkbox
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    size="small"
+                                                    name="file"
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            )
+                                          }
+                                        >
+                                          {childItem.children
+                                            ?.filter((grandItem) => {
+                                              return (
+                                                grandItem.parent ===
+                                                childItem._id
+                                              );
+                                            })
+                                            ?.map((grandItem) => (
+                                              <>
+                                                <TreeItem
+                                                  key={item._id}
+                                                  nodeId={
+                                                    `${item._id}` +
+                                                    "-" +
+                                                    `${childItem._id}` +
+                                                    "-" +
+                                                    `${grandItem._id}`
+                                                  }
+                                                  label={
+                                                    grandchildId ===
+                                                    grandItem._id ? (
+                                                      <FormControlLabel
+                                                        sx={{
+                                                          fontSize: "12px",
+                                                        }}
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            size="small"
+                                                            name="file"
+                                                            checked={
+                                                              checkedtree
+                                                            }
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    ) : (
+                                                      <FormControlLabel
+                                                        sx={{
+                                                          fontSize: "12px",
+                                                        }}
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            size="small"
+                                                            name="file"
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    )
+                                                  }
+                                                ></TreeItem>
+                                              </>
+                                            ))}
+                                        </TreeItem>
+                                      </>
+                                    ))}
+                                </TreeItem>
+                              </>
+                            ))}
+                          </TreeView>
+                        </Grid>
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Create a new category
+                          <Tooltip title={newcategories}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+
+                        {category === 1 ? (
+                          <>
+                            <Box sx={{ m: 2, p: 1 }}>
+                              <Typography>New Category name</Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  id="outlined-size-small"
+                                  defaultValue="Category name"
+                                  size="small"
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                Parent of the category
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  id="outlined-size-small"
+                                  defaultValue="Home"
+                                  size="small"
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "10px" }}>
+                                <Button variant="contained">Cancel</Button>
+                                <Button variant="contained" sx={{ ml: "50px" }}>
+                                  Create
+                                </Button>
+                              </Typography>
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <Typography>
+                              <Button
+                                sx={{
+                                  mr: 3,
+                                  mt: 1,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                  ml: -15,
+                                }}
+                                variant="contained"
+                                onClick={() => setCategory(1)}
+                              >
+                                Create a Category
+                              </Button>
+                            </Typography>
+
+                            <Typography>
+                              <Button
+                                type="submit"
+                                sx={{
+                                  mr: 1,
+                                  mt: 5,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  ml: "15rem",
+                                }}
+                                variant="contained"
+                              >
+                                Save
+                              </Button>
+                            </Typography>
+                          </>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )}
+                {/* *****************************Save Screen********************************************* */}
+
+                {tabIndex === 1 && (
+                  <Grid container>
+                    <Grid item xs>
+                      {gridComopen === 1 ? (
+                        <Box style={{ height: 560, width: "100%" }}>
+                          <DataGrid
+                            sx={{
+                              boxShadow: 10,
+                              borderRadius: 0,
+                              m: 2,
+                            }}
+                            columns={combinationcolumns}
+                            rows={ComList ? ComList : ""}
+                            getRowId={(rows) => rows.id}
+                            VerticalAlignment="Center"
+                            rowHeight={64}
+                            pageSize={10}
+                            rowsPerPageOptions={[10]}
+                            // checkboxSelection
+                          />
+                          <Box>
+                            <Dialog
+                              // fullWidth={fullWidth}
+                              // maxWidth={maxWidth}
+                              open={Comopen}
+                              onClick={handleComClose}
+                              sx={{
+                                width: 700,
+                                hight: 700,
+                              }}
+                            >
+                              <Box>
+                                <CardMedia
+                                  sx={{
+                                    cursor: "pointer",
+                                    justifycontent: "space-between",
+                                  }}
+                                  component="img"
+                                  // height="200"
+                                  image={ComnewImg}
+                                  // alt={"subimgnew.filename"}
+                                  // onMouseOver={handleChangeimage}
+                                />
+                              </Box>
+                            </Dialog>
+                          </Box>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              mt: 3,
+                              mb: 2,
+                              backgroundColor: "#00A787",
+                              "&:hover": {
+                                backgroundColor: "#00A787",
+                              },
+                            }}
+                            onClick={(event) => HandlecombSave(event)}
+                            type="Click"
+                          >
+                            Save
+                          </Button>
+                        </Box>
+                      ) : (
+                        <>
+                          {subtype?.length > 0 ? (
+                            <Box
+                              sx={{ width: "100%" }}
+                              component="form"
+                              onSubmit={handleSubmit1(CreateCombination)}
+                            >
+                              <Autocomplete
+                                size="small"
+                                multiple={true}
+                                id="free-solo-demo"
+                                options={attributeValuedetails}
+                                value={defaultOption}
+                                autoSelect={true}
+                                getOptionLabel={(option) =>
+                                  `${option.attributename} : ${option.value} `
+                                }
+                                onChange={(event, value) =>
+                                  combinationhandleChange(event, value)
+                                }
+                                filterOptions={filterOptions}
+                                renderInput={(params) => (
                                   <TextField
-                                    id="outlined-size-small"
-                                    defaultValue="Category name"
-                                    size="small"
                                     InputProps={{
                                       style: { fontSize: 13 },
                                     }}
-                                  />
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  Parent of the category
-                                </Typography>
-
-                                <Typography sx={{ mt: "20px" }}>
-                                  <TextField
-                                    id="outlined-size-small"
-                                    defaultValue="Home"
                                     size="small"
+                                    {...params}
+                                    label="Combination"
+                                    margin="normal"
+                                    variant="outlined"
+                                  />
+                                )}
+                              />
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  mt: 3,
+                                  mr: 20,
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                }}
+                                type="submit"
+                              >
+                                Generate
+                              </Button>
+                            </Box>
+                          ) : (
+                            <Box
+                              sx={{ width: "100%" }}
+                              component="form"
+                              onSubmit={handleSubmit1(CreateCombination)}
+                            >
+                              <Autocomplete
+                                size="small"
+                                multiple={true}
+                                id="free-solo-demo"
+                                options={attributeValuedetails}
+                                value={defaultOption}
+                                autoSelect={true}
+                                getOptionLabel={(option) =>
+                                  `${option.attributename} : ${option.value} `
+                                }
+                                onChange={(event, value) =>
+                                  combinationhandleChange(event, value)
+                                }
+                                filterOptions={filterOptions}
+                                renderInput={(params) => (
+                                  <TextField
                                     InputProps={{
                                       style: { fontSize: 13 },
                                     }}
+                                    size="small"
+                                    {...params}
+                                    label="Combination"
+                                    margin="normal"
+                                    variant="outlined"
                                   />
-                                </Typography>
+                                )}
+                              />
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  mt: 3,
+                                  mr: 20,
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                }}
+                                type="submit"
+                              >
+                                Generate
+                              </Button>
+                            </Box>
+                          )}
+                        </>
+                      )}
+                    </Grid>
+                  </Grid>
+                )}
 
-                                <Typography sx={{ mt: "10px" }}>
-                                  <Button variant="contained">Cancel</Button>
-                                  <Button
-                                    variant="contained"
-                                    sx={{ ml: "50px" }}
+                {/* ************************************************************************* */}
+                {tabIndex === 2 && <ProductQuantitiesSreen />}
+                {tabIndex === 3 && <ProductShippingScreen />}
+                {tabIndex === 4 && <ProdPricingScreen />}
+                {tabIndex === 5 && <SeoScreen />}
+                {tabIndex === 6 && <OptionsScreen />}
+              </Box>
+            ) : (
+              <Box sx={{ padding: 2 }}>
+                {tabIndex === 0 && (
+                  <Box component="form" onSubmit={handleSubmit(submitHandler)}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={8}>
+                        <Box>
+                          <Box sx={{ width: "100%" }}>
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                mt: -1,
+                              }}
+                            >
+                              Enter Your Product Name
+                            </Typography>
+
+                            <TextField
+                              size="small"
+                              sx={{
+                                width: "75%",
+                                mt: 1,
+                                height: "0.5rem",
+                              }}
+                              id="margin-normal"
+                              margin="normal"
+                              {...register("prodname", { required: true })}
+                              error={errors.prodname}
+                              // onChange={handleChange.bind(this)}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                              }}
+                            />
+                          </Box>
+                          <Box
+                            sx={{
+                              border: "2px solid gray",
+                              width: "75%",
+                              // height: "250px",
+                              mt: "50px",
+                              overflow: "scroll",
+                            }}
+                          >
+                            <Grid container spacing={2}>
+                              <Grid item xs>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    margin: "0px 10%",
+                                    borderRadius: "5px",
+                                  }}
+                                >
+                                  <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: 12 }}
                                   >
-                                    Create
+                                    {" "}
+                                    Add Images up to 10
+                                  </Typography>
+                                  <TextField
+                                    size="small"
+                                    sx={{
+                                      margin: "0px 0px",
+                                      border: "none",
+                                    }}
+                                    inputProps={{
+                                      style: { fontSize: 12 },
+                                      multiple: true,
+                                      accept: "image/*",
+                                    }}
+                                    fullWidth
+                                    type="file"
+                                    name="uploadedImages"
+                                    multiple
+                                    onChange={onSelectFile}
+                                  />
+                                  <br />
+                                </Box>
+                              </Grid>
+                              <Grid item xs>
+                                {ImageDelete === "Delete" ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {ImageSelectblob === ImageSelectblob && (
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          width: "100%",
+                                          flexDirection: "column",
+                                          alignItems: "center",
+                                          margin: "0px 10%",
+                                          borderRadius: "5px",
+                                        }}
+                                      >
+                                        <Box sx={{ display: "flex" }}>
+                                          <IconButton
+                                            onClick={() =>
+                                              deleteHandlerpage(ImageSelect)
+                                            }
+                                          >
+                                            <ClearIcon
+                                              sx={{
+                                                backgroundColor: "#999999",
+                                                color: "#fff",
+                                              }}
+                                            />
+                                          </IconButton>
+                                          <FormControlLabel
+                                            sx={{ fontSize: 12 }}
+                                            label={
+                                              <Typography
+                                                sx={{ fontSize: 12, mr: 3 }}
+                                              >
+                                                Select Image
+                                              </Typography>
+                                            }
+                                            control={
+                                              <Checkbox
+                                                style={{ color: "#00A787" }}
+                                                size="small"
+                                                checked={checked}
+                                                onChange={handleChangeChekce}
+                                                inputProps={{
+                                                  "aria-label": "controlled",
+                                                }}
+                                              />
+                                            }
+                                          />
+                                        </Box>
+
+                                        <Button
+                                          sx={{
+                                            // mr: 3,
+                                            // mt: 5,
+                                            borderRadius: "50px",
+                                            backgroundColor: "#00A787",
+                                            "&:hover": {
+                                              backgroundColor: "#00A787",
+                                            },
+                                            fontSize: 10,
+                                          }}
+                                          variant="contained"
+                                          size="small"
+                                          onClick={handleChangeSaveImage}
+                                        >
+                                          Select cover Image
+                                        </Button>
+                                      </Box>
+                                    )}
+                                  </>
+                                )}
+                              </Grid>
+                            </Grid>
+                            <List>
+                              {/* <input type="file" multiple /> */}
+                              {selectedImages?.length > 0 &&
+                                selectedImages?.length > 10 && (
+                                  <p className="error">
+                                    You upload more than 10 images! <br />
+                                    <span>
+                                      please delete{" "}
+                                      <b> {selectedImages?.length - 10} </b> of
+                                      them{" "}
+                                    </span>
+                                  </p>
+                                )}
+                              <Box
+                                sx={{
+                                  width: "auto",
+                                  listStyle: "none",
+                                  display: "flex",
+                                  flexFlow: "wrap row",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  m: 2,
+                                }}
+                              >
+                                <ListItem>
+                                  {selectedImages?.map((image, index) => {
+                                    return (
+                                      <Box
+                                        key={image}
+                                        className="image"
+                                        width="75%"
+                                      >
+                                        {image === CoverImages ? (
+                                          <CardContent
+                                            sx={{
+                                              mt: -4,
+                                              width: "100%",
+                                              ml: 1,
+                                            }}
+                                          >
+                                            <Typography
+                                              variant="body2"
+                                              color="#fff"
+                                              sx={{
+                                                fontSize: 10,
+                                                height: 10,
+                                                width: 70,
+                                                padding: 0,
+                                                Zindex: -1,
+                                                mt: -1,
+                                                ml: -2,
+                                                color: "black",
+                                                fontWeight: "bold",
+                                              }}
+                                            >
+                                              Cover Image
+                                            </Typography>
+                                          </CardContent>
+                                        ) : (
+                                          <></>
+                                        )}
+                                        <CardMedia
+                                          sx={{
+                                            padding: 0,
+                                            marginLeft: 1,
+                                            mb: 1,
+                                            border:
+                                              image === ImageSelectblob
+                                                ? "2px solid #66CCFF"
+                                                : "2px solid #999999",
+                                            height: 80,
+                                            width: 80,
+                                          }}
+                                          className="media"
+                                          component="img"
+                                          height="50"
+                                          image={image}
+                                          alt={name}
+                                          id={index}
+                                          onClick={(e) =>
+                                            ImagHandleSelect(e, index)
+                                          }
+                                        />
+
+                                        <Button
+                                          sx={{ color: "#00A787" }}
+                                          onClick={() => deleteHandler(image)}
+                                        >
+                                          Remove
+                                          {/* <ClearIcon
+                                        sx={{ backgroundColor: "red" }}
+                                      /> */}
+                                        </Button>
+                                      </Box>
+                                    );
+                                  })}
+                                </ListItem>
+                              </Box>
+                            </List>
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "5px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Summary
+                          </Typography>
+
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setSummary({ data });
+                              }}
+                            />
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Description
+                          </Typography>
+
+                          <Box sx={{ mt: "10px", width: "75%" }}>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setDescription({ data });
+                              }}
+                            />
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Features
+                          </Typography>
+
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                backgroundColor: "#00A787",
+                                "&:hover": { backgroundColor: "#00A787" },
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="contained"
+                              small
+                              onClick={handleappend}
+                            >
+                              Add a feature
+                            </Button>
+                          </Typography>
+                          <>
+                            {/* ***********SAVE SCREEN************** */}
+                            {fields ? (
+                              <>
+                                {fields?.map(({ id }, index) => {
+                                  // { console.log("id=====>", id) }
+                                  // { console.log("index=====>", index) }
+                                  return (
+                                    <Box
+                                      key={id}
+                                      sx={{ p: 2, m: 2, width: "75%" }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          mt: "20px",
+                                          justifyContent: "space-between",
+                                        }}
+                                      >
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          Feature
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          Predefined value
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "12px" }}>
+                                          OR Customized value
+                                        </Typography>
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          mt: "20px",
+                                          justifyContent: "space-between",
+                                          fontSize: 12,
+                                        }}
+                                      >
+                                        <FormControl sx={{ width: "30%" }}>
+                                          <Select
+                                            native
+                                            size="small"
+                                            // Featuresvaluedetails
+                                            name={index}
+                                            id={index}
+                                            // defaultValue={featurestype}
+                                            ref={register()}
+                                            onChange={(e) =>
+                                              HandleChange(e, index)
+                                            }
+                                          >
+                                            <option value="">
+                                              Select your Future
+                                            </option>
+                                            {Featuresdetails?.map((Feature) => (
+                                              <option
+                                                key={Feature._id}
+                                                value={Feature._id}
+                                              >
+                                                {Feature.featurename}
+                                              </option>
+                                            ))}
+                                          </Select>
+                                        </FormControl>
+                                        <FormControl sx={{ width: "30%" }}>
+                                          <Select
+                                            size="small"
+                                            native
+                                            // defaultValue={featurestypevalue}
+                                            name={index}
+                                            id={index}
+                                            ref={register()}
+                                            onChange={(e) =>
+                                              handleFeatureValue(e, index)
+                                            }
+                                            // onClick={() => removeName(index)}
+                                          >
+                                            {Featuresvaluedetails?.filter(
+                                              (Feature) => {
+                                                return (
+                                                  // Feature.featuretype=== featurestype[newadd]?.id && index===featurestype[newadd]?.index
+                                                  Feature.featuretype ===
+                                                  featurestype[index]?.id
+                                                );
+                                              }
+                                            )?.map((Feature) => (
+                                              <option
+                                                key={Feature._id}
+                                                value={Feature._id}
+                                              >
+                                                {Feature.featurevalue}
+                                              </option>
+                                            ))}
+                                          </Select>
+                                        </FormControl>
+
+                                        <TextField
+                                          name={`items[${index}].name`}
+                                          ref={register()}
+                                          id="outlined-size-small"
+                                          size="small"
+                                        />
+                                        <IconButton
+                                          type="button"
+                                          onClick={() => remove(index)}
+                                        >
+                                          <ClearIcon sx={{ color: "red" }} />
+                                        </IconButton>
+                                      </Box>
+                                    </Box>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography>
+                            <Button
+                              sx={{
+                                mr: 3,
+                                mt: 1,
+                                borderRadius: "70px",
+                                backgroundColor: "#00A787",
+                                "&:hover": { backgroundColor: "#00A787" },
+                                color: "#fff",
+                                fontSize: "12px",
+                              }}
+                              variant="contained"
+                              onClick={() => setBrand(1)}
+                            >
+                              Add a brand
+                            </Button>
+                          </Typography>
+
+                          <>
+                            {brand === 1 ? (
+                              <>
+                                <Box sx={{ p: 1, m: 1 }}>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "10px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "20px",
+                                        fontWeight: "700",
+                                      }}
+                                    >
+                                      Brand
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mt: "20px",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <FormControl sx={{ width: "40%" }}>
+                                      <Select
+                                        value={brandId}
+                                        onChange={(e) =>
+                                          setBrandId(e.target.value)
+                                        }
+                                      >
+                                        {brandLists?.map((item, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={item._id}
+                                          >
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Box>
+                                </Box>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Related Product
+                          </Typography>
+
+                          <>
+                            {relatProd === 1 ? (
+                              <Typography sx={{ m: 2 }}>
+                                <TextField
+                                  size="small"
+                                  sx={{ width: "60%" }}
+                                  id="standard-bare"
+                                  variant="outlined"
+                                  {...register("search", { required: true })}
+                                  error={errors.search}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <IconButton>
+                                        <SearchOutlined />
+                                      </IconButton>
+                                    ),
+                                  }}
+                                />
+                              </Typography>
+                            ) : (
+                              <>
+                                <Typography>
+                                  <Button
+                                    sx={{
+                                      mr: 3,
+                                      mt: 1,
+                                      borderRadius: "70px",
+                                      backgroundColor: "#00A787",
+                                      "&:hover": {
+                                        backgroundColor: "#00A787",
+                                      },
+                                      color: "#fff",
+                                      fontSize: "12px",
+                                    }}
+                                    variant="contained"
+                                    onClick={() => setRelatProduct(1)}
+                                  >
+                                    Add a related product
                                   </Button>
                                 </Typography>
-                              </Box>
-                            </>
-                          ) : (
-                            <>
-                              <Typography>
-                                <Button
+                              </>
+                            )}
+                          </>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          sx={{
+                            mt: "-10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Combinations
+                          <Tooltip title={Combinations}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+
+                        <Box>
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={combination}
+                              onChange={handleChangecombination}
+                            >
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  ml: "-7.5rem",
+                                  width: "200%",
+                                }}
+                              >
+                                <Box
                                   sx={{
-                                    mr: 3,
-                                    mt: 1,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
+                                    fontsize: "12px",
+                                    width: "300%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value="Simple Product"
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        style={{ color: "#00A787" }}
+                                      />
+                                    }
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Simple Product
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    fontsize: "12px",
+                                    // mr: "110px",
+                                    width: "600%",
+                                  }}
+                                >
+                                  <FormControlLabel
+                                    value={true}
+                                    control={
+                                      <Radio
+                                        style={{ mt: -1, color: "#00A787" }}
+                                        size="small"
+                                      />
+                                    }
+                                    // label='Product with combinations'
+                                    label={
+                                      <Typography sx={{ fontSize: 14 }}>
+                                        Product with combinations
+                                      </Typography>
+                                    }
+                                  />
+                                </Box>
+                              </Box>
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            Reference
+                            <Tooltip title={reference}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ml: "10rem",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+
+                              mt: "10px",
+                            }}
+                          >
+                            Quantity
+                            <Tooltip>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+                        </Box>
+
+                        <Box sx={{ display: "flex" }}>
+                          <Grid item xs={4}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  size="small"
+                                  sx={{
+                                    mt: "10px",
                                     fontSize: "12px",
+                                    fontWeight: "bold",
                                     ml: -15,
                                   }}
-                                  variant="contained"
-                                  onClick={() => setCategory(1)}
-                                >
-                                  Create a Category
-                                </Button>
-                              </Typography>
-
-                              <Typography>
-                                <Button
-                                  type="submit"
-                                  sx={{
-                                    mr: 1,
-                                    mt: 5,
-                                    borderRadius: "70px",
-                                    backgroundColor: "#00A787",
-                                    "&:hover": { backgroundColor: "#00A787" },
-                                    color: "#fff",
-                                    ml: "15rem",
+                                  width="20%"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  value={referenced}
+                                  onChange={handlereference}
+                                  // {...register("reference", {
+                                  //   required: true,
+                                  // })}
+                                  InputProps={{
+                                    style: { fontSize: 13 },
                                   }}
-                                  variant="contained"
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Box>
+                              <Typography>
+                                <TextField
+                                  sx={{ m: 1 }}
+                                  size="small"
+                                  width="50%"
+                                  // label="0"
+                                  id="margin-normal"
+                                  margin="normal"
+                                  {...register("quantity", {
+                                    // required: true,
+                                  })}
+                                  inputProps={{ readOnly: true }}
+                                />
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Price
+                          <Tooltip title={price}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+                        <Grid item xs={12}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              mt: "10px",
+                              ml: -15,
+                            }}
+                          >
+                            <TextField
+                              size="small"
+                              label="Tax excluded"
+                              id="outlined-start-adornment"
+                              value={Prodexclusive}
+                              onChange={handleProdexclusive}
+                              // {...register("taxexcluded", { required: true })}
+                              sx={{ m: 1, width: "100%" }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                            <FormControl
+                              sx={{ width: "100%", mt: 0.7 }}
+                              size="small"
+                            >
+                              <InputLabel id="demo-select-small-label">
+                                Tax Rule
+                              </InputLabel>
+                              <Select
+                                labelId="demo-select-small-label"
+                                size="small"
+                                label="Tax Rule"
+                                value={Taxprice}
+                                onChange={taxesrule}
+                                inputProps={{ readOnly: true }}
+                              >
+                                {taxes?.map((item, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    value={item._id}
+                                    onClick={() => setpercentage(item._id)}
+                                  >
+                                    {item.Name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <TextField
+                              size="small"
+                              label="Tax included"
+                              // {...register("taxincluded", { required: true })}
+                              value={Prodinclusive}
+                              onChange={(e) => setProdinclusive(e.target.value)}
+                              id="outlined-start-adornment"
+                              sx={{ m: 1, width: "100%" }}
+                              inputProps={{ readOnly: true }}
+                              InputProps={{
+                                style: { fontSize: 13 },
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <CurrencyRupeeIcon sx={{ fontSize: 15 }} />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={8}>
+                          <Typography
+                            sx={{
+                              mt: "10px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                              ml: -15,
+                            }}
+                          >
+                            categories
+                            <Tooltip title={categories}>
+                              <InfoIcon sx={{ fontSize: 12 }} />
+                            </Tooltip>
+                          </Typography>
+
+                          <TreeView
+                            aria-label="rich object"
+                            defaultCollapseIcon={<ExpandMoreIcon />}
+                            defaultExpanded={["root"]}
+                            defaultExpandIcon={<ChevronRightIcon />}
+                            // onChange={(nodeId) => setParent(nodeId)}
+                            onNodeSelect={handleSelectedItems}
+                            sx={{
+                              border: "1px solid black",
+                              p: 1,
+
+                              ".MuiTreeItem-root": {
+                                ".Mui-focused:not(.Mui-selected)":
+                                  classes.focused,
+                                ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                  classes.selected,
+                              },
+                            }}
+                          >
+                            {/* {categorymasterallList?.map((item) =>
+                                renderTree(item), */}
+                            {categorymasterallList?.map((item) => (
+                              <>
+                                <TreeItem
+                                  key={item._id}
+                                  nodeId={item._id}
+                                  label={
+                                    parentId === item._id ? (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            size="small"
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            name="file"
+                                            checked={checkedtree}
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    ) : (
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            style={{
+                                              mt: -1,
+                                              color: "#00A787",
+                                            }}
+                                            size="small"
+                                            name="file"
+                                          />
+                                        }
+                                        label={
+                                          <Typography sx={{ fontSize: 12 }}>
+                                            {item.name}
+                                          </Typography>
+                                        }
+                                        key={item._id}
+                                      />
+                                    )
+                                  }
                                 >
-                                  Save
+                                  {item.children
+                                    ?.filter((childItem) => {
+                                      return childItem.parent === item._id;
+                                    })
+                                    ?.map((childItem) => (
+                                      <>
+                                        <TreeItem
+                                          key={item._id}
+                                          nodeId={
+                                            `${item._id}` +
+                                            "-" +
+                                            `${childItem._id}`
+                                          }
+                                          label={
+                                            childId === childItem._id ? (
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    size="small"
+                                                    name="file"
+                                                    checked={checkedtree}
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            ) : (
+                                              <FormControlLabel
+                                                sx={{ fontSize: "12px" }}
+                                                control={
+                                                  <Checkbox
+                                                    style={{
+                                                      mt: -1,
+                                                      color: "#00A787",
+                                                    }}
+                                                    size="small"
+                                                    name="file"
+                                                  />
+                                                }
+                                                label={
+                                                  <Typography
+                                                    sx={{ fontSize: 12 }}
+                                                  >
+                                                    {childItem.name}
+                                                  </Typography>
+                                                }
+                                                key={childItem._id}
+                                              />
+                                            )
+                                          }
+                                        >
+                                          {childItem.children
+                                            ?.filter((grandItem) => {
+                                              return (
+                                                grandItem.parent ===
+                                                childItem._id
+                                              );
+                                            })
+                                            ?.map((grandItem) => (
+                                              <>
+                                                <TreeItem
+                                                  key={item._id}
+                                                  nodeId={
+                                                    `${item._id}` +
+                                                    "-" +
+                                                    `${childItem._id}` +
+                                                    "-" +
+                                                    `${grandItem._id}`
+                                                  }
+                                                  label={
+                                                    grandchildId ===
+                                                    grandItem._id ? (
+                                                      <FormControlLabel
+                                                        sx={{
+                                                          fontSize: "12px",
+                                                        }}
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            size="small"
+                                                            name="file"
+                                                            checked={
+                                                              checkedtree
+                                                            }
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    ) : (
+                                                      <FormControlLabel
+                                                        sx={{
+                                                          fontSize: "12px",
+                                                        }}
+                                                        control={
+                                                          <Checkbox
+                                                            style={{
+                                                              mt: -1,
+                                                              color: "#00A787",
+                                                            }}
+                                                            size="small"
+                                                            name="file"
+                                                            // onChange={handleChange}
+                                                          />
+                                                        }
+                                                        label={
+                                                          <Typography
+                                                            sx={{
+                                                              fontSize: 12,
+                                                            }}
+                                                          >
+                                                            {grandItem.name}
+                                                          </Typography>
+                                                        }
+                                                        key={grandItem._id}
+                                                      />
+                                                    )
+                                                  }
+                                                ></TreeItem>
+                                              </>
+                                            ))}
+                                        </TreeItem>
+                                      </>
+                                    ))}
+                                </TreeItem>
+                              </>
+                            ))}
+                          </TreeView>
+                        </Grid>
+                        <Typography
+                          sx={{
+                            mt: "10px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            ml: -15,
+                          }}
+                        >
+                          Create a new category
+                          <Tooltip title={newcategories}>
+                            <InfoIcon sx={{ fontSize: 12 }} />
+                          </Tooltip>
+                        </Typography>
+
+                        {category === 1 ? (
+                          <>
+                            <Box sx={{ m: 2, p: 1 }}>
+                              <Typography>New Category name</Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  id="outlined-size-small"
+                                  defaultValue="Category name"
+                                  size="small"
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                Parent of the category
+                              </Typography>
+
+                              <Typography sx={{ mt: "20px" }}>
+                                <TextField
+                                  id="outlined-size-small"
+                                  defaultValue="Home"
+                                  size="small"
+                                  InputProps={{
+                                    style: { fontSize: 13 },
+                                  }}
+                                />
+                              </Typography>
+
+                              <Typography sx={{ mt: "10px" }}>
+                                <Button variant="contained">Cancel</Button>
+                                <Button variant="contained" sx={{ ml: "50px" }}>
+                                  Create
                                 </Button>
                               </Typography>
-                            </>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  )}
-                  {/* ************************************************************************** */}
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <Typography>
+                              <Button
+                                sx={{
+                                  mr: 3,
+                                  mt: 1,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                  ml: -15,
+                                }}
+                                variant="contained"
+                                onClick={() => setCategory(1)}
+                              >
+                                Create a Category
+                              </Button>
+                            </Typography>
 
-                  {/* ************************************************************************* */}
-                  {tabIndex === 1 && <ProductQuantitiesSreen />}
-                  {tabIndex === 2 && <ProductShippingScreen />}
-                  {tabIndex === 3 && <ProdPricingScreen />}
-                  {tabIndex === 4 && <SeoScreen />}
-                  {tabIndex === 5 && <OptionsScreen />}
-                </Box>
-              )}
-            </Box>
-          )}
-        </>
+                            <Typography>
+                              <Button
+                                type="submit"
+                                sx={{
+                                  mr: 1,
+                                  mt: 5,
+                                  borderRadius: "70px",
+                                  backgroundColor: "#00A787",
+                                  "&:hover": { backgroundColor: "#00A787" },
+                                  color: "#fff",
+                                  ml: "15rem",
+                                }}
+                                variant="contained"
+                              >
+                                Save
+                              </Button>
+                            </Typography>
+                          </>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )}
+                {/* ************************************************************************** */}
+
+                {/* ************************************************************************* */}
+                {tabIndex === 1 && <ProductQuantitiesSreen />}
+                {tabIndex === 2 && <ProductShippingScreen />}
+                {tabIndex === 3 && <ProdPricingScreen />}
+                {tabIndex === 4 && <SeoScreen />}
+                {tabIndex === 5 && <OptionsScreen />}
+              </Box>
+            )}
+          </Box>
+        )}
       </>
     </>
   );

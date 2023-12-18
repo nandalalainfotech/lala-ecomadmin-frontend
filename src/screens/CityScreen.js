@@ -53,7 +53,7 @@ export default function CityScreen() {
 
   const CountryList = useSelector((state) => state.CountryList);
   const { country } = CountryList;
-  console.log("country", country);
+ 
   const CitySave = useSelector((state) => state.CitySave);
   const { success: savecity } = CitySave;
   const CityUpdate = useSelector((state) => state.CityUpdate);
@@ -76,8 +76,9 @@ export default function CityScreen() {
   const [EditState, setEditState] = useState(citydata?.state);
   const [EditCity, setEditCity] = useState(citydata?.city);
   const [EditCountry, setEditCountry] = useState(citydata?.country);
-  console.log("EditCountry", EditCountry);
+
   const [EditZone, setEditZone] = useState(citydata?.zone);
+  
   const [EditChecked, setEditChecked] = useState(citydata?.checked);
   // const { update } = useFieldArray({ name: "array" });
   // update(0, { From: "", To: "" });
@@ -91,7 +92,7 @@ export default function CityScreen() {
   let ZoneId = zonedatum?.find((x) => x._id == Zone)?.zoneName;
   let CountryID = country?.find((x) => x._id == Country)?.Country;
   let stateID = Statedatum?.find((x) => x._id == State)?.state;
-  console.log(".................", ZoneId, CountryID, stateID);
+
   const SaveStateDetails = (e) => {
     dispatch(
       saveCity({
@@ -284,8 +285,7 @@ export default function CityScreen() {
                                   return state.checked === true;
                                 })
                                 ?.map(
-                                  (item) => (
-                                    console.log("item", item),
+                                  (item) => (                                   
                                     (
                                       <MenuItem
                                         key={item?._id}

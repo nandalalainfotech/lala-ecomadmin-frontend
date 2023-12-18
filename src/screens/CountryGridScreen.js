@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 });
 export const CountryGridScreen = () => {
   const [selectionModel, setSelectionModel] = useState([]);
-  console.log("selectionModel", selectionModel);
+
   const editHandler = (id) => {
     console.log("id", id);
     navigate(`/country/` + id);
@@ -64,7 +64,6 @@ export const CountryGridScreen = () => {
 
   const CountryList = useSelector((state) => state.CountryList);
   const { country, loading } = CountryList;
-  console.log("country", country);
 
   const CountryMasterDelete = useSelector((state) => state.CountryMasterDelete);
   const { success: countrylistdel } = CountryMasterDelete;
@@ -79,6 +78,7 @@ export const CountryGridScreen = () => {
     (state) => state.CountrymultipleDelete
   );
   const { success: deletealldetails } = CountrymultipleDelete;
+  console.log("deletealldetails==>", deletealldetails);
 
   /********************************************Bulk Action *********** */
   const [opencheck, setOpencheck] = useState(false);
@@ -133,7 +133,7 @@ export const CountryGridScreen = () => {
 
   const handleClosecheckdelet = () => {
     setOpencheck(false);
-    if (checkeddelete == true) {
+    if (checkeddelete === true) {
       dispatch(deleteMultiplecountry({ id: selectionModel }));
     }
   };
@@ -154,9 +154,15 @@ export const CountryGridScreen = () => {
     if (deletealldetails) {
       dispatch({ type: COUNTRY_MULTIPLE_DELETE_RESET });
     }
+    // dispatch(deleteMultiplecountry());
     dispatch(CountryListDetails());
-    dispatch(deleteMultiplecountry());
-  }, [dispatch, countrylistdel, countryenable, enableallcheckbox]);
+  }, [
+    dispatch,
+    countrylistdel,
+    countryenable,
+    enableallcheckbox,
+    deletealldetails 
+  ]);
 
   const handleChangeEnabled = (e, params) => {
     if (e.target.checked === true) {

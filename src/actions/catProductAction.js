@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { COMBO_DELETE_FAIL, COMBO_DELETE_REQUEST, COMBO_DELETE_SUCCESS } from '../constants/ComboConstants';
 import {
   CAT_LAST_PRODUCT_FAIL,
   CAT_LAST_PRODUCT_REQUEST,
@@ -366,6 +367,22 @@ export const deleteImages =
           ? error.response.data.message
           : error.message;
       dispatch({ type: IMAGE_DELETE_FAIL, payload: message });
+    }
+  };
+
+
+  export const deleteChildImages = (_id,item) => async (dispatch) => {
+    dispatch({ type: COMBO_DELETE_REQUEST, payload: _id });
+    try {
+      await Axios.delete(`/api/uploads/deleteok/${_id}`,{data:item})
+  
+      dispatch({ type: COMBO_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: COMBO_DELETE_FAIL, payload: message });
     }
   };
 

@@ -340,6 +340,7 @@ export default function LogicGridScreen() {
   };
 
   const handleClosecheckdelet = () => {
+    setOpencheck(false);
     setdeleteopen(false);
     if (checkeddelete == true) {
       // console.log('checkeddelete', checkeddelete);

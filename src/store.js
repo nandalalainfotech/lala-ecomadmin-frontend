@@ -159,6 +159,7 @@ import {
   EnableproductUpdateReducer,
   ProductActiveReducer,
   ProductmultipleDeleteReducer,
+  RemovecatproductReducer,
   wishListUpdateReducer,
 } from "./reducers/catProductReducer";
 import {
@@ -530,6 +531,7 @@ const reducer = combineReducers({
   Brandmultiple: BrandmultipleDeleteReducer,
   Productmultiple: ProductmultipleDeleteReducer,
   cominationstockupdate: CominationupdateReducer,
+  Removecatproduct: RemovecatproductReducer,
   parentDelete: parentDeleteReducer,
   childDelete: childDeleteReducer,
   grandDelete: grandDeleteReducer,

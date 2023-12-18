@@ -138,7 +138,7 @@ function BrandScreen() {
       })
     );
     window.confirm("Brand Details Updated SuccessFully!!");
-    navigate("/home");
+    navigate("/brand");
     setNewname("");
     setbrnadindId(0);
   };
@@ -228,6 +228,7 @@ function BrandScreen() {
     successDelete,
     successbrandsave,
     successmultiple,
+    successUpdate,
   ]);
 
   const editHandler = (brandIndId) => {
@@ -762,7 +763,7 @@ function BrandScreen() {
                       }}
                     >
                       <Typography variant="h4" sx={{ textAlign: "center" }}>
-                        Brands
+                        Updated Brands
                       </Typography>
 
                       <Typography>Name*</Typography>

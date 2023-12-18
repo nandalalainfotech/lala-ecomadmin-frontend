@@ -196,6 +196,7 @@ export default function TaxesMasterScreen() {
 
   const handleClosecheckdelet = () => {
     // setdeleteopen(false);
+    setOpencheck(false);
     if (checkeddelete == true) {
       dispatch(deleteMultipletax({ id: selectionModel }));
     }
