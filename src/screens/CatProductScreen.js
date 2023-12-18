@@ -66,7 +66,7 @@ import CardContent from "@mui/material/CardContent";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Link, useParams } from "react-router-dom";
-import { Divider } from "../../node_modules/@material-ui/core/index";
+import { Accordion, AccordionDetails, AccordionSummary, Divider } from "../../node_modules/@material-ui/core/index";
 import { makeStyles } from "../../node_modules/@material-ui/styles/index";
 import {
   CategoryChildNewLists,
@@ -105,6 +105,7 @@ import {
   PricingLastListDetails,
   PricingListDetails,
 } from "../actions/prodAction";
+import { data, event } from "jquery";
 
 function CatProductScreen() {
   const {
@@ -163,6 +164,68 @@ function CatProductScreen() {
   const AttributeValueList = useSelector((state) => state.AttributeValueList);
   const { attributeValuedetails } = AttributeValueList;
   // console.log("attributeValuedetails=========.", attributeValuedetails);
+
+  let datas = AttributeValueList.attributeValuedetails;
+  const [combValues, setCombValues] = useState([]);
+
+  let ramData = [];
+  let sizeData = [];
+  let colorData = [];
+  let checkRam = datas?.map((items) => {
+    if (items.value == "4GB" || items.value == "3GB" || items.value == "6GB" || items.value == "8GB")
+      ramData.push(items)
+  })
+  let checkSize = datas?.map((items) => {
+    if (items.value == "XXL" || items.value == "XL" || items.value == "M" || items.value == "S")
+      sizeData.push(items)
+  })
+  let checkColor = datas?.map((items) => {
+    if (items.value == "Blue" || items.value == "Green" || items.value == "Red" || items.value == "black")
+      colorData.push(items)
+  })
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  // SelectRam Check
+
+  const handleCheckboxRamChange = (value, event) => {
+    let selectedRam = [];
+    datas?.map((items) => {
+      if (items.value == value) {
+        selectedRam.push(items)
+        // combValues.push(items)
+      }
+    });
+    // console.log("combValues------------>", combValues);
+    let val = [...combValues, ...selectedRam]
+    setCombValues(val);
+  };
+
+
+  // SelectSize Check
+  let selectedSize = [];
+  const handleCheckboxSizeChange = (value, event) => {
+    let sizeId = datas?.map((items) => {
+      if (items.value == value) {
+        selectedSize.push(items)
+      }
+    });
+    let val = [...combValues, ...selectedSize]
+    setCombValues(val);
+
+  };
+
+  // SelectColor Check
+  let selectedColor = [];
+  const handleCheckboxColorChange = (value, event) => {
+    let colorId = datas?.map((items) => {
+      if (items.value == value) {
+        selectedColor.push(items)
+      }
+    });
+    let val = [...combValues, ...selectedColor]
+    setCombValues(val);
+
+  };
 
   const Combinationchild = useSelector((state) => state.Combinationchild);
   const { childComination } = Combinationchild;
@@ -448,13 +511,10 @@ function CatProductScreen() {
 
   const [finalValue, setfinalValue] = useState([]);
   const stockCount = () => {
-    console.log("CombStock------->", CombStock);
     let arr = [];
     let indexes = [];
     CombStock.map((items, index) => {
-      console.log("items", items);
       if (!arr.includes(items.id)) {
-        console.log("items.id--------->", items.id);
         arr.push(items.id);
         indexes?.push(index, arr);
         finalValue?.push({
@@ -467,7 +527,6 @@ function CatProductScreen() {
     let lastValue = CombStock[CombStock.length - 1];
     finalValue.splice(0, 1);
     finalValue.push(lastValue);
-    console.log("finalValue--------->", finalValue);
   };
 
   const handleStockudateInput = (event, params) => {
@@ -527,6 +586,7 @@ function CatProductScreen() {
       });
     }
     setState(value);
+    setCombValues(value)
     // setState(value)
   };
   if (defaultOption?.length < state?.length) {
@@ -718,7 +778,6 @@ function CatProductScreen() {
   // *********************************************
   const [images, setImage] = useState();
   const [subimg, setSubImage] = useState();
-  console.log("subimg===>", subimg);
   const [Delete, setDelete] = useState("");
 
   useEffect(() => {
@@ -780,7 +839,7 @@ function CatProductScreen() {
       fetchBusines();
       fetchBusinesses();
     }
-  }, [deleteImages,updateprod, successcom, deleteCombo, RemovecatproductSuccess]);
+  }, [deleteImages, updateprod, successcom, deleteCombo, RemovecatproductSuccess]);
 
   useEffect(() => {
     if (updatecomina) {
@@ -790,7 +849,7 @@ function CatProductScreen() {
     if (deleteCombo) {
       dispatch(CombinationChildList());
     }
-    
+
   }, [updatecomina, deleteCombo]);
 
   var file = new File([subimg], "name");
@@ -856,7 +915,6 @@ Not all shops sell new products.
   };
 
   const ImagHandleSelect = (e, index) => {
-    console.log("e?.target?.src====>", e?.target?.src);
     setImageSelectblob(e?.target?.src);
     setImageSelect(index);
     setImageDelete(0);
@@ -903,7 +961,6 @@ Not all shops sell new products.
 
   // ********************************************************
   const [selectedImages, setSelectedImages] = useState([]);
-  console.log("selectedImages====>", selectedImages);
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
@@ -924,7 +981,6 @@ Not all shops sell new products.
     }
   };
   function deleteHandler(image) {
-    console.log("image--------->>Naresh", image);
     setSelectedImages(selectedImages?.filter((e) => e !== image));
     URL.revokeObjectURL(image);
   }
@@ -1119,7 +1175,7 @@ Not all shops sell new products.
     // const formData = new FormData();
     // formData.append("image", item);
     try {
-      dispatch(deleteChildImages(ProdId,item));
+      dispatch(deleteChildImages(ProdId, item));
     } catch (err) {
       // console.log(err);
     }
@@ -1225,10 +1281,10 @@ Not all shops sell new products.
   function getnumId(comproducts) {
     return `${
       comproducts.row.CombinationId
-        ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
-            ?.prodname
-        : ""
-    }`;
+      ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
+        ?.prodname
+      : ""
+      }`;
   }
   const navigate = useNavigate();
   const editCombination = (obj) => {
@@ -2153,7 +2209,7 @@ Not all shops sell new products.
                                               value={
                                                 newfeaturestypevalue[index]?.id
                                                   ? newfeaturestypevalue[index]
-                                                      ?.id
+                                                    ?.id
                                                   : id
                                               }
                                               // ref={register()}
@@ -2673,9 +2729,9 @@ Not all shops sell new products.
                                             }}
                                             name="file"
                                             defaultChecked={true}
-                                            // checked={checkedtreeupdate}
-                                            // checked={true}
-                                            // onChange={handleChangecheckbox}
+                                          // checked={checkedtreeupdate}
+                                          // checked={true}
+                                          // onChange={handleChangecheckbox}
                                           />
                                         }
                                         label={
@@ -2722,7 +2778,7 @@ Not all shops sell new products.
                                           }
                                           label={
                                             newchildCategory ===
-                                            childItem._id ? (
+                                              childItem._id ? (
                                               <FormControlLabel
                                                 control={
                                                   <Checkbox
@@ -2788,7 +2844,7 @@ Not all shops sell new products.
                                                   }
                                                   label={
                                                     grandchildCategory ===
-                                                    grandItem._id ? (
+                                                      grandItem._id ? (
                                                       <FormControlLabel
                                                         control={
                                                           <Checkbox
@@ -2824,7 +2880,7 @@ Not all shops sell new products.
                                                               color: "#00A787",
                                                             }}
                                                             name="file"
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
@@ -3029,7 +3085,7 @@ Not all shops sell new products.
                           rowHeight={64}
                           pageSize={10}
                           rowsPerPageOptions={[10]}
-                          // checkboxSelection
+                        // checkboxSelection
                         />
                         <Button
                           variant="contained"
@@ -3536,7 +3592,7 @@ Not all shops sell new products.
                                         sx={{ color: "#00A787" }}
                                         onClick={() => deleteHandler(testImage)}
                                       >
-                                        Remove 
+                                        Remove
                                       </Button>
                                     </Box>
                                   </>
@@ -3618,8 +3674,8 @@ Not all shops sell new products.
                                   })}
                                 </ListItem>
                               </Box>
-                              </List>
-                              <List>
+                            </List>
+                            <List>
                               {/* <input type="file" multiple /> */}
                               {selectedImages?.length > 0 &&
                                 selectedImages?.length > 10 && (
@@ -3912,7 +3968,7 @@ Not all shops sell new products.
                                               value={
                                                 newfeaturestypevalue[index]?.id
                                                   ? newfeaturestypevalue[index]
-                                                      ?.id
+                                                    ?.id
                                                   : id
                                               }
                                               // ref={register()}
@@ -4434,9 +4490,9 @@ Not all shops sell new products.
                                             }}
                                             name="file"
                                             defaultChecked={true}
-                                            // checked={checkedtreeupdate}
-                                            // checked={true}
-                                            // onChange={handleChangecheckbox}
+                                          // checked={checkedtreeupdate}
+                                          // checked={true}
+                                          // onChange={handleChangecheckbox}
                                           />
                                         }
                                         label={
@@ -4483,7 +4539,7 @@ Not all shops sell new products.
                                           }
                                           label={
                                             newchildCategory ===
-                                            childItem._id ? (
+                                              childItem._id ? (
                                               <FormControlLabel
                                                 control={
                                                   <Checkbox
@@ -4548,7 +4604,7 @@ Not all shops sell new products.
                                                   }
                                                   label={
                                                     grandchildCategory ===
-                                                    grandItem._id ? (
+                                                      grandItem._id ? (
                                                       <FormControlLabel
                                                         control={
                                                           <Checkbox
@@ -4584,7 +4640,7 @@ Not all shops sell new products.
                                                               color: "#00A787",
                                                             }}
                                                             name="file"
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
@@ -5303,7 +5359,7 @@ Not all shops sell new products.
                                             onChange={(e) =>
                                               handleFeatureValue(e, index)
                                             }
-                                            // onClick={() => removeName(index)}
+                                          // onClick={() => removeName(index)}
                                           >
                                             {Featuresvaluedetails?.filter(
                                               (Feature) => {
@@ -5878,7 +5934,7 @@ Not all shops sell new products.
                                                   }
                                                   label={
                                                     grandchildId ===
-                                                    grandItem._id ? (
+                                                      grandItem._id ? (
                                                       <FormControlLabel
                                                         sx={{
                                                           fontSize: "12px",
@@ -5894,7 +5950,7 @@ Not all shops sell new products.
                                                             checked={
                                                               checkedtree
                                                             }
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
@@ -5921,7 +5977,7 @@ Not all shops sell new products.
                                                             }}
                                                             size="small"
                                                             name="file"
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
@@ -6065,7 +6121,7 @@ Not all shops sell new products.
                             rowHeight={64}
                             pageSize={10}
                             rowsPerPageOptions={[10]}
-                            // checkboxSelection
+                          // checkboxSelection
                           />
                           <Box>
                             <Dialog
@@ -6087,8 +6143,8 @@ Not all shops sell new products.
                                   component="img"
                                   // height="200"
                                   image={ComnewImg}
-                                  // alt={"subimgnew.filename"}
-                                  // onMouseOver={handleChangeimage}
+                                // alt={"subimgnew.filename"}
+                                // onMouseOver={handleChangeimage}
                                 />
                               </Box>
                             </Dialog>
@@ -6112,84 +6168,213 @@ Not all shops sell new products.
                       ) : (
                         <>
                           {subtype?.length > 0 ? (
-                            <Box
-                              sx={{ width: "100%" }}
-                              component="form"
-                              onSubmit={handleSubmit1(CreateCombination)}
-                            >
-                              <Autocomplete
-                                size="small"
-                                multiple={true}
-                                id="free-solo-demo"
-                                options={attributeValuedetails}
-                                value={defaultOption}
-                                autoSelect={true}
-                                getOptionLabel={(option) =>
-                                  `${option.attributename} : ${option.value} `
-                                }
-                                onChange={(event, value) =>
-                                  combinationhandleChange(event, value)
-                                }
-                                filterOptions={filterOptions}
-                                renderInput={(params) => (
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                            <Grid container item xs>
+                              <Grid xs={6}>
+                                <Box
+                                  sx={{ width: "100%" }}
+                                  component="form"
+                                  onSubmit={handleSubmit1(CreateCombination)}
+                                >
+                                  <Autocomplete
                                     size="small"
-                                    {...params}
-                                    label="Combination"
-                                    margin="normal"
-                                    variant="outlined"
+                                    multiple={true}
+                                    id="free-solo-demo"
+                                    options={attributeValuedetails}
+                                    value={defaultOption}
+                                    autoSelect={true}
+                                    getOptionLabel={(option) =>
+                                      `${option.attributename} : ${option.value} `
+                                    }
+                                    onChange={(event, value) =>
+                                      combinationhandleChange(event, value)
+                                    }
+                                    filterOptions={filterOptions}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        InputProps={{
+                                          style: { fontSize: 13 },
+                                        }}
+                                        size="small"
+                                        {...params}
+                                        label="Combination"
+                                        margin="normal"
+                                        variant="outlined"
+                                      />
+                                    )}
                                   />
-                                )}
-                              />
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  mt: 3,
-                                  mr: 20,
-                                  backgroundColor: "#00A787",
-                                  "&:hover": { backgroundColor: "#00A787" },
-                                }}
-                                type="submit"
-                              >
-                                Generate
-                              </Button>
-                            </Box>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      mt: 3,
+                                      mr: 20,
+                                      backgroundColor: "#00A787",
+                                      "&:hover": { backgroundColor: "#00A787" },
+                                    }}
+                                    type="submit"
+                                  >
+                                    Generate
+                                  </Button>
+                                </Box>
+                              </Grid>
+                            </Grid>
                           ) : (
-                            <Box
-                              sx={{ width: "100%" }}
-                              component="form"
-                              onSubmit={handleSubmit1(CreateCombination)}
-                            >
-                              <Autocomplete
-                                size="small"
-                                multiple={true}
-                                id="free-solo-demo"
-                                options={attributeValuedetails}
-                                value={defaultOption}
-                                autoSelect={true}
-                                getOptionLabel={(option) =>
-                                  `${option.attributename} : ${option.value} `
-                                }
-                                onChange={(event, value) =>
-                                  combinationhandleChange(event, value)
-                                }
-                                filterOptions={filterOptions}
-                                renderInput={(params) => (
-                                  <TextField
-                                    InputProps={{
-                                      style: { fontSize: 13 },
-                                    }}
+                            <Grid container>
+                              <Grid item xs={6}>
+                                <Box
+                                  sx={{ width: "100%" }}
+                                  component="form"
+                                  onSubmit={handleSubmit1(CreateCombination)}
+                                >
+                                  <Autocomplete
                                     size="small"
-                                    {...params}
-                                    label="Combination"
-                                    margin="normal"
-                                    variant="outlined"
+                                    multiple={true}
+                                    id="free-solo-demo"
+                                    options={attributeValuedetails}
+                                    value={combValues}
+                                    autoSelect={true}
+                                    getOptionLabel={(option) =>
+                                      `${option.attributename} : ${option.value} `
+                                    }
+                                    onChange={(event, value) =>
+                                      combinationhandleChange(event, value)
+                                    }
+                                    filterOptions={filterOptions}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        InputProps={{
+                                          style: { fontSize: 13 },
+                                        }}
+                                        size="small"
+                                        {...params}
+                                        label="Combination"
+                                        margin="normal"
+                                        variant="outlined"
+                                      />
+                                    )}
                                   />
-                                )}
-                              />
+                                </Box>
+                              </Grid>
+                              <Grid xs={6}>
+                                <Grid items xs={3}>
+                                </Grid>
+                                <Grid items xs={6} >
+                                  <Box sx={{ marginTop: "10px", marginLeft: "30px", marginBottom: "20px" }}>
+                                    <Accordion>
+                                      <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                      >
+                                        Select RAM
+                                      </AccordionSummary>
+                                      {ramData.map((option) => (
+                                        <>
+                                          <AccordionDetails sx={{ width: "50%" }}>
+                                            <>
+                                              <FormControlLabel sx={{ display: "flex" }}
+                                                key={option.id}
+                                                control={
+                                                  <Checkbox
+                                                    sx={{ display: "flex" }}
+                                                    checked={option.checked}
+                                                    onChange={() => handleCheckboxRamChange(option.value, event)}
+                                                  />
+                                                }
+                                                label={option.value}
+                                              />
+                                            </>
+                                          </AccordionDetails>
+                                        </>
+                                      ))}
+                                    </Accordion>
+                                  </Box>
+                                  <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
+                                    <Accordion>
+                                      <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                      >
+                                        <Typography>Select  Size</Typography>
+                                      </AccordionSummary>
+                                      {sizeData.map((option) => (
+                                        <>
+                                          <AccordionDetails sx={{ width: "50%" }}>
+                                            <>
+                                              <FormControlLabel sx={{ display: "flex" }}
+                                                key={option.id}
+                                                control={
+                                                  <Checkbox
+                                                    sx={{ display: "flex" }}
+                                                    checked={option.checked}
+                                                    onChange={() => handleCheckboxSizeChange(option.value, event)}
+                                                  />
+                                                }
+                                                label={option.value}
+                                              />
+                                            </>
+                                          </AccordionDetails>
+                                        </>
+                                      ))}
+                                    </Accordion>
+                                  </Box>
+                                  <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
+                                    <Accordion>
+                                      <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                      >
+                                        <Typography>Select  Color</Typography>
+                                      </AccordionSummary>
+                                      {colorData.map((option) => (
+                                        <>
+                                          {/* {checkboxes.map((checkbox) => ( */}
+                                          <>
+                                            <AccordionDetails sx={{ width: "50%" }}>
+                                              <>
+                                                <FormControlLabel sx={{ display: "flex" }}
+                                                  key={option.id}
+                                                  control={
+                                                    <Checkbox
+                                                      sx={{ display: "flex" }}
+                                                      checked={option.checked}
+                                                      onChange={() => handleCheckboxColorChange(option.value, event)}
+                                                    />
+                                                  }
+                                                  label={option.value}
+                                                />
+
+
+                                                {/* <div key={option.id}>
+                                                    <label>
+                                                      <input
+                                                        type="checkbox"
+                                                        checked={option.checked}
+                                                        onChange={() => handleCheckboxChange(option.id)}
+                                                      />
+                                                      {option.value}
+                                                    </label>
+                                                  </div>
+
+                                                  <p>Selected checkboxes: {checkboxes.filter((c) => c.checked).length}</p> */}
+
+                                              </>
+                                            </AccordionDetails>
+                                          </>
+                                          {/* ))} */}
+                                        </>
+                                      ))}
+                                    </Accordion>
+
+                                  </Box>
+                                </Grid>
+                                <Grid items xs={3}>
+
+                                </Grid>
+                                <Box>
+                                </Box>
+                              </Grid>
                               <Button
                                 variant="contained"
                                 sx={{
@@ -6202,7 +6387,7 @@ Not all shops sell new products.
                               >
                                 Generate
                               </Button>
-                            </Box>
+                            </Grid>
                           )}
                         </>
                       )}
@@ -6618,7 +6803,7 @@ Not all shops sell new products.
                                             onChange={(e) =>
                                               handleFeatureValue(e, index)
                                             }
-                                            // onClick={() => removeName(index)}
+                                          // onClick={() => removeName(index)}
                                           >
                                             {Featuresvaluedetails?.filter(
                                               (Feature) => {
@@ -7193,7 +7378,7 @@ Not all shops sell new products.
                                                   }
                                                   label={
                                                     grandchildId ===
-                                                    grandItem._id ? (
+                                                      grandItem._id ? (
                                                       <FormControlLabel
                                                         sx={{
                                                           fontSize: "12px",
@@ -7209,7 +7394,7 @@ Not all shops sell new products.
                                                             checked={
                                                               checkedtree
                                                             }
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
@@ -7236,7 +7421,7 @@ Not all shops sell new products.
                                                             }}
                                                             size="small"
                                                             name="file"
-                                                            // onChange={handleChange}
+                                                          // onChange={handleChange}
                                                           />
                                                         }
                                                         label={
