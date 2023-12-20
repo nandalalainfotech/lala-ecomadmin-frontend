@@ -172,15 +172,19 @@ function CatProductScreen() {
   let sizeData = [];
   let colorData = [];
   let checkRam = datas?.map((items) => {
-    if (items.value == "4GB" || items.value == "3GB" || items.value == "6GB" || items.value == "8GB")
+    // items.allRam = "Select All "
+    let ramIDs = "655cb37b09fb80091023636e";
+    if (items._id == ramIDs || items.value == "4GB" || items.value == "3GB" || items.value == "6GB" || items.value == "8GB")
       ramData.push(items)
   })
   let checkSize = datas?.map((items) => {
-    if (items.value == "XXL" || items.value == "XL" || items.value == "M" || items.value == "S")
+    // items.allSize = "Select All"
+    if (items._id == "655cb33f09fb800910236347" || items.value == "XXL" || items.value == "XL" || items.value == "M" || items.value == "S")
+
       sizeData.push(items)
   })
   let checkColor = datas?.map((items) => {
-    if (items.value == "Blue" || items.value == "Green" || items.value == "Red" || items.value == "black")
+    if (items._id == "655cb35909fb800910236358" || items.value == "Blue" || items.value == "Green" || items.value == "Red" || items.value == "black" )
       colorData.push(items)
   })
   const [checkedItems, setCheckedItems] = useState([]);
@@ -188,16 +192,20 @@ function CatProductScreen() {
   // SelectRam Check
 
   const handleCheckboxRamChange = (value, event) => {
+
     let selectedRam = [];
     datas?.map((items) => {
-      if (items.value == value) {
-        selectedRam.push(items)
-        // combValues.push(items)
-      }
+      if (items.value == value)
+        if (items.value == value && event.target.checked == true) {
+          selectedRam.push(items)
+          let val = [...combValues, ...selectedRam];
+          setCombValues(val);
+        }
+        else if (event.target.checked == false) {
+          const updatedArray = combValues.filter(item => item.value !== value);
+          setCombValues(updatedArray);
+        }
     });
-    // console.log("combValues------------>", combValues);
-    let val = [...combValues, ...selectedRam]
-    setCombValues(val);
   };
 
 
@@ -207,10 +215,15 @@ function CatProductScreen() {
     let sizeId = datas?.map((items) => {
       if (items.value == value) {
         selectedSize.push(items)
+        let val = [...combValues, ...selectedSize]
+        setCombValues(val);
+      }
+      else if (event.target.checked == false) {
+        const updatedArray = combValues.filter(item => item.value !== value);
+        setCombValues(updatedArray);
       }
     });
-    let val = [...combValues, ...selectedSize]
-    setCombValues(val);
+
 
   };
 
@@ -219,11 +232,16 @@ function CatProductScreen() {
   const handleCheckboxColorChange = (value, event) => {
     let colorId = datas?.map((items) => {
       if (items.value == value) {
-        selectedColor.push(items)
+        selectedColor.push(items);
+        let val = [...combValues, ...selectedColor]
+        setCombValues(val);
+      }
+      else if (event.target.checked == false) {
+        const updatedArray = combValues.filter(item => item.value !== value);
+        setCombValues(updatedArray);
       }
     });
-    let val = [...combValues, ...selectedColor]
-    setCombValues(val);
+
 
   };
 
@@ -1279,8 +1297,7 @@ Not all shops sell new products.
   // **********************COMINATION SCREEN**************************************
 
   function getnumId(comproducts) {
-    return `${
-      comproducts.row.CombinationId
+    return `${comproducts.row.CombinationId
       ? catProducts?.find((x) => x?._id == comproducts.row.CombinationId)
         ?.prodname
       : ""
@@ -6277,7 +6294,7 @@ Not all shops sell new products.
                                                   <Checkbox
                                                     sx={{ display: "flex" }}
                                                     checked={option.checked}
-                                                    onChange={() => handleCheckboxRamChange(option.value, event)}
+                                                    onChange={(event) => handleCheckboxRamChange(option.value, event)}
                                                   />
                                                 }
                                                 label={option.value}
@@ -6307,7 +6324,7 @@ Not all shops sell new products.
                                                   <Checkbox
                                                     sx={{ display: "flex" }}
                                                     checked={option.checked}
-                                                    onChange={() => handleCheckboxSizeChange(option.value, event)}
+                                                    onChange={(event) => handleCheckboxSizeChange(option.value, event)}
                                                   />
                                                 }
                                                 label={option.value}
@@ -6339,7 +6356,7 @@ Not all shops sell new products.
                                                     <Checkbox
                                                       sx={{ display: "flex" }}
                                                       checked={option.checked}
-                                                      onChange={() => handleCheckboxColorChange(option.value, event)}
+                                                      onChange={(event) => handleCheckboxColorChange(option.value, event)}
                                                     />
                                                   }
                                                   label={option.value}
