@@ -165,85 +165,121 @@ function CatProductScreen() {
   const { attributeValuedetails } = AttributeValueList;
   // console.log("attributeValuedetails=========.", attributeValuedetails);
 
+
+  // Product varient CheckBox 
   let datas = AttributeValueList.attributeValuedetails;
   const [combValues, setCombValues] = useState([]);
 
-  let ramData = [];
-  let sizeData = [];
-  let colorData = [];
-  let checkRam = datas?.map((items) => {
-    // items.allRam = "Select All "
-    let ramIDs = "655cb37b09fb80091023636e";
-    if (items._id == ramIDs || items.value == "4GB" || items.value == "3GB" || items.value == "6GB" || items.value == "8GB")
-      ramData.push(items)
-  })
-  let checkSize = datas?.map((items) => {
-    // items.allSize = "Select All"
-    if (items._id == "655cb33f09fb800910236347" || items.value == "XXL" || items.value == "XL" || items.value == "M" || items.value == "S")
+  // console.log(datas)
+  const [isRamChecked, setIsRamChecked] = useState(false);
 
-      sizeData.push(items)
-  })
-  let checkColor = datas?.map((items) => {
-    if (items._id == "655cb35909fb800910236358" || items.value == "Blue" || items.value == "Green" || items.value == "Red" || items.value == "black" )
-      colorData.push(items)
-  })
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [selectAllCheck, setSelectAllCheck] = useState([])
+  const [selectSubmenu, setSelectsubmenu] = useState([])
 
-  // SelectRam Check
 
-  const handleCheckboxRamChange = (value, event) => {
+  // combination product Checkbox
 
-    let selectedRam = [];
-    datas?.map((items) => {
-      if (items.value == value)
-        if (items.value == value && event.target.checked == true) {
-          selectedRam.push(items)
-          let val = [...combValues, ...selectedRam];
-          setCombValues(val);
+  let selectAllType = [];
+  let filterSelect = datas?.filter(item => item.value == "Select All")
+  let changedObject = [];
+  filterSelect?.map(items => {
+    const val = datas?.filter(x => x?.allId === items?._id).map((item) => {
+      changedObject.push(item)
+    });
+  });
+  selectAllType.push(filterSelect);
+ 
+  const [checkAll, setCheckAll] = useState([]);
+  const handleSelectAllCheck = (e, datavalue, index) => {
+    let emptyCheck = [];
+    let totalCheck = [];
+    emptyCheck.push(datavalue)
+    let checkId = datavalue._id;
+    let value = datavalue.value;
+    if (datavalue.value == 'Select All' && e.target.checked == true) {
+
+      let dataSelect = datas?.filter((item) => item.allId == datavalue._id);
+      dataSelect.map((items) => {
+        emptyCheck.push(items)
+      })
+      let inital = [false];
+
+      totalCheck = [...selectAllCheck, ...emptyCheck]
+
+      let leave_Array = []
+      const changedObjects = changedObject.filter(items => {
+        const val = totalCheck.find(x => x?._id === items?._id);
+        if (val?._id == items?._id) {
+          items.checkeds = true
+          leave_Array.push(items)
+        } else {
+          items.checkeds = false
+          leave_Array.push(items)
         }
-        else if (event.target.checked == false) {
-          const updatedArray = combValues.filter(item => item.value !== value);
-          setCombValues(updatedArray);
+      });
+      setCheckAll(leave_Array)
+      setSelectAllCheck(totalCheck)
+    }
+    if (datavalue.value == 'Select All' && e.target.checked == true) {
+      emptyCheck.map((all) => {
+        combValues.push(all);
+      })
+    }
+    if (datavalue.value == 'Select All' && datavalue.atributename == datavalue.atributename && e.target.checked == false) {
+      let removeSelectAll = combValues.filter((items) => items.allId !== checkId && items._id !== checkId);
+      let leave_Array = []
+      const changedObjects = changedObject.filter(items => {
+        const val = removeSelectAll.find(x => x?._id === items?._id);
+        if (val?._id == items?._id) {
+          items.checkeds = true
+          leave_Array.push(items)
+        } else {
+          items.checkeds = false
+          leave_Array.push(items)
         }
-    });
-  };
+      });
+      setCheckAll(leave_Array)
+      setCombValues(removeSelectAll)
+    }
+  }
 
+  const handleSingleCheck = (e, test, index) => {
+    let emptyCheck = [];
+    let totalCheck = [];
+    let id = test._id;
+    if (e.target.checked == true) {
+      let check_array = []
+      checkAll.map((value) => {
+        if (value?._id == test?._id) {
+          value.checkeds = true
+          check_array.push(value)
+        } else {
+          check_array.push(value)
+        }
+      });
+      setCheckAll(check_array)
+      let filterSingleCheck = datas?.filter((item) => item._id == id);
+      let val = [...filterSingleCheck, ...combValues]
+      setCombValues(val)
+    }
+    if (e.target.checked == false) {
+      let un_check_array = []
+      checkAll.map((value) => {
+        if (value?._id == test?._id) {
+          value.checkeds = false
+          un_check_array.push(value)
+        } else {
+          un_check_array.push(value)
+        }
+      });
+      setCheckAll(un_check_array)
+      let dataRemove = combValues.filter((item) => item._id !== id);
+      setSelectAllCheck(dataRemove)
 
-  // SelectSize Check
-  let selectedSize = [];
-  const handleCheckboxSizeChange = (value, event) => {
-    let sizeId = datas?.map((items) => {
-      if (items.value == value) {
-        selectedSize.push(items)
-        let val = [...combValues, ...selectedSize]
-        setCombValues(val);
-      }
-      else if (event.target.checked == false) {
-        const updatedArray = combValues.filter(item => item.value !== value);
-        setCombValues(updatedArray);
-      }
-    });
+      setCombValues(dataRemove)
+    }
+  }
 
-
-  };
-
-  // SelectColor Check
-  let selectedColor = [];
-  const handleCheckboxColorChange = (value, event) => {
-    let colorId = datas?.map((items) => {
-      if (items.value == value) {
-        selectedColor.push(items);
-        let val = [...combValues, ...selectedColor]
-        setCombValues(val);
-      }
-      else if (event.target.checked == false) {
-        const updatedArray = combValues.filter(item => item.value !== value);
-        setCombValues(updatedArray);
-      }
-    });
-
-
-  };
 
   const Combinationchild = useSelector((state) => state.Combinationchild);
   const { childComination } = Combinationchild;
@@ -324,7 +360,7 @@ function CatProductScreen() {
   const pricingObj = pricingdetail?.find((item) => item?.mprodId === ProdId);
 
   const [priceId, setpriceId] = useState([pricingObj?._id]);
-
+  let _name = 'Moorthy'
   // **********************Edit Section********************************
 
   const [brand, setBrand] = useState(0);
@@ -605,6 +641,7 @@ function CatProductScreen() {
     }
     setState(value);
     setCombValues(value)
+    setIsRamChecked(!isRamChecked)
     // setState(value)
   };
   if (defaultOption?.length < state?.length) {
@@ -1481,6 +1518,7 @@ Not all shops sell new products.
   //   }
   // }
   // console.log("attcom", attcom)
+
   return (
     <>
       {prodctObj ? (
@@ -6276,114 +6314,58 @@ Not all shops sell new products.
                                 </Grid>
                                 <Grid items xs={6} >
                                   <Box sx={{ marginTop: "10px", marginLeft: "30px", marginBottom: "20px" }}>
-                                    <Accordion>
-                                      <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                      >
-                                        Select RAM
-                                      </AccordionSummary>
-                                      {ramData.map((option) => (
+                                    <Box>
+                                      {filterSelect?.map((item, index) => (
                                         <>
-                                          <AccordionDetails sx={{ width: "50%" }}>
-                                            <>
+                                          <Accordion>
+                                            <AccordionSummary
+                                              expandIcon={<ExpandMoreIcon />}
+                                              aria-controls="panel1a-content"
+                                              id="panel1a-header"
+                                            >
                                               <FormControlLabel sx={{ display: "flex" }}
-                                                key={option.id}
+                                                key={item._id}
                                                 control={
                                                   <Checkbox
                                                     sx={{ display: "flex" }}
-                                                    checked={option.checked}
-                                                    onChange={(event) => handleCheckboxRamChange(option.value, event)}
+                                                    checked={item.checked}
+                                                    onChange={(event) => handleSelectAllCheck(event, item, index)}
                                                   />
                                                 }
-                                                label={option.value}
+                                                label={item.attributename}
                                               />
-                                            </>
-                                          </AccordionDetails>
-                                        </>
-                                      ))}
-                                    </Accordion>
-                                  </Box>
-                                  <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
-                                    <Accordion>
-                                      <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                      >
-                                        <Typography>Select  Size</Typography>
-                                      </AccordionSummary>
-                                      {sizeData.map((option) => (
-                                        <>
-                                          <AccordionDetails sx={{ width: "50%" }}>
-                                            <>
-                                              <FormControlLabel sx={{ display: "flex" }}
-                                                key={option.id}
-                                                control={
-                                                  <Checkbox
-                                                    sx={{ display: "flex" }}
-                                                    checked={option.checked}
-                                                    onChange={(event) => handleCheckboxSizeChange(option.value, event)}
-                                                  />
-                                                }
-                                                label={option.value}
-                                              />
-                                            </>
-                                          </AccordionDetails>
-                                        </>
-                                      ))}
-                                    </Accordion>
-                                  </Box>
-                                  <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
-                                    <Accordion>
-                                      <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                      >
-                                        <Typography>Select  Color</Typography>
-                                      </AccordionSummary>
-                                      {colorData.map((option) => (
-                                        <>
-                                          {/* {checkboxes.map((checkbox) => ( */}
-                                          <>
-                                            <AccordionDetails sx={{ width: "50%" }}>
-                                              <>
-                                                <FormControlLabel sx={{ display: "flex" }}
-                                                  key={option.id}
-                                                  control={
-                                                    <Checkbox
-                                                      sx={{ display: "flex" }}
-                                                      checked={option.checked}
-                                                      onChange={(event) => handleCheckboxColorChange(option.value, event)}
+                                              <Typography ></Typography>
+                                            </AccordionSummary>
+
+
+                                            {
+                                              changedObject.filter((test) => {
+                                                return test.allId == item._id
+                                              })?.map((test, key) => (
+                                                <>
+                                                  <AccordionDetails>
+                                                    <FormControlLabel sx={{ display: "flex" }}
+                                                      key={test._id}
+                                                      control={
+                                                        <Checkbox
+                                                          sx={{ display: "flex" }}
+                                                          checked={checkAll.length > 0 ? checkAll.find(x => x?._id == test?._id).checkeds : (test.checked || false)}
+                                                          onChange={(event) => handleSingleCheck(event, test, key)}
+                                                        />
+                                                      }
+                                                      label={test.value}
                                                     />
-                                                  }
-                                                  label={option.value}
-                                                />
+                                                    {/* {option?.attributename} */}
+                                                  </AccordionDetails>
+                                                </>
+                                              ))
+                                            }
 
 
-                                                {/* <div key={option.id}>
-                                                    <label>
-                                                      <input
-                                                        type="checkbox"
-                                                        checked={option.checked}
-                                                        onChange={() => handleCheckboxChange(option.id)}
-                                                      />
-                                                      {option.value}
-                                                    </label>
-                                                  </div>
-
-                                                  <p>Selected checkboxes: {checkboxes.filter((c) => c.checked).length}</p> */}
-
-                                              </>
-                                            </AccordionDetails>
-                                          </>
-                                          {/* ))} */}
+                                          </Accordion>
                                         </>
                                       ))}
-                                    </Accordion>
-
+                                    </Box>
                                   </Box>
                                 </Grid>
                                 <Grid items xs={3}>
