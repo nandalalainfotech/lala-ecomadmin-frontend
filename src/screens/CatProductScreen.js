@@ -360,7 +360,7 @@ function CatProductScreen() {
   const pricingObj = pricingdetail?.find((item) => item?.mprodId === ProdId);
 
   const [priceId, setpriceId] = useState([pricingObj?._id]);
-  let _name = 'Moorthy'
+
   // **********************Edit Section********************************
 
   const [brand, setBrand] = useState(0);
@@ -1518,7 +1518,6 @@ Not all shops sell new products.
   //   }
   // }
   // console.log("attcom", attcom)
-
   return (
     <>
       {prodctObj ? (
